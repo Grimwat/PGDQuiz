@@ -45,7 +45,7 @@ fun DrainLayout(
 
 @Preview
 @Composable
-fun Preview() {
+fun Drainpreview (){
     PgdQuizTheme {
         DrainLayout()
     }
