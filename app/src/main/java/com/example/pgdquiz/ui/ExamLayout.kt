@@ -23,21 +23,10 @@ fun DrainLayout(
         contentDescription = "TradesManTom")
     Column {
         Banner(
-            examType = "DrainLayer",
+            examType = "Drainlaying",
             examEmoji = painterResource(R.drawable.happypoo),
-            emojiCont = "HappyPoos",
+            emojiCont = "happyPoo",
             attempts = "3",
-            modifier = Modifier.fillMaxWidth()
-        )
-        Questionfield(
-            question = "What pipe is used for most Home Sewer Drains?",
-            icon = painterResource(R.drawable.flame1),
-            streakcount = "0",
-            streak = ""
-        )
-        ButtonGrid()
-        BannerAd(
-            modifier = Modifier.fillMaxWidth()
         )
     }
 }

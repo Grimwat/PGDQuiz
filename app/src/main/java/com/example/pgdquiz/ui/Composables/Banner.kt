@@ -16,8 +16,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import com.example.pgdquiz.Greeting
 import com.example.pgdquiz.R
+import com.example.pgdquiz.ui.DrainLayout
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 @Composable
@@ -34,9 +36,9 @@ fun Banner(
     ) {
         Text(
             text = examType,
+            maxLines = 1,
             modifier = Modifier
-                .weight(1f)
-                .padding(8.dp),
+                .padding(start = 150.dp, top = 5.dp, bottom = 20.dp),
             textAlign = TextAlign.Center
         )
 
@@ -44,8 +46,7 @@ fun Banner(
             painter = examEmoji,
             contentDescription = emojiCont,
             modifier = Modifier
-                .weight(1f)
-                .padding(start = 130.dp)
+                .padding(start = 80.dp, bottom = 20.dp, top = 5.dp)
                 .size(40.dp),
             contentScale = ContentScale.Fit
         )
@@ -54,7 +55,7 @@ fun Banner(
             text = attempts,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
-                .padding(end = 10.dp),
+                .padding(end = 20.dp, bottom = 20.dp, top = 5.dp),
             textAlign = TextAlign.Center
         )
     }
@@ -63,11 +64,8 @@ fun Banner(
 
 @Preview
 @Composable
-fun Preview() {
+fun Drainpreview (){
     PgdQuizTheme {
-        Banner(examType = "Drainlayer",
-            examEmoji = painterResource(R.drawable.happypoo),
-            emojiCont = "No shits left to give",
-            attempts = "3")
+        DrainLayout()
     }
 }
