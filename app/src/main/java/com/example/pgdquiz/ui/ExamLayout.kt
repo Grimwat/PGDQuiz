@@ -32,8 +32,9 @@ fun DrainLayout(
             streakcount = "3"
         )
         Questionfield(
-            question = "what minimum diameter is required for a vent stack"
+            question = "What minimum diameter\n is required for a vent stack"
         )
+        ButtonGrid()
     }
 }
 

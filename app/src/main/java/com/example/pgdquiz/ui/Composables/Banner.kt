@@ -40,6 +40,7 @@ fun Banner(
         Text(
             text = examType,
             maxLines = 1,
+            fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(start = 150.dp, top = 5.dp, bottom = 20.dp),
             textAlign = TextAlign.Center
