@@ -23,7 +23,7 @@ fun DrainLayout(
     Image(
         painter = painterResource(R.drawable.backg),
         contentDescription = "TradesManTom")
-    Column {
+    Column(modifier = modifier) {
         Banner(
             examType = "Drainlaying",
             examEmoji = painterResource(R.drawable.happypoo),
@@ -41,6 +41,11 @@ fun DrainLayout(
         ButtonGrid(
             modifier = Modifier
                 .padding(top = 60.dp)
+        )
+        BannerAd(
+            modifier = Modifier
+                .padding(top = 10.dp)
+                .fillMaxWidth()
         )
     }
 }
