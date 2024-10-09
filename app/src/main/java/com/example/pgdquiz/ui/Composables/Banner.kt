@@ -28,6 +28,9 @@ fun Banner(
     examEmoji: Painter,
     emojiCont: String,
     attempts: String,
+    icon: Painter,
+    streak: String,
+    streakcount: String,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -41,12 +44,25 @@ fun Banner(
                 .padding(start = 150.dp, top = 5.dp, bottom = 20.dp),
             textAlign = TextAlign.Center
         )
+        Image(
+            painter = icon,
+            contentDescription = streak,
+            modifier = Modifier
+                .padding(start = 15.dp, bottom = 20.dp, top = 5.dp)
+                .size(40.dp),
+        )
+        Text(
+            text = streakcount,
+            modifier = Modifier
+                .padding(end = 20.dp, bottom = 20.dp, top = 5.dp),
+            textAlign = TextAlign.Center
+        )
 
         Image(
             painter = examEmoji,
             contentDescription = emojiCont,
             modifier = Modifier
-                .padding(start = 80.dp, bottom = 20.dp, top = 5.dp)
+                .padding(start = 5.dp, bottom = 20.dp, top = 5.dp)
                 .size(40.dp),
             contentScale = ContentScale.Fit
         )

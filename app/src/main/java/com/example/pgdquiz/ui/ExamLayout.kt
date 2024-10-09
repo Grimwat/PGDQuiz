@@ -27,6 +27,12 @@ fun DrainLayout(
             examEmoji = painterResource(R.drawable.happypoo),
             emojiCont = "happyPoo",
             attempts = "3",
+            icon = painterResource(R.drawable.flame1),
+            streak = "Streak Count",
+            streakcount = "3"
+        )
+        Questionfield(
+            question = "what minimum diameter is required for a vent stack"
         )
     }
 }

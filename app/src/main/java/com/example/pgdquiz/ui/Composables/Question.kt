@@ -18,9 +18,6 @@ import com.example.pgdquiz.ui.theme.PgdQuizTheme
 fun Questionfield(
     modifier: Modifier = Modifier,
     question: String,
-    icon: Painter,
-    streakcount: String,
-    streak: String
 ) {
     Box(modifier = modifier) {
         Row() {
@@ -28,18 +25,6 @@ fun Questionfield(
                 text = question,
                 modifier = Modifier
                     .weight(1f))
-            Row {
-                Image(
-                    painter = icon,
-                    contentDescription = streak,
-                    modifier = Modifier
-                        .weight(1f)
-                )
-                Text(
-                    text = streakcount,
-                    modifier = Modifier
-                        .weight(1f))
-            }
         }
     }
 }
@@ -48,10 +33,5 @@ fun Questionfield(
 @Composable
 fun Previewquestion() {
     PgdQuizTheme {
-        Questionfield(
-            question = "what Diamiter pipe is used for floor wastes",
-            icon = painterResource(R.drawable.flame1),
-            streakcount = "3",
-            streak = "3")
     }
 }
