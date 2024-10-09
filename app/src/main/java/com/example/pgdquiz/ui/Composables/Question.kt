@@ -28,8 +28,8 @@ fun Questionfield(
                 maxLines = 2,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .padding(top = 70.dp, start = 95.dp)
+                modifier = modifier
+
                     )
         }
     }

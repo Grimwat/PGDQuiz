@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,6 +37,10 @@ fun AnswerButton(
         Button(
             onClick = onImageClick,
             shape = RectangleShape,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent,
+                contentColor = Color.Unspecified      
+            ),
             modifier = Modifier
                 .background(Color.Transparent)
         ) {
@@ -100,6 +105,10 @@ fun ButtonGrid(
 @Composable
 fun GreetingPreview() {
     PgdQuizTheme {
-        ButtonGrid()
+        AnswerButton(
+            contentDescriptionId = "no help",
+            questionResourceId = "GG",
+            drawableResourceId = painterResource(R.drawable.buttonoff)
+        ) { }
     }
 }
