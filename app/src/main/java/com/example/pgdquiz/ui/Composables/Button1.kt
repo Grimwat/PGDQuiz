@@ -17,7 +17,9 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModel
 import com.example.pgdquiz.R
+import com.example.pgdquiz.ui.PGDViewmodel
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 
@@ -64,6 +66,7 @@ fun AnswerButton(
 
 @Composable
 fun ButtonGrid(
+    viewModel: PGDViewmodel,
     modifier: Modifier = Modifier
 ) {
     val buttonOff = painterResource(R.drawable.buttonoff)
@@ -75,7 +78,8 @@ fun ButtonGrid(
                 drawableResourceId = buttonOff,
                 questionResourceId = questionset,
                 contentDescriptionId = contentDes,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                onImageClick = {viewModel.buttonActivate}
             ) {}
             AnswerButton(
                 drawableResourceId = buttonOff,
