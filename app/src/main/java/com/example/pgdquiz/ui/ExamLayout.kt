@@ -55,6 +55,5 @@ fun DrainLayout(
 @Composable
 fun Drainpreview (){
     PgdQuizTheme {
-        DrainLayout()
     }
 }
