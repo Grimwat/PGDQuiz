@@ -15,25 +15,5 @@ import com.example.pgdquiz.R
 class PGDViewmodel : ViewModel() {
 }
 
-@Composable
-fun buttonActivate(
-    modifier: Modifier = Modifier
-) {
-    var isSelected by remember { mutableStateOf(false) }
-    val buttonPainter = if (isSelected) {
-        painterResource(id = R.drawable.buttonon)
-    } else {
-        painterResource(id = R.drawable.buttonoff)
-    }
-
-    Image(
-        painter = buttonPainter,
-        contentDescription = null,
-        modifier = Modifier
-            .clickable {
-                isSelected = !isSelected
-            }
-    )
-}
 
 

@@ -10,6 +10,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,7 +21,6 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.ViewModel
 import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.PGDViewmodel
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
@@ -26,18 +29,20 @@ import com.example.pgdquiz.ui.theme.PgdQuizTheme
 @Composable
 fun AnswerButton(
     modifier: Modifier = Modifier,
-    drawableResourceId: Painter,
+    initialDrawableResourceId: Painter,
+    selectedDrawableResourceId: Painter,
     questionResourceId: String,
     contentDescriptionId: String,
-    onImageClick: () -> Unit
 ) {
+    var isSelected by remember { mutableStateOf(false) }
+    val drawableResourceId = if (isSelected) selectedDrawableResourceId else initialDrawableResourceId
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Button(
-            onClick = onImageClick,
+            onClick =  {isSelected = !isSelected},
             shape = RectangleShape,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
@@ -66,53 +71,54 @@ fun AnswerButton(
 
 @Composable
 fun ButtonGrid(
-    viewModel: PGDViewmodel,
     modifier: Modifier = Modifier
 ) {
     val buttonOff = painterResource(R.drawable.buttonoff)
+    val buttonOn = painterResource(R.drawable.buttonon)
     var questionset = "gg"
     val contentDes = "No Help here Cuz"
     Column{
         Row (modifier = modifier){
             AnswerButton(
-                drawableResourceId = buttonOff,
                 questionResourceId = questionset,
+                initialDrawableResourceId = buttonOff,
+                selectedDrawableResourceId = buttonOn,
                 contentDescriptionId = contentDes,
                 modifier = Modifier.weight(1f),
-                onImageClick = {viewModel.buttonActivate}
-            ) {}
+            )
             AnswerButton(
-                drawableResourceId = buttonOff,
+                initialDrawableResourceId = buttonOff,
+                selectedDrawableResourceId = buttonOn,
                 questionResourceId = questionset,
                 contentDescriptionId = contentDes,
                 modifier = Modifier.weight(1f)
-            ) {}
+            )
         }
         Row(modifier = Modifier) {
             AnswerButton(
-                drawableResourceId = buttonOff,
+                initialDrawableResourceId = buttonOff,
+                selectedDrawableResourceId = buttonOn,
                 questionResourceId = questionset,
                 contentDescriptionId = contentDes,
                 modifier = Modifier.weight(1f)
-            ) {}
+            )
             AnswerButton(
-                drawableResourceId = buttonOff,
+                initialDrawableResourceId = buttonOff,
+                selectedDrawableResourceId = buttonOn,
                 questionResourceId = questionset,
                 contentDescriptionId = contentDes,
                 modifier = Modifier.weight(1f)
-            ) {}
+            )
         }
     }
 }
+
 
 @Preview
 @Composable
 fun GreetingPreview() {
     PgdQuizTheme {
-        AnswerButton(
-            contentDescriptionId = "no help",
-            questionResourceId = "GG",
-            drawableResourceId = painterResource(R.drawable.buttonoff)
-        ) { }
+
+
     }
 }
