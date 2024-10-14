@@ -11,7 +11,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.Composables.Banner
-import com.example.pgdquiz.ui.Composables.BannerAd
 import com.example.pgdquiz.ui.Composables.ButtonGrid
 import com.example.pgdquiz.ui.Composables.Questionfield
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
@@ -41,11 +40,6 @@ fun DrainLayout(
         ButtonGrid(
             modifier = Modifier
                 .padding(top = 60.dp)
-        )
-        BannerAd(
-            modifier = Modifier
-                .padding(top = 10.dp)
-                .fillMaxWidth()
         )
     }
 }
