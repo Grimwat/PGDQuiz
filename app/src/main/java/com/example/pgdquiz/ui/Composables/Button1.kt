@@ -28,13 +28,15 @@ import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 @Composable
 fun AnswerButton(
+    buttonIndex: Int,
+    isSelected: Boolean,
+    onButtonSelected: () -> Unit,
     modifier: Modifier = Modifier,
     initialDrawableResourceId: Painter,
     selectedDrawableResourceId: Painter,
     questionResourceId: String,
     contentDescriptionId: String,
 ) {
-    var isSelected by remember { mutableStateOf(false) }
     val drawableResourceId = if (isSelected) selectedDrawableResourceId else initialDrawableResourceId
     Column(
         modifier = modifier,
@@ -42,7 +44,7 @@ fun AnswerButton(
         verticalArrangement = Arrangement.Center
     ) {
         Button(
-            onClick =  {isSelected = !isSelected},
+            onClick =  {onButtonSelected()},
             shape = RectangleShape,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
@@ -73,6 +75,7 @@ fun AnswerButton(
 fun ButtonGrid(
     modifier: Modifier = Modifier
 ) {
+    var selectedButtonIndex by remember { mutableStateOf(-1) }
     val buttonOff = painterResource(R.drawable.buttonoff)
     val buttonOn = painterResource(R.drawable.buttonon)
     var questionset = "gg"
@@ -80,6 +83,9 @@ fun ButtonGrid(
     Column{
         Row (modifier = modifier){
             AnswerButton(
+                buttonIndex = 0,
+                isSelected = selectedButtonIndex == 0,
+                onButtonSelected = { selectedButtonIndex = 0 },
                 questionResourceId = questionset,
                 initialDrawableResourceId = buttonOff,
                 selectedDrawableResourceId = buttonOn,
@@ -87,6 +93,9 @@ fun ButtonGrid(
                 modifier = Modifier.weight(1f),
             )
             AnswerButton(
+                buttonIndex = 1,
+                isSelected = selectedButtonIndex == 1,
+                onButtonSelected = { selectedButtonIndex = 1 },
                 initialDrawableResourceId = buttonOff,
                 selectedDrawableResourceId = buttonOn,
                 questionResourceId = questionset,
@@ -96,6 +105,9 @@ fun ButtonGrid(
         }
         Row(modifier = Modifier) {
             AnswerButton(
+                buttonIndex = 2,
+                isSelected = selectedButtonIndex == 2,
+                onButtonSelected = { selectedButtonIndex = 2 },
                 initialDrawableResourceId = buttonOff,
                 selectedDrawableResourceId = buttonOn,
                 questionResourceId = questionset,
@@ -103,6 +115,9 @@ fun ButtonGrid(
                 modifier = Modifier.weight(1f)
             )
             AnswerButton(
+                buttonIndex = 3,
+                isSelected = selectedButtonIndex == 3,
+                onButtonSelected = { selectedButtonIndex = 3 },
                 initialDrawableResourceId = buttonOff,
                 selectedDrawableResourceId = buttonOn,
                 questionResourceId = questionset,
