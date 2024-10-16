@@ -22,7 +22,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.pgdquiz.R
-import com.example.pgdquiz.ui.PGDViewmodel
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 
