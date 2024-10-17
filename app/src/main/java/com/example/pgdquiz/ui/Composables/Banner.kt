@@ -1,6 +1,7 @@
 package com.example.pgdquiz.ui.Composables
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,10 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.DrainLayout
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
@@ -29,56 +32,70 @@ fun Banner(
     streakcount: String,
     modifier: Modifier = Modifier
 ) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = examType,
-            maxLines = 1,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .padding(start = 150.dp, top = 5.dp, bottom = 20.dp),
-            textAlign = TextAlign.Center
-        )
-        Image(
-            painter = icon,
-            contentDescription = streak,
-            modifier = Modifier
-                .padding(start = 15.dp, bottom = 20.dp, top = 5.dp)
-                .size(40.dp),
-        )
-        Text(
-            text = streakcount,
-            modifier = Modifier
-                .padding(end = 20.dp, bottom = 20.dp, top = 5.dp),
-            textAlign = TextAlign.Center
-        )
+    Image(
+        painter = painterResource(R.drawable.banner__2_),
+        contentDescription = "Banner"
+    )
+        Row(
+            modifier = modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = examType,
+                maxLines = 1,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .padding(start = 140.dp, top = 20.dp, bottom = 20.dp),
+                textAlign = TextAlign.Center
+            )
+            Image(
+                painter = icon,
+                contentDescription = streak,
+                modifier = Modifier
+                    .padding(start = 30.dp, bottom = 20.dp, top = 15.dp)
+                    .size(40.dp),
+            )
+            Text(
+                text = streakcount,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .padding(end = 10.dp, bottom = 20.dp, top = 20.dp),
+                textAlign = TextAlign.Center
+            )
 
-        Image(
-            painter = examEmoji,
-            contentDescription = emojiCont,
-            modifier = Modifier
-                .padding(start = 5.dp, bottom = 20.dp, top = 5.dp)
-                .size(40.dp),
-            contentScale = ContentScale.Fit
-        )
+            Image(
+                painter = examEmoji,
+                contentDescription = emojiCont,
+                modifier = Modifier
+                    .padding(bottom = 20.dp, top = 15.dp)
+                    .size(40.dp),
+                contentScale = ContentScale.Fit
+            )
 
-        Text(
-            text = attempts,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .padding(end = 20.dp, bottom = 20.dp, top = 5.dp),
-            textAlign = TextAlign.Center
-        )
+            Text(
+                text = attempts,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .padding(end = 25.dp, bottom = 20.dp, top = 20.dp),
+                textAlign = TextAlign.Center
+            )
+
+        }
     }
-}
+
 
 
 @Preview
 @Composable
 fun Drainpreview (){
     PgdQuizTheme {
-        DrainLayout()
+        Banner(
+            examType = "Drainlaying",
+            examEmoji = painterResource(R.drawable.happypoo),
+            emojiCont = "happyPoo",
+            attempts = "3",
+            icon = painterResource(R.drawable.flame1),
+            streak = "Streak Count",
+            streakcount = "3")
     }
 }
