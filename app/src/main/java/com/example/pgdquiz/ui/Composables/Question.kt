@@ -35,7 +35,6 @@ fun Questionfield(
         Image(
             painter = painterResource(R.drawable.questionbox),
             contentDescription = "Questions",
-            modifier = Modifier.fillMaxSize(),
         )
         Text(
             text = question,

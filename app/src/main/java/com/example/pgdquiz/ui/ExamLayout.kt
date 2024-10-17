@@ -1,10 +1,14 @@
 package com.example.pgdquiz.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,37 +26,27 @@ import com.example.pgdquiz.ui.theme.PgdQuizTheme
 fun DrainLayout(
     modifier: Modifier = Modifier
 ) {
-    Image(
-        modifier = Modifier.fillMaxHeight(),
-        painter = painterResource(R.drawable.background__1_),
-        contentDescription = "TradesManTom")
-    Column(modifier = modifier) {
-        Banner(
-            examType = "Drainlaying",
-            examEmoji = painterResource(R.drawable.happypoo),
-            emojiCont = "happyPoo",
-            attempts = "3",
-            icon = painterResource(R.drawable.flame1),
-            streak = "Streak Count",
-            streakcount = "3"
-        )
-        Questionfield(
-            question = "What minimum diameter\n is required for a vent stack",
-            modifier = Modifier
-                .padding(top = 30.dp, start = 45.dp)
-        )
-        ButtonGrid(
-            modifier = Modifier
-                .padding(top = 60.dp)
-        )
-        BannerAd()
+        Column(modifier = modifier) {
+            Banner(
+                examType = "Drainlaying",
+                examEmoji = painterResource(R.drawable.happypoo),
+                emojiCont = "happyPoo",
+                attempts = "3",
+                icon = painterResource(R.drawable.flame1),
+                streak = "Streak Count",
+                streakcount = "3"
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Questionfield(
+                question = "What minimum diameter\n is required for a vent stack",
+            )
+        }
     }
-}
 
 
 @Preview
 @Composable
-fun Drainpreview (){
+fun Drainpreview() {
     PgdQuizTheme {
         DrainLayout()
     }

@@ -32,10 +32,11 @@ fun Banner(
     streakcount: String,
     modifier: Modifier = Modifier
 ) {
-    Image(
-        painter = painterResource(R.drawable.banner__2_),
-        contentDescription = "Banner"
-    )
+    Box(modifier = Modifier.fillMaxWidth()) {
+        Image(
+            painter = painterResource(R.drawable.banner__2_),
+            contentDescription = "Banner"
+        )
         Row(
             modifier = modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -48,41 +49,44 @@ fun Banner(
                     .padding(start = 140.dp, top = 20.dp, bottom = 20.dp),
                 textAlign = TextAlign.Center
             )
-            Image(
-                painter = icon,
-                contentDescription = streak,
-                modifier = Modifier
-                    .padding(start = 30.dp, bottom = 20.dp, top = 15.dp)
-                    .size(40.dp),
-            )
-            Text(
-                text = streakcount,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .padding(end = 10.dp, bottom = 20.dp, top = 20.dp),
-                textAlign = TextAlign.Center
-            )
+            Row {
+                Image(
+                    painter = icon,
+                    contentDescription = streak,
+                    modifier = Modifier
+                        .padding(start = 30.dp, bottom = 20.dp, top = 15.dp)
+                        .size(40.dp),
+                )
+                Text(
+                    text = streakcount,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .padding(end = 10.dp, bottom = 20.dp, top = 20.dp),
+                    textAlign = TextAlign.Center
+                )
+            }
+            Row {
+                Image(
+                    painter = examEmoji,
+                    contentDescription = emojiCont,
+                    modifier = Modifier
+                        .padding(bottom = 20.dp, top = 15.dp)
+                        .size(40.dp),
+                    contentScale = ContentScale.Fit
+                )
 
-            Image(
-                painter = examEmoji,
-                contentDescription = emojiCont,
-                modifier = Modifier
-                    .padding(bottom = 20.dp, top = 15.dp)
-                    .size(40.dp),
-                contentScale = ContentScale.Fit
-            )
-
-            Text(
-                text = attempts,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .padding(end = 25.dp, bottom = 20.dp, top = 20.dp),
-                textAlign = TextAlign.Center
-            )
+                Text(
+                    text = attempts,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .padding(end = 25.dp, bottom = 20.dp, top = 20.dp),
+                    textAlign = TextAlign.Center
+                )
+            }
 
         }
     }
-
+}
 
 
 @Preview
