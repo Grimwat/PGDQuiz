@@ -54,14 +54,6 @@ fun DrainLayout(
 @Composable
 fun Drainpreview (){
     PgdQuizTheme {
-        Banner(
-            examType = "Drainlaying",
-            examEmoji = painterResource(R.drawable.happypoo),
-            emojiCont = "happyPoo",
-            attempts = "3",
-            icon = painterResource(R.drawable.flame1),
-            streak = "Streak Count",
-            streakcount = "3"
-        )
+        DrainLayout()
     }
 }
