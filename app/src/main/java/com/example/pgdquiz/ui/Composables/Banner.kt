@@ -1,6 +1,7 @@
 package com.example.pgdquiz.ui.Composables
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,21 +33,25 @@ fun Banner(
     streakcount: String,
     modifier: Modifier = Modifier
 ) {
-    Box(modifier = Modifier.fillMaxWidth()) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+
+        ) {
         Image(
-            painter = painterResource(R.drawable.banner__2_),
+            painter = painterResource(R.drawable.banner4),
             contentDescription = "Banner"
         )
         Row(
             modifier = modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Text(
                 text = examType,
                 maxLines = 1,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .padding(start = 140.dp, top = 20.dp, bottom = 20.dp),
+                modifier = Modifier,
                 textAlign = TextAlign.Center
             )
             Row {
@@ -54,23 +59,20 @@ fun Banner(
                     painter = icon,
                     contentDescription = streak,
                     modifier = Modifier
-                        .padding(start = 30.dp, bottom = 20.dp, top = 15.dp)
                         .size(40.dp),
                 )
                 Text(
                     text = streakcount,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(end = 10.dp, bottom = 20.dp, top = 20.dp),
+                    modifier = Modifier,
                     textAlign = TextAlign.Center
                 )
             }
-            Row {
+            Row() {
                 Image(
                     painter = examEmoji,
                     contentDescription = emojiCont,
                     modifier = Modifier
-                        .padding(bottom = 20.dp, top = 15.dp)
                         .size(40.dp),
                     contentScale = ContentScale.Fit
                 )
@@ -78,8 +80,7 @@ fun Banner(
                 Text(
                     text = attempts,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(end = 25.dp, bottom = 20.dp, top = 20.dp),
+                    modifier = Modifier,
                     textAlign = TextAlign.Center
                 )
             }
@@ -91,7 +92,7 @@ fun Banner(
 
 @Preview
 @Composable
-fun Drainpreview (){
+fun Drainpreview() {
     PgdQuizTheme {
         Banner(
             examType = "Drainlaying",
@@ -100,6 +101,7 @@ fun Drainpreview (){
             attempts = "3",
             icon = painterResource(R.drawable.flame1),
             streak = "Streak Count",
-            streakcount = "3")
+            streakcount = "3"
+        )
     }
 }

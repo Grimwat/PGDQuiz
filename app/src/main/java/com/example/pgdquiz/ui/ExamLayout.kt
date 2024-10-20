@@ -24,9 +24,14 @@ import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 @Composable
 fun DrainLayout(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-        Column(modifier = modifier) {
+    Image(
+        painter = painterResource(R.drawable.background__1_),
+        contentDescription = "TradesManTom"
+    )
+        Column(modifier = modifier,
+            verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Banner(
                 examType = "Drainlaying",
                 examEmoji = painterResource(R.drawable.happypoo),
@@ -36,7 +41,6 @@ fun DrainLayout(
                 streak = "Streak Count",
                 streakcount = "3"
             )
-            Spacer(modifier = Modifier.height(8.dp))
             Questionfield(
                 question = "What minimum diameter\n is required for a vent stack",
             )
