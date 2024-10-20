@@ -39,7 +39,7 @@ fun Banner(
 
         ) {
         Image(
-            painter = painterResource(R.drawable.banner4),
+            painter = painterResource(R.drawable.bannerfinal),
             contentDescription = "Banner"
         )
         Row(

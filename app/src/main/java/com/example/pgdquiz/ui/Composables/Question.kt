@@ -34,7 +34,7 @@ fun Questionfield(
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(R.drawable.questionbox),
+            painter = painterResource(R.drawable.questbox1),
             contentDescription = "Questions",
         )
         Text(

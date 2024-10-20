@@ -31,7 +31,7 @@ fun DrainLayout(
         contentDescription = "TradesManTom"
     )
         Column(modifier = modifier,
-            verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            verticalArrangement = Arrangement.spacedBy(5.dp)) {
             Banner(
                 examType = "Drainlaying",
                 examEmoji = painterResource(R.drawable.happypoo),
@@ -44,6 +44,7 @@ fun DrainLayout(
             Questionfield(
                 question = "What minimum diameter\n is required for a vent stack",
             )
+            ButtonGrid()
         }
     }
 
