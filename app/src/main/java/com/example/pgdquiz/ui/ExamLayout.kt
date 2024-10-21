@@ -40,6 +40,7 @@ fun DrainLayout(
                 modifier = Modifier.padding(start = 10.dp, end = 10.dp)
             )
             ButtonGrid()
+            BannerAd()
         }
     }
 
