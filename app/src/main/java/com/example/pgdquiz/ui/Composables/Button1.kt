@@ -132,7 +132,7 @@ fun ButtonGrid(
 @Composable
 fun GreetingPreview() {
     PgdQuizTheme {
-
+ButtonGrid()
 
     }
 }

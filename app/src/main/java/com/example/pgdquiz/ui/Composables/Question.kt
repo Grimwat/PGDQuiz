@@ -27,14 +27,13 @@ import com.example.pgdquiz.ui.theme.PgdQuizTheme
 fun Questionfield(
     modifier: Modifier = Modifier,
     question: String,
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth(),
-        contentAlignment = Alignment.Center
-    ) {
+) {Box(
+    modifier = modifier
+        .fillMaxWidth(),
+    contentAlignment = Alignment.Center)
+{
         Image(
-            painter = painterResource(R.drawable.questbox1),
+            painter = painterResource(R.drawable.questbox),
             contentDescription = "Questions",
         )
         Text(

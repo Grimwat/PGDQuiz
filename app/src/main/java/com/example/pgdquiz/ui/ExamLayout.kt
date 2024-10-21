@@ -43,6 +43,7 @@ fun DrainLayout(
             )
             Questionfield(
                 question = "What minimum diameter\n is required for a vent stack",
+                modifier = Modifier.padding(start = 10.dp, end = 10.dp)
             )
             ButtonGrid()
         }
