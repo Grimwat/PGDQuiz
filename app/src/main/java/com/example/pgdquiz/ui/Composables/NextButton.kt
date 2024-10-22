@@ -17,30 +17,33 @@ import com.example.pgdquiz.R
 
 @Composable
 fun NextButton (modifier: Modifier = Modifier) {
-    Button(
-        onClick = {},
-        shape = RectangleShape,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Transparent,
-            contentColor = Color.Unspecified
-        ),
-        modifier = Modifier
-            .background(Color.Transparent)
-    )
-    {
-        Box(
-            contentAlignment = Alignment.Center,
+    Box(modifier = modifier,
+            contentAlignment = Alignment.Center) {
+        Button(
+            onClick = {},
+            shape = RectangleShape,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent,
+                contentColor = Color.Unspecified
+            ),
             modifier = Modifier
                 .background(Color.Transparent)
-        ) {
-            Image(
-                painter = painterResource(R.drawable.nextbutton),
-                contentDescription = "Next Question",
-                modifier = modifier
-            )
-            Text(
-                text = "Flush"
-            )
+        )
+        {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .background(Color.Transparent)
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.nextbutton),
+                    contentDescription = "Next Question",
+                    modifier = modifier
+                )
+                Text(
+                    text = "Flush"
+                )
+            }
         }
     }
 }

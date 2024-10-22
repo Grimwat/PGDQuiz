@@ -17,6 +17,7 @@ import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.Composables.Banner
 import com.example.pgdquiz.ui.Composables.BannerAd
 import com.example.pgdquiz.ui.Composables.ButtonGrid
+import com.example.pgdquiz.ui.Composables.NextButton
 import com.example.pgdquiz.ui.Composables.Questionfield
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
@@ -30,7 +31,8 @@ fun DrainLayout(
         modifier = Modifier.fillMaxHeight()
     )
         Column(modifier = modifier,
-            verticalArrangement = Arrangement.spacedBy(5.dp)) {
+            verticalArrangement = Arrangement.spacedBy(5.dp),
+            horizontalAlignment = Alignment.CenterHorizontally) {
             Banner(
                 examType = "Drainlaying",
                 examEmoji = painterResource(R.drawable.happypoo),
@@ -46,6 +48,7 @@ fun DrainLayout(
                 modifier = Modifier.padding(start = 10.dp, end = 10.dp)
             )
             ButtonGrid()
+            NextButton()
             BannerAd(
             )
         }
