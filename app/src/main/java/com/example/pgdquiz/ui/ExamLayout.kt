@@ -3,6 +3,7 @@ package com.example.pgdquiz.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -39,6 +40,7 @@ fun DrainLayout(
                 streak = "Streak Count",
                 streakcount = "3"
             )
+            Spacer(modifier = Modifier.padding(10.dp))
             Questionfield(
                 question = "What minimum diameter\n is required for a vent stack",
                 modifier = Modifier.padding(start = 10.dp, end = 10.dp)
