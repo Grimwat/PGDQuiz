@@ -3,8 +3,11 @@ package com.example.pgdquiz.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,8 +24,9 @@ fun DrainLayout(
     modifier: Modifier = Modifier,
 ) {
     Image(
-        painter = painterResource(R.drawable.background__1_),
-        contentDescription = "TradesManTom"
+        painter = painterResource(R.drawable.blackback),
+        contentDescription = "TradesManTom",
+        modifier = Modifier.fillMaxHeight()
     )
         Column(modifier = modifier,
             verticalArrangement = Arrangement.spacedBy(5.dp)) {
@@ -40,7 +44,8 @@ fun DrainLayout(
                 modifier = Modifier.padding(start = 10.dp, end = 10.dp)
             )
             ButtonGrid()
-            BannerAd()
+            BannerAd(
+            )
         }
     }
 

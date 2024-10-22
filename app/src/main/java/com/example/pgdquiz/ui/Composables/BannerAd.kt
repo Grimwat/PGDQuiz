@@ -13,7 +13,8 @@ import com.google.android.gms.ads.AdView
 @Composable
 fun BannerAd (modifier: Modifier = Modifier) {
 AndroidView(
-    modifier = Modifier.fillMaxWidth(),
+    modifier = Modifier
+        .fillMaxWidth(),
     factory = {
     val windowMetrics: WindowMetrics = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(it)
     val bounds = windowMetrics.bounds
