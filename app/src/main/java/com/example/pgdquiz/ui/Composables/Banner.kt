@@ -43,7 +43,8 @@ fun Banner(
             contentDescription = "Banner"
         )
         Row(
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth()
+                .padding(top = 25.dp, start = 120.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
@@ -64,11 +65,12 @@ fun Banner(
                 Text(
                     text = streakcount,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .padding(top = 10.dp),
                     textAlign = TextAlign.Center
                 )
             }
-            Row() {
+            Row(modifier = Modifier.padding()) {
                 Image(
                     painter = examEmoji,
                     contentDescription = emojiCont,
@@ -80,7 +82,8 @@ fun Banner(
                 Text(
                     text = attempts,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .padding(top = 10.dp),
                     textAlign = TextAlign.Center
                 )
             }
