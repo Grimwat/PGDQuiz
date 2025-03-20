@@ -26,7 +26,7 @@ fun DrainLayout(
     modifier: Modifier = Modifier,
 ) {
     Image(
-        painter = painterResource(R.drawable.blackback),
+        painter = painterResource(R.drawable.background__1_),
         contentDescription = "TradesManTom",
         modifier = Modifier.fillMaxHeight()
     )

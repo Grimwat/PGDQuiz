@@ -77,7 +77,7 @@ fun ButtonGrid(
     var selectedButtonIndex by remember { mutableStateOf(-1) }
     val buttonOff = painterResource(R.drawable.buttonoff)
     val buttonOn = painterResource(R.drawable.buttonon)
-    var questionset = "gg"
+    var questionset = "placeholder"
     val contentDes = "No Help here Cuz"
     Column{
         Row (modifier = modifier){

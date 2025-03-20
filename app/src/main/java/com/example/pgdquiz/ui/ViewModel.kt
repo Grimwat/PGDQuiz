@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModel
 import com.example.pgdquiz.R
 
 class PGDViewmodel : ViewModel() {
+    var questionstate by mutableStateOf("")
+    var wrongAnswerState by mutableStateOf("")
+    var rightAnswerState by mutableStateOf("")
 }
-
-
-
