@@ -12,8 +12,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.ViewModel
 import com.example.pgdquiz.R
 
-class PGDViewmodel : ViewModel() {
-    var questionstate by mutableStateOf("")
-    var wrongAnswerState by mutableStateOf("")
-    var rightAnswerState by mutableStateOf("")
-}
+//class PGDViewmodel : ViewModel() {
+//   var questionaireState by mutableStateOf(""),
+//
+//}

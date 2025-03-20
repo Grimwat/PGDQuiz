@@ -36,18 +36,19 @@ fun AnswerButton(
     questionResourceId: String,
     contentDescriptionId: String,
 ) {
-    val drawableResourceId = if (isSelected) selectedDrawableResourceId else initialDrawableResourceId
+    val drawableResourceId =
+        if (isSelected) selectedDrawableResourceId else initialDrawableResourceId
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Button(
-            onClick =  {onButtonSelected()},
+            onClick = { onButtonSelected() },
             shape = RectangleShape,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
-                contentColor = Color.Unspecified      
+                contentColor = Color.Unspecified
             ),
             modifier = Modifier
                 .background(Color.Transparent)
@@ -75,55 +76,64 @@ fun ButtonGrid(
     modifier: Modifier = Modifier
 ) {
     var selectedButtonIndex by remember { mutableStateOf(-1) }
-    val buttonOff = painterResource(R.drawable.buttonoff)
-    val buttonOn = painterResource(R.drawable.buttonon)
+    val buttonOff = painterResource(R.drawable.butoff)
+    val buttonOn = painterResource(R.drawable.buton)
     var questionset = "placeholder"
     val contentDes = "No Help here Cuz"
-    Column{
-        Row (modifier = modifier){
-            AnswerButton(
-                buttonIndex = 0,
-                isSelected = selectedButtonIndex == 0,
-                onButtonSelected = { selectedButtonIndex = 0 },
-                questionResourceId = questionset,
-                initialDrawableResourceId = buttonOff,
-                selectedDrawableResourceId = buttonOn,
-                contentDescriptionId = contentDes,
-                modifier = Modifier.weight(1f),
-            )
-            AnswerButton(
-                buttonIndex = 1,
-                isSelected = selectedButtonIndex == 1,
-                onButtonSelected = { selectedButtonIndex = 1 },
-                initialDrawableResourceId = buttonOff,
-                selectedDrawableResourceId = buttonOn,
-                questionResourceId = questionset,
-                contentDescriptionId = contentDes,
-                modifier = Modifier.weight(1f)
-            )
-        }
-        Row(modifier = Modifier) {
-            AnswerButton(
-                buttonIndex = 2,
-                isSelected = selectedButtonIndex == 2,
-                onButtonSelected = { selectedButtonIndex = 2 },
-                initialDrawableResourceId = buttonOff,
-                selectedDrawableResourceId = buttonOn,
-                questionResourceId = questionset,
-                contentDescriptionId = contentDes,
-                modifier = Modifier.weight(1f)
-            )
-            AnswerButton(
-                buttonIndex = 3,
-                isSelected = selectedButtonIndex == 3,
-                onButtonSelected = { selectedButtonIndex = 3 },
-                initialDrawableResourceId = buttonOff,
-                selectedDrawableResourceId = buttonOn,
-                questionResourceId = questionset,
-                contentDescriptionId = contentDes,
-                modifier = Modifier.weight(1f)
-            )
-        }
+    Column {
+
+        AnswerButton(
+            buttonIndex = 0,
+            isSelected = selectedButtonIndex == 0,
+            onButtonSelected = { selectedButtonIndex = 0 },
+            questionResourceId = questionset,
+            initialDrawableResourceId = buttonOff,
+            selectedDrawableResourceId = buttonOn,
+            contentDescriptionId = contentDes,
+            modifier = Modifier
+        )
+        AnswerButton(
+            buttonIndex = 1,
+            isSelected = selectedButtonIndex == 1,
+            onButtonSelected = { selectedButtonIndex = 1 },
+            initialDrawableResourceId = buttonOff,
+            selectedDrawableResourceId = buttonOn,
+            questionResourceId = questionset,
+            contentDescriptionId = contentDes,
+            modifier = Modifier
+        )
+
+        AnswerButton(
+            buttonIndex = 2,
+            isSelected = selectedButtonIndex == 2,
+            onButtonSelected = { selectedButtonIndex = 2 },
+            initialDrawableResourceId = buttonOff,
+            selectedDrawableResourceId = buttonOn,
+            questionResourceId = questionset,
+            contentDescriptionId = contentDes,
+            modifier = Modifier
+        )
+        AnswerButton(
+            buttonIndex = 3,
+            isSelected = selectedButtonIndex == 3,
+            onButtonSelected = { selectedButtonIndex = 3 },
+            initialDrawableResourceId = buttonOff,
+            selectedDrawableResourceId = buttonOn,
+            questionResourceId = questionset,
+            contentDescriptionId = contentDes,
+            modifier = Modifier
+        )
+        AnswerButton(
+            buttonIndex = 4,
+            isSelected = selectedButtonIndex == 4,
+            onButtonSelected = { selectedButtonIndex = 4 },
+            initialDrawableResourceId = buttonOff,
+            selectedDrawableResourceId = buttonOn,
+            questionResourceId = questionset,
+            contentDescriptionId = contentDes,
+            modifier = Modifier
+        )
+
     }
 }
 
@@ -132,7 +142,7 @@ fun ButtonGrid(
 @Composable
 fun GreetingPreview() {
     PgdQuizTheme {
-ButtonGrid()
+        ButtonGrid()
 
     }
 }
