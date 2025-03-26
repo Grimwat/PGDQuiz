@@ -16,7 +16,7 @@ private val DarkColorScheme = darkColorScheme(
     secondary = Green,
     tertiary = Grey,
     background = Black,
-    surface = Grey,
+    surface = DarkGrey,
     outline = LightRed,
 //    outlinetwo = DarkGrey
 
@@ -27,7 +27,7 @@ private val LightColorScheme = lightColorScheme(
     secondary = Green,
     tertiary = Grey,
     background = White,
-    surface = Grey,
+    surface = DarkGrey,
     outline = DarkRed,
 
     /* Other default colors to override

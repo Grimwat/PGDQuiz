@@ -1,16 +1,21 @@
 package com.example.pgdquiz.ui.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -32,18 +37,18 @@ fun Banner(
     streakcount: String,
     modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
+        Box(
+            modifier = modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .background(color = MaterialTheme.colorScheme.tertiary)
+                .border(width = 4.dp, color = MaterialTheme.colorScheme.surface),
+            contentAlignment = Alignment.Center
 
-        ) {
-        Image(
-            painter = painterResource(R.drawable.bannerfinal),
-            contentDescription = "Banner"
-        )
+        ){
         Row(
             modifier = modifier.fillMaxWidth()
-                .padding(top = 25.dp, start = 120.dp),
+                .padding(start = 120.dp, top = 16.dp, bottom = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
