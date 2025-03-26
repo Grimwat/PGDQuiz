@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui.Composables
+package com.example.pgdquiz.ui.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -19,7 +19,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.R
-import com.example.pgdquiz.ui.DrainLayout
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 @Composable

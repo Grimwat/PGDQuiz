@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui.Composables
+package com.example.pgdquiz.ui.ui
 
 import com.example.pgdquiz.ui.Question
 
