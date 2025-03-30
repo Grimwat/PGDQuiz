@@ -2,7 +2,7 @@ package com.example.pgdquiz.ui.ui
 
 import com.example.pgdquiz.ui.Question
 
-object Constants {
+object DrainQuestions {
     fun getQuestions(): List<Question> {
         return listOf(
 
@@ -27,5 +27,4 @@ object Constants {
         )
 
     }
-}
 }
