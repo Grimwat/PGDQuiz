@@ -18,8 +18,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.R
+import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 @Composable
 fun NextButton (modifier: Modifier = Modifier) {
@@ -40,7 +42,7 @@ fun NextButton (modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(8.dp))
                 .background(
-                    color = MaterialTheme.colorScheme.outline
+                    color = MaterialTheme.colorScheme.tertiary
 
                 )
                 .border(
@@ -48,11 +50,20 @@ fun NextButton (modifier: Modifier = Modifier) {
                     color = MaterialTheme.colorScheme.primary
 
                 )
-                .padding(16.dp),
+                .padding(24.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(text = "Next Question", color = Color.White)
         }
         }
+    }
+}
+
+@Preview
+@Composable
+fun NextPreview() {
+    PgdQuizTheme {
+        NextButton()
+
     }
 }

@@ -90,6 +90,7 @@ fun ButtonGrid(
                 modifier = Modifier.padding(4.dp)
             )
         }
+        NextButton()
     }
 }
 
