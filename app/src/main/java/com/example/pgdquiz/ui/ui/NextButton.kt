@@ -24,46 +24,41 @@ import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 @Composable
-fun NextButton (modifier: Modifier = Modifier) {
-    Box(modifier = modifier,
-            contentAlignment = Alignment.Center) {
+fun NextButton(
+    onClick: () -> Unit,  // Accepts a function to be called when clicked
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
         Button(
-            onClick = {},
+            onClick = onClick,  // Calls the provided function
             shape = RectangleShape,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
                 contentColor = Color.Unspecified
             ),
-            modifier = Modifier
-                .background(Color.Transparent)
-        )
-        {Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(8.dp))
-                .background(
-                    color = MaterialTheme.colorScheme.tertiary
-
-                )
-                .border(
-                    width = 4.dp,
-                    color = MaterialTheme.colorScheme.primary
-
-                )
-                .padding(24.dp),
-            contentAlignment = Alignment.Center
+            modifier = Modifier.background(Color.Transparent)
         ) {
-            Text(text = "Next Question", color = Color.White)
-        }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(color = MaterialTheme.colorScheme.tertiary)
+                    .border(width = 4.dp, color = MaterialTheme.colorScheme.primary)
+                    .padding(24.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "Next Question", color = Color.White)
+            }
         }
     }
 }
-
 @Preview
 @Composable
 fun NextPreview() {
     PgdQuizTheme {
-        NextButton()
 
     }
 }
