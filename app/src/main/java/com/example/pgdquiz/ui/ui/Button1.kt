@@ -22,15 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
 import com.example.pgdquiz.ui.QuizViewModel
-import com.example.pgdquiz.ui.theme.Grey
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 @Composable
@@ -84,7 +82,7 @@ fun ButtonGrid(
 ) {
     val currentQuestion = viewModel.currentQuestion
     var selectedButtonIndex by remember { mutableStateOf(-1) }
-    var isAnswered by remember { mutableStateOf(false) }  // Changed from val to var
+    var isAnswered by remember { mutableStateOf(false) }
 
     Column(modifier = modifier) {
         Text(
@@ -99,26 +97,13 @@ fun ButtonGrid(
                 isSelected = selectedButtonIndex == index,
                 onButtonSelected = {
                     selectedButtonIndex = index
-                    isAnswered = true  // Fixed incorrect comma
+                    isAnswered = true
                 },
                 questionResourceId = option,
-                initialContent = { Box(modifier = Modifier.background(MaterialTheme.colorScheme.surface)) }, // Fixed undefined Grey
-                selectedContent = {
-                    Box(
-                        modifier = Modifier.background(
-                            if (index == currentQuestion.correctAnswerIndex)
-                                MaterialTheme.colorScheme.secondary
-                            else
-                                MaterialTheme.colorScheme.outline
-                        )
-                    )
-                },
-                contentDescriptionId = "Answer Option $index",
                 modifier = Modifier.padding(4.dp)
             )
         }
 
-        // Placed inside Column
         NextButton(
             onClick = {
                 selectedButtonIndex = -1
@@ -129,7 +114,6 @@ fun ButtonGrid(
         )
     }
 }
-
 @Preview
 @Composable
 fun GreetingPreview() {
