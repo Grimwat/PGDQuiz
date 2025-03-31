@@ -77,8 +77,9 @@ fun AnswerButton(
 
 @Composable
 fun ButtonGrid(
-    viewModel: QuizViewModel = viewModel(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: QuizViewModel = viewModel()
+
 ) {
     val currentQuestion = viewModel.currentQuestion
     var selectedButtonIndex by remember { mutableStateOf(-1) }
@@ -114,6 +115,7 @@ fun ButtonGrid(
         )
     }
 }
+
 @Preview
 @Composable
 fun GreetingPreview() {
