@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
@@ -19,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pgdquiz.ui.Question
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
@@ -29,7 +31,7 @@ fun QuestionField(
 ) {
     Box(
         modifier = modifier
-            .fillMaxWidth()
+            .wrapContentSize()
             .clip(RoundedCornerShape(8.dp))
             .background(color = MaterialTheme.colorScheme.primary)
             .border(width = 4.dp, color = MaterialTheme.colorScheme.outline),
@@ -41,7 +43,6 @@ fun QuestionField(
                 .padding(16.dp),
             text = question.question,
             color = Color.White,
-            maxLines = 2,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
         )

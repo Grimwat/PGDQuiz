@@ -94,12 +94,6 @@ fun ButtonGrid(
     var showCorrectAnswer by remember { mutableStateOf(false) }
 
     Column(modifier = modifier) {
-        Text(
-            text = currentQuestion.question,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
-        )
-
         currentQuestion.shuffledOptions.forEachIndexed { index, option ->
             AnswerButton(
                 buttonIndex = index,
