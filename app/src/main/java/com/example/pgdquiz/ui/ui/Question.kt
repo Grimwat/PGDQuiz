@@ -1,5 +1,6 @@
 package com.example.pgdquiz.ui.ui
 
+import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -18,12 +19,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.pgdquiz.ui.Question
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 @Composable
 fun QuestionField(
     modifier: Modifier = Modifier,
-    question: String,
+    question: Question,
 ) {
     Box(
         modifier = modifier
@@ -37,7 +39,8 @@ fun QuestionField(
             modifier = Modifier
                 .clip(RoundedCornerShape(16.dp))
                 .padding(16.dp),
-            text = question,
+            text = question.question,
+            color = Color.White,
             maxLines = 2,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
@@ -49,8 +52,6 @@ fun QuestionField(
 @Composable
 fun PreviewQuestionField() {
     PgdQuizTheme {
-        QuestionField(
-            question = "What minimum diameter\n is required for a vent stack",
-        )
+
     }
 }

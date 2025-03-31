@@ -25,7 +25,7 @@ import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 @Composable
 fun NextButton(
-    onClick: () -> Unit,  // Accepts a function to be called when clicked
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -33,7 +33,7 @@ fun NextButton(
         contentAlignment = Alignment.Center
     ) {
         Button(
-            onClick = onClick,  // Calls the provided function
+            onClick = onClick,
             shape = RectangleShape,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,

@@ -1,5 +1,7 @@
 package com.example.pgdquiz.ui.ui
 
+import android.os.Handler
+import android.os.Looper
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -37,7 +39,9 @@ fun AnswerButton(
     isSelected: Boolean,
     onButtonSelected: () -> Unit,
     modifier: Modifier = Modifier,
-    questionResourceId: String
+    questionResourceId: String,
+    isCorrect: Boolean,
+    showCorrectAnswer: Boolean
 ) {
     Column(
         modifier = modifier,
@@ -58,8 +62,11 @@ fun AnswerButton(
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(8.dp))
                     .background(
-                        if (isSelected) MaterialTheme.colorScheme.outline
-                        else MaterialTheme.colorScheme.primary
+                        when {
+                            isSelected -> MaterialTheme.colorScheme.outline
+                            showCorrectAnswer && isCorrect -> MaterialTheme.colorScheme.secondary // Highlight correct answer
+                            else -> MaterialTheme.colorScheme.primary
+                        }
                     )
                     .border(
                         width = 4.dp,
@@ -84,6 +91,7 @@ fun ButtonGrid(
     val currentQuestion = viewModel.currentQuestion
     var selectedButtonIndex by remember { mutableStateOf(-1) }
     var isAnswered by remember { mutableStateOf(false) }
+    var showCorrectAnswer by remember { mutableStateOf(false) }
 
     Column(modifier = modifier) {
         Text(
@@ -101,15 +109,21 @@ fun ButtonGrid(
                     isAnswered = true
                 },
                 questionResourceId = option,
-                modifier = Modifier.padding(4.dp)
+                modifier = Modifier.padding(4.dp),
+                isCorrect = index == currentQuestion.correctAnswerIndex,
+                showCorrectAnswer = showCorrectAnswer
             )
         }
 
         NextButton(
             onClick = {
-                selectedButtonIndex = -1
-                isAnswered = false
-                viewModel.nextQuestion()
+                showCorrectAnswer = true
+                Handler(Looper.getMainLooper()).postDelayed({
+                    selectedButtonIndex = -1
+                    isAnswered = false
+                    showCorrectAnswer = false
+                    viewModel.nextQuestion()
+                }, 1500)
             },
             modifier = Modifier.padding(top = 16.dp)
         )

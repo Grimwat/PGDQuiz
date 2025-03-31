@@ -24,8 +24,9 @@ import com.example.pgdquiz.ui.ui.QuestionField
 
 @Composable
 fun DrainLayout(
-    viewModel: QuizViewModel = viewModel(),
     modifier: Modifier = Modifier,
+    viewModel: QuizViewModel = viewModel()
+
 ) {
     Column(
         modifier = modifier
@@ -47,7 +48,7 @@ fun DrainLayout(
         )
         Spacer(modifier = Modifier.padding(4.dp))
         QuestionField(
-            question = "What minimum diameter\n is required for a vent stack",
+            question = viewModel.currentQuestion,
             modifier = Modifier.padding(start = 10.dp, end = 10.dp)
         )
         ButtonGrid(viewModel = viewModel)
