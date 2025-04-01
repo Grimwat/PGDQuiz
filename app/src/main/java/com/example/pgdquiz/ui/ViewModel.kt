@@ -12,6 +12,21 @@ class QuizViewModel : ViewModel() {
     val currentQuestion: Question
         get() = questions[_currentQuestionIndex.value]
 
+    private val _streakCount = mutableStateOf(0)
+    val streakCount: State<Int> = _streakCount
+
+    private val _lives = mutableStateOf(3)
+    val lives: State<Int> = _lives
+
+    fun checkAnswer(selectedAnswer: String) {
+        if (selectedAnswer == currentQuestion.correctAnswer){
+            _streakCount.value++
+        } else {
+            _streakCount.value = 0
+            _lives.value--
+        }
+    }
+
     fun nextQuestion() {
         if (_currentQuestionIndex.value < questions.size - 1) {
             _currentQuestionIndex.value++
