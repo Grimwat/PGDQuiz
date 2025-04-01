@@ -101,6 +101,7 @@ fun ButtonGrid(
                 onButtonSelected = {
                     selectedButtonIndex = index
                     isAnswered = true
+                    viewModel.checkAnswer(option)
                 },
                 questionResourceId = option,
                 modifier = Modifier.padding(4.dp),
