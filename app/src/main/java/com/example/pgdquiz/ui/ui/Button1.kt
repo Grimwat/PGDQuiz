@@ -63,8 +63,8 @@ fun AnswerButton(
                     .clip(RoundedCornerShape(8.dp))
                     .background(
                         when {
+                            showCorrectAnswer && isCorrect -> MaterialTheme.colorScheme.secondary
                             isSelected -> MaterialTheme.colorScheme.outline
-                            showCorrectAnswer && isCorrect -> MaterialTheme.colorScheme.secondary // Highlight correct answer
                             else -> MaterialTheme.colorScheme.primary
                         }
                     )
