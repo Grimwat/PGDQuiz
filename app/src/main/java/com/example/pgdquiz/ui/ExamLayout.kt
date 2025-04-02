@@ -39,12 +39,11 @@ fun DrainLayout(
             examType = "Drainlaying",
             examEmoji = painterResource(R.drawable.happypoo),
             emojiCont = "happyPoo",
-            attempts = "3",
+            attempts = viewModel.lives.value,
             icon = painterResource(R.drawable.flame1),
             streak = "Streak Count",
-            streakcount = "3",
+            streakCount = viewModel.streakCount.value,
             modifier = Modifier.fillMaxWidth()
-
         )
         Spacer(modifier = Modifier.padding(4.dp))
         QuestionField(

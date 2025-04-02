@@ -24,10 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.pgdquiz.ui.QuizViewModel
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -86,7 +84,6 @@ fun AnswerButton(
 fun ButtonGrid(
     modifier: Modifier = Modifier,
     viewModel: QuizViewModel = viewModel()
-
 ) {
     val currentQuestion = viewModel.currentQuestion
     var selectedButtonIndex by remember { mutableStateOf(-1) }
@@ -101,7 +98,7 @@ fun ButtonGrid(
                 onButtonSelected = {
                     selectedButtonIndex = index
                     isAnswered = true
-                    viewModel.checkAnswer(option)
+                    viewModel.selectAnswer(option)
                 },
                 questionResourceId = option,
                 modifier = Modifier.padding(4.dp),
