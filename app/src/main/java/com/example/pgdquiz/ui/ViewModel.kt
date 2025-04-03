@@ -14,7 +14,8 @@ class QuizViewModel : ViewModel() {
     private val _currentQuestionIndex = mutableStateOf(0)
     val currentQuestionIndex: MutableState<Int> = _currentQuestionIndex
 
-    var currentQuestion: Question? = null
+    val currentQuestion: Question?
+        get() = questions.getOrNull(_currentQuestionIndex.value)
 
     private val _streakCount = mutableStateOf(0)
     val streakCount: MutableState<Int> = _streakCount
@@ -40,14 +41,16 @@ class QuizViewModel : ViewModel() {
             reader,
             QuestionsResponse::class.java
         ).questions.filter { it.answer != null }
-        currentQuestion = questions[_currentQuestionIndex.value]
         reader.close()
         inputStream.close()
     }
 
     fun nextQuestion() {
-        if (_selectedAnswer.value != null) {
-            if (_selectedAnswer.value == currentQuestion?.answer) {
+        val selected = _selectedAnswer.value
+        val correct = currentQuestion?.answer
+
+        if (selected != null && correct != null) {
+            if (selected == correct) {
                 _streakCount.value++
             } else {
                 _streakCount.value = 0

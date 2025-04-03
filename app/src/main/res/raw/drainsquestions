@@ -30,7 +30,7 @@
       "id": 5,
       "question": "Which clause of the New Zealand Building Code covers the design and construction of soak pits?",
       "answer": "E1 Surface Water",
-      "options": ["B2 Durability", "E1 Surface Water", "E2 External Moisture", "G12 Water Supplies", "G13 Foul Water"]
+      "options": ["B2 Durability", "E2 External Moisture", "G12 Water Supplies", "G13 Foul Water"]
     },
     {
       "id": 6,
@@ -65,51 +65,61 @@
     {
       "id": 11,
       "question": "Which of the following best describes the term erosion?",
+      "answer":
       "options": ["Tear", "Rip", "Decay", "Crack", "Wear"]
     },
     {
       "id": 12,
       "question": "The diameter of a drain is doubled. What effect will there be on the force that is applied to a test plug in that drain?",
+      "answer":
       "options": ["It will halve it", "It will remain the same", "It will double", "It will increase four times", "It will increase eight times"]
     },
     {
       "id": 13,
       "question": "What is the maximum allowable angle for a junction that connects one drain to another?",
+      "answer":
       "options": ["11½°", "15°", "22°", "45°", "60°"]
     },
     {
       "id": 14,
       "question": "What is the maximum number of discharge units permitted to be conveyed by a 100 mm pipe that is laid at a gradient of 1:40?",
+      "answer":
       "options": ["61", "205", "215", "255", "515"]
     },
     {
       "id": 15,
       "question": "Which of the following is a plumb bob used for?",
+      "answer":
       "options": ["To measure the fall or gradient of a pipe", "To check a pipe is completely vertical", "To chamfer the end of a uPVC pipe", "To roughen the external surface of an earthenware pipe", "To seal the outlet of a pipe for testing purposes"]
     },
     {
       "id": 16,
       "question": "A trench is to be excavated to a depth of 1.5 metres. When would the excavation become classified as particular hazardous work?",
+      "answer":
       "options": ["When the trench crosses a public access route", "When the trench will be open for more than 48 hours", "When the trench is in type B (saturated) soil", "When the trench is 1.0 metres wide", "When the trench is being excavated with large machinery"]
     },
     {
       "id": 17,
       "question": "According to AS/NZS 3500, what is the maximum distance allowed between anchor blocks installed on an inclined drain?",
+      "answer":
       "options": ["2.500 m", "3.000 m", "3.500 m", "4.000 m", "4.500 m"]
     },
     {
       "id": 18,
       "question": "Which of the following shows how flow rate is expressed?",
+      "answer":
       "options": ["L/minute", "m/second", "kg/m3", "mm/m", "N/m2"]
     },
     {
       "id": 19,
       "question": "What is the purpose of using flexible joints on a drainage system?",
+      "answer":
       "options": ["To allow branches for future connections to be added", "To provide an easy point for the drain to be disconnected", "To allow for differential settlement in the system", "To adjust the angle of a drain during installation", "To allow two different drainage pipe materials to be jointed"]
     },
     {
       "id": 20,
       "question": "Why is there a restricted zone where a discharge stack joins the main drain?",
+      "answer":
       "options": ["To prevent trap seal loss due to compression", "To prevent trap seal loss due to oscillation", "To prevent blockages in the drain", "To prevent blockages in the discharge stack", "To prevent blockages in the drain and discharge stack"]
     },
     {
