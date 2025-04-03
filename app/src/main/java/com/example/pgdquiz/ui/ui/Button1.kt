@@ -24,11 +24,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.QuizViewModel
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pgdquiz.ui.answers
 
 
 @Composable
@@ -91,7 +93,7 @@ fun ButtonGrid(
     var showCorrectAnswer by remember { mutableStateOf(false) }
 
     Column(modifier = modifier) {
-        currentQuestion.shuffledOptions.forEachIndexed { index, option ->
+        currentQuestion?.answers()?.forEachIndexed { index, option ->
             AnswerButton(
                 buttonIndex = index,
                 isSelected = selectedButtonIndex == index,
@@ -125,8 +127,11 @@ fun ButtonGrid(
 @Preview
 @Composable
 fun GreetingPreview() {
+    val viewModel = QuizViewModel()
     PgdQuizTheme {
-        ButtonGrid()
+        viewModel.loadQuestionsFromRawResource(LocalContext.current)
+
+        ButtonGrid(viewModel = viewModel)
 
     }
 }

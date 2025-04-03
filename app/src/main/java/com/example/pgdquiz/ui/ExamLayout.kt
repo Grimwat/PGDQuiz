@@ -1,5 +1,6 @@
 package com.example.pgdquiz.ui
 
+//import com.example.pgdquiz.ui.Composables.BannerAd
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,21 +12,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 import com.example.pgdquiz.ui.ui.Banner
-import androidx.lifecycle.viewmodel.compose.viewModel
-//import com.example.pgdquiz.ui.Composables.BannerAd
 import com.example.pgdquiz.ui.ui.ButtonGrid
 import com.example.pgdquiz.ui.ui.QuestionField
 
 @Composable
 fun DrainLayout(
     modifier: Modifier = Modifier,
-    viewModel: QuizViewModel = viewModel()
+    viewModel: QuizViewModel
 
 ) {
     Column(
@@ -59,7 +59,9 @@ fun DrainLayout(
 @Preview
 @Composable
 fun Drainpreview() {
+    val viewModel = QuizViewModel()
     PgdQuizTheme {
-        DrainLayout()
+        viewModel.loadQuestionsFromRawResource(LocalContext.current)
+        DrainLayout(viewModel = viewModel)
     }
 }

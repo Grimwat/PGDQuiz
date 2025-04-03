@@ -1,17 +1,20 @@
 package com.example.pgdquiz.ui
+
+import android.content.Context
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.pgdquiz.ui.ui.DrainQuestions
+import com.example.pgdquiz.R
+import com.google.gson.Gson
+import java.io.InputStreamReader
 
 
 class QuizViewModel : ViewModel() {
-    private val questions = DrainQuestions.getQuestions()
+    private var questions: List<Question> = emptyList()
     private val _currentQuestionIndex = mutableStateOf(0)
     val currentQuestionIndex: MutableState<Int> = _currentQuestionIndex
 
-    val currentQuestion: Question
-        get() = questions[_currentQuestionIndex.value]
+    var currentQuestion: Question? = null
 
     private val _streakCount = mutableStateOf(0)
     val streakCount: MutableState<Int> = _streakCount
@@ -26,9 +29,25 @@ class QuizViewModel : ViewModel() {
         _selectedAnswer.value = answer
     }
 
+    private val gson = Gson()
+
+    fun loadQuestionsFromRawResource(
+        context: Context
+    ) {
+        val inputStream = context.resources.openRawResource(R.raw.drainsquestions)
+        val reader = InputStreamReader(inputStream)
+        questions = gson.fromJson(
+            reader,
+            QuestionsResponse::class.java
+        ).questions.filter { it.answer != null }
+        currentQuestion = questions[_currentQuestionIndex.value]
+        reader.close()
+        inputStream.close()
+    }
+
     fun nextQuestion() {
         if (_selectedAnswer.value != null) {
-            if (_selectedAnswer.value == currentQuestion.correctAnswer) {
+            if (_selectedAnswer.value == currentQuestion?.answer) {
                 _streakCount.value++
             } else {
                 _streakCount.value = 0
