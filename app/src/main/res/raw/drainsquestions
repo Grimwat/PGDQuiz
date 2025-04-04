@@ -60,455 +60,533 @@
       "id": 10,
       "question": "Which of the following describes the soffit of a pipe?",
       "answer": "The top of the inside of a pipe",
-      "options": ["The top of the inside of a pipe", "The highest point of a pipe when it is on a grade", "The top of the outside of a pipe", "The highest point of a pipe when it is on a grade", "The lowest point inside a pipe"]
+      "options": ["The highest point of a pipe when it is on a grade", "The top of the outside of a pipe", "The highest point of a pipe when it is on a grade", "The lowest point inside a pipe"]
     },
     {
       "id": 11,
       "question": "Which of the following best describes the term erosion?",
-      "answer":
-      "options": ["Tear", "Rip", "Decay", "Crack", "Wear"]
+      "answer": "Wear",
+      "options": ["Tear", "Rip", "Decay", "Crack",]
     },
     {
       "id": 12,
       "question": "The diameter of a drain is doubled. What effect will there be on the force that is applied to a test plug in that drain?",
-      "answer":
-      "options": ["It will halve it", "It will remain the same", "It will double", "It will increase four times", "It will increase eight times"]
+      "answer": "It will increase four times",
+      "options": ["It will halve it", "It will remain the same", "It will double", "It will increase eight times"]
     },
     {
       "id": 13,
       "question": "What is the maximum allowable angle for a junction that connects one drain to another?",
-      "answer":
-      "options": ["11½°", "15°", "22°", "45°", "60°"]
+      "answer":"60°",
+      "options": ["11½°", "15°", "22°", "45°",]
     },
     {
       "id": 14,
       "question": "What is the maximum number of discharge units permitted to be conveyed by a 100 mm pipe that is laid at a gradient of 1:40?",
-      "answer":
-      "options": ["61", "205", "215", "255", "515"]
+      "answer": "255",
+      "options": ["61", "205", "215", "515"]
     },
     {
       "id": 15,
       "question": "Which of the following is a plumb bob used for?",
-      "answer":
-      "options": ["To measure the fall or gradient of a pipe", "To check a pipe is completely vertical", "To chamfer the end of a uPVC pipe", "To roughen the external surface of an earthenware pipe", "To seal the outlet of a pipe for testing purposes"]
+      "answer": "To check a pipe is completely vertical",
+      "options": ["To measure the fall or gradient of a pipe", "To chamfer the end of a uPVC pipe", "To roughen the external surface of an earthenware pipe", "To seal the outlet of a pipe for testing purposes"]
     },
     {
       "id": 16,
       "question": "A trench is to be excavated to a depth of 1.5 metres. When would the excavation become classified as particular hazardous work?",
-      "answer":
-      "options": ["When the trench crosses a public access route", "When the trench will be open for more than 48 hours", "When the trench is in type B (saturated) soil", "When the trench is 1.0 metres wide", "When the trench is being excavated with large machinery"]
+      "answer": "When the trench is 1.0 metres wide",
+      "options": ["When the trench crosses a public access route", "When the trench will be open for more than 48 hours", "When the trench is in type B (saturated) soil", "When the trench is being excavated with large machinery"]
     },
     {
       "id": 17,
       "question": "According to AS/NZS 3500, what is the maximum distance allowed between anchor blocks installed on an inclined drain?",
-      "answer":
-      "options": ["2.500 m", "3.000 m", "3.500 m", "4.000 m", "4.500 m"]
+      "answer": "3.000 m",
+      "options": ["2.500 m", "3.500 m", "4.000 m", "4.500 m"]
     },
     {
       "id": 18,
       "question": "Which of the following shows how flow rate is expressed?",
-      "answer":
-      "options": ["L/minute", "m/second", "kg/m3", "mm/m", "N/m2"]
+      "answer": "L/minute",
+      "options": ["m/second", "kg/m3", "mm/m", "N/m2"]
     },
     {
       "id": 19,
       "question": "What is the purpose of using flexible joints on a drainage system?",
-      "answer":
-      "options": ["To allow branches for future connections to be added", "To provide an easy point for the drain to be disconnected", "To allow for differential settlement in the system", "To adjust the angle of a drain during installation", "To allow two different drainage pipe materials to be jointed"]
+      "answer": "To allow for differential settlement in the system",
+      "options": ["To allow branches for future connections to be added", "To provide an easy point for the drain to be disconnected", "To adjust the angle of a drain during installation", "To allow two different drainage pipe materials to be jointed"]
     },
     {
       "id": 20,
       "question": "Why is there a restricted zone where a discharge stack joins the main drain?",
-      "answer":
-      "options": ["To prevent trap seal loss due to compression", "To prevent trap seal loss due to oscillation", "To prevent blockages in the drain", "To prevent blockages in the discharge stack", "To prevent blockages in the drain and discharge stack"]
+      "answer": "To prevent trap seal loss due to compression",
+      "options": ["To prevent trap seal loss due to oscillation", "To prevent blockages in the drain", "To prevent blockages in the discharge stack", "To prevent blockages in the drain and discharge stack"]
     },
     {
       "id": 21,
       "question": "According to New Zealand Building Code clause G13/AS2 Foul Water, when constructing a circular inspection chamber what distance should the corbel extend beyond each side of the chamber?",
-      "options": ["150 mm", "200 mm", "250 mm", "300 mm", "350 mm"]
+      "answer": "150 mm",
+      "options": ["200 mm", "250 mm", "300 mm", "350 mm"]
     },
     {
       "id": 22,
       "question": "According to AS/NZS 3500 Part 2: Sanitary plumbing and drainage, what is a steep grade defined as?",
-      "options": ["Between 20% and vertical", "Between 30% and vertical", "Between 45% and vertical", "Between 60% and vertical", "Between 65% and vertical"]
+      "answer": "Between 20% and vertical",
+      "options": ["Between 30% and vertical", "Between 45% and vertical", "Between 60% and vertical", "Between 65% and vertical"]
     },
     {
       "id": 23,
       "question": "According to the New Zealand Building Code clause G13/AS2 Foul Water, which of the following gives the maximum number of discharge units permitted to be conveyed by a 150 mm pipe laid at a gradient of 1:60?",
-      "options": ["104", "515", "611", "1310", "2920"]
+      "answer": "1310",
+      "options": ["104", "515", "611", "2920"]
     },
     {
       "id": 24,
       "question": "According to AS/NZS 3500 Part 2: Sanitary plumbing and drainage, when two drains at grade are to be joined by means of a 45° unequal junction, the invert of the branch drain must meet which of the following requirements?",
-      "options": ["Level with the soffit of the drain to which it connects", "25 mm lower than the soffit of the drain to which it connects", "10 mm higher than the soffit of the drain to which it connects", "50 mm higher than the soffit of the drain to which it connects", "10 mm higher than the invert of the drain to which it connects"]
+      "answer": "10 mm higher than the soffit of the drain to which it connects",
+      "options": ["Level with the soffit of the drain to which it connects", "25 mm lower than the soffit of the drain to which it connects", "50 mm higher than the soffit of the drain to which it connects", "10 mm higher than the invert of the drain to which it connects"]
     },
     {
       "id": 25,
       "question": "According to AS/NZS 3500 Part 2: Sanitary plumbing and drainage, where more than one jump-up is installed in a circular inspection chamber, what is the minimum allowable chamber diameter?",
-      "options": ["600 mm", "800 mm", "900 mm", "1200 mm", "1500 mm"]
+      "answer": "1200 mm",
+      "options": ["600 mm", "800 mm", "900 mm", "1500 mm"]
     },
     {
       "id": 26,
       "question": "What is the minimum diameter for a main drain vent as specified in the New Zealand Building Code clause G13/AS2 Foul Water?",
-      "options": ["40 mm", "50 mm", "65 mm", "80 mm", "100 mm"]
+      "answer": "80 mm",
+      "options": ["40 mm", "50 mm", "65 mm", "100 mm"]
     },
     {
       "id": 27,
       "question": "According to AS/NZS 3500 Part 2: Sanitary plumbing and drainage, what is the minimum allowable size of the upstream vent on any branch drain?",
-      "options": ["DN 32", "DN 40", "DN 50", "DN 80", "DN 100"]
+      "answer": "DN 40",
+      "options": ["DN 32", "DN 50", "DN 80", "DN 100"]
     },
     {
       "id": 28,
       "question": "According to AS/NZS 3500 Part 2: Sanitary plumbing and drainage, what is the minimum allowable clearance between a drain and an unprotected or unmarked electrical or gas supply?",
-      "options": ["300 mm", "400 mm", "500 mm", "600 mm", "700 mm"]
+      "answer": "600 mm",
+      "options": ["300 mm", "400 mm", "500 mm", "700 mm"]
     },
     {
       "id": 29,
       "question": "According to AS/NZS 3500 Part 2: Sanitary plumbing and drainage, at which gradient does it become necessary to install anchor blocks around a drain?",
-      "options": ["Greater than 5.0%", "Greater than 10.0%", "Greater than 15.0%", "Greater than 20.0%", "Greater than 25.0%"]
+      "answer": "Greater than 20.0%",
+      "options": ["Greater than 5.0%", "Greater than 10.0%", "Greater than 15.0%", "Greater than 25.0%"]
     },
     {
       "id": 30,
       "question": "According to New Zealand Building Code Clause G13/AS2 Foul Water, what is the minimum allowable distance the overflow level of a gully dish must be above an unpaved surface?",
-      "options": ["25 mm", "50 mm", "75 mm", "100 mm", "125 mm"]
+      "answer": "100 mm",
+      "options": ["25 mm", "50 mm", "75 mm", "125 mm"]
     },
     {
       "id": 31,
       "question": "A foul water drain is to be laid under a concrete floor. Which New Zealand Building Code Clause, in addition to G13 Foul Water, must the drain comply with?",
-      "options": ["B1 Structure", "B2 Durability", "E2 External Moisture", "G12 Water Supplies", "G14 Industrial Liquid Waste"]
+      "answer": "B2 Durability",
+      "options": ["B1 Structure", "E2 External Moisture", "G12 Water Supplies", "G14 Industrial Liquid Waste"]
     },
     {
       "id": 32,
       "question": "What is the purpose of a dewatering system?",
-      "options": ["To separate solid waste from liquid waste during sewerage treatment", "To dilute liquid effluent to maintain a safe level of bacteria", "To use recycled waste for irrigation", "To help effluent transpire through the soil", "To remove ground water before excavation"]
+      "answer": "To remove ground water before excavation",
+      "options": ["To separate solid waste from liquid waste during sewerage treatment", "To dilute liquid effluent to maintain a safe level of bacteria", "To use recycled waste for irrigation", "To help effluent transpire through the soil",]
     },
     {
       "id": 33,
       "question": "Which of the following requires two people to find a level?",
-      "options": ["Smart level", "Plumb bob", "Dumpy/builder’s level", "Spirit level", "Laser level"]
+      "answer": "Dumpy/builder’s level",
+      "options": ["Smart level", "Plumb bob", "Spirit level", "Laser level"]
     },
     {
       "id": 34,
       "question": "A rectangular chamber must provide 12 m3 of storage volume. The available area to construct the chamber measures 2.2 m x 3.8 m. What minimum depth will the chamber need to have?",
-      "options": ["1.339 m", "1.435 m", "1.948 m", "2.424 m", "2.663 m"]
+      "answer": "1.435 m",
+      "options": ["1.339 m", "1.948 m", "2.424 m", "2.663 m"]
     },
     {
       "id": 35,
       "question": "A drain is serving a vertical discharge stack on a three-level building. A gully dish is required to be connected to the drain downstream of the discharge stack connection. How close to the base of the discharge stack is the junction for the gully trap permitted to be?",
-      "options": ["0.5 m", "1.0 m", "1.5 m", "2.0 m", "2.5 m"]
+      "answer": "2.5 m",
+      "options": ["0.5 m", "1.0 m", "1.5 m", "2.0 m",]
     },
     {
       "id": 36,
       "question": "What is the definition of the term drain in common?",
-      "options": ["A drain that conveys both storm water and foul water", "A drain that is maintained by the local territorial authority", "A drain that serves two or more properties", "A drain that has been permitted to cross public land", "A drain that discharges into a watercourse"]
+      "answer": "A drain that serves two or more properties",
+      "options": ["A drain that conveys both storm water and foul water", "A drain that is maintained by the local territorial authority", "A drain that has been permitted to cross public land", "A drain that discharges into a watercourse"]
     },
     {
       "id": 37,
       "question": "Why is there a maximum allowable distance between a gully dish and a grease trap it is discharging into?",
-      "options": ["To prevent vermin from entering the grease trap", "So that the pipe does not require venting", "So that an inspection point is not required on the inlet of the grease trap", "To stop the waste cooling and fats solidifying on the internal wall of the pipe", "So that the pipe can easily be cleaned without specialised equipment"]
+      "answer": "To stop the waste cooling and fats solidifying on the internal wall of the pipe",
+      "options": ["To prevent vermin from entering the grease trap", "So that the pipe does not require venting", "So that an inspection point is not required on the inlet of the grease trap", "So that the pipe can easily be cleaned without specialised equipment"]
     },
     {
       "id": 38,
       "question": "A pipe 45 m long falls 900 mm. What gradient has it been laid at?",
-      "options": ["1:50 (2.00%)", "1:45 (2.25%)", "1:40 (2.50%)", "1:30 (3.35%)", "1:20 (5.00%)"]
+      "answer": "1:50 (2.00%)",
+      "options": [ "1:45 (2.25%)", "1:40 (2.50%)", "1:30 (3.35%)", "1:20 (5.00%)"]
     },
     {
       "id": 39,
       "question": "Which of the following correctly describes stratification in relation to sewage treatment?",
-      "options": ["A plant absorbing liquid via the root system and releasing the moisture to the air through its leaves", "How quickly the soil will absorb the moisture from the effluent", "The sludge, scum and effluent separating while in the septic tank", "The moisture from the effluent field vaporising into the atmosphere", "The breaking down of the effluent by bacteria to make a clearer liquid"]
+      "answer": "The sludge, scum and effluent separating while in the septic tank",
+      "options": ["A plant absorbing liquid via the root system and releasing the moisture to the air through its leaves", "How quickly the soil will absorb the moisture from the effluent", "The moisture from the effluent field vaporising into the atmosphere", "The breaking down of the effluent by bacteria to make a clearer liquid"]
     },
     {
       "id": 40,
       "question": "How long should an in-ground septic tank last in order to comply with New Zealand Building Code clause B2/AS1 Durability?",
-      "options": ["5 years", "10 years", "15 years", "30 years", "50 years"]
+      "answer": "15 years",
+      "options": ["5 years", "10 years", "30 years", "50 years"]
     },
     {
       "id": 41,
       "question": "What is the minimum allowable gradient for a 100 mm surface water drain?",
-      "options": ["1:90", "1:120", "1:250", "1:300", "1:350"]
+      "answer": "1:120",
+      "options": ["1:90", "1:250", "1:300", "1:350"]
     },
     {
       "id": 42,
       "question": "A pipe has been laid at a gradient of 1:40 (2.50%). How much will the pipe fall over a 7 metre run?",
-      "options": ["70 mm", "175 mm", "280 mm", "1.75 m", "2.8 m"]
+      "answer": "175 mm",
+      "options": ["70 mm", "280 mm", "1.75 m", "2.8 m"]
     },
     {
       "id": 43,
       "question": "What is the maximum amount of non-friable asbestos permitted to be removed before a licence is required?",
-      "options": ["5 m2", "10 m2", "15 m2", "20 m2", "25 m2"]
+      "answer": "10 m2",
+      "options": ["5 m2", "15 m2", "20 m2", "25 m2"]
     },
     {
       "id": 44,
       "question": "What is the purpose of an aerated chamber on a septic tank system?",
-      "options": ["To convey the effluent evenly over the disposal field", "To mix the tank contents thoroughly", "To supply oxygen to the bacteria within the tank", "To prevent grease from travelling through the system", "To make sure all sludge is retained within the system"]
+      "answer": "To supply oxygen to the bacteria within the tank",
+      "options": ["To convey the effluent evenly over the disposal field", "To mix the tank contents thoroughly", "To prevent grease from travelling through the system", "To make sure all sludge is retained within the system"]
     },
     {
       "id": 45,
       "question": "What determines the cascade level of grease trap?",
-      "options": ["The height difference between the inlet and the baffle", "The height difference between the baffle and the outlet", "The height difference between the discharging fixture outlet and the grease trap inlet", "The height difference between the inlet and the outlet", "The height difference between the grease trap outlet and the main drain"]
+      "answer": "The height difference between the inlet and the outlet",
+      "options": ["The height difference between the inlet and the baffle", "The height difference between the baffle and the outlet", "The height difference between the discharging fixture outlet and the grease trap inlet", "The height difference between the grease trap outlet and the main drain"]
     },
     {
       "id": 46,
       "question": "A certifying drainlayer has employed a labourer who has just uplifted an exemption to perform restricted drainlaying. For what length of time must the labourer work in the presence of the certifying drainlayer?",
-      "options": ["6 months", "12 months", "24 months", "36 months", "Until such time as the trainee achieves registration"]
+      "answer": "24 months",
+      "options": ["6 months", "12 months", "36 months", "Until such time as the trainee achieves registration"]
     },
     {
       "id": 47,
       "question": "A uPVC drain is to be installed to comply with AS/NZS 3500 Part 2: Sanitary plumbing and drainage. What is the minimum depth of cover that must be provided in an area that is subject to vehicular traffic?",
-      "options": ["350 mm", "400 mm", "450 mm", "500 mm", "550 mm"]
+      "answer": "500 mm",
+      "options": ["350 mm", "400 mm", "450 mm", "550 mm"]
     },
     {
       "id": 48,
       "question": "Approved codes of practice give details of how work could be carried out. Why is following these recommendations beneficial?",
-      "options": ["The approved Code of Practice ensures the work will comply with the Building Act", "If the work is carried out according to the Code of Practice, a Particular Hazardous Work Notification Form does not have to be completed", "If an accident occurred, the code of practice is used as an example of good work practice, and if not followed could indicate negligence", "The Ministry of Business, Innovation and Employment can issue an infringement notice or a fine if work is not completed according to the Code of Practice", "Approved Codes of Practice must be followed to prevent accidents occurring"]
+      "answer": "If an accident occurred, the code of practice is used as an example of good work practice, and if not followed could indicate negligence",
+      "options": ["The approved Code of Practice ensures the work will comply with the Building Act", "If the work is carried out according to the Code of Practice, a Particular Hazardous Work Notification Form does not have to be completed", "The Ministry of Business, Innovation and Employment can issue an infringement notice or a fine if work is not completed according to the Code of Practice", "Approved Codes of Practice must be followed to prevent accidents occurring"]
     },
     {
       "id": 49,
       "question": "What is the purpose of a drainage easement on a Certificate of Title?",
-      "options": ["To allow a drain to be laid within a neighbouring property", "To prevent flooding caused by surface water from a neighbouring property", "To allow two neighbouring properties to share a drainage system", "To permit the storm-water from the property to discharge to a curb and channel", "To show the as-built location of the drainage system on the certificate of title"]
+      "answer":"To allow a drain to be laid within a neighbouring property",
+      "options": [ "To prevent flooding caused by surface water from a neighbouring property", "To allow two neighbouring properties to share a drainage system", "To permit the storm-water from the property to discharge to a curb and channel", "To show the as-built location of the drainage system on the certificate of title"]
     },
     {
       "id": 50,
       "question": "The location of an underground electrical cable has been marked on a paved surface. A hand held power tool is used to break up the paved surface. To avoid damage to the electrical cable, the tool should not be used within what distance of the marked location?",
-      "options": ["200 mm", "300 mm", "400 mm", "500 mm", "600 mm"]
+      "answer": "500 mm",
+      "options": ["200 mm", "300 mm", "400 mm", "600 mm"]
     },
     {
       "id": 51,
       "question": "What is the corrected run-off coefficient for a sealed driveway that has a slope of 15%?",
-      "options": ["0.70", "0.75", "0.80", "0.85", "0.90"]
+      "answer": "0.90",
+      "options": ["0.70", "0.75", "0.80", "0.85",]
     },
     {
       "id": 52,
       "question": "In the event that the minimum depth of cover required for a drain subject to light vehicular traffic and installed to comply with AS/NZS 3500 Part 2: Sanitary plumbing and drainage cannot be achieved, which of the following is the minimum requirements to protect the drain from damage?",
-      "options": ["Cover the pipe with 50 mm of overlay followed by 50 mm of concrete paving", "Cover the pipe with 25 mm of overlay followed by 75 mm of reinforced concrete", "Cover the pipe with 50 mm of overlay followed by 75 mm of concrete paving", "Cover the pipe with 25 mm of overlay followed by 100 mm of concrete paving", "Cover the pipe with 50 mm of overlay followed by 100 mm of reinforced concrete"]
+      "answer": "Cover the pipe with 50 mm of overlay followed by 75 mm of concrete paving",
+      "options": ["Cover the pipe with 50 mm of overlay followed by 50 mm of concrete paving", "Cover the pipe with 25 mm of overlay followed by 75 mm of reinforced concrete", "Cover the pipe with 25 mm of overlay followed by 100 mm of concrete paving", "Cover the pipe with 50 mm of overlay followed by 100 mm of reinforced concrete"]
     },
     {
       "id": 53,
       "question": "Which of the following best describes a retention tank?",
-      "options": ["A tank designed to hold surface water for re-use as a water supply on the property", "A tank designed to hold surface-water for reuse as a water supply on the property", "A tank designed to store any trade waste requiring treatment before disposal", "A tank designed to aerate foul water before discharging to an effluent disposal field", "A tank designed to contain any overflow from a sewage treatment process when any above expected peak flow occurs"]
+      "answer":"A tank designed to hold surface water for re-use as a water supply on the property",
+      "options": [ "A tank designed to hold surface-water to release at the boundary when full", "A tank designed to store any trade waste requiring treatment before disposal", "A tank designed to aerate foul water before discharging to an effluent disposal field", "A tank designed to contain any overflow from a sewage treatment process when any above expected peak flow occurs"]
     },
     {
       "id": 54,
       "question": "Which of the following is the best method of controlling hazards in the workplace?",
-      "options": ["Isolate employees from the hazard", "Minimise the hazard to the employees", "Eliminate the hazard from the employees’ workplace", "Provide all necessary personal protection equipment to employees", "Monitor the employees’ health and exposure to the hazard"]
+      "answer": "Eliminate the hazard from the employees’ workplace",
+      "options": ["Isolate employees from the hazard", "Minimise the hazard to the employees", "Provide all necessary personal protection equipment to employees", "Monitor the employees’ health and exposure to the hazard"]
     },
     {
       "id": 55,
       "question": "Which of the following is NOT an acceptable reason to disturb the scene of an accident that has resulted in serious harm?",
-      "options": ["To recover plant and equipment from the site", "To provide help to an injured person", "To remove a deceased person", "When directed by a police officer", "To make the site safe"]
+      "answer": "To recover plant and equipment from the site",
+      "options": [ "To provide help to an injured person", "To remove a deceased person", "When directed by a police officer", "To make the site safe"]
     },
     {
       "id": 56,
       "question": "Drainlayer A has requested the assistance of a tradesman drainlayer employed by Drainlayer B. Who is responsible for ensuring that the tradesman drainlayer is capable of completing the proposed work safely?",
-      "options": ["Drainlayer A", "Drainlayer B", "The tradesman drainlayer", "The Plumbers, Gasfitters and Drainlayers Board", "WorkSafe"]
+      "answer": "Drainlayer B",
+      "options": ["Drainlayer A", "The tradesman drainlayer", "The Plumbers, Gasfitters and Drainlayers Board", "WorkSafe"]
     },
     {
       "id": 57,
       "question": "What is meant by the term surcharge load in relation to shoring a trench?",
-      "options": ["The amount of ground water in the area of the trench", "Slippage of soil along bedding planes applying extra forces on the shoring", "Extra weight from soil or vehicles near the edge of the trench", "The removal of ground water via well-pointing changing the structure of the soil", "Building foundations within 1 m of a trench"]
+      "answer": "Extra weight from soil or vehicles near the edge of the trench",
+      "options": ["The amount of ground water in the area of the trench", "Slippage of soil along bedding planes applying extra forces on the shoring", "The removal of ground water via well-pointing changing the structure of the soil", "Building foundations within 1 m of a trench"]
     },
     {
       "id": 58,
       "question": "How much notice must be given before particular hazardous work is to be carried out?",
-      "options": ["24 hours", "48 hours", "72 hours", "5 working days", "10 working days"]
+      "answer": "24 hours",
+      "options": [ "48 hours", "72 hours", "5 working days", "10 working days"]
     },
     {
       "id": 59,
       "question": "A company has been engaged to carry out drainlaying work. Which party is classed as a PCBU and has the primary health and safety duty under the Health and Safety at Work Act?",
-      "options": ["The company", "The company’s health and safety representative", "The owner of the property where work takes place", "The tradespeople doing the work", "The company’s directors"]
+      "answer": "The company",
+      "options": [ "The company’s health and safety representative", "The owner of the property where work takes place", "The tradespeople doing the work", "The company’s directors"]
     },
     {
       "id": 60,
       "question": "For what length of time should a ceramic surface water drain be soaked before a leakage test complying with New Zealand Building Code clause E1/VM1 Surface Water is carried out?",
-      "options": ["15 minutes", "30 minutes", "4 hours", "12 hours", "24 hours"]
+      "answer": "24 hours",
+      "options": ["15 minutes", "30 minutes", "4 hours", "12 hours",]
     },
     {
       "id": 61,
       "question": "What is the minimum allowable gradient for a 225 mm surface water drain?",
-      "options": ["1:90", "1:120", "1:250", "1:300", "1:350"]
+      "answer": "1:350",
+      "options": ["1:90", "1:120", "1:250", "1:300",]
     },
     {
       "id": 62,
       "question": "How many ml per m of pipe length is it acceptable for a 100 mm surface water drain pipe to lose per hour during a water test carried out to comply with New Zealand Building Code clause E1/VM1 Surface Water?",
-      "options": ["1.2", "2.0", "2.5", "3.0", "5.0"]
+      "answer": "2.0",
+      "options": ["1.2", "2.5", "3.0", "5.0"]
     },
     {
       "id": 63,
       "question": "A rectangular chamber must provide 9 m3 of storage volume. The base measures 2.4 m × 2.8 m internally. What minimum depth will the chamber need to have?",
-      "options": ["1.34 m", "1.73 m", "3.21 m", "3.75 m", "3.80 m"]
+      "answer": "1.34 m",
+      "options": [ "1.73 m", "3.21 m", "3.75 m", "3.80 m"]
     },
     {
       "id": 64,
       "question": "Which of the following best describes an Approved Code of Practice?",
-      "options": ["A New Zealand Building Code clause", "A New Zealand Building Code approved alternative solution", "A mandatory solution for complying with the Health and Safety at Work Act", "A normative set of rules that must be followed", "A preferred work practice guideline"]
+      "answer": "A preferred work practice guideline",
+      "options": ["A New Zealand Building Code clause", "A New Zealand Building Code approved alternative solution", "A mandatory solution for complying with the Health and Safety at Work Act", "A normative set of rules that must be followed",]
     },
     {
       "id": 65,
       "question": "Which of the following excavations would be classified as Particular Hazardous Work?",
-      "options": ["A trench which is 1200 mm deep and 1000 mm wide", "A trench which is 1200 mm deep and 1500 mm wide", "A trench which is 1200 mm deep and 1750 mm wide", "A trench which is 1500 mm deep and 1000 mm wide", "A trench which is 1500 mm deep and 1750 mm wide"]
+      "answer": "A trench which is 1500 mm deep and 1000 mm wide",
+      "options": ["A trench which is 1200 mm deep and 1000 mm wide", "A trench which is 1200 mm deep and 1500 mm wide", "A trench which is 1200 mm deep and 1750 mm wide", "A trench which is 1500 mm deep and 1750 mm wide"]
     },
     {
       "id": 66,
       "question": "Which of the following describes a notifiable event?",
-      "options": ["A foul water drain breaks due to an earthquake", "Working in an excavation that is 2 m deep and 1 m wide at the top", "An excavation which has filled with water over night", "An unplanned incident in the workplace that endangers the health and safety of workers", "Working within 1 m of an underground pipe made of material containing asbestos"]
+      "answer": "An unplanned incident in the workplace that endangers the health and safety of workers",
+      "options": ["A foul water drain breaks due to an earthquake", "Working in an excavation that is 2 m deep and 1 m wide at the top", "An excavation which has filled with water over night", "Working within 1 m of an underground pipe made of material containing asbestos"]
     },    {
       "id": 67,
       "question": "What is the minimum length of time that an exempted person under supervision must work in the presence of his or her supervisor?",
-      "options": ["18 months", "24 months", "30 months", "36 months", "40 months"]
+      "answer": "24 months",
+      "options": ["18 months", "30 months", "36 months", "40 months"]
     },
     {
       "id": 68,
       "question": "A certifying practitioner ceases to supervise a person by notifying the Plumbers, Gasfitters and Drainlayers Board in writing. When does the certifier’s responsibility for the work of the supervised person cease?",
-      "options": ["When the certifier informs the supervised person", "When the notification is signed by the certifier", "When the notification is received by the Board", "When the licensing year finishes", "When the notification is signed by the supervised person"]
+      "answer": "When the notification is received by the Board",
+      "options": ["When the certifier informs the supervised person", "When the notification is signed by the certifier", "When the licensing year finishes", "When the notification is signed by the supervised person"]
     },
     {
       "id": 69,
       "question": "There is a gas that occurs in the ground and naturally smells like rotten eggs. When exposed to large concentrations of this gas, peoples’ sense of smell is lost so that the gas cannot be readily detected by its smell. What is the gas?",
-      "options": ["Methane", "Hydrogen sulphide", "Ethane", "Carbon dioxide", "Propane"]
+      "answer": "Hydrogen sulphide",
+      "options": ["Methane", "Ethane", "Carbon dioxide", "Propane"]
     },
     {
       "id": 70,
       "question": "A drain has been laid at a gradient of 1:80 (1.25%) and has a fall of 120 mm. How long is the drain?",
-      "options": ["150 mm", "960 mm", "1.50 m", "6.66 m", "9.60 m"]
+      "answer": "960 mm",
+      "options": ["150 mm", "1.50 m", "6.66 m", "9.60 m"]
     },
     {
       "id": 71,
       "question": "A drain is serving a vertical discharge stack on a two-level building. A gully dish is required to be connected to the drain downstream of the discharge stack connection. How close to the base of the discharge stack is the junction for the gully trap permitted to be?",
-      "options": ["0.5 m", "1.0 m", "1.5 m", "2.0 m", "2.5 m"]
+      "answer": "0.5 m",
+      "options": [ "1.0 m", "1.5 m", "2.0 m", "2.5 m"]
     },
     {
       "id": 72,
       "question": "Why is there a maximum allowable distance between a gully dish and a grease trap it is discharging into?",
-      "options": ["To stop the waste cooling and fats solidifying on the internal wall of the pipe", "To prevent vermin from entering the grease trap", "So that the pipe does not require venting", "So that the pipe can easily be cleaned without specialised equipment", "So that an inspection point is not required on the inlet of the grease trap"]
+      "answer": "To stop the waste cooling and fats solidifying on the internal wall of the pipe",
+      "options": [ "To prevent vermin from entering the grease trap", "So that the pipe does not require venting", "So that the pipe can easily be cleaned without specialised equipment", "So that an inspection point is not required on the inlet of the grease trap"]
     },
     {
       "id": 73,
       "question": "Which of the following is NOT a required location for an access point on a surface water drain, as specified by New Zealand Building Code clause E1/AS1 Surface Water?",
-      "options": ["At least every 50 m where rodding points are used", "At least every 100 m where inspection points, inspection chambers or access chambers are used", "Points with changes in direction of greater than 45°", "Points with changes in gradient of greater than 45°", "Junctions of drains serving a single downpipe that are less than 2.0 m long"]
+      "answer": "Junctions of drains serving a single downpipe that are less than 2.0 m long",
+      "options": ["At least every 50 m where rodding points are used", "At least every 100 m where inspection points, inspection chambers or access chambers are used", "Points with changes in direction of greater than 45°", "Points with changes in gradient of greater than 45°",]
     },
     {
       "id": 74,
       "question": "What is the maximum permitted head at the lower end of a drain during a water test carried out to comply with New Zealand Building Code clause E1/VM1 Surface Water?",
-      "options": ["1.2 m", "2.0 m", "3.0 m", "6.0 m", "10 m"]
+      "answer": "6.0 m",
+      "options": ["1.2 m", "2.0 m", "3.0 m", "10 m"]
     },
     {
       "id": 75,
       "question": "A customer’s drain is to be laid and will pass through a neighbouring property. What is the term used to describe this on a plan?",
-      "options": ["A right of way", "A landowner’s agreement", "A landowner’s registration", "An easement", "A drain in common"]
+      "answer": "An easement",
+      "options": ["A right of way", "A landowner’s agreement", "A landowner’s registration", "A drain in common"]
     },
     {
       "id": 76,
       "question": "A wet well dual pumping system has been installed to convey foul-water from a building. What should occur when the low level sensor is activated?",
-      "options": ["The main pump should start to empty the well", "The main pump should stop", "A warning system should activate to inform that maintenance is required", "The standby pump should start", "The building water supply solenoid valve should shut"]
+      "answer": "The main pump should stop",
+      "options": ["The main pump should start to empty the well", "A warning system should activate to inform that maintenance is required", "The standby pump should start", "The building water supply solenoid valve should shut"]
     },
     {
       "id": 77,
       "question": "What is the definition of the term ‘drain in common’?",
-      "options": ["A drain that conveys both storm water and foul water", "A drain that is maintained by the local territorial authority", "A drain that serves two or more properties", "A drain that has been permitted to cross public land", "A drain that discharges into a watercourse"]
+      "answer": "A drain that serves two or more properties",
+      "options": ["A drain that conveys both storm water and foul water", "A drain that is maintained by the local territorial authority", "A drain that has been permitted to cross public land", "A drain that discharges into a watercourse"]
     },
     {
       "id": 78,
       "question": "A drain is serving a vertical discharge stack on a two level building. A gully dish must be connected to the drain downstream of the discharge stack connection. How close to the discharge stack connection is the junction for the gully trap permitted to be?",
-      "options": ["250 mm", "500 mm", "600 mm", "1000 mm", "2500 mm"]
+      "answer": "500 mm",
+      "options": ["250 mm", "600 mm", "1000 mm", "2500 mm"]
     },
     {
       "id": 79,
       "question": "A tank has an internal volume of 8.5 m3. It is 60% full with material. What is the volume of the material in the tank?",
-      "options": ["4.2 m3", "4.5 m3", "4.8 m3", "5.1 m3", "5.5 m3"]
+      "answer": "5.1 m3",
+      "options": ["4.2 m3", "4.5 m3", "4.8 m3", "5.5 m3"]
     },
     {
       "id": 80,
       "question": "A water test of a surface water drain is to be carried out to comply with New Zealand Building Code clause E1/VM1 Surface Water. What is the required length of time for the test?",
-      "options": ["5 minutes", "15 minutes", "30 minutes", "45 minutes", "60 minutes"]
+      "answer": "30 minutes",
+      "options": ["5 minutes", "15 minutes", "45 minutes", "60 minutes"]
     },
     {
       "id": 81,
       "question": "What is the typical minimum acceptable content of oxygen in air for a safe environment?",
-      "options": ["9%", "14%", "19%", "24%", "28%"]
+      "answer": "19%",
+      "options": ["9%", "14%", "24%", "28%"]
     },
     {
       "id": 82,
       "question": "A surface water system must be designed to cope with the expected rainfall in a 10 minute period of a storm that occurs how often?",
-      "options": ["Once in 10 years", "Once in 15 years", "Once in 25 years", "Once in 50 years", "Once in 100 years"]
+      "answer": "Once in 10 years",
+      "options": [ "Once in 15 years", "Once in 25 years", "Once in 50 years", "Once in 100 years"]
     },
     {
       "id": 83,
       "question": "Who approves the discharge of trade waste into a sewer?",
-      "options": ["The trade waste producer", "The chemical testing laboratory", "The Resource Management Act department", "The network utility operator", "The certifying drainlayer"]
+      "answer": "The certifying drainlayer",
+      "options": ["The trade waste producer", "The chemical testing laboratory", "The Resource Management Act department", "The network utility operator",]
     },
     {
       "id": 84,
       "question": "What does PCBU stand for in the Health and Safety at Work Act?",
-      "options": ["Principle contractor of building utilities", "Private company business undertaking", "Persons conducting a business or undertaking", "Private construction business union", "Personnel control building unit"]
+      "answer": "Persons conducting a business or undertaking",
+      "options": ["Principle contractor of building utilities", "Private company business undertaking", "Private construction business union", "Personnel control building unit"]
     },
     {
       "id": 85,
       "question": "Which party has the responsibility to make sure the PCBU is meeting its health and safety obligations under the Health and Safety at Work Act?",
-      "options": ["The company", "The health and safety representative", "The owner of the property where work takes place", "The company’s directors", "The Ministry of Business, Innovation and Employment"]
+      "answer": "The company’s directors",
+      "options": ["The company", "The health and safety representative", "The owner of the property where work takes place", "The Ministry of Business, Innovation and Employment"]
     },
     {
       "id": 86,
       "question": "For what length of time should a ceramic surface water drain be soaked before a leakage test complying with New Zealand Building Code clause E1/VM1 Surface Water is carried out?",
-      "options": ["15 minutes", "30 minutes", "4 hours", "12 hours", "24 hours"]
+      "answer": "24 hours",
+      "options": ["15 minutes", "30 minutes", "4 hours", "12 hours",]
     },
     {
       "id": 87,
       "question": "How many ml per m of pipe length is it acceptable for a 100 mm surface water drain pipe to lose per hour during a water test carried out to comply with New Zealand Building Code clause E1/VM1 Surface Water?",
-      "options": ["2.0", "20.0", "220", "1200", "2000"]
+      "answer": "2.0",
+      "options": [ "20.0", "220", "1200", "2000"]
     },
     {
       "id": 88,
       "question": "The sides of a trench have been cut back to a safe slope. What is the minimum distance from the top edge of the trench that any vehicles can be permitted to drive?",
-      "options": ["800 mm", "850 mm", "900 mm", "950 mm", "1000 mm"]
+      "answer": "1000 mm",
+      "options": ["800 mm", "850 mm", "900 mm", "950 mm",]
     },
     {
       "id": 89,
       "question": "According to New Zealand Building Code clause G13/AS2 Foul Water, verifiable levelling devices must be used to ensure uniform gradients of drains laid at gradients in what range?",
-      "options": ["1 in 40 or less", "1 in 60 or less", "1 in 80 or less", "1 in 100 or less", "1 in 120 or less"]
+      "answer": "1 in 80 or less",
+      "options": ["1 in 40 or less", "1 in 60 or less", "1 in 100 or less", "1 in 120 or less"]
     },
     {
       "id": 90,
       "question": "The sides of a trench have been cut back to a safe slope. What is the minimum distance from the top edge of the trench that any vehicles should be permitted to drive?",
-      "options": ["600 mm", "750 mm", "800 mm", "900 mm", "1000 mm"]
+      "answer": "1000 mm",
+      "options": ["600 mm", "750 mm", "800 mm", "900 mm",]
     },
     {
       "id": 91,
       "question": "Which of the following effluent disposal options is NOT suitable for use with a septic tank treatment system?",
-      "options": ["Gravity soakage trenches", "Soak pit system", "Sand (Wisconsin) mounds", "Low pressure (dose loading) effluent distribution", "Drip line irrigation system"]
+      "answer": "Soak pit system",
+      "options": ["Gravity soakage trenches", "Sand (Wisconsin) mounds", "Low pressure (dose loading) effluent distribution", "Drip line irrigation system"]
     },
     {
       "id": 92,
       "question": "Which of the following is true for a drain to be suitable for relining?",
-      "options": ["The drain must have no bends", "The drain must be at least 150 mm in diameter", "The drain must not be collapsed", "The drain must be made from earthenware pipe", "The drain must be fully uncovered"]
+      "answer": "The drain must not be collapsed",
+      "options": ["The drain must have no bends", "The drain must be at least 150 mm in diameter", "The drain must be made from earthenware pipe", "The drain must be fully uncovered"]
     },
     {
       "id": 93,
       "question": "Which of the following cannot be disposed of at a clean fill landfill site?",
-      "options": ["Soil", "Concrete", "Earthenware pipe", "Cesspit/stormwater sump cleanings", "Gravel"]
+      "answer": "Cesspit/stormwater sump cleanings",
+      "options": ["Soil", "Concrete", "Earthenware pipe", "Gravel"]
     },
     {
       "id": 94,
       "question": "A new drain is to be connected to the network utility operator’s sewer. As the trench is being excavated, a line of purple paint is discovered on the ground. What service is likely to be buried below the purple line?",
-      "options": ["Electrical", "Gas", "Surface water", "Water", "Telecommunications"]
+      "answer": "Telecommunications",
+      "options": ["Electrical", "Gas", "Surface water", "Water",]
     },    {
       "id": 95,
       "question": "A house is connected to a septic tank. A foul water sewer is being extended up the street past this house. At what distance of the house from the sewer does connecting the house to the sewer become compulsory?",
-      "options": ["20 m", "30 m", "40 m", "50 m", "60 m"]
+      "answer": "60 m",
+      "options": ["20 m", "30 m", "40 m", "50 m",]
     },
     {
       "id": 96,
       "question": "The fixtures discharging into an overflow relief gully have been removed. What actions should be taken regarding the drain?",
-      "options": ["The gully dish should be removed and a cap installed on the riser", "A flushing device or hose tap should be installed to manually keep the gully trap charged", "The gully dish and trap should be removed and the branch drain capped", "The branch drain and junction receiving the waste from the gully dish should be removed and replaced with a straight section of pipe", "A down pipe should be diverted to the gully dish to charge the gully trap automatically when it rains"]
+      "answer": "The branch drain and junction receiving the waste from the gully dish should be removed and replaced with a straight section of pipe"
+      "options": ["The gully dish should be removed and a cap installed on the riser", "A flushing device or hose tap should be installed to manually keep the gully trap charged", "The gully dish and trap should be removed and the branch drain capped",, "A down pipe should be diverted to the gully dish to charge the gully trap automatically when it rains"]
     },
     {
       "id": 97,
       "question": "How far below the overflow level of the lowest fixture connected to a drain should the top of a gully dish be installed?",
-      "options": ["20 mm", "50 mm", "100 mm", "150 mm", "200 mm"]
+      "answer": "150 mm",
+      "options": ["20 mm", "50 mm", "100 mm", "200 mm"]
     },
     {
       "id": 98,
       "question": "What is the maximum allowable distance between a grease trap and the gully dish discharging waste to the grease trap?",
-      "options": ["1.5 m", "2.0 m", "2.5 m", "3.0 m", "6.0 m"]
+      "answer": "3.0 m",
+      "options": ["1.5 m", "2.0 m", "2.5 m", "6.0 m"]
     }
 ]
 }
