@@ -73,10 +73,13 @@ fun AnswerButton(
                         color = if (isSelected) MaterialTheme.colorScheme.primary
                         else MaterialTheme.colorScheme.outline
                     )
-                    .padding(16.dp),
+                    .padding(8.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = questionResourceId, color = Color.White)
+                Text(
+                    text = questionResourceId,
+                    textAlign = Alignment.Center,
+                    color = Color.White)
             }
         }
     }
@@ -103,7 +106,7 @@ fun ButtonGrid(
                     viewModel.selectAnswer(option)
                 },
                 questionResourceId = option,
-                modifier = Modifier.padding(4.dp),
+                modifier = modifier,
                 isCorrect = option == currentQuestion.answer,
                 showCorrectAnswer = showCorrectAnswer
             )

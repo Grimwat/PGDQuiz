@@ -32,19 +32,21 @@ class QuizViewModel : ViewModel() {
 
     private val gson = Gson()
 
-    fun loadQuestionsFromRawResource(
-        context: Context
-    ) {
+    fun loadQuestionsFromRawResource(context: Context) {
         val inputStream = context.resources.openRawResource(R.raw.drainsquestions)
         val reader = InputStreamReader(inputStream)
-        questions = gson.fromJson(
+        val loadedQuestions = gson.fromJson(
             reader,
             QuestionsResponse::class.java
-        ).questions.filter { it.answer != null }
+        ).questions
+
         reader.close()
         inputStream.close()
-    }
 
+        questions = loadedQuestions
+
+        _currentQuestionIndex.value = 0
+    }
     fun nextQuestion() {
         val selected = _selectedAnswer.value
         val correct = currentQuestion?.answer
