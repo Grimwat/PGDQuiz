@@ -95,7 +95,7 @@ fun ButtonGrid(
     var showCorrectAnswer by remember { mutableStateOf(false) }
 
     Column(modifier = modifier) {
-        currentQuestion?.answers()?.forEachIndexed { index, option ->
+        currentQuestion.shuffledOptions.forEachIndexed { index, option ->
             AnswerButton(
                 buttonIndex = index,
                 isSelected = selectedButtonIndex == index,

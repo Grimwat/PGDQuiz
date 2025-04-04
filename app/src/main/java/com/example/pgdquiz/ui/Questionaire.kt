@@ -3,16 +3,27 @@ package com.example.pgdquiz.ui
 data class Question(
     val id: Int,
     val question: String,
-    val answer: String? = null,
+    val answer: String,
     var options: List<String>,
-    var isAnswerCorrect: Boolean,
+    var isAnswerCorrect: Boolean = false,
 ) {
-    val shuffledOptions: List<String> = (options + answer!!).shuffled()
-    val correctAnswerIndex: Int = answers().indexOf(answer)
+    init {
+        if (options.isEmpty()) {
+            throw IllegalArgumentException("Options cannot be empty for question: $question")
+        }
+    }
+
+    val shuffledOptions: List<String> by lazy {
+        options.shuffled()
+    }
+
+    val correctAnswerIndex: Int by lazy {
+        shuffledOptions.indexOf(answer)
+    }
 }
 
 fun Question.answers(): List<String>{
-    return options + answer!!
+    return options + answer
 }
 
 data class QuestionsResponse(
