@@ -78,7 +78,6 @@ fun AnswerButton(
             ) {
                 Text(
                     text = questionResourceId,
-                    textAlign = Alignment.Center,
                     color = Color.White)
             }
         }
