@@ -75,6 +75,6 @@ fun Drainpreview() {
     val viewModel = QuizViewModel()
     PgdQuizTheme {
         viewModel.loadQuestionsFromRawResource(LocalContext.current)
-        DrainLayout(viewModel = viewModel)
+
     }
 }
