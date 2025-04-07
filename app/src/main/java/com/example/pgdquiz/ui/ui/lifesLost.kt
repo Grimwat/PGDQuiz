@@ -62,57 +62,6 @@ fun LivesLost(
             ) {
                 Button(
                     onClick = onWatchAd,
-                    enabled = false,
-                    modifier = Modifier.background(Color.Transparent)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(MaterialTheme.colorScheme.outline)
-                            .border(
-                                width = 4.dp,
-                                MaterialTheme.colorScheme.primary
-                            )
-                            .padding(8.dp),
-                        contentAlignment = Alignment.Center
-                    )
-                    {
-                        Text(
-                            text = "Gain 1 attempt",
-                            color = Color.White
-                        )
-                    }
-                }
-                Button(
-                    onClick = onExit,
-                    enabled = false,
-                    modifier = Modifier.background(Color.Transparent)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(MaterialTheme.colorScheme.outline)
-                            .border(
-                                width = 4.dp,
-                                MaterialTheme.colorScheme.primary
-                            )
-                            .padding(8.dp),
-                        contentAlignment = Alignment.Center
-                    )
-                    {
-                        Text(
-                            text = "Leave Quiz",
-                            color = Color.White
-                        )
-                    }
-                }
-            }
-            Button(
-                onClick = onUpgrade,
-                enabled = false,
-                modifier = Modifier.background(Color.Transparent)
-            ) {
-                Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(8.dp))
                         .background(MaterialTheme.colorScheme.outline)
@@ -120,10 +69,43 @@ fun LivesLost(
                             width = 4.dp,
                             MaterialTheme.colorScheme.primary
                         )
-                        .padding(8.dp),
-                    contentAlignment = Alignment.Center
                 )
-                {
+                    {
+                        Text(
+                            text = "Gain 1 attempt",
+                            color = Color.White
+                        )
+                    }
+                Button(
+                    onClick = onExit,
+                    enabled = false,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.outline)
+                        .border(
+                            width = 4.dp,
+                            MaterialTheme.colorScheme.primary
+                        )
+                )
+                    {
+                        Text(
+                            text = "Leave Quiz",
+                            color = Color.White
+                        )
+
+                }
+            }
+            Button(
+                onClick = onUpgrade,
+                enabled = false,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(MaterialTheme.colorScheme.outline)
+                    .border(
+                        width = 4.dp,
+                        MaterialTheme.colorScheme.primary
+                    )
+            ) {
                     Text(
                         text = "Upgrade to Premium",
                         color = Color.White
@@ -132,7 +114,7 @@ fun LivesLost(
             }
         }
     }
-}
+
 
 
 
