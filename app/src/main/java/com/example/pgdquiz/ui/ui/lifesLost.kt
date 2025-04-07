@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.example.pgdquiz.ui.DrainLayout
 import com.example.pgdquiz.ui.QuizViewModel
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
+import com.example.pgdquiz.ui.theme.White
 
 
 @Composable
@@ -37,17 +38,16 @@ fun LivesLost(
     modifier: Modifier = Modifier,
     onWatchAd: () -> Unit,
     onExit: () -> Unit,
-    onUpgrade: () -> Unit = {} // For future use
+    onUpgrade: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
-            .fillMaxSize()
             .background(MaterialTheme.colorScheme.tertiary),
         contentAlignment = Alignment.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(24.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
                 text = "All Out of Sh*ts",
@@ -63,15 +63,10 @@ fun LivesLost(
                 Button(
                     onClick = onWatchAd,
                     enabled = false,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Transparent,
-                        contentColor = Color.Unspecified
-                    ),
                     modifier = Modifier.background(Color.Transparent)
                 ) {
                     Box(
                         modifier = Modifier
-                            .fillMaxWidth()
                             .clip(RoundedCornerShape(8.dp))
                             .background(MaterialTheme.colorScheme.outline)
                             .border(
@@ -83,22 +78,18 @@ fun LivesLost(
                     )
                     {
                         Text(
-                            text = "Gain 1 attempt"
+                            text = "Gain 1 attempt",
+                            color = Color.White
                         )
                     }
                 }
                 Button(
                     onClick = onExit,
                     enabled = false,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Transparent,
-                        contentColor = Color.Unspecified
-                    ),
                     modifier = Modifier.background(Color.Transparent)
                 ) {
                     Box(
                         modifier = Modifier
-                            .fillMaxWidth()
                             .clip(RoundedCornerShape(8.dp))
                             .background(MaterialTheme.colorScheme.outline)
                             .border(
@@ -110,7 +101,8 @@ fun LivesLost(
                     )
                     {
                         Text(
-                            text = "Leave Quiz"
+                            text = "Leave Quiz",
+                            color = Color.White
                         )
                     }
                 }
@@ -118,15 +110,10 @@ fun LivesLost(
             Button(
                 onClick = onUpgrade,
                 enabled = false,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = Color.Unspecified
-                ),
                 modifier = Modifier.background(Color.Transparent)
             ) {
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth()
                         .clip(RoundedCornerShape(8.dp))
                         .background(MaterialTheme.colorScheme.outline)
                         .border(
@@ -138,7 +125,8 @@ fun LivesLost(
                 )
                 {
                     Text(
-                        text = "Upgrade to Premium"
+                        text = "Upgrade to Premium",
+                        color = Color.White
                     )
                 }
             }
@@ -153,7 +141,5 @@ fun LivesLost(
 fun LivesPreview() {
     val viewModel = QuizViewModel()
     PgdQuizTheme {
-
-
     }
 }
