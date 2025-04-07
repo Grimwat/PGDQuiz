@@ -82,6 +82,10 @@ class QuizViewModel : ViewModel() {
         }
     }
 
+    fun restoreLife() {
+        _lives.value = 1
+    }
+
 
     fun nextQuestion() {
         val selected = _selectedAnswer.value

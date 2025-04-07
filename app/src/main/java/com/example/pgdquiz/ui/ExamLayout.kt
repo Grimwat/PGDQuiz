@@ -20,14 +20,27 @@ import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 import com.example.pgdquiz.ui.ui.Banner
 import com.example.pgdquiz.ui.ui.ButtonGrid
+import com.example.pgdquiz.ui.ui.LivesLost
 import com.example.pgdquiz.ui.ui.QuestionField
 
 @Composable
 fun DrainLayout(
     modifier: Modifier = Modifier,
-    viewModel: QuizViewModel
+    viewModel: QuizViewModel,
+    onExit: ()-> Unit
 
 ) {
+    val lives = viewModel.lives.value
+
+
+    if (lives <= 0) {
+        LivesLost(
+            onWatchAd = {
+                viewModel.restoreLife()
+            },
+            onExit = onExit
+        )
+    }
     Column(
         modifier = modifier
             .fillMaxHeight()

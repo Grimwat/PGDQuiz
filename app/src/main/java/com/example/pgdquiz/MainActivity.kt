@@ -20,7 +20,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             viewModel.loadQuestionsFromRawResource(LocalContext.current)
             PgdQuizTheme {
-                DrainLayout(viewModel = viewModel)
+                DrainLayout(viewModel = viewModel,
+                    onExit = {
+                    }
+                )
             }
         }
     }
