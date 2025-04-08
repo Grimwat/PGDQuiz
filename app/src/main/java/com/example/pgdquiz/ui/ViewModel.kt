@@ -6,6 +6,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.pgdquiz.R
+import com.example.pgdquiz.ui.ui.QuizMode
 import com.google.gson.Gson
 import java.io.InputStreamReader
 
@@ -107,5 +108,19 @@ class QuizViewModel : ViewModel() {
         }
 
         _selectedAnswer.value = null
+    }
+    fun loadQuestions(context: Context, mode: QuizMode) {
+        loadQuestionsFromRawResource(context)
+
+        questions = when (mode) {
+            QuizMode.EASY -> questions.shuffled().take(25)
+            QuizMode.MEDIUM -> questions.shuffled().take(50)
+            QuizMode.HARD -> {
+                val base = questions.shuffled().take(50)
+                (base + base.shuffled().take(50)).shuffled()
+            }
+        }
+
+        _currentQuestionIndex.value = 0
     }
 }
