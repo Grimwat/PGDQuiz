@@ -53,13 +53,3 @@ fun QuizModeSelection(
         //BannerAd()
     }
 }
-
-@Composable
-fun Text(x0: String) {
-    TODO("Not yet implemented")
-}
-
-@Composable
-fun Button(onClick: () -> Unit, content: @Composable () -> Text) {
-    TODO("Not yet implemented")
-}

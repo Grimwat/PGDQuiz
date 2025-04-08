@@ -1,4 +1,5 @@
 package com.example.pgdquiz.ui.ui
 
-class QuizMode {
+enum class QuizMode {
+    EASY, MEDIUM, HARD
 }
