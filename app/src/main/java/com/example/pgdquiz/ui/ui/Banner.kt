@@ -35,17 +35,18 @@ fun Banner(
     streakCount: Int,
     modifier: Modifier = Modifier
 ) {
-        Box(
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .background(color = MaterialTheme.colorScheme.tertiary)
+            .border(width = 4.dp, color = MaterialTheme.colorScheme.surface),
+        contentAlignment = Alignment.Center
+
+    ) {
+        Row(
             modifier = modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(8.dp))
-                .background(color = MaterialTheme.colorScheme.tertiary)
-                .border(width = 4.dp, color = MaterialTheme.colorScheme.surface),
-            contentAlignment = Alignment.Center
-
-        ){
-        Row(
-            modifier = modifier.fillMaxWidth()
                 .padding(start = 120.dp, top = 16.dp, bottom = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly

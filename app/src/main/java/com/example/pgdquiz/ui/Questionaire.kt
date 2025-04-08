@@ -22,7 +22,7 @@ data class Question(
     }
 }
 
-fun Question.answers(): List<String>{
+fun Question.answers(): List<String> {
     return options + answer
 }
 

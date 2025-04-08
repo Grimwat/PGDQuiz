@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.QuizViewModel
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.pgdquiz.ui.answers
 
 
 @Composable
@@ -78,7 +77,8 @@ fun AnswerButton(
             ) {
                 Text(
                     text = questionResourceId,
-                    color = Color.White)
+                    color = Color.White
+                )
             }
         }
     }

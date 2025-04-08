@@ -78,7 +78,10 @@ fun LivesLost(
                     onClick = onExit,
                     enabled = false,
                     shape = RoundedCornerShape(8.dp),
-                    border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
+                    border = BorderStroke(
+                        2.dp,
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
+                    ),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.outline,
                         disabledContainerColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
@@ -108,12 +111,7 @@ fun LivesLost(
 }
 
 
-
-
 @Preview
 @Composable
 fun LivesPreview() {
-    val viewModel = QuizViewModel()
-    PgdQuizTheme {
-    }
 }
