@@ -47,7 +47,7 @@ fun DrainLayout(
         ) {
             Banner(
                 examType = "Drainlaying",
-                examEmoji = painterResource(R.drawable.happypoo),
+                examEmoji = painterResource(R.drawable.happypoo2),
                 emojiCont = "happyPoo",
                 attempts = viewModel.lives.value,
                 icon = painterResource(R.drawable.flame1),
@@ -81,7 +81,7 @@ fun DrainLayout(
                             viewModel.restoreLife()
                         },
                         onExit = onExit,
-                        examEmoji = painterResource(R.drawable.happypoo),
+                        examEmoji = painterResource(R.drawable.happypoo2),
                         emojiCont = "happyPoo",
                     )
                 }
