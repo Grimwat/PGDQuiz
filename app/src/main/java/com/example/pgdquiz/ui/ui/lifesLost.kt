@@ -49,7 +49,8 @@ fun LivesLost(
                 text = "All Out of Sh*ts",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(top = 8.dp)
             )
             Image(
                 painter = examEmoji,

@@ -86,7 +86,8 @@ class QuizViewModel : ViewModel() {
     fun restoreLife() {
         _lives.value = 1
     }
-
+    private val _quizComplete = mutableStateOf(false)
+    val quizComplete: MutableState<Boolean> = _quizComplete
 
     fun nextQuestion() {
         val selected = _selectedAnswer.value
@@ -104,10 +105,17 @@ class QuizViewModel : ViewModel() {
         if (_currentQuestionIndex.value < questions.size - 1) {
             _currentQuestionIndex.value++
         } else {
-            _currentQuestionIndex.value = 0
+            _quizComplete.value = true
         }
 
         _selectedAnswer.value = null
+    }
+    fun restartQuiz(mode: QuizMode, context: Context) {
+        _lives.value = 3
+        _streakCount.value = 0
+        _selectedAnswer.value = null
+        _quizComplete.value = false
+        loadQuestions(context, mode)
     }
     fun loadQuestions(context: Context, mode: QuizMode) {
         loadQuestionsFromRawResource(context)
