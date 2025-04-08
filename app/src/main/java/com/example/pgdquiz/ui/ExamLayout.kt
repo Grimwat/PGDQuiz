@@ -72,15 +72,17 @@ fun DrainLayout(
                 Box(
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .clip(RoundedCornerShape(4.dp))
+                        .clip(RoundedCornerShape(8.dp))
                         .background(MaterialTheme.colorScheme.surface)
-                        .padding(24.dp)
+                        .padding(8.dp)
                 ) {
                     LivesLost(
                         onWatchAd = {
                             viewModel.restoreLife()
                         },
-                        onExit = onExit
+                        onExit = onExit,
+                        examEmoji = painterResource(R.drawable.happypoo),
+                        emojiCont = "happyPoo",
                     )
                 }
             }
