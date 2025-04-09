@@ -5,6 +5,7 @@ import androidx.compose.foundation.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -29,8 +30,7 @@ fun QuizModeSelection(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(16.dp),
+            .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -44,6 +44,7 @@ fun QuizModeSelection(
             streakCount = 0,
             modifier = Modifier.fillMaxWidth()
         )
+        Spacer(modifier = Modifier.padding(32.dp))
         Button(
             onClick = { onSelectMode(QuizMode.EASY) },
             shape = RoundedCornerShape(8.dp),
@@ -55,7 +56,9 @@ fun QuizModeSelection(
                 containerColor = MaterialTheme.colorScheme.outline,
                 disabledContainerColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
                 disabledContentColor = Color.White.copy(alpha = 0.3f)
-            )
+            ),
+            modifier = Modifier.fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp)
         ) {
             Text("25 Questions")
         }
@@ -71,7 +74,9 @@ fun QuizModeSelection(
                 containerColor = MaterialTheme.colorScheme.outline,
                 disabledContainerColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
                 disabledContentColor = Color.White.copy(alpha = 0.3f)
-            )
+            ),
+            modifier = Modifier.fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp)
         ) {
             Text("50 Questions")
         }
@@ -87,7 +92,9 @@ fun QuizModeSelection(
                 containerColor = MaterialTheme.colorScheme.outline,
                 disabledContainerColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
                 disabledContentColor = Color.White.copy(alpha = 0.3f)
-            )
+            ),
+            modifier = Modifier.fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp)
         ) {
             Text("100 Questions")
         }
