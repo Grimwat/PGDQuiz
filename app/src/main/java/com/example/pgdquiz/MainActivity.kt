@@ -39,7 +39,11 @@ class MainActivity : ComponentActivity() {
                 } else {
                     DrainLayout(
                         viewModel = viewModel,
+                        quizMode = selectedMode!!,
                         onExit = {
+                            selectedMode = null
+                        },
+                        onBackToModeSelect = {
                             selectedMode = null
                         }
                     )

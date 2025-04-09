@@ -51,7 +51,8 @@ fun CongratulationsScreen(
             Text(
                 text = "You've completed all the questions!",
                 fontSize = 16.sp,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp)
             )
             Image(
                 painter = examEmoji,
