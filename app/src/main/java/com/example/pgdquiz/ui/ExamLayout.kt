@@ -17,22 +17,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.ui.Banner
 import com.example.pgdquiz.ui.ui.ButtonGrid
+import com.example.pgdquiz.ui.ui.CongratulationsScreen
 import com.example.pgdquiz.ui.ui.LivesLost
 import com.example.pgdquiz.ui.ui.QuestionField
+import com.example.pgdquiz.ui.ui.QuizMode
 
 @Composable
 fun DrainLayout(
     modifier: Modifier = Modifier,
     viewModel: QuizViewModel,
-    onExit: () -> Unit
+    onExit: () -> Unit,
+    quizMode: QuizMode,
+    onBackToModeSelect: () -> Unit
 
 ) {
     val lives = viewModel.lives.value
+    val quizComplete = viewModel.quizComplete.value
+    val context = LocalContext.current
 
 
     Box(
@@ -83,6 +90,30 @@ fun DrainLayout(
                         onExit = onExit,
                         examEmoji = painterResource(R.drawable.happypoo2),
                         emojiCont = "happyPoo",
+                    )
+                }
+            }
+        }
+        if (quizComplete) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f))
+            ) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.surface)
+                        .padding(8.dp)
+                ) {
+                    CongratulationsScreen(
+                        examEmoji = painterResource(R.drawable.happypoo2),
+                        emojiCont = "happyPoo",
+                        onRestart = {
+                            viewModel.restartQuiz(quizMode,context)
+                        },
+                        onBackToModeSelect = onBackToModeSelect
                     )
                 }
             }
