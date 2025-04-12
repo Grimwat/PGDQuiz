@@ -1,0 +1,565 @@
+{
+  "questions": [
+  {
+      "id": 1,
+      "question": "Which of the following is the correct name for AS/NZS 3604:2011?",
+      "answer": "Timber framed buildings.",
+      "options": [
+       "Gas appliance safety.",
+       "Storage and handling of LP Gas.",
+       "Gas verification.",
+       "Pipe materials.",
+      ]
+    },
+    {
+      "id": 2,
+      "question": "What is the main constituent of natural gas?",
+      "answer": Methane.",
+      "options": [
+       "Propane.",
+       "Butane.",
+       "Hexane.",
+      "Pentane."
+      ]
+    },
+    {
+      "id": 3,
+      "question": "Butane is part of which family of gases?",
+      "answer": "3rd family.",
+      "options": [
+        "1st family.",
+        "2nd family.",
+        "4th family.",
+        "5th family."
+      ]
+    },
+    {
+      "id": 4,
+      "question": "What TWO main elements occur in both natural gas and LPG?",
+      "answer": "Carbon and hydrogen.",
+      "options": [
+       "Hydrogen and nitrogen.",
+       "Propane and butane.",
+       "Nitrogen and oxygen.",
+       "Hydrogen and oxygen."
+      ]
+    },
+    {
+      "id": 5,
+      "question": "Gases are classified in families. What does it mean if two gases are in the same family?",
+      "answer": "There is the possibility to interchange between the gases without the need to change the injector size.",
+      "options": [
+        "The gases require similar pressures to change state from gas into liquid.",
+        "The vaporisation points of the gases are within 25°C of each other ensuring even dilution of molecules once in a gas state.",
+        "The gases were separated after being extracted from the same well source.",
+        "There is not more than 1 kg/m³ difference in density between the gases."
+      ]
+    },
+    {
+      "id": 6,
+      "question": "A thermocouple produces an electrical current. Which reading would you expect to read on a multi-meter when testing a working thermocouple?",
+      "answer": "Between 20 and 35 mV.",
+      "options": [
+       "Between 20 and 35 Watts.",
+       "Between 20 and 35 Amps.",
+       "C": "Between 20 and 35 Volts.",
+       "Between 20 and 35 mA.",
+      ]
+    },
+    {
+      "id": 7,
+      "question": "What can occur within an appliance that has an efficiency exceeding 85%?",
+      "answer": "Condensation.",
+      "options": [
+        "Flame cooling.",
+        "Vitiation due to low flue temperatures.",
+        "Excessive carbon dioxide creation.",
+        "Excessive flame noise and lift."
+      ]
+    },
+    {
+      "id": 8,
+      "question": "Which statement best describes a thermistor?",
+      "answer": "A temperature dependant resistor.",
+      "options": [
+        "A vapour or liquid filled sensing vial.",
+        "A bimetallic temperature operated switch.",
+        ""An electronically controlled capacitor.",
+        "A mercury temperature sensing bulb."
+      ]
+    },
+    {
+      "id": 9,
+      "question": "Why are heating outlets from ducted warm air furnaces permitted to be installed in small bedrooms and bathrooms?",
+      "answer": "The combustion portion of the heater is room sealed.",
+      "options": [
+        "The ducting can be altered to restrict flow.",
+        "Convection heating cannot distribute carbon dioxide.",
+        "Adequate ventilation is provided by the return air grille.",
+        "The air entering the room is filtered."
+      ]
+    },
+    {
+      "id": 10,
+      "question": "What is the maximum permissible length of a restraint chain on an appliance that is designed to be slid out for servicing?",
+      "answer": "80% of the length of the hose assembly.",
+      "options": [
+       "75% of the length of the hose assembly.",
+       "85% of the length of the hose assembly.",
+       "90% of the length of the hose assembly.",
+       "95% of the length of the hose assembly."
+      ]
+    },
+    {
+      "id": 11,
+      "question": "Which device found in LPG pigtails and regulators limits the amount of gas flow to prevent a large accumulation of gas in the event of a leakage?",
+      "answer": "Excess flow device.",
+      "options": [
+        "Back-check module.",
+        "Overpressure relief.",
+        "Over pressure shut off.",
+        "Pressure limiting valve."
+      ]
+    },
+    {
+      "id": 12,
+      "question": "Which of the following best describes the term vitiation?",
+      "answer": "The contamination of air supply to a burner by the products of combustion.",
+      "options": [
+        "The flame of a burner lighting back to the injector.",
+        "The fluctuation of gas supply due to a highly sensitive regulator spring.",
+        "The process of combustion products corroding a flue.",
+        "Irregular flame due to decreasing gas supply.",
+      ]
+    },
+    {
+      "id": 13,
+      "question": "Which of the following is equivalent to 8 kW?",
+      "answer": "28.8 MJ.",
+      "options": [
+        "32.2 MJ.",
+        "68.4 MJ.",
+        "72.0 MJ.",
+        "80.0 MJ."
+      ]
+    },
+    {
+      "id": 14,
+      "question": "According to AS/NZS 5601 Part 1, what is the maximum flue gas temperature at which PVC-U (polyvinyl chloride) pipe may be used as flue?",
+      "answer": "60°C",
+      "options": [
+        "45°C",
+        "50°C",
+        "55°C",
+        "65°C"
+      ]
+    },
+    {
+      "id": 15,
+      "question": "When not specified in the appliance manufacturer’s instructions, what is the minimum height a natural draught flue can have?",
+      "answer": "1.2 m.",
+      "options": [
+        "0.6 m.",
+        "0.9 m.",
+        "1.0 m.",
+        "1.6 m"
+      ]
+    },
+    {
+      "id": 16,
+      "question": "According to AS/NZS 5601 Part 1, an exhaust duct is required to be fitted to a gas laundry dryer if the gas consumption exceeds which of the following?",
+      "answer": "10 MJ/h.",
+      "options": [
+        "18 MJ/h.",
+        "20 MJ/h.",
+        "24 MJ/h.",
+        "40 MJ/h"
+      ]
+    },
+    {
+      "id": 17,
+      "question": "Which of the following would cause gas to escape from the breather hole on an appliance regulator?",
+      "answer": "The regulator diaphragm has ruptured.",
+      "options": [
+        "The regulator adjustment screw cap has been left off.",
+        "The seat of the regulator valve has jammed closed.",
+        "The regulator breather hole has been enlarged.",
+        "The regulator is relieving excess pressure.",
+      ]
+    },
+    {
+      "id": 18,
+      "question": "Which of the following appliance types is most susceptible to adverse effects of air movement caused by the operation of mechanical ventilation systems?",
+      "answer": "Natural draught appliances.",
+      "options": [
+        "Balanced flued appliances.",
+        "Fan forced appliances.",
+        "Power flued appliances.",
+        "Room sealed appliances."
+      ]
+    },
+    {
+      "id": 19,
+      "question": "According to the Health and Safety in Employment Regulations, what term is used for work that is more dangerous than usual?",
+      "answer": "Notifiable work.",
+      "options": [
+        "Danger work.",
+        "High risk work.",
+        "Restricted work.",
+        "Specialised work."
+      ]
+    },
+    {
+      "id": 20,
+      "question": "LPG is part of which family of gases?",
+      "answer": "3rd family.",
+      "options": [
+        "1st family.",
+        "2nd family.",
+        "4th family.",
+        "5th family."
+      ]
+    },
+   {
+       "id": "21",
+       "question": "What is the air to gas ratio for complete combustion of natural gas?",
+       "answer": "10:1",
+       "options": ["15:1", "20:1", "25:1", "50:1"]
+     },
+     {
+       "id": "22",
+       "question": "What is the relative density of LPG?",
+       "answer": "1.55",
+       "options": ["0.50", "0.65", "0.95", "1.25"]
+     },
+     {
+       "id": "23",
+       "question": "Which of the following devices will shut off the gas supply in the event of mechanical ventilation failing to operate?",
+       "answer": "Fan interlock.",
+       "options": ["Carbon monoxide detector.", "Fire damper.", "Flame rectification device.", "Oxygen depletion device"]
+     },
+     {
+       "id": "24",
+       "question": "Which formula is used to calculate meter correction factor for pressure?",
+       "answer": "(101.3 + supply pressure) ÷ 101.3",
+       "options": ["101.3 + (2.5 ÷ 101.3)", "(101.3 x burner pressure) ÷ 101.3", "9.81 + (atmospheric pressure ÷ 101.3)", "(Atmospheric pressure + heating value) ÷ 101.3"]
+     },
+     {
+       "id": "25",
+       "question": "Which of the following is likely to cause an appliance regulator to make a chattering sound?",
+       "answer": "The regulator breather hole has been enlarged.",
+       "options": ["The injectors of the appliance are blocked.", "The regulator is leaking.", "The regulator is not receiving enough pressure.", "The regulator seat is jammed closed."]
+     },
+     {
+       "id": "26",
+       "question": "Which of the following is the vaporisation temperature for butane?",
+       "answer": "0°C",
+       "options": ["-43°C", "-25°C", "-15°C", "-10°C"]
+     },
+     {
+       "id": "27",
+       "question": "flue terminal and another flue terminal?",
+       "answer": "200 mm.",
+       "options": ["400 mm.", "500 mm.", "600 mm.", "1000 mm."]
+     },
+     {
+       "id": "28",
+       "question": "appliance where a twin wall flue is to be used in a cavity wall in a domestic location?",
+       "answer": "50 MJ/h.",
+       "options": ["18 MJ/h.", "24 MJ/h.", "40 MJ/h.", "65 MJ/h."]
+     },
+     {
+       "id": "29",
+       "question": "GSC stand for?",
+       "answer": "Gas Safety Certificate.",
+       "options": ["Gas Supply Connection.", "Gas Safety Commission.", "Gas Service Company.", "Gas Specific Calibration."]
+     },
+     {
+       "id": "30",
+       "question": "The efficiency of a gas appliance can be found using which calculation?",
+       "answer": "Appliance heat output ÷ heat input.",
+       "options": ["Appliance heat input ÷ heat output.", "Appliance MJ/h × heating value of the gas.", "Appliance MJ/m3 ÷ heating value of the gas.", "Appliance heat input × heat output."]
+     },
+     {
+       "id": "31",
+       "question": " A gas hob has been commissioned and is working correctly. When a wok is used on the gas hob, the bottom of the wok turns black with soot. Which of the following is the most likely cause of this?",
+       "answer": "The bottom of the wok is impinging on the burner flame.",
+       "options": ["The calorific value of the gas has altered.", "The wok is getting too hot and should be used on a smaller burner.", "The wok is positioned beyond the outer cone of the burner flame.", "The wok has a copper base which heats too quickly."]
+     },
+     {
+       "id": "32",
+       "question": "Which of the following safety devices will shut off gas supply in the event of mechanical ventilation failing to operate?",
+       "answer": "Fan interlock.",
+       "options": ["Flame rectification.", "Fire damper.", "Carbon monoxide detector.", "Oxygen depletion device."]
+     },
+     {
+       "id": "33",
+       "question": "Natural gas is part of which family of gases?",
+       "answer": "2nd family.",
+       "options": ["1st family.", "3rd family.", "4th family.", "5th family."]
+     },
+     {
+       "id": "34",
+       "question": "Which of the following appliance types is most susceptible to adverse effects of air movement caused by the operation of mechanical ventilation systems?",
+       "answer": "Natural draught appliances.",
+       "options": ["Balanced flued appliances.", "Power flued appliances.", "Fan forced appliances.", "Room sealed appliances."]
+     },
+     {
+       "id": "35",
+       "question": "Biogas mostly consists of methane and which other gas?",
+       "answer": "Carbon dioxide.",
+       "options": ["Propane.", "Butane.", "Pentane.", "Nitrogen."]
+     },
+     {
+       "id": "36",
+       "question": "Which of the following can be confirmed by gas rating an appliance?",
+       "answer": "The burner injector size is correct.",
+       "options": [ "The appliance efficiency.", "Correct air to gas ratio.", "The operation of the appliance safety devices.", "Correct operation of the appliance flue."]
+     },
+     {
+       "id": "37",
+       "question": "According to AS/NZS 5601 Part 1, what is the minimum permissible clearance above an 8 MJ/h overhead radiant heater that is installed indoors to a combustible surface?",
+       "answer": "900 mm.",
+       "options": ["400 mm.", "600 mm.", "800 mm.", "1100 mm."]
+     },
+     {
+       "id": "38",
+       "question": "According to AS/NZS 5601 Part 1, what colour must natural gas pipes be painted for identification purposes?",
+       "answer": "BS08C35 (buff).",
+       "options": ["BS07G38 (yellow).", "AS08H44 (green).", "NZ34A35 (bright yellow).", "BS09Y07 (grey)."]
+     },
+     {
+       "id": "39",
+       "question": "highest part of a gas hob and a range hood constructed of non-combustible materials?",
+       "answer": "600 mm.",
+       "options": ["350 mm.", "450 mm.", "500 mm.", "550 mm."]
+     },
+     {
+       "id": "40",
+       "question": "In what way does a thermopile differ from a thermocouple?",
+       "answer": "A thermopile is a collection of thermocouples within one probe.",
+       "options": ["A thermopile is constructed of a copper coil rather that a platinum one.", "The thermopile generates ohms rather than millivolts.", "The lifespan of a thermocouple is twice that of a thermopile.", "The core of a thermopile is removable for servicing."]
+     },
+     {
+         "id": "41",
+         "question": "According to AS/NZS 5601 Part 2, which of the following words makes a statement a recommendation?",
+         "answer": "Should.",
+         "options": ["Can.", "May.", "Shall.", "Will."]
+       },
+       {
+         "id": "42",
+         "question": "Which device is designed to shut off the gas supply if the mechanical ventilation for a room fails to operate?",
+         "answer": "Fan interlock.",
+         "options": ["Carbon dioxide detector.", "Combustion air pressure switch.", "Energy cut off.", "Flame rectification."]
+       },
+       {
+         "id": "43",
+         "question": "Which elements are present in both natural gas and LPG?",
+         "answer": "Carbon and hydrogen.",
+         "options": ["Hydrogen and nitrogen.", "Hydrogen and oxygen.", "Nitrogen and oxygen.", "Propane and butane"]
+       },
+       {
+         "id": "44",
+         "question": "According to AS/NZS 5601 Part 2, a cylinder compartment in a caravan must not be able to contain more than which of the following?",
+         "answer": "Two 15 kg LPG cylinders.",
+         "options": ["One 9 kg LPG cylinder.", "Two 9 kg LPG cylinders.", "One 15 kg LPG cylinder.", "One 45 kg LPG cylinder."]
+       },
+       {
+         "id": "45",
+         "question": "For gas pipework being installed in a caravan, pipe supports must be provided within what distance from a tee?",
+         "answer": "150 mm.",
+         "options": ["100 mm.", "200 mm.", "250 mm.", "300 mm"]
+       },
+       {
+         "id": "46",
+         "question": "When a caravan fitted with gas appliances requires ventilation, what is the maximum allowable distance between the floor and the low-level ventilation opening?",
+         "answer": "150 mm.",
+         "options": ["50 mm.", "100 mm.", "200 mm.", "250 mm"]
+       },
+       {
+         "id": "47",
+         "question": "According to AS/NZS 5601 Part 1, what is the maximum diameter hole permitted to be drilled in a joist, unless otherwise specified by the manufacturer?",
+         "answer": "32 mm.",
+         "options": ["25 mm.", "40 mm.", "45 mm.", "50 mm"]
+       },
+       {
+         "id": "48",
+         "question": "According to AS/NZS 5601 Part 1, except in single occupancy residential premises, above-ground consumer piping must be identified when the operating pressure exceeds which pressure?",
+         "answer": "7 kPa.",
+         "options": ["10 kPa.", "14 kPa.", "100 kPa.", "200 kPa"]
+       },
+       {
+         "id": "49",
+         "question": "Which government agency administers the gas installation high risk database?",
+         "answer": "WorkSafe New Zealand.",
+         "options": ["Gas Association of New Zealand.", "The Institute of Gas Engineers.", "The Plumbers, Gasfitters and Drainlayers Board.", "The local regional authority."]
+       },
+       {
+         "id": "50",
+         "question": "A soaker flashing is required to be installed on a flue penetrating a roof. Which of the following is the New Zealand Building Code clause that provides an acceptable solution for the installation?",
+         "answer": "E2.",
+         "options": ["B2.", "B4.", "E1.", "E4"]
+       },
+       {
+         "id": "51",
+         "question": "Which of the following gives the purpose of a flame retention device?",
+         "answer": "To prevent flame lift off.",
+         "options": ["To prevent a flame lighting explosively.", "To extinguish the flame if it gets too large.", "To limit the heat of the flame.", "To keep the flame trapped inside it."]
+       },
+       {
+         "id": "52",
+         "question": "According to AS/NZS 5601 Part 1, what is the minimum horizontal clearance required between a balanced flue terminal and a gas meter fitted with a venting regulator?",
+         "answer": "800 mm.",
+         "options": ["300 mm.", "400 mm.", "600 mm.", "1000 mm."]
+       },
+       {
+         "id": "53",
+         "question": "What can occur within an appliance that has an efficiency exceeding 85%?",
+         "answer": "Condensation.",
+         "options": ["Excessive CO2 creation.", "Excessive flame noise and lift.", "Flame cooling.", "Vitiation due to low temperatures."]
+       },
+       {
+         "id": "54",
+         "question": "According to AS/NZS 5601 Part 2, what is the minimum clearance required between installed gas piping and any electrical service?",
+         "answer": "25 mm.",
+         "options": ["10 mm.", "50 mm.", "100 mm.", "150 m"]
+       },
+       {
+         "id": "55",
+         "question": "According to AS/NZS 5601 Part 2, what is the minimum distance allowed between a fuel filler cap and a gas appliance with a permanent pilot (or its vent) in a motorhome?",
+         "answer": "1000 mm.",
+         "options": ["150 mm.", "250 mm.", "400 mm.", "600 mm."]
+       },
+       {
+         "id": "56",
+         "question": "Which of the following is the closest conversion of 28,000 BTU/h?",
+         "answer": "30 MJ/h.",
+         "options": ["2.8 MJ/h.", "30 MJ/h.", "77 MJ/h.", "100 MJ/h."]
+       },
+       {
+         "id": "57",
+         "question": "What is the minimum height at which work being carried out becomes notifiable work?",
+         "answer": "5.0 m.",
+         "options": ["2.4 m.", "3.0 m.", "7.5 m.", "12.0 m"]
+       },
+       {
+         "id": "58",
+         "question": "For what minimum period of time must a gasfitting trainee holding a limited certificate work in the presence of his/her supervisor?",
+         "answer": "12 months.",
+         "options": ["2 months.", "3 months.", "6 months.", "24 months."]
+       },
+       {
+         "id": "59",
+         "question": "Which of the following situations would be most likely to activate the high limit switch on a laundry dryer?",
+         "answer": "A blockage in the lint trap.",
+         "options": ["Fluctuation of the gas supply.", "Flame failure.", "Lack of combustion air.", "Blocked burner injecto"]
+       },
+       {
+         "id": "60",
+         "question": "Which of the following safety devices will shut off the gas supply in the event of mechanical ventilation failing to operate?",
+         "answer": "Fan interlock.",
+         "options": ["Flame rectification.", "Fire damper.", "Carbon monoxide detector.", "Under pressure shut off devic"]
+       },
+       {
+           "id": "61",
+           "question": "Which of the following best describes the term vitiation?",
+           "answer": "The contamination of the air supply by products of combustion.",
+           "options": ["The fluctuation of gas supply due to a highly sensitive regulator spring.", "The flow of combustion products as they enter a flue", "Irregular flame due to an object protruding into the outer cone of the flame.", "The flame of a burner lighting back to the injector"]
+         },
+         {
+           "id": "62",
+           "question": "If a combustible gas detection system is required to be installed on a boat, what is the minimum number of sensors required to be fitted?",
+           "answer": "2",
+           "options": ["1", "3", "4", "5"]
+         },
+         {
+           "id": "63",
+           "question": "An appliance with a continuously burning flame has been installed below the upper deck of a petrol-fuelled boat. There is a possibility of petrol vapour entering the space where the appliance is mounted. What is the minimum height above the deck on which the appliance is mounted that the air intake for the appliance must be?",
+           "answer": "600 mm",
+           "options": ["100 mm.", "200 mm.", "400 mm.", "500 mm."]
+         },
+         {
+           "id": "64",
+           "question": "Which of the following is not permitted to be used for gas piping in a caravan?",
+           "answer": "Multilayer proprietary systems.",
+           "options": ["Stainless steel.", "Copper.", "Proprietary stainless steel.", "Non-metallic hose assemblies."]
+         },
+         {
+           "id": "65",
+           "question": "What is the minimum distance gas piping can be installed from an electrical service in a boat?",
+           "answer": "25 mm.",
+           "options": ["50 mm.", "75 mm.", "100 mm.", "125 mm."]
+         },
+         {
+           "id": "66",
+           "question": "What is the minimum length a flexible connection is permitted to be if it is being used for the high pressure piping between an LPG cylinder and a regulator?",
+           "answer": "500 mm.",
+           "options": ["100 mm.", "200 mm.", "250 mm.", "600 mm"]
+         },
+         {
+           "id": "67",
+           "question": "Which of the following is not permitted to be located inside a caravan?",
+           "answer": "Quick connect device.",
+           "options": ["LPG cylinder.", "Room sealed appliance.", "Gas water heater.", "Flueless space hea"]
+         },
+         {
+           "id": "68",
+           "question": "Safety control systems are required when a person could face a fall of what height (or higher)?",
+           "answer": "E Any height",
+           "options": ["2.0 m.", "2.4 m.", "3.0 m.", "5.0 m."]
+         },
+         {
+           "id": "69",
+           "question": "A thermocouple produces electrical current. Which reading would be expected to see on a multi-meter when testing a working thermocouple?",
+           "answer": "Between 20 and 35 mV.",
+           "options": ["Between 20 and 35 Watts.", "Between 20 and 35 Amps.", "Between 20 and 35 Volts.", "Between 20 and 35 mA."]
+         },
+         {
+           "id": "70",
+           "question": "The burner on a newly installed LPG hob burns nicely on high but keeps going out when it is turned down to low. What is the most likely reason for this to occur?",
+           "answer": "The low flame has not been set correctly.",
+           "options": ["The wrong size injectors have been used.", "The hob is a natural gas appliance.", "The aeration has been set incorrectly.", "The wrong knobs are fitted to the appliance."]
+         },
+         {
+           "id": "71",
+           "question": "Which of the following can be confirmed by gas rating an appliance?",
+           "answer": "The burner injector size is correct.",
+           "options": ["B The appliance efficiency.", "Correct air to gas ratio.", "The operation of the appliance safety devices.", "Correct operation of the appliance flue."]
+         },
+         {
+           "id": "72",
+           "question": "Which of the following safety devices will shut off gas supply in the event of mechanical ventilation failing to operate?",
+           "answer": "Fan interlock.",
+           "options": ["Flame rectification.", "Fire damper.", "Carbon monoxide detector.", "Oxygen depletion device."]
+         },
+         {
+           "id": "73",
+           "question": "What TWO main elements occur in both natural gas and LPG?",
+           "answer": "Carbon and hydrogen.",
+           "options": ["Hydrogen and nitrogen.", "Propane and butane.", "Nitrogen and oxygen.", "Hydrogen and oxygen."]
+         },
+         {
+           "id": "74",
+           "question": "Which of the following is the government agency responsible for managing the database that contains the compliance declarations for gas appliances?",
+           "answer": "WorkSafe New Zealand.",
+           "options": ["Plumbers Gasfitters and Drainlayers Board.", "Environmental Protection Agency.", "Housing New Zealand.", "Gas Association of New Zealand."]
+         },
+         {
+           "id": "75",
+           "question": "According to AS/NZS 5601 Part 1, in what situation should cross-linked polyethylene/ aluminium/polyethylene multilayer gas pipe not be used?",
+           "answer": "Where it is exposed to sunlight.",
+           "options": ["Where operating temperatures exceed 40°C.", "Underground.", "Under a building.", "Inside a building framework."]
+         },
+         {
+           "id": "76",
+           "question": "According to AS/NZS 5601 Part 1, what is the minimum permitted thickness of a concrete precast chimney used for flue gases not exceeding 300°C?",
+           "answer": "50 mm.",
+           "options": ["60 mm.", "80 mm.", "100 mm.", "120 mm."]
+         },
+         {
+           "id": "77",
+           "question": "According to AS/NZS 5601 Part 1, what is required when a flanged joint is to be re-made?",
+           "answer": "The gasket should be replaced.",
+           "options": ["The gasket should be checked for defects before re-using it.", "Sealant should be applied to both sides of the gasket before refitting it.", "The gasket should be lightly sanded before re-fitting.", "The gasket should be soaked in jointing compound before re-fitting"]
+         }
+  ]}

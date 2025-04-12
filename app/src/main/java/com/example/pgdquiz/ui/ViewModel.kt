@@ -7,11 +7,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.ui.QuizMode
+import com.example.pgdquiz.ui.ui.QuizType
 import com.google.gson.Gson
 import java.io.InputStreamReader
 
 
 class QuizViewModel : ViewModel() {
+    private var allQuestions: List<Question> = emptyList()
     private var questions: List<Question> = emptyList()
     private val _currentQuestionIndex = mutableStateOf(0)
     val currentQuestionIndex: MutableState<Int> = _currentQuestionIndex
@@ -35,16 +37,17 @@ class QuizViewModel : ViewModel() {
     }
 
 
-    fun loadQuestionsFromRawResource(context: Context) {
+    fun loadQuestionsFromRawResource(context: Context, resId: Int) {
         try {
-            val inputStream = context.resources.openRawResource(R.raw.drainsquestions)
+            val inputStream = context.resources.openRawResource(resId)
             val reader = InputStreamReader(inputStream)
             val jsonString = reader.readText()
 
             Log.d("QuizViewModel", "Raw JSON content: $jsonString")
 
             val parsedResponse = gson.fromJson(jsonString, QuestionsResponse::class.java)
-
+            allQuestions = parsedResponse.questions.mapNotNull { question -> ... }
+            questions = allQuestions
             reader.close()
             inputStream.close()
 
@@ -63,7 +66,8 @@ class QuizViewModel : ViewModel() {
                 val safeAnswer = question.answer
                 val safeOptions = question.options?.filter { it.isNotEmpty() } ?: emptyList()
                 val newOptions = (safeOptions + safeAnswer).distinct().shuffled()
-                val finalOptions = if (newOptions.size < 2) listOf(safeAnswer, "Unknown") else newOptions
+                val finalOptions =
+                    if (newOptions.size < 2) listOf(safeAnswer, "Unknown") else newOptions
 
                 question.copy(options = finalOptions)
 
@@ -86,6 +90,7 @@ class QuizViewModel : ViewModel() {
     fun restoreLife() {
         _lives.value = 1
     }
+
     private val _quizComplete = mutableStateOf(false)
     val quizComplete: MutableState<Boolean> = _quizComplete
 
@@ -110,21 +115,30 @@ class QuizViewModel : ViewModel() {
 
         _selectedAnswer.value = null
     }
-    fun restartQuiz(mode: QuizMode, context: Context) {
+
+    fun restartQuiz(
+        mode: QuizMode, context: Context) {
         _lives.value = 3
         _streakCount.value = 0
         _selectedAnswer.value = null
         _quizComplete.value = false
         loadQuestions(context, mode)
     }
-    fun loadQuestions(context: Context, mode: QuizMode) {
-        loadQuestionsFromRawResource(context)
+
+    fun loadQuestions(context: Context, mode: QuizMode, quizType: QuizType) {
+        val resId = when (quizType) {
+            QuizType.DRAINLAYING -> R.raw.drainsquestions
+//            QuizType.PLUMBING -> R.raw.plumbingquestions
+//            QuizType.GASFITTING -> R.raw.gasquestions
+        }
+
+        loadQuestionsFromRawResource(context, resId)
 
         questions = when (mode) {
-            QuizMode.EASY -> questions.shuffled().take(25)
-            QuizMode.MEDIUM -> questions.shuffled().take(50)
+            QuizMode.EASY -> allQuestions.shuffled().take(25)
+            QuizMode.MEDIUM -> allQuestions.shuffled().take(50)
             QuizMode.HARD -> {
-                val base = questions.shuffled().take(50)
+                val base = allQuestions.shuffled().take(50)
                 (base + base.shuffled().take(50)).shuffled()
             }
         }
