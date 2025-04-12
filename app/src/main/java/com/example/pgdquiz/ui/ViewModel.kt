@@ -129,7 +129,7 @@ class QuizViewModel : ViewModel() {
         val resId = when (quizType) {
             QuizType.DRAINLAYING -> R.raw.drainsquestions
 //            QuizType.PLUMBING -> R.raw.plumbingquestions
-//            QuizType.GASFITTING -> R.raw.gasquestions
+           QuizType.GASFITTING -> R.raw.gasquestions
         }
 
         loadQuestionsFromRawResource(context, resId)
