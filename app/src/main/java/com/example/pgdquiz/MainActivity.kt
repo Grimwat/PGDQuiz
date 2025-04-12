@@ -25,28 +25,41 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
+            var selectedQuizType by remember { mutableStateOf<QuizType?>(null) }
             var selectedMode by remember { mutableStateOf<QuizMode?>(null) }
             val context = LocalContext.current
 
             PgdQuizTheme {
-                if (selectedMode == null) {
-                    QuizModeSelection(
-                        onSelectMode = { mode ->
-                            selectedMode = mode
-                            viewModel.loadQuestions(context, mode)
-                        }
-                    )
-                } else {
-                    DrainLayout(
-                        viewModel = viewModel,
-                        quizMode = selectedMode!!,
-                        onExit = {
-                            selectedMode = null
-                        },
-                        onBackToModeSelect = {
-                            selectedMode = null
-                        }
-                    )
+                when {
+                    selectedQuizType == null -> {
+                        QuizTypeSelection(
+                            onSelectQuizType = { quizType ->
+                                selectedQuizType = quizType
+                            }
+                        )
+                    }
+
+                    selectedMode == null -> {
+                        QuizModeSelection(
+                            onSelectMode = { mode ->
+                                selectedMode = mode
+                                viewModel.loadQuestions(context, mode, selectedQuizType!!)
+                            },
+                            onBack = { selectedQuizType = null } // go back to main quiz type screen
+                        )
+                    }
+
+                    else -> {
+                        DrainLayout(
+                            viewModel = viewModel,
+                            onExit = {
+                                selectedMode = null
+                            },
+                            onBackToModeSelect = {
+                                selectedMode = null
+                            }
+                        )
+                    }
                 }
             }
         }
