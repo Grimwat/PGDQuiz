@@ -46,10 +46,27 @@ class QuizViewModel : ViewModel() {
             Log.d("QuizViewModel", "Raw JSON content: $jsonString")
 
             val parsedResponse = gson.fromJson(jsonString, QuestionsResponse::class.java)
-            questions = allQuestions
             reader.close()
             inputStream.close()
 
+            if (parsedResponse?.questions.isNullOrEmpty()) {
+                Log.e("QuizViewModel", "No questions loaded!")
+                return
+            }
+
+            allQuestions = parsedResponse.questions.mapNotNull { question ->
+                if (question == null || question.answer.isNullOrEmpty()) {
+                    Log.e("QuizViewModel", "Skipping invalid question: $question")
+                    return@mapNotNull null
+                }
+
+                val safeAnswer = question.answer
+                val safeOptions = question.options?.filter { it.isNotEmpty() } ?: emptyList()
+                val newOptions = (safeOptions + safeAnswer).distinct().shuffled()
+                val finalOptions = if (newOptions.size < 2) listOf(safeAnswer, "Unknown") else newOptions
+
+                question.copy(options = finalOptions)
+            }
             if (parsedResponse?.questions.isNullOrEmpty()) {
                 Log.e("QuizViewModel", "No questions loaded!")
                 return

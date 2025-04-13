@@ -24,11 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.QuizViewModel
-import com.example.pgdquiz.ui.theme.PgdQuizTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 
@@ -126,14 +123,3 @@ fun ButtonGrid(
     }
 }
 
-@Preview
-@Composable
-fun GreetingPreview() {
-    val viewModel = QuizViewModel()
-    PgdQuizTheme {
-        viewModel.loadQuestionsFromRawResource(LocalContext.current)
-
-        ButtonGrid(viewModel = viewModel)
-
-    }
-}
