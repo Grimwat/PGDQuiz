@@ -3,9 +3,11 @@ package com.example.pgdquiz.ui
 data class Question(
     val id: Int,
     val question: String,
-    val answer: String,
+    val answer: Any,
     var options: List<String>,
     var isAnswerCorrect: Boolean = false,
+    val multipleAnswers: Boolean = false,
+    val imageOptions: Boolean = false
 ) {
     init {
         if (options.isEmpty()) {
@@ -17,15 +19,11 @@ data class Question(
         options.shuffled()
     }
 
-    val correctAnswerIndex: Int by lazy {
-        shuffledOptions.indexOf(answer)
+    fun correctAnswers(): List<String> = when (answer) {
+        is String -> listOf(answer)
+        is List<*> -> answer.filterIsInstance<String>()
+        else -> emptyList()
     }
-}
 
-fun Question.answers(): List<String> {
-    return options + answer
+    fun isOptionCorrect(option: String): Boolean = correctAnswers().contains(option)
 }
-
-data class QuestionsResponse(
-    val questions: List<Question>
-)
