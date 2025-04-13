@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui.ui
+package com.example.pgdquiz.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,7 +16,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun QuizTypeSelection(onSelectQuizType: (QuizType) -> Unit) {
+fun QuizTypeSelection(
+    onSelectQuizType: (QuizType) -> Unit,
+    onBack: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -42,6 +45,12 @@ fun QuizTypeSelection(onSelectQuizType: (QuizType) -> Unit) {
 
         Button(onClick = { onSelectQuizType(QuizType.GASFITTING) }) {
             Text("Gasfitting")
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Button(onClick = { onBack() }) {
+            Text("Back")
         }
     }
 }

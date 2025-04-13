@@ -6,8 +6,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.pgdquiz.R
-import com.example.pgdquiz.ui.ui.QuizMode
-import com.example.pgdquiz.ui.ui.QuizType
+import com.example.pgdquiz.ui.QuizMode
+import com.example.pgdquiz.ui.QuizType
 import com.google.gson.Gson
 import java.io.InputStreamReader
 
@@ -46,7 +46,6 @@ class QuizViewModel : ViewModel() {
             Log.d("QuizViewModel", "Raw JSON content: $jsonString")
 
             val parsedResponse = gson.fromJson(jsonString, QuestionsResponse::class.java)
-            allQuestions = parsedResponse.questions.mapNotNull { question -> ... }
             questions = allQuestions
             reader.close()
             inputStream.close()
@@ -117,19 +116,22 @@ class QuizViewModel : ViewModel() {
     }
 
     fun restartQuiz(
-        mode: QuizMode, context: Context) {
+        mode: QuizMode,
+        context: Context,
+        quizType: QuizType
+    ) {
         _lives.value = 3
         _streakCount.value = 0
         _selectedAnswer.value = null
         _quizComplete.value = false
-        loadQuestions(context, mode)
+        loadQuestions(context, mode, quizType)
     }
 
     fun loadQuestions(context: Context, mode: QuizMode, quizType: QuizType) {
         val resId = when (quizType) {
             QuizType.DRAINLAYING -> R.raw.drainsquestions
-//            QuizType.PLUMBING -> R.raw.plumbingquestions
-           QuizType.GASFITTING -> R.raw.gasquestions
+            QuizType.PLUMBING -> R.raw.plumbingquestions
+            QuizType.GASFITTING -> R.raw.gasquestions
         }
 
         loadQuestionsFromRawResource(context, resId)

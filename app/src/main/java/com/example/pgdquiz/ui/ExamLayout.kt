@@ -21,12 +21,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.R
-import com.example.pgdquiz.ui.ui.Banner
+import com.example.pgdquiz.ui.Banner
 import com.example.pgdquiz.ui.ui.ButtonGrid
 import com.example.pgdquiz.ui.ui.CongratulationsScreen
 import com.example.pgdquiz.ui.ui.LivesLost
 import com.example.pgdquiz.ui.ui.QuestionField
-import com.example.pgdquiz.ui.ui.QuizMode
 
 @Composable
 fun DrainLayout(
@@ -34,6 +33,7 @@ fun DrainLayout(
     viewModel: QuizViewModel,
     onExit: () -> Unit,
     quizMode: QuizMode,
+    quizType: QuizType,
     onBackToModeSelect: () -> Unit
 
 ) {
@@ -111,9 +111,9 @@ fun DrainLayout(
                         examEmoji = painterResource(R.drawable.happypoo2),
                         emojiCont = "happyPoo",
                         onRestart = {
-                            viewModel.restartQuiz(quizMode,context)
+                            viewModel.restartQuiz(quizMode, context, quizType)
                         },
-                        onBackToModeSelect = onBackToModeSelect
+                        onBackToModeSelect = { /* Your desired back-to-mode logic */ }
                     )
                 }
             }

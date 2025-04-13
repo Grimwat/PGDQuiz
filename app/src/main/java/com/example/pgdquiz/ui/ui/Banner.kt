@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui.ui
+package com.example.pgdquiz.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

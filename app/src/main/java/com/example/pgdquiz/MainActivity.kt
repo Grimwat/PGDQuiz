@@ -13,9 +13,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.pgdquiz.ui.DrainLayout
 import com.example.pgdquiz.ui.QuizViewModel
+import com.example.pgdquiz.ui.QuizType
+import com.example.pgdquiz.ui.QuizMode
+import com.example.pgdquiz.ui.QuizModeSelection
+import com.example.pgdquiz.ui.QuizTypeSelection
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
-import com.example.pgdquiz.ui.ui.QuizMode
-import com.example.pgdquiz.ui.ui.QuizModeSelection
 
 class MainActivity : ComponentActivity() {
     private val viewModel = QuizViewModel()
@@ -35,7 +37,8 @@ class MainActivity : ComponentActivity() {
                         QuizTypeSelection(
                             onSelectQuizType = { quizType ->
                                 selectedQuizType = quizType
-                            }
+                            },
+                            onBack = { /* You can leave this blank or handle app exit */ }
                         )
                     }
 
@@ -44,20 +47,27 @@ class MainActivity : ComponentActivity() {
                             onSelectMode = { mode ->
                                 selectedMode = mode
                                 viewModel.loadQuestions(context, mode, selectedQuizType!!)
+                            }
+                        )
+                    }
+
+                    selectedMode == null -> {
+                        QuizTypeSelection(
+                            onSelectQuizType = { quizType ->
+                                selectedQuizType = quizType
                             },
-                            onBack = { selectedQuizType = null } // go back to main quiz type screen
+                            onBack = {
+                                selectedQuizType = null }
                         )
                     }
 
                     else -> {
                         DrainLayout(
                             viewModel = viewModel,
-                            onExit = {
-                                selectedMode = null
-                            },
-                            onBackToModeSelect = {
-                                selectedMode = null
-                            }
+                            onExit = { selectedMode = null },
+                            quizMode = selectedMode!!,
+                            quizType = selectedQuizType!!,
+                            onBackToModeSelect = { selectedMode = null }
                         )
                     }
                 }
