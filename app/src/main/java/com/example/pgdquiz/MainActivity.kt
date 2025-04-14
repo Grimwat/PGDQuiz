@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.pgdquiz.ui.DrainLayout
 import com.example.pgdquiz.ui.QuizViewModel
@@ -35,10 +36,9 @@ class MainActivity : ComponentActivity() {
                 when {
                     selectedQuizType == null -> {
                         QuizTypeSelection(
+                            tradeTom = painterResource(R.drawable.neonsign),
                             onSelectQuizType = { quizType ->
-                                selectedQuizType = quizType
-                            },
-                            onBack = { /* You can leave this blank or handle app exit */ }
+                                selectedQuizType = quizType }
                         )
                     }
 
@@ -53,11 +53,10 @@ class MainActivity : ComponentActivity() {
 
                     selectedMode == null -> {
                         QuizTypeSelection(
+                            tradeTom = painterResource(R.drawable.neonsign),
                             onSelectQuizType = { quizType ->
                                 selectedQuizType = quizType
-                            },
-                            onBack = {
-                                selectedQuizType = null }
+                            }
                         )
                     }
 
