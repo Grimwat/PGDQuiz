@@ -77,9 +77,8 @@ fun AnswerButton(
                 contentAlignment = Alignment.Center
             ) {
                 if (imageOptions) {
+                    val context = LocalContext.current
                     val imageResId = remember(optionText) {
-                        // Try loading image from raw by name, fallback to placeholder
-                        val context = LocalContext.current
                         context.resources.getIdentifier(optionText, "raw", context.packageName)
                     }
 
