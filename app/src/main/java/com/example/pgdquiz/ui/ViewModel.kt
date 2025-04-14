@@ -138,6 +138,7 @@ class QuizViewModel : ViewModel() {
             QuizType.DRAINLAYING -> R.raw.drainsquestions
             QuizType.PLUMBING -> R.raw.plumbingquestions
             QuizType.GASFITTING -> R.raw.gasquestions
+            QuizType.DEFAULT -> error("QuizType.DEFAULT should not be used here")
         }
 
         loadQuestionsFromRawResource(context, resId)

@@ -30,24 +30,24 @@ private val DrainLightScheme = lightColorScheme(
     outline = DarkRed,
 )
 private val DarkColorScheme = darkColorScheme (
-    primary = LightRed,
+    primary = Black,
     secondary = Blue,
     onSurface = DarkBLue,
-    onBackground = Yellow,
-    onPrimary = Gas,
+    onBackground = Gas,
+    onPrimary = Yellow,
     tertiary = Grey,
-    background = Black,
+    background = LightRed,
     surface = DarkGrey,
     outline = DarkRed,
 )
 private val LightColorScheme = lightColorScheme(
-    primary = LightRed,
+    primary = Black,
     secondary = Blue,
     onSurface = DarkBLue,
-    onBackground = Yellow,
-    onPrimary = Gas,
+    onBackground = Gas,
+    onPrimary = Yellow,
     tertiary = Grey,
-    background = Black,
+    background = LightRed,
     surface = DarkGrey,
     outline = DarkRed,
 )
