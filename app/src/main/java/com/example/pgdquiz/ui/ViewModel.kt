@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.QuizMode
 import com.example.pgdquiz.ui.QuizType
+import androidx.compose.runtime.State
 import com.google.gson.Gson
 import java.io.InputStreamReader
 
@@ -27,15 +28,27 @@ class QuizViewModel : ViewModel() {
     private val _lives = mutableStateOf(3)
     val lives: MutableState<Int> = _lives
 
-    private val _selectedAnswer = mutableStateOf<String?>(null)
-    val selectedAnswer: MutableState<String?> = _selectedAnswer
+    private val _selectedAnswers = mutableStateOf(mutableSetOf<String>())
+    val selectedAnswers: State<Set<String>> get() = _selectedAnswers
+
+    private val _quizComplete = mutableStateOf(false)
+    val quizComplete: MutableState<Boolean> = _quizComplete
 
     private val gson = Gson()
 
     fun selectAnswer(answer: String) {
-        _selectedAnswer.value = answer
+        val current = _selectedAnswers.value
+        if (currentQuestion?.multipleAnswers == true) {
+            if (current.contains(answer)) {
+                current.remove(answer)
+            } else {
+                current.add(answer)
+            }
+            _selectedAnswers.value = current.toMutableSet()
+        } else {
+            _selectedAnswers.value = mutableSetOf(answer)
+        }
     }
-
 
     fun loadQuestionsFromRawResource(context: Context, resId: Int) {
         try {
@@ -49,54 +62,37 @@ class QuizViewModel : ViewModel() {
             reader.close()
             inputStream.close()
 
-            if (parsedResponse?.questions.isNullOrEmpty()) {
-                Log.e("QuizViewModel", "No questions loaded!")
-                return
-            }
+            val filteredQuestions = parsedResponse?.questions?.mapNotNull { question ->
+                if (question == null) return@mapNotNull null
 
-            allQuestions = parsedResponse.questions.mapNotNull { question ->
-                if (question == null || question.answer.isNullOrEmpty()) {
-                    Log.e("QuizViewModel", "Skipping invalid question: $question")
+                val correctAnswers = when (val ans = question.answer) {
+                    is String -> listOf(ans)
+                    is List<*> -> ans.filterIsInstance<String>()
+                    else -> emptyList()
+                }
+
+                if (correctAnswers.isEmpty()) {
+                    Log.e("QuizViewModel", "Skipping question with no valid answers: $question")
                     return@mapNotNull null
                 }
 
-                val safeAnswer = question.answer
                 val safeOptions = question.options?.filter { it.isNotEmpty() } ?: emptyList()
-                val newOptions = (safeOptions + safeAnswer).distinct().shuffled()
-                val finalOptions = if (newOptions.size < 2) listOf(safeAnswer, "Unknown") else newOptions
+                val newOptions = (safeOptions + correctAnswers).distinct().shuffled()
+                val finalOptions = if (newOptions.size < 2) listOf(correctAnswers.first(), "Unknown") else newOptions
 
                 question.copy(options = finalOptions)
-            }
-            if (parsedResponse?.questions.isNullOrEmpty()) {
-                Log.e("QuizViewModel", "No questions loaded!")
-                return
-            }
+            } ?: emptyList()
 
-            questions = parsedResponse.questions.mapNotNull { question ->
-
-                if (question == null || question.answer.isNullOrEmpty()) {
-                    Log.e("QuizViewModel", "Skipping invalid question: $question")
-                    return@mapNotNull null
-                }
-
-                val safeAnswer = question.answer
-                val safeOptions = question.options?.filter { it.isNotEmpty() } ?: emptyList()
-                val newOptions = (safeOptions + safeAnswer).distinct().shuffled()
-                val finalOptions =
-                    if (newOptions.size < 2) listOf(safeAnswer, "Unknown") else newOptions
-
-                question.copy(options = finalOptions)
-
-                question.copy(options = finalOptions)
-            }
+            allQuestions = filteredQuestions
+            questions = filteredQuestions
+            _currentQuestionIndex.value = 0
 
             if (questions.isEmpty()) {
                 Log.e("QuizViewModel", "All questions were invalid or missing answers.")
+            } else {
+                Log.d("QuizViewModel", "Loaded Questions: $questions")
             }
 
-            Log.d("QuizViewModel", "Loaded Questions: $questions")
-
-            _currentQuestionIndex.value = 0
         } catch (e: Exception) {
             Log.e("QuizViewModel", "Error loading questions: ${e.message}")
             e.printStackTrace()
@@ -107,15 +103,12 @@ class QuizViewModel : ViewModel() {
         _lives.value = 1
     }
 
-    private val _quizComplete = mutableStateOf(false)
-    val quizComplete: MutableState<Boolean> = _quizComplete
-
     fun nextQuestion() {
-        val selected = _selectedAnswer.value
-        val correct = currentQuestion?.answer
+        val selected = _selectedAnswers.value
+        val correct = currentQuestion?.correctAnswers() ?: emptyList()
 
-        if (selected != null && correct != null) {
-            if (selected == correct) {
+        if (selected.isNotEmpty()) {
+            if (selected.toSet() == correct.toSet()) {
                 _streakCount.value++
             } else {
                 _streakCount.value = 0
@@ -129,17 +122,13 @@ class QuizViewModel : ViewModel() {
             _quizComplete.value = true
         }
 
-        _selectedAnswer.value = null
+        _selectedAnswers.value = mutableSetOf()
     }
 
-    fun restartQuiz(
-        mode: QuizMode,
-        context: Context,
-        quizType: QuizType
-    ) {
+    fun restartQuiz(mode: QuizMode, context: Context, quizType: QuizType) {
         _lives.value = 3
         _streakCount.value = 0
-        _selectedAnswer.value = null
+        _selectedAnswers.value = mutableSetOf()
         _quizComplete.value = false
         loadQuestions(context, mode, quizType)
     }

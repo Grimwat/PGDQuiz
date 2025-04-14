@@ -1,5 +1,8 @@
 package com.example.pgdquiz.ui
 
+data class QuestionsResponse(
+    val questions: List<Question>
+)
 data class Question(
     val id: Int,
     val question: String,

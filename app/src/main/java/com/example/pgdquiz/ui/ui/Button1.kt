@@ -2,6 +2,7 @@ package com.example.pgdquiz.ui.ui
 
 import android.os.Handler
 import android.os.Looper
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -24,6 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.QuizViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -31,13 +35,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun AnswerButton(
-    buttonIndex: Int,
+    optionText: String,
     isSelected: Boolean,
     onButtonSelected: () -> Unit,
     modifier: Modifier = Modifier,
-    questionResourceId: String,
     isCorrect: Boolean,
-    showCorrectAnswer: Boolean
+    showCorrectAnswer: Boolean,
+    imageOptions: Boolean
 ) {
     Column(
         modifier = modifier,
@@ -45,7 +49,7 @@ fun AnswerButton(
         verticalArrangement = Arrangement.Center
     ) {
         Button(
-            onClick = { onButtonSelected() },
+            onClick = onButtonSelected,
             shape = RectangleShape,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
@@ -72,10 +76,25 @@ fun AnswerButton(
                     .padding(8.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = questionResourceId,
-                    color = Color.White
-                )
+                if (imageOptions) {
+                    val imageResId = remember(optionText) {
+                        // Try loading image from raw by name, fallback to placeholder
+                        val context = LocalContext.current
+                        context.resources.getIdentifier(optionText, "raw", context.packageName)
+                    }
+
+                    if (imageResId != 0) {
+                        Image(
+                            painter = painterResource(id = imageResId),
+                            contentDescription = optionText,
+                            modifier = Modifier.size(64.dp)
+                        )
+                    } else {
+                        Text("Image not found", color = Color.White)
+                    }
+                } else {
+                    Text(text = optionText, color = Color.White)
+                }
             }
         }
     }
@@ -87,24 +106,22 @@ fun ButtonGrid(
     viewModel: QuizViewModel = viewModel()
 ) {
     val currentQuestion = viewModel.currentQuestion ?: return
-    var selectedButtonIndex by remember { mutableStateOf(-1) }
-    var isAnswered by remember { mutableStateOf(false) }
+    val selectedAnswers = viewModel.selectedAnswers.value
     var showCorrectAnswer by remember { mutableStateOf(false) }
 
     Column(modifier = modifier) {
-        currentQuestion.shuffledOptions.forEachIndexed { index, option ->
+        currentQuestion.shuffledOptions.forEach { option ->
+            val isSelected = selectedAnswers.contains(option)
+            val isCorrect = currentQuestion.isOptionCorrect(option)
+
             AnswerButton(
-                buttonIndex = index,
-                isSelected = selectedButtonIndex == index,
-                onButtonSelected = {
-                    selectedButtonIndex = index
-                    isAnswered = true
-                    viewModel.selectAnswer(option)
-                },
-                questionResourceId = option,
-                modifier = modifier,
-                isCorrect = option == currentQuestion.answer,
-                showCorrectAnswer = showCorrectAnswer
+                optionText = option,
+                isSelected = isSelected,
+                onButtonSelected = { viewModel.selectAnswer(option) },
+                modifier = Modifier.padding(vertical = 4.dp),
+                isCorrect = isCorrect,
+                showCorrectAnswer = showCorrectAnswer,
+                imageOptions = currentQuestion.imageOptions
             )
         }
 
@@ -112,14 +129,13 @@ fun ButtonGrid(
             onClick = {
                 showCorrectAnswer = true
                 Handler(Looper.getMainLooper()).postDelayed({
-                    selectedButtonIndex = -1
-                    isAnswered = false
                     showCorrectAnswer = false
                     viewModel.nextQuestion()
                 }, 1500)
             },
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
         )
     }
 }
-
