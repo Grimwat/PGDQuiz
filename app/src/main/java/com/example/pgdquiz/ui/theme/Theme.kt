@@ -107,15 +107,21 @@ fun PgdQuizTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
+
         quizType == QuizType.GASFITTING && darkTheme -> GasfittingDarkColorScheme
         quizType == QuizType.GASFITTING -> GasfittingColorScheme
+
         quizType == QuizType.PLUMBING && darkTheme -> PlumbingDarkColorScheme
         quizType == QuizType.PLUMBING -> PlumbingColorScheme
+
         quizType == QuizType.DRAINLAYING && darkTheme -> DrainDarkScheme
         quizType == QuizType.DRAINLAYING -> DrainLightScheme
+
+
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
+
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,

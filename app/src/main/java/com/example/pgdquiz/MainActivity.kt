@@ -32,13 +32,14 @@ class MainActivity : ComponentActivity() {
             var selectedMode by remember { mutableStateOf<QuizMode?>(null) }
             val context = LocalContext.current
 
-            PgdQuizTheme {
+            PgdQuizTheme(quizType = selectedQuizType ?: QuizType.PLUMBING) {
                 when {
                     selectedQuizType == null -> {
                         QuizTypeSelection(
                             tradeTom = painterResource(R.drawable.neonsign),
                             onSelectQuizType = { quizType ->
-                                selectedQuizType = quizType }
+                                selectedQuizType = quizType
+                            }
                         )
                     }
 
@@ -47,15 +48,6 @@ class MainActivity : ComponentActivity() {
                             onSelectMode = { mode ->
                                 selectedMode = mode
                                 viewModel.loadQuestions(context, mode, selectedQuizType!!)
-                            }
-                        )
-                    }
-
-                    selectedMode == null -> {
-                        QuizTypeSelection(
-                            tradeTom = painterResource(R.drawable.neonsign),
-                            onSelectQuizType = { quizType ->
-                                selectedQuizType = quizType
                             }
                         )
                     }
