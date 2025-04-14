@@ -98,7 +98,4 @@ fun Banner(
 
 @Preview
 @Composable
-fun Drainpreview() {
-    PgdQuizTheme {
-    }
-}
+fun Drainpreview() {}

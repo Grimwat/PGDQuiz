@@ -58,7 +58,4 @@ fun NextButton(
 @Preview
 @Composable
 fun NextPreview() {
-    PgdQuizTheme {
-
-    }
 }

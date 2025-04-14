@@ -48,7 +48,5 @@ fun QuestionField(
 @Preview
 @Composable
 fun PreviewQuestionField() {
-    PgdQuizTheme {
 
-    }
 }
