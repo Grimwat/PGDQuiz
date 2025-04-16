@@ -25,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
@@ -131,15 +130,6 @@ fun QuizTypeSelection(
             verticalAlignment = Alignment.CenterVertically
         ) {
             QuizTypeButton(
-                text = "DRAINLAYING",
-                backgroundColor = MaterialTheme.colorScheme.outline,
-                borderColor = MaterialTheme.colorScheme.background,
-                modifier = Modifier.weight(1f),
-                logo = painterResource(R.drawable.drainlogo)
-            ) {onQuizTypeSelected(QuizType.DRAINLAYING)
-                onSelectQuizType(QuizType.DRAINLAYING) }
-
-            QuizTypeButton(
                 text = "PLUMBING",
                 backgroundColor = MaterialTheme.colorScheme.onSurface,
                 borderColor = MaterialTheme.colorScheme.secondary,
@@ -156,6 +146,16 @@ fun QuizTypeSelection(
                 logo = painterResource(R.drawable.gasslogo)
             ) { onQuizTypeSelected(QuizType.DRAINLAYING)
                 onSelectQuizType(QuizType.GASFITTING) }
+
+            QuizTypeButton(
+                text = "DRAINLAYING",
+                backgroundColor = MaterialTheme.colorScheme.outline,
+                borderColor = MaterialTheme.colorScheme.background,
+                modifier = Modifier.weight(1f),
+                logo = painterResource(R.drawable.drainlogo)
+            ) {onQuizTypeSelected(QuizType.DRAINLAYING)
+                onSelectQuizType(QuizType.DRAINLAYING) }
+
         }
         Spacer(modifier = Modifier.height(50.dp))
     }

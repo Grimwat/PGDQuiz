@@ -77,16 +77,15 @@ fun LivesLost(
 
                 Button(
                     onClick = onExit,
-                    enabled = false,
                     shape = RoundedCornerShape(8.dp),
                     border = BorderStroke(
                         2.dp,
-                        MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
+                        MaterialTheme.colorScheme.primary
                     ),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.outline,
-                        disabledContainerColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
-                        disabledContentColor = Color.White.copy(alpha = 0.3f)
+                        disabledContainerColor = MaterialTheme.colorScheme.outline,
+                        disabledContentColor = Color.White
                     )
                 ) {
                     Text("Leave Quiz")

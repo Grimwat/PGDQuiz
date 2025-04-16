@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -33,6 +34,8 @@ fun DrainLayout(
     modifier: Modifier = Modifier,
     viewModel: QuizViewModel,
     onExit: () -> Unit,
+    examEmoji: Painter,
+    examCont: String,
     quizMode: QuizMode,
     quizType: QuizType,
     onBackToModeSelect: () -> Unit
@@ -54,14 +57,12 @@ fun DrainLayout(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Banner(
-                examType = "Drainlaying",
-                examEmoji = painterResource(R.drawable.happypoo2),
-                emojiCont = "happyPoo",
+                quizType = quizType,
+                emojiCont = examCont,
                 attempts = viewModel.lives.value,
-                icon = painterResource(R.drawable.flame1),
-                streak = "Streak Count",
                 streakCount = viewModel.streakCount.value,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                onBack = onBackToModeSelect
             )
             Spacer(modifier = Modifier.padding(4.dp))
             QuestionField(

@@ -17,12 +17,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun QuizModeSelection(
+    quizType: QuizType,
+    tradeTom: Painter,
     modifier: Modifier = Modifier,
     onSelectMode: (mode: QuizMode) -> Unit
 ) {
@@ -34,30 +37,26 @@ fun QuizModeSelection(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Banner(
-            examType = "Drainlaying",
-            examEmoji = painterResource(com.example.pgdquiz.R.drawable.happypoo2),
-            emojiCont = "happyPoo",
+            quizType = quizType,
+            emojiCont = "Exam Icon",
             attempts = 0,
-            icon = painterResource(com.example.pgdquiz.R.drawable.flame1),
-            streak = "StreakCount",
             streakCount = 0,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            onBack = { /* Handle back nav if needed */ }
         )
+
         Spacer(modifier = Modifier.padding(32.dp))
+
         Button(
             onClick = { onSelectMode(QuizMode.EASY) },
             shape = RoundedCornerShape(8.dp),
-            border = BorderStroke(
-                2.dp,
-                MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
-            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.outline,
-                disabledContainerColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
-                disabledContentColor = Color.White.copy(alpha = 0.3f)
-            ),
-            modifier = Modifier.fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp)
+                containerColor = MaterialTheme.colorScheme.outline
+            )
         ) {
             Text("25 Questions")
         }
@@ -65,17 +64,13 @@ fun QuizModeSelection(
         Button(
             onClick = { onSelectMode(QuizMode.MEDIUM) },
             shape = RoundedCornerShape(8.dp),
-            border = BorderStroke(
-                2.dp,
-                MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
-            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.outline,
-                disabledContainerColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
-                disabledContentColor = Color.White.copy(alpha = 0.3f)
-            ),
-            modifier = Modifier.fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp)
+                containerColor = MaterialTheme.colorScheme.outline
+            )
         ) {
             Text("50 Questions")
         }
@@ -83,27 +78,20 @@ fun QuizModeSelection(
         Button(
             onClick = { onSelectMode(QuizMode.HARD) },
             shape = RoundedCornerShape(8.dp),
-            border = BorderStroke(
-                2.dp,
-                MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
-            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.outline,
-                disabledContainerColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
-                disabledContentColor = Color.White.copy(alpha = 0.3f)
-            ),
-            modifier = Modifier.fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp)
+                containerColor = MaterialTheme.colorScheme.outline
+            )
         ) {
             Text("100 Questions")
         }
-
-        //BannerAd()
     }
 }
 
 @Preview
 @Composable
 fun QuizModePreview() {
-    QuizModeSelection {  }
 }

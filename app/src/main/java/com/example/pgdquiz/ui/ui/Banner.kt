@@ -10,31 +10,39 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.example.pgdquiz.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 @Composable
 fun Banner(
-    examType: String,
-    examEmoji: Painter,
+    quizType: QuizType,
     emojiCont: String,
     attempts: Int,
-    icon: Painter,
-    streak: String,
     streakCount: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onBack: () -> Unit
 ) {
+    val (title, examEmoji) = when (quizType) {
+        QuizType.DRAINLAYING -> "Drainlaying" to R.drawable.happypoo2
+        QuizType.PLUMBING -> "Plumbing" to R.drawable.droplet
+        QuizType.GASFITTING -> "Gasfitting" to R.drawable.pressure
+        QuizType.DEFAULT -> "PGD Quiz" to R.drawable.neonsign2
+    }
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -42,60 +50,54 @@ fun Banner(
             .background(color = MaterialTheme.colorScheme.tertiary)
             .border(width = 4.dp, color = MaterialTheme.colorScheme.surface),
         contentAlignment = Alignment.Center
-
     ) {
         Row(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 120.dp, top = 16.dp, bottom = 16.dp),
+                .padding(horizontal = 8.dp, vertical = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            IconButton(onClick = onBack) {
+                Icon(
+                    painter = painterResource(id = R.drawable.arrow),
+                    contentDescription = "Back"
+                )
+            }
             Text(
-                text = examType,
-                maxLines = 1,
+                text = title,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier,
+                modifier = Modifier.weight(1f),
                 textAlign = TextAlign.Center
             )
             Row {
                 Image(
-                    painter = icon,
-                    contentDescription = streak,
-                    modifier = Modifier
-                        .size(40.dp),
+                    painter = painterResource(R.drawable.flame1),
+                    contentDescription = "Streak Icon",
+                    modifier = Modifier.size(40.dp)
                 )
                 Text(
                     text = streakCount.toString(),
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(top = 10.dp),
-                    textAlign = TextAlign.Center
+                    modifier = Modifier.padding(top = 10.dp)
                 )
             }
-            Row(modifier = Modifier.padding()) {
+            Row {
                 Image(
-                    painter = examEmoji,
+                    painter = painterResource(examEmoji),
                     contentDescription = emojiCont,
-                    modifier = Modifier
-                        .size(40.dp),
+                    modifier = Modifier.size(40.dp),
                     contentScale = ContentScale.Fit
                 )
-
                 Text(
                     text = attempts.toString(),
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(top = 10.dp),
-                    textAlign = TextAlign.Center
+                    modifier = Modifier.padding(top = 10.dp)
                 )
             }
-
         }
     }
 }
-
-
 @Preview
 @Composable
 fun Drainpreview() {}

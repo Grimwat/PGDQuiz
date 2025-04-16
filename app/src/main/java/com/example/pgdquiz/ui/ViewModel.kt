@@ -126,7 +126,7 @@ class QuizViewModel : ViewModel() {
     }
 
     fun restartQuiz(mode: QuizMode, context: Context, quizType: QuizType) {
-        _lives.value = 3
+        _lives.value = 5
         _streakCount.value = 0
         _selectedAnswers.value = mutableSetOf()
         _quizComplete.value = false

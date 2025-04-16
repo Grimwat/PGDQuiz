@@ -16,38 +16,60 @@ import com.example.pgdquiz.ui.theme.PgdQuizTheme
 @Composable
 fun QuizApp(
     viewModel: QuizViewModel,
-    onQuizTypeSelected: (QuizType) -> Unit
+    onQuizTypeSelected: (QuizType) -> Unit,
+    examType: String
 ) {
     var selectedQuizType by remember { mutableStateOf<QuizType?>(null) }
     var selectedMode by remember { mutableStateOf<QuizMode?>(null) }
-    val context = LocalContext.current
+
+    val context = LocalContext.current // Correctly access context here
 
     when {
         selectedQuizType == null -> {
             QuizTypeSelection(
-                tradeTom = painterResource(R.drawable.neonsign2),
                 onSelectQuizType = { quizType ->
                     selectedQuizType = quizType
                 },
-                onQuizTypeSelected = onQuizTypeSelected
+                onQuizTypeSelected = onQuizTypeSelected,
+                tradeTom = painterResource(id = R.drawable.neonsign2)
             )
         }
 
         selectedMode == null -> {
+            val emojiResId = when (selectedQuizType) {
+                QuizType.DRAINLAYING -> R.drawable.happypoo2
+                QuizType.PLUMBING -> R.drawable.droplet
+                QuizType.GASFITTING -> R.drawable.pressure
+                QuizType.DEFAULT, null -> R.drawable.neonsign2
+            }
+
+
             QuizModeSelection(
+                quizType = selectedQuizType!!,
                 onSelectMode = { mode ->
                     selectedMode = mode
                     viewModel.loadQuestions(context, mode, selectedQuizType!!)
-                }
+                },
+                tradeTom = painterResource(id = emojiResId)
             )
         }
 
         else -> {
+            val (examCont, emojiResId) = when (selectedQuizType) {
+                QuizType.DRAINLAYING -> "Drainlaying" to R.drawable.happypoo2
+                QuizType.PLUMBING -> "Plumbing" to R.drawable.droplet
+                QuizType.GASFITTING -> "Gasfitting" to R.drawable.pressure
+                QuizType.DEFAULT, null -> "PGD Quiz" to R.drawable.neonsign2
+            }
+            val examEmoji = painterResource(id = emojiResId)
+
             DrainLayout(
                 viewModel = viewModel,
                 onExit = { selectedMode = null },
                 quizMode = selectedMode!!,
                 quizType = selectedQuizType!!,
+                examEmoji = examEmoji,
+                examCont = examCont,
                 onBackToModeSelect = { selectedMode = null }
             )
         }
