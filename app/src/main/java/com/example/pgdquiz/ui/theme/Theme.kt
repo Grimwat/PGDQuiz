@@ -60,12 +60,12 @@ private val GasfittingDarkColorScheme = darkColorScheme (
     outline = Yellow,
     )
 private val GasfittingColorScheme = lightColorScheme(
-    primary = Yellow,
+    primary = Gas,
     secondary = Green,
     tertiary = Grey,
     background = Black,
     surface = DarkGrey,
-    outline = Gas,
+    outline = Yellow,
 )
 private val PlumbingDarkColorScheme = darkColorScheme (
     primary = DarkBLue,

@@ -7,8 +7,10 @@ import com.example.pgdquiz.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,118 +23,141 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
+
+@Composable
+fun QuizTypeButton(
+    text: String,
+    backgroundColor: Color,
+    logo: Painter,
+    borderColor: Color,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier
+            .fillMaxHeight()
+            .padding(horizontal = 4.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.Transparent,
+            contentColor = Color.Unspecified
+        ),
+        shape = RoundedCornerShape(12.dp),
+        contentPadding = PaddingValues(0.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(12.dp))
+                .background(backgroundColor)
+                .border(
+                    width = 4.dp,
+                    color = borderColor,
+                    shape = RoundedCornerShape(12.dp)
+                )
+                .padding(8.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = logo,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .alpha(0.2f), // 👈 20% opacity for subtle background
+                contentScale = ContentScale.Crop
+            )
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                text.forEach { letter ->
+                    Text(
+                        text = letter.toString(),
+                        color = Color.White,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            }
+        }
+    }
+}
+
 
 @Composable
 fun QuizTypeSelection(
     onSelectQuizType: (QuizType) -> Unit,
-    tradeTom: Painter
+    tradeTom: Painter,
+    onQuizTypeSelected: (QuizType) -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 48.dp)
             .background(color = MaterialTheme.colorScheme.primary)
     ) {
-        Image(
-            painter = tradeTom,
-            contentDescription = "TradesmanTom",
-            modifier = Modifier
-                .fillMaxWidth(),
 
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = tradeTom,
+                contentDescription = "TradesmanTom",
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentScale = ContentScale.Fit
             )
+        }
+
+
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(150.dp),
+                .padding(horizontal = 16.dp)
+                .height(300.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            QuizTypeButton(
+                text = "DRAINLAYING",
+                backgroundColor = MaterialTheme.colorScheme.outline,
+                borderColor = MaterialTheme.colorScheme.background,
+                modifier = Modifier.weight(1f),
+                logo = painterResource(R.drawable.drainlogo)
+            ) {onQuizTypeSelected(QuizType.DRAINLAYING)
+                onSelectQuizType(QuizType.DRAINLAYING) }
 
-            Button(
-                onClick = { onSelectQuizType(QuizType.DRAINLAYING) },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = Color.Unspecified
-                ),
-            ) {
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(MaterialTheme.colorScheme.outline)
-                        .border(
-                            width = 4.dp,
-                            color = MaterialTheme.colorScheme.background
-                        )
-                        .padding(8.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        "Drainlaying",
-                        color = Color.White
-                    )
-                }
-            }
+            QuizTypeButton(
+                text = "PLUMBING",
+                backgroundColor = MaterialTheme.colorScheme.onSurface,
+                borderColor = MaterialTheme.colorScheme.secondary,
+                modifier = Modifier.weight(1f),
+                logo = painterResource(R.drawable.plumblogo)
+            ) { onQuizTypeSelected(QuizType.DRAINLAYING)
+                onSelectQuizType(QuizType.PLUMBING) }
 
-            Button(
-                onClick = { onSelectQuizType(QuizType.PLUMBING) },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = Color.Unspecified
-                ),
-                ) {
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(MaterialTheme.colorScheme.onSurface)
-                        .border(
-                            width = 4.dp,
-                            color = MaterialTheme.colorScheme.secondary
-                        )
-                        .padding(8.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        "Plumbing",
-                        color = Color.White
-                    )
-                }
-            }
-
-
-                Button(
-                onClick = { onSelectQuizType(QuizType.GASFITTING) },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = Color.Unspecified
-                ),
-
-                ) {
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(MaterialTheme.colorScheme.onBackground)
-                        .border(
-                            width = 4.dp,
-                            color = MaterialTheme.colorScheme.onPrimary
-                        )
-                        .padding(8.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("Gasfitting",
-                        color = Color.White)
-                }
-            }
+            QuizTypeButton(
+                text = "GASFITTING",
+                backgroundColor = MaterialTheme.colorScheme.onBackground,
+                borderColor = MaterialTheme.colorScheme.onPrimary,
+                modifier = Modifier.weight(1f),
+                logo = painterResource(R.drawable.gasslogo)
+            ) { onQuizTypeSelected(QuizType.DRAINLAYING)
+                onSelectQuizType(QuizType.GASFITTING) }
         }
+        Spacer(modifier = Modifier.height(50.dp))
     }
 }
 
@@ -142,7 +167,9 @@ fun QuizTypeSelectionPreview() {
     PgdQuizTheme(quizType = QuizType.DEFAULT) {
         QuizTypeSelection(
             tradeTom = painterResource(id = R.drawable.neonsign),
-            onSelectQuizType = {}
+            onSelectQuizType = {},
+            onQuizTypeSelected = {}
+
         )
     }
 }

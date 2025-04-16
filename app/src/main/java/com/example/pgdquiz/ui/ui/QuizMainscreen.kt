@@ -14,40 +14,42 @@ import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 
 @Composable
-fun QuizApp(viewModel: QuizViewModel) {
+fun QuizApp(
+    viewModel: QuizViewModel,
+    onQuizTypeSelected: (QuizType) -> Unit
+) {
     var selectedQuizType by remember { mutableStateOf<QuizType?>(null) }
     var selectedMode by remember { mutableStateOf<QuizMode?>(null) }
     val context = LocalContext.current
 
-    PgdQuizTheme(quizType = selectedQuizType ?: QuizType.PLUMBING) {
-        when {
-            selectedQuizType == null -> {
-                QuizTypeSelection(
-                    tradeTom = painterResource(R.drawable.neonsign),
-                    onSelectQuizType = { quizType ->
-                        selectedQuizType = quizType
-                    }
-                )
-            }
+    when {
+        selectedQuizType == null -> {
+            QuizTypeSelection(
+                tradeTom = painterResource(R.drawable.neonsign2),
+                onSelectQuizType = { quizType ->
+                    selectedQuizType = quizType
+                },
+                onQuizTypeSelected = onQuizTypeSelected
+            )
+        }
 
-            selectedMode == null -> {
-                QuizModeSelection(
-                    onSelectMode = { mode ->
-                        selectedMode = mode
-                        viewModel.loadQuestions(context, mode, selectedQuizType!!)
-                    }
-                )
-            }
+        selectedMode == null -> {
+            QuizModeSelection(
+                onSelectMode = { mode ->
+                    selectedMode = mode
+                    viewModel.loadQuestions(context, mode, selectedQuizType!!)
+                }
+            )
+        }
 
-            else -> {
-                DrainLayout(
-                    viewModel = viewModel,
-                    onExit = { selectedMode = null },
-                    quizMode = selectedMode!!,
-                    quizType = selectedQuizType!!,
-                    onBackToModeSelect = { selectedMode = null }
-                )
-            }
+        else -> {
+            DrainLayout(
+                viewModel = viewModel,
+                onExit = { selectedMode = null },
+                quizMode = selectedMode!!,
+                quizType = selectedQuizType!!,
+                onBackToModeSelect = { selectedMode = null }
+            )
         }
     }
 }
