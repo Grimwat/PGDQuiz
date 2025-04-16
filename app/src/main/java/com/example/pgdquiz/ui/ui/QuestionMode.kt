@@ -27,6 +27,9 @@ fun QuizModeSelection(
     quizType: QuizType,
     tradeTom: Painter,
     modifier: Modifier = Modifier,
+    onBackToQuizType: () -> Unit,
+    lives: Int,
+    streak: Int,
     onSelectMode: (mode: QuizMode) -> Unit
 ) {
     Column(
@@ -39,10 +42,10 @@ fun QuizModeSelection(
         Banner(
             quizType = quizType,
             emojiCont = "Exam Icon",
-            attempts = 0,
-            streakCount = 0,
+            attempts = lives,
+            streakCount = streak,
             modifier = Modifier.fillMaxWidth(),
-            onBack = { /* Handle back nav if needed */ }
+            onBack = onBackToQuizType
         )
 
         Spacer(modifier = Modifier.padding(32.dp))
@@ -52,13 +55,15 @@ fun QuizModeSelection(
             shape = RoundedCornerShape(8.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 24.dp),
             border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.outline
             )
-        ) {
-            Text("25 Questions")
+        ) {Column {
+            Text("25 Questions",)
+            Text("Easy")
+        }
         }
 
         Button(
@@ -66,13 +71,16 @@ fun QuizModeSelection(
             shape = RoundedCornerShape(8.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 24.dp),
             border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.outline
             )
         ) {
-            Text("50 Questions")
+            Column {
+                Text("50 Questions")
+                Text("Medium")
+            }
         }
 
         Button(
@@ -80,13 +88,16 @@ fun QuizModeSelection(
             shape = RoundedCornerShape(8.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 24.dp),
             border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.outline
             )
         ) {
-            Text("100 Questions")
+            Column {
+                Text("100 Questions")
+                Text("Hard")
+            }
         }
     }
 }

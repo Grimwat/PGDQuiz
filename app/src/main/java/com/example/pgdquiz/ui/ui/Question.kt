@@ -1,8 +1,10 @@
 package com.example.pgdquiz.ui.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,20 +13,33 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import com.example.pgdquiz.R
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.Question
+import com.example.pgdquiz.ui.QuizType
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 @Composable
 fun QuestionField(
+    quizType: QuizType,
     modifier: Modifier = Modifier,
     question: Question?,
 ) {
+    val ExamId = when (quizType) {
+        QuizType.GASFITTING -> R.drawable.gasslogo
+        QuizType.PLUMBING -> R.drawable.plumblogo
+        QuizType.DRAINLAYING -> R.drawable.drainlogo
+        QuizType.DEFAULT -> null
+    }
     Box(
         modifier = modifier
             .wrapContentSize()
@@ -33,6 +48,14 @@ fun QuestionField(
             .border(width = 4.dp, color = MaterialTheme.colorScheme.outline),
         contentAlignment = Alignment.Center
     ) {
+        Image(
+            painter = painterResource(ExamId),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxSize()
+                .alpha(0.2f),
+            contentScale = ContentScale.None
+        )
         Text(
             modifier = Modifier
                 .clip(RoundedCornerShape(16.dp))

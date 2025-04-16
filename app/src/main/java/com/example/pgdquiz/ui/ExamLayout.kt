@@ -67,7 +67,8 @@ fun DrainLayout(
             Spacer(modifier = Modifier.padding(4.dp))
             QuestionField(
                 question = viewModel.currentQuestion,
-                modifier = Modifier.padding(start = 10.dp, end = 10.dp)
+                modifier = Modifier.padding(start = 10.dp, end = 10.dp),
+                quizType = quizType,
             )
             ButtonGrid(viewModel = viewModel)
 //        BannerAd()

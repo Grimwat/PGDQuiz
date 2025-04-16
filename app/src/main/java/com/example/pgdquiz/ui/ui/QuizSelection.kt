@@ -72,8 +72,8 @@ fun QuizTypeButton(
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxSize()
-                    .alpha(0.2f), // 👈 20% opacity for subtle background
-                contentScale = ContentScale.Crop
+                    .alpha(0.2f),
+                contentScale = ContentScale.None
             )
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -135,7 +135,7 @@ fun QuizTypeSelection(
                 borderColor = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.weight(1f),
                 logo = painterResource(R.drawable.plumblogo)
-            ) { onQuizTypeSelected(QuizType.DRAINLAYING)
+            ) { onQuizTypeSelected(QuizType.PLUMBING)
                 onSelectQuizType(QuizType.PLUMBING) }
 
             QuizTypeButton(
@@ -144,7 +144,7 @@ fun QuizTypeSelection(
                 borderColor = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.weight(1f),
                 logo = painterResource(R.drawable.gasslogo)
-            ) { onQuizTypeSelected(QuizType.DRAINLAYING)
+            ) { onQuizTypeSelected(QuizType.GASFITTING)
                 onSelectQuizType(QuizType.GASFITTING) }
 
             QuizTypeButton(

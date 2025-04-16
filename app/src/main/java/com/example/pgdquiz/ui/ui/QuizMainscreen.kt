@@ -17,21 +17,22 @@ import com.example.pgdquiz.ui.theme.PgdQuizTheme
 fun QuizApp(
     viewModel: QuizViewModel,
     onQuizTypeSelected: (QuizType) -> Unit,
-    examType: String
 ) {
     var selectedQuizType by remember { mutableStateOf<QuizType?>(null) }
     var selectedMode by remember { mutableStateOf<QuizMode?>(null) }
 
-    val context = LocalContext.current // Correctly access context here
+    val context = LocalContext.current
 
     when {
         selectedQuizType == null -> {
+            onQuizTypeSelected(QuizType.DEFAULT)
             QuizTypeSelection(
                 onSelectQuizType = { quizType ->
                     selectedQuizType = quizType
+                    onQuizTypeSelected(quizType)
                 },
                 onQuizTypeSelected = onQuizTypeSelected,
-                tradeTom = painterResource(id = R.drawable.neonsign2)
+                tradeTom = painterResource(id = R.drawable.neonsign3)
             )
         }
 
@@ -50,7 +51,10 @@ fun QuizApp(
                     selectedMode = mode
                     viewModel.loadQuestions(context, mode, selectedQuizType!!)
                 },
-                tradeTom = painterResource(id = emojiResId)
+                tradeTom = painterResource(id = emojiResId),
+                onBackToQuizType = { selectedQuizType = null },
+                lives = viewModel.lives.value,
+                streak = viewModel.streakCount.value
             )
         }
 
@@ -70,7 +74,8 @@ fun QuizApp(
                 quizType = selectedQuizType!!,
                 examEmoji = examEmoji,
                 examCont = examCont,
-                onBackToModeSelect = { selectedMode = null }
+                onBackToModeSelect = { selectedMode = null
+                    selectedQuizType = null}
             )
         }
     }
