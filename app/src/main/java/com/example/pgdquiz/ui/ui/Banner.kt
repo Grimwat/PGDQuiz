@@ -1,5 +1,6 @@
 package com.example.pgdquiz.ui
 
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -37,8 +38,8 @@ fun Banner(
 ) {
     val (title, examEmoji) = when (quizType) {
         QuizType.DRAINLAYING -> "Drainlaying" to R.drawable.happypoo2
-        QuizType.PLUMBING -> "Plumbing" to R.drawable.droplet
-        QuizType.GASFITTING -> "Gasfitting" to R.drawable.pressure
+        QuizType.PLUMBING -> "Plumbing" to R.drawable.drop2
+        QuizType.GASFITTING -> "Gasfitting" to R.drawable.pressure2
         QuizType.DEFAULT -> "PGD Quiz" to R.drawable.neonsign2
     }
 
@@ -50,28 +51,36 @@ fun Banner(
             .border(width = 4.dp, color = MaterialTheme.colorScheme.surface),
         contentAlignment = Alignment.Center
     ) {
+        val iconSize = 40.dp
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 20.dp),
+                .padding(horizontal = 8.dp, vertical = 24.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             IconButton(onClick = onBack) {
                 Icon(
                     painter = painterResource(id = R.drawable.arrow),
-                    contentDescription = "Back"
+                    contentDescription = "Back",
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .size(iconSize)
                 )
             }
             Text(
                 text = title,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                .padding(start = 28.dp, top = 16.dp),
                 textAlign = TextAlign.Center
             )
-            val iconSize = 40.dp
 
-            Row {
+            Row (
+                modifier = Modifier.padding(top = 16.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
                 Image(
                     painter = painterResource(R.drawable.flame1),
                     contentDescription = "Streak Icon",
@@ -85,9 +94,6 @@ fun Banner(
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(top = 10.dp)
                 )
-            }
-
-            Row {
                 Image(
                     painter = painterResource(examEmoji),
                     contentDescription = emojiCont,

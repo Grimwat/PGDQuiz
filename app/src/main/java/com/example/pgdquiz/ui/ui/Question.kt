@@ -51,7 +51,6 @@ fun QuestionField(
                 painter = painterResource(id),
                 contentDescription = null,
                 modifier = Modifier
-                    .fillMaxSize()
                     .alpha(0.2f),
             )
             Text(
