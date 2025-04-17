@@ -22,8 +22,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.R
-import com.example.pgdquiz.ui.QuizType
-import com.example.pgdquiz.ui.Banner
 import com.example.pgdquiz.ui.ui.ButtonGrid
 import com.example.pgdquiz.ui.ui.CongratulationsScreen
 import com.example.pgdquiz.ui.ui.LivesLost

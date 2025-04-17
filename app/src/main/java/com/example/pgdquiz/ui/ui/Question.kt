@@ -17,7 +17,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import com.example.pgdquiz.R
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -26,7 +25,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.Question
 import com.example.pgdquiz.ui.QuizType
-import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 @Composable
 fun QuestionField(
@@ -48,26 +46,26 @@ fun QuestionField(
             .border(width = 4.dp, color = MaterialTheme.colorScheme.outline),
         contentAlignment = Alignment.Center
     ) {
-        Image(
-            painter = painterResource(ExamId),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxSize()
-                .alpha(0.2f),
-            contentScale = ContentScale.None
-        )
-        Text(
-            modifier = Modifier
-                .clip(RoundedCornerShape(16.dp))
-                .padding(16.dp),
-            text = question?.question?:"",
-            color = Color.White,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold,
-        )
+        ExamId?.let { id ->
+            Image(
+                painter = painterResource(id),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .alpha(0.2f),
+            )
+            Text(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(16.dp))
+                    .padding(16.dp),
+                text = question?.question ?: "",
+                color = Color.White,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold,
+            )
+        }
     }
 }
-
 @Preview
 @Composable
 fun PreviewQuestionField() {

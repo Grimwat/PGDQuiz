@@ -6,8 +6,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.pgdquiz.R
-import com.example.pgdquiz.ui.QuizMode
-import com.example.pgdquiz.ui.QuizType
 import androidx.compose.runtime.State
 import com.google.gson.Gson
 import java.io.InputStreamReader

@@ -10,7 +10,6 @@ import com.example.pgdquiz.ui.QuizType
 import com.example.pgdquiz.ui.QuizModeSelection
 import com.example.pgdquiz.ui.QuizTypeSelection
 import com.example.pgdquiz.ui.QuizViewModel
-import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 
 @Composable

@@ -20,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -70,11 +69,16 @@ fun Banner(
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.Center
             )
+            val iconSize = 40.dp
+
             Row {
                 Image(
                     painter = painterResource(R.drawable.flame1),
                     contentDescription = "Streak Icon",
-                    modifier = Modifier.size(40.dp)
+                    modifier = Modifier
+                        .size(iconSize)
+                        .clip(RoundedCornerShape(8.dp)),
+                    contentScale = ContentScale.Fit
                 )
                 Text(
                     text = streakCount.toString(),
@@ -82,11 +86,14 @@ fun Banner(
                     modifier = Modifier.padding(top = 10.dp)
                 )
             }
+
             Row {
                 Image(
                     painter = painterResource(examEmoji),
                     contentDescription = emojiCont,
-                    modifier = Modifier.size(40.dp),
+                    modifier = Modifier
+                        .size(iconSize)
+                        .clip(RoundedCornerShape(8.dp)),
                     contentScale = ContentScale.Fit
                 )
                 Text(
@@ -98,6 +105,9 @@ fun Banner(
         }
     }
 }
+
+
+
 @Preview
 @Composable
 fun Drainpreview() {}
