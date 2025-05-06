@@ -114,7 +114,7 @@ fun DrainLayout(
                         onRestart = {
                             viewModel.restartQuiz(quizMode, context, quizType)
                         },
-                        onBackToModeSelect = { /* Your desired back-to-mode logic */ }
+                        onBackToModeSelect = onBackToModeSelect
                     )
                 }
             }

@@ -1,12 +1,15 @@
 package com.example.pgdquiz.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -16,9 +19,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.pgdquiz.R
 
 @Composable
 fun QuizModeSelection(
@@ -48,6 +55,13 @@ fun QuizModeSelection(
 
         Spacer(modifier = Modifier.padding(32.dp))
 
+        val PGDLogo = when (quizType) {
+            QuizType.DRAINLAYING -> R.drawable.drainlogo
+            QuizType.PLUMBING -> R.drawable.plumblogo
+            QuizType.GASFITTING -> R.drawable.gasslogo
+            QuizType.DEFAULT, null -> R.drawable.neonsign
+        }
+
         Button(
             onClick = { onSelectMode(QuizMode.EASY) },
             shape = RoundedCornerShape(8.dp),
@@ -58,10 +72,30 @@ fun QuizModeSelection(
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.outline
             )
-        ) {Column {
-            Text("25 Questions",)
-            Text("Easy")
-        }
+        ) {
+            Box(
+                modifier = Modifier.fillMaxWidth()
+                    .height(56.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = PGDLogo),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .alpha(0.15f),
+                    contentScale = ContentScale.Crop
+                )
+
+                Column(
+                    modifier = Modifier
+                        .padding(start = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text("25 Questions")
+                    Text("Easy")
+                }
+            }
         }
 
         Button(
@@ -75,9 +109,28 @@ fun QuizModeSelection(
                 containerColor = MaterialTheme.colorScheme.outline
             )
         ) {
-            Column {
-                Text("50 Questions")
-                Text("Medium")
+            Box(
+                modifier = Modifier.fillMaxWidth()
+                    .height(56.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = PGDLogo),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .alpha(0.15f),
+                    contentScale = ContentScale.Crop
+                )
+
+                Column(
+                    modifier = Modifier
+                        .padding(start = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text("50 Questions")
+                    Text("Medium")
+                }
             }
         }
 
@@ -92,9 +145,28 @@ fun QuizModeSelection(
                 containerColor = MaterialTheme.colorScheme.outline
             )
         ) {
-            Column {
-                Text("100 Questions")
-                Text("Hard")
+            Box(
+                modifier = Modifier.fillMaxWidth()
+                    .height(56.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = PGDLogo),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .alpha(0.15f),
+                    contentScale = ContentScale.Crop
+                )
+
+                Column(
+                    modifier = Modifier
+                        .padding(start = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text("100 Questions")
+                    Text("Hard")
+                }
             }
         }
     }

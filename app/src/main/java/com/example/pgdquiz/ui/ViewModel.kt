@@ -17,6 +17,9 @@ class QuizViewModel : ViewModel() {
     private val _currentQuestionIndex = mutableStateOf(0)
     val currentQuestionIndex: MutableState<Int> = _currentQuestionIndex
 
+    private val _quizType = mutableStateOf(QuizType.DEFAULT)
+    val quizType: State<QuizType> = _quizType
+
     val currentQuestion: Question?
         get() = questions.getOrNull(_currentQuestionIndex.value)
 
@@ -123,14 +126,33 @@ class QuizViewModel : ViewModel() {
         _selectedAnswers.value = mutableSetOf()
     }
 
-    fun restartQuiz(mode: QuizMode, context: Context, quizType: QuizType) {
-        _lives.value = 5
-        _streakCount.value = 0
-        _selectedAnswers.value = mutableSetOf()
-        _quizComplete.value = false
-        loadQuestions(context, mode, quizType)
-    }
+    fun restartQuiz(mode: QuizMode, context: Context, type: QuizType) {
+        _quizType.value = type
 
+        val resId = when (type) {
+            QuizType.DRAINLAYING -> R.raw.drainsquestions
+            QuizType.PLUMBING -> R.raw.plumbingquestions
+            QuizType.GASFITTING -> R.raw.gasquestions
+            QuizType.DEFAULT -> error("QuizType.DEFAULT should not be used here")
+        }
+
+        loadQuestionsFromRawResource(context, resId)
+
+        val randomized = when (mode) {
+            QuizMode.EASY -> allQuestions.shuffled().take(25)
+            QuizMode.MEDIUM -> allQuestions.shuffled().take(50)
+            QuizMode.HARD -> {
+                val base = allQuestions.shuffled().take(50)
+                (base + base.shuffled().take(50)).shuffled()
+            }
+        }
+
+        questions = randomized
+        _currentQuestionIndex.value = 0
+        _lives.value = 3
+        _streakCount.value = 0
+        _quizComplete.value = false
+    }
     fun loadQuestions(context: Context, mode: QuizMode, quizType: QuizType) {
         val resId = when (quizType) {
             QuizType.DRAINLAYING -> R.raw.drainsquestions

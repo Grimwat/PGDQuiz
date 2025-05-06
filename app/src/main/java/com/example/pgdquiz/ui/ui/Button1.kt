@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.pgdquiz.ui.QuizViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 
@@ -92,7 +93,10 @@ fun AnswerButton(
                         Text("Image not found", color = Color.White)
                     }
                 } else {
-                    Text(text = optionText, color = Color.White)
+                    Text(
+                        text = optionText,
+                        color = Color.White,
+                        fontSize = 12.sp)
                 }
             }
         }

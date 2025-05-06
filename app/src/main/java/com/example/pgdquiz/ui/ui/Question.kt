@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.pgdquiz.ui.Question
 import com.example.pgdquiz.ui.QuizType
 
@@ -61,6 +62,7 @@ fun QuestionField(
                 color = Color.White,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
+                fontSize = 14.sp
             )
         }
     }
