@@ -1,0 +1,1185 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is the minimum size air gap permitted for a 20 mm diameter relief valve drain that is discharging over a tundish?",
+      "answer": "25 mm",
+      "options": [
+        " 20 mm.",
+        " 32 mm.",
+        " 40 mm.",
+        " 50 mm."
+      ]
+    },
+    {
+      "id": 2,
+      "question": "What is the minimum height above ground level at which a vent pipe connected to a foul water drainage system must terminate?",
+      "answer": " 3.0 m.",
+      "options": [
+        " 2.0 m.",
+        " 2.5 m.",
+        " 4.0 m.",
+        " 5.0 m."
+      ]
+    },
+    {
+      "id": 3,
+      "question": "To provide backflow protection, what is the minimum size for an air gap?",
+      "answer": "2 × the inlet diameter or 25 mm whichever is greater.",
+      "options": [
+        " Equal in size to the inlet pipe diameter.",
+        " 1.5 × the inlet diameter or 25 mm whichever is greater.",
+        " 20 mm.",
+        " 40 mm."
+      ]
+    },
+    {
+      "id": 4,
+      "question": "Why is there a restricted zone at the base of a discharge stack?",
+      "answer": "To prevent trap seal loss due to compression.",
+      "options": [
+        " To prevent trap seal loss due to oscillation.",
+        " To prevent blockages in the drain.",
+        " To prevent blockages in the discharge stack.",
+        " To prevent blockages in the drain and discharge stack."
+      ]
+    },
+    {
+      "id": 5,
+      "question": "A 150 mm uPVC vertical discharge stack is to be installed in a two-storey building. How far apart can the supports for the stack be spaced?",
+      "answer": "1.800 m.",
+      "options": [
+        " 1.000 m.",
+        " 1.200 m.",
+        " 3.000 m.",
+        " 3.500 m."
+      ]
+    },
+    {
+          "id": 6,
+          "question": "Which of the following statements is correct for a bypass fitted to a backflow prevention installation?",
+          "answer": "The bypass must provide the same protection as the main.",
+          "options": [
+            " The bypass must be larger in diameter than the main.",
+            " The bypass must be smaller in diameter than the main.",
+            " The bypass must be the same size as the main.",
+            " The bypass must be constructed of the same material as the main.",
+          ]
+        },
+        {
+          "id": 7,
+          "question": "How many seismic restraint straps must be installed on a 300 litre storage hot water cylinder?",
+          "answer": "3",
+          "options": ["2", "4", "5", "6"]
+        },
+        {
+          "id": 8,
+          "question": "Which of the following determines the inclination at which a solar panel must be installed to give maximum efficiency?",
+          "answer": "The latitude of the installation.",
+          "options": [
+            " The pitch of the roof.",
+            " The longitude of the installation.",
+            " The type of solar collector installed.",
+            " The pressure rating of the pump installed."
+          ]
+        },
+        {
+          "id": 9,
+          "question": "In a solar water heating system, which part is known as the collector?",
+          "answer": "The solar panel.",
+          "options": [
+            " The water storage cylinder.",
+            " The drain tundish.",
+            " The circulating pump.",
+            " The solar panel manifold system."
+          ]
+        },
+        {
+          "id": 10,
+          "question": "Which of the following best describes a solar preheater?",
+          "answer": "A solar water heating system that feeds an electric storage water cylinder.",
+          "options": [
+            " A pump that circulates warm water when panel temperatures drop to near freezing.",
+            " An electric element that raises the water temperature slightly to start a thermo-syphon current.",
+            " A water heating system that relies solely on solar energy to reach the desired temperature.",
+            " A selective surface coating that directs rays to the solar tubes."
+          ]
+        },
+        {
+          "id": 11,
+          "question": "Which of the following is an advantage of using an indirect heating system?",
+          "answer": "One heat source can be used for both potable and non-potable hot water supplies.",
+          "options": [
+            " Higher temperatures can be achieved.",
+            " The temperature can be maintained at a more stable level.",
+            " The pressure rating of the circulating pump can be increased.",
+            " A tempering valve is not required on the installation."
+          ]
+        },
+        {
+          "id": 12,
+          "question": "A water service carrying non-potable water is to be installed. Which colour pipe or marking should be used to enable future identification of the pipe?",
+          "answer": "Purple.",
+          "options": ["Red.", "Yellow.", "Orange.", "Pink."]
+        },
+        {
+          "id": 13,
+          "question": "What is the maximum temperature at which hot water is permitted to be delivered from a basin tap in an aged care facility?",
+          "answer": "45ºC",
+          "options": ["35ºC", "40ºC", "50ºC", "55ºC"]
+        },
+        {
+          "id": 14,
+          "question": "Within which distance from the top and bottom of a hot water storage cylinder must a seismic restraint be fitted?",
+          "answer": "100 mm.",
+          "options": ["50 mm.", "75 mm.", "150 mm.", "200 mm."]
+        },
+        {
+          "id": 15,
+          "question": "A 5 metre length of pipe falls 125 mm over its length. What is the gradient of the pipe?",
+          "answer": "1:40",
+          "options": ["1:20", "1:60", "1:80", "1:100"]
+        },
+        {
+          "id": 16,
+          "question": "When multiple mains pressure storage cylinders are being installed, how many of the cylinders need to be fitted with temperature and pressure relief valves?",
+          "answer": "Every cylinder in the installation.",
+          "options": [
+            "Only the first cylinder in the installation.",
+            "Only the last cylinder in the installation.",
+            "The first cylinder in the installation and every second cylinder thereafter.",
+            "One relief valve for every three cylinders in the installation"
+          ]
+        },
+        {
+          "id": 17,
+          "question": "What is the maximum number of 90º bends that are permitted in a relief valve drain that is 8 metres long?",
+          "answer": "4",
+          "options": ["5", "6", "7", "8"]
+        },
+        {
+          "id": 18,
+          "question": "Who is responsible for organising the periodic testing of a backflow prevention device?",
+          "answer": "The building owner.",
+          "options": [
+            "The local territorial authority.",
+            "The building architect.",
+            "The installing plumber.",
+            "An independently qualified person."
+          ]
+        },
+        {
+          "id": 19,
+          "question": "What is the minimum period pipework concealed behind wall linings must last in order to be compliant with the New Zealand Building Code?",
+          "answer": "15 years.",
+          "options": ["1 year.", "2 years.", "5 years.", "50 years."]
+        },
+        {
+          "id": 20,
+          "question": "What is the minimum allowable pressure for a soundness test on cold water pipework?",
+          "answer": "1500 kPa.",
+          "options": ["100 kPa.", "500 kPa.", "1000 kPa.", "2000 kPa."]
+        },
+        {
+          "id": 21,
+          "question": "Which of the following includes the requirements regarding all workplace health and safety?",
+          "answer": "Health and Safety at Work Act.",
+          "options": [
+            "Department of Labour Code of Practice.",
+            "WorkSafe guidelines.",
+            "Health and Safety in Employment Act.",
+            "Plumbers, Gasfitters and Drainlayers Act."
+          ]
+        },
+        {
+          "id": 22,
+          "question": "Which of the following is NOT an acceptable reason to disturb the scene of an accident that has resulted in serious harm?",
+          "answer": "To recover plant and equipment from the site.",
+          "options": [
+            "When directed by a police officer.",
+            "To provide help to an injured person.",
+            "To remove a deceased person.",
+            "To make the site safe."
+          ]
+        },
+        {
+          "id": 23,
+          "question": "Plumber A has requested the assistance of a tradesman plumber employed by Plumber B. Who is responsible for ensuring that the tradesman plumber is capable of completing the proposed work safely?",
+          "answer": "Plumber B.",
+          "options": [
+            "The tradesman plumber.",
+            "The Plumbers, Gasfitters and Drainlayers Board.",
+            "Plumber A.",
+            "WorkSafe."
+          ]
+        },
+        {
+          "id": 24,
+          "question": "A certifying plumber has employed a trainee who now holds a limited certificate. What is the minimum length of time must the trainee work in the presence of a qualified supervisor?",
+          "answer": "12 months.",
+          "options": ["6 months.", "24 months.", "36 months.", "Until such time as the trainee achieves registration."]
+        },
+        {
+          "id": 25,
+          "question": "What is the minimum distance below a gully trap grate that a waste pipe should discharge?",
+          "answer": "20 mm.",
+          "options": ["30 mm.", "40 mm.", "50 mm.", "60 mm."]
+        },
+    {
+        "id": 26,
+        "question": "What is the minimum distance above a gully trap that a trapped floor waste should discharge?",
+        "answer":"50 mm",
+        "options": ["10 mm", "20 mm", "30 mm", "40 mm",]
+      },
+      {
+        "id": 27,
+        "question": "What is the maximum length a single waste pipe to a gully can be before a vent pipe must be fitted?",
+        "answer":"3.5 m",
+        "options": ["3.8 m", "4.2 m", "4.5 m", "4.8 m"]
+      },
+      {
+        "id": 28,
+        "question": "Which of the following is permitted to discharge to a floor waste gully in an adjacent room?",
+        "answer":"Tundish",
+        "options": ["Dishwasher", "Kitchen sink", "Urinal", "Washing machine"]
+      },
+      {
+        "id": 29,
+        "question": "Which of the following is not permitted to discharge into a floor waste gully?",
+        "answer":"A urinal",
+        "options": ["A washing machine", "A tundish from a hot water cylinder in an adjacent room", "A bidet", "A refrigerated cabinet drain"]
+      },
+      {
+        "id": 30,
+        "question": "Which of the following is trap seal loss that can occur when wind blows over the top of a vent pipe?",
+        "answer":"Oscillation",
+        "options": ["Compression", "Evaporation", "Momentum", "Siphonage"]
+      },
+      {
+        "id": 31,
+        "question": "A layering of water within a cylinder due to different temperatures is:",
+        "answer":"Stratification",
+        "options": [ "Uncontrolled heat source", "Indirect", "Convection"]
+      },
+      {
+        "id": 32,
+        "question": "Within what length of time must the Plumbers, Gasfitters and Drainlayers Board be notified of a registered plumber’s change of address?",
+        "answer":"3 months",
+        "options": ["7 days", "28 days", "6 weeks", "6 months"]
+      },
+      {
+        "id": 33,
+        "question": "Which of the following must receive a completed Particular Hazardous Work Notification Form before such work is started?",
+        "answer":"WorkSafe",
+        "options": ["The local territorial authority", "The Plumbers, Gasfitters and Drainlayers Board", "The Health and Safety Representative for the site", "The Regional Health and Safety inspector"]
+      },
+      {
+        "id": 34,
+        "question": "How much notice must be given before Particular Hazardous Work is carried out?",
+        "answer":"24 hours",
+        "options": [ "48 hours", "72 hours", "5 working days", "10 working days"]
+      },
+      {
+        "id": 35,
+        "question": "Under which of the following circumstances can an employee choose not to wear the personal protective equipment gear supplied?",
+        "answer":"When the employee provides his/her own suitable PPE gear",
+        "options": ["When the ambient temperature is above 32°C", "When the total weight of the PPE gear exceeds 16 kg", "When it is agreed the PPE gear makes a task more difficult to complete", "When the employee signs a waiver safeguarding the employer from prosecution if an injury should occur"]
+      },
+      {
+        "id": 36,
+        "question": "When is it permitted to bypass a backflow prevention device supplying an installation?",
+        "answer":"When the bypass has the same rating as the device being bypassed",
+        "options": ["During maintenance procedures", "While testing of the backflow assembly takes place", "At non-peak usage times", "In an emergency fire-fighting situation where a high flow rate is required"]
+      },
+      {
+        "id": 37,
+        "question": "Who is responsible for organising the periodic testing of a backflow prevention device?",
+        "answer":"The building owner",
+        "options": ["The local territorial authority", "The installing plumber", "The architect", "An independently qualified person"]
+      },
+      {
+        "id": 38,
+        "question": "What is the minimum time a hot water cylinder relief drain installed under a concrete slab must last to meet the durability requirements of the New Zealand Building Code?",
+        "answer":"50 years",
+        "options": ["1 year", "2 years", "5 years", "15 years"]
+      },
+      {
+        "id": 39,
+        "question": "When flashing a square penetration through a roof, what is the minimum height required for the upstand on the flashing to comply with New Zealand Building Code clause E2/AS1?",
+        "answer":"110 mm",
+        "options": ["75 mm", "90 mm", "100 mm", "150 mm"]
+      },
+      {
+        "id": 40,
+        "question": "What is the maximum roof pitch on which an EPDM rubber boot flashing is permitted to be used to seal a roof penetration to comply with New Zealand Building Code clause E2/AS1?",
+        "answer":"45°",
+        "options": ["10°", "15°", "20°", "30°"]
+      },
+      {
+        "id": 41,
+        "question": "At which pipe diameter does fitting a soaker flashing under a flexible boot flashing become required for the installation to comply with the New Zealand Code clause E2/AS1 External moisture?",
+        "answer":"86 mm",
+        "options": ["41 mm", "52 mm", "66 mm", "105 mm"]
+      },
+      {
+        "id": 42,
+        "question": "Why is a restricted entry zone required at the base of a discharge stack?",
+        "answer":"To prevent trap seal loss",
+        "options": ["To prevent blockages from occurring", "To stop oscillation within the discharge stack", "To stop the pipe running full bore", "To increase the number of discharge units the stack can convey"]
+      },
+      {
+        "id": 43,
+        "question": "Which of the following is NOT an acceptable reason to disturb the scene of an accident that has resulted in serious harm?",
+        "answer":"To recover plant and equipment from the site",
+        "options": ["To save a life", "To prevent suffering of an injured person", "To maintain public access to services (e.g. gas and electricity)", "To prevent serious damage to property"]
+      },
+      {
+        "id": 44,
+        "question": "An accident resulting in serious harm has occurred on a job site. Which of the following must be contacted with details of the accident as soon as possible?",
+        "answer":"WorkSafe",
+        "options": ["The local territorial authority", "The Plumbers, Gasfitters and Drainlayers Board", "The Health and Safety Representative for the site", "The Regional Health and Safety inspector"]
+      },
+      {
+        "id": 45,
+        "question": "A certifying plumber has employed an apprentice who now holds a trainee limited certificate. What is the minimum length of time the apprentice must work in the direct presence of the certifying plumber?",
+        "answer":"12 months",
+        "options": ["6 months", "24 months", "36 months", "Until such time as the apprentice achieves registration"]
+      },
+      {
+        "id": 46,
+        "question": "Edge protection is to be erected around the perimeter of a roof. What is the maximum allowable gap from the edge of the spouting to the guardrail?",
+        "answer":"150 mm",
+        "options": ["50 mm", "100 mm", "200 mm", "250 mm"]
+      },
+      {
+        "id": 47,
+        "question": "By what date must registered plumbers renew their annual practising licence?",
+        "answer":"1 April",
+        "options": ["1 March", "20 May", "30 June", "31 December"]
+      },
+      {
+        "id": 48,
+        "question": "A heat source that cannot be adjusted via a thermostat – solar/wetback is:",
+        "answer":"Uncontrolled heat source",
+        "options": ["Stratification", "Indirect", "Convection"]
+      },
+      {
+        "id": 49,
+        "question": "Heat transfer by circulating currents due to differing densities is:",
+        "answer":"Convection",
+        "options": ["Stratification", "Uncontrolled heat source", "Indirect"]
+      },
+      {
+        "id": 50,
+        "question": "A heating system incorporating a heat exchange system is:",
+        "answer":"Indirect",
+        "options": ["Stratification", "Uncontrolled heat source", "Convection"]
+      },
+      {
+          "id": 51,
+          "question": "Sources from which potable water may be obtained.",
+          "answer":"All of these",
+          "options": ["A Network utility operator", "Rainfall", "Bore/aquifer/spring", "Tanker"]
+        },
+        {
+          "id": 52,
+          "question": "What may or may not be trapped. It does not receive waste from sanitary fixtures.",
+          "answer":"Floor waste",
+          "options": ["Floor waste gully", "Overflow relief gully"]
+        },
+        {
+          "id": 53,
+          "question": "What has a trap. It will discharge directly into the foul water system. Fixtures may discharge into a floor waste gully.",
+          "answer":"Floor waste gully",
+          "options": ["Floor waste", "Overflow relief gully"]
+        },
+        {
+          "id": 54,
+          "question": "A minimum height of 150mm shall be maintained between the top of the grate and the lowest fixture connected to the drain is",
+          "answer":"Overflow relief gully",
+          "options": ["Floor waste", "Floor waste gully"]
+        },
+        {
+          "id": 55,
+          "question": "Which of the following statements is correct for a bypass fitted to a backflow prevention installation?",
+          "answer":"The bypass must provide the same level of protection as the main",
+          "options": [
+            "The bypass must be larger in diameter than the main",
+            "The bypass must be smaller in diameter than the main",
+            "The bypass must be the same size as the main",
+            "The bypass must be constructed of the same material as the main",
+          ]
+        },
+        {
+          "id": 56,
+          "question": "What is the minimum distance above the highest outlet at which an atmospheric vacuum breaker can be installed?",
+          "answer":"150 mm",
+          "options": ["100 mm", "200 mm", "250 mm", "300 mm"]
+        },
+        {
+          "id": 57,
+          "question": "How often must a backflow prevention device be tested?",
+          "answer":"Once every year",
+          "options": ["Once a month", "Once every 6 months", "Once every 2 years", "Once every 5 years"]
+        },
+        {
+          "id": 58,
+          "question": "What is the minimum allowable separation distance between parallel potable and non-potable water supplies underground to comply with AS/NZS 3500 Part 1: Water services?",
+          "answer":"300 mm",
+          "options": ["100 mm", "150 mm", "200 mm", "250 mm"]
+        },
+        {
+          "id": 59,
+          "question": "Potable and non-potable water supply pipework is to be installed parallel through a building. What is the minimum allowable distance that must be maintained to comply with AS/NZS 3500 Part 1: Water services?",
+          "answer":"100 mm",
+          "options": ["50 mm", "150 mm", "200 mm", "250 mm"]
+        },
+        {
+          "id": 60,
+          "question": "How many litres of water per person must be stored for use when the water supply to a community care building is interrupted?",
+          "answer":"50",
+          "options": ["75", "100", "125", "150"]
+        },
+        {
+          "id": 61,
+          "question": "How is the pressure rating for a temperature pressure relief valve installed on a hot water cylinder determined?",
+          "answer":"Must be higher than that of the cold water expansion valve and lower than that of the cylinder",
+          "options": [
+            "Must be higher than that of the cold water expansion valve and that of the cylinder",
+            "Must be lower than that of the cold water expansion valve and that of the cylinder",
+            "Must be lower than that of the cold water expansion valve and higher than that of the cylinder",
+            "Must be of the same pressure rating as the cold water expansion valve and that of the cylinder"
+          ]
+        },
+        {
+          "id": 62,
+          "question": "When multiple mains pressure hot water cylinders are being installed and connected via a manifold, which of the cylinders need to be fitted with temperature and pressure relief valves?",
+          "answer":"Every cylinder in the installation",
+          "options": [
+            "Only the first cylinder in the installation",
+            "Only the last cylinder in the installation",
+            "The first cylinder in the installation and every second cylinder thereafter",
+            "Every third cylinder in the installation"
+          ]
+        },
+        {
+          "id": 63,
+          "question": "What is the maximum number of 90º bends permitted in a relief valve drain that is 7 metres long?",
+          "answer":"5",
+          "options": ["4", "6", "7", "8"]
+        },
+        {
+          "id": 64,
+          "question": "Which of the following requires the hot water supply to personal hygiene sanitary fixtures to be limited to 45°C?",
+          "answer":"A kindergarten or preschool",
+          "options": ["A prison", "A restaurant", "A domestic dwelling", "A laundromat"]
+        },
+        {
+          "id": 65,
+          "question": "Which of the following specifies the minimum diameter for an overflow pipe on a safe tray situated under a 180 litre water tank?",
+          "answer":"40 mm",
+          "options": ["25 mm", "50 mm", "The same size as the inlet pipe diameter", "2 × the inlet pipe diameter"]
+        },
+        {
+          "id": 66,
+          "question": "Which of the following can be discharged into a copper waste pipe without risk of affecting the system?",
+          "answer":"Slop hoppers",
+          "options": [ "Photographic equipment", "Cooling towers", "Undiluted urinal waste", "Grease arrestors"]
+        },
+        {
+          "id": 67,
+          "question": "What is the fixture unit rating for a double sink with waste disposal installation?",
+          "answer":"3",
+          "options": ["2", "4", "5", "6"]
+        },
+        {
+          "id": 68,
+          "question": "Which of the following is a fixture pair?",
+          "answer":"A double-bowl vanity where the two bowls share one trap",
+          "options": [
+            "A washing machine discharging into a laundry tub",
+            "A double-bowl kitchen sink unit where each bowl has its own trap and the discharge pipes are combined",
+            "A dishwasher connected to a supplementary trap on a sink",
+            "A WC pan and basin installed in the same room"
+          ]
+        },
+        {
+          "id": 69,
+          "question": "A third seismic restraint is required to be fitted to a hot water storage cylinder exceeding what capacity?",
+          "answer":"200 litres",
+          "options": ["150 litres", "250 litres", "300 litres", "350 litres"]
+        },
+        {
+          "id": 70,
+          "question": "Which of the following is the best method of controlling hazards in the workplace to comply with the Health and Safety in Employment Act?",
+          "answer":"Eliminate the hazard from the employee’s workplace",
+          "options": [
+            "Isolate employees from the hazard",
+            "Minimise the hazard to the employees",
+            "Provide all necessary personal protection equipment to employees",
+            "Monitor the employees’ health and exposure to the hazard"
+          ]
+        },
+        {
+          "id": 71,
+          "question": "A 4 metre length of pipe has been installed at a gradient of 1:80 (1.25%). What is the pipe fall?",
+          "answer":"50 mm",
+          "options": ["4 mm", "5 mm", "40 mm", "500 mm"]
+        },
+        {
+          "id": 72,
+          "question": "A pipe is to be laid at a gradient of 2.5%. The fall is 1350 mm. What is the length of the pipe?",
+          "answer":"54 m",
+          "options": ["5.4 m", "11.4 m", "14 m", "140 m"]
+        },
+        {
+          "id": 73,
+          "question": "What is the maximum diameter pipe permitted to be flashed with an EDPM rubber boot without requiring a soaker flashing in accordance with the New Zealand Building Code clause E2 External Moisture?",
+          "answer":"85 mm",
+          "options": ["65 mm", "75 mm", "95 mm", "105 mm"]
+        },
+        {
+          "id": 74,
+          "question": "What is the minimum period a flashing sealing a roof penetration must last in order to be compliant with the New Zealand Building Code?",
+          "answer":"15 years",
+          "options": ["1 year", "2 years", "5 years", "50 years"]
+        },
+        {
+          "id": 75,
+          "question": "How many fixture units are allowed to be discharged through an 80 mm graded discharge pipe laid at a gradient of 2.50%, as stated in AS/NZS 3500 Part 2: Sanitary plumbing and drainage?",
+          "answer":"27",
+          "options": ["16", "20", "39", "65"]
+        },
+   {
+       "id": 76,
+       "question": "According to the New Zealand Building Code clause G13/AS1 Foul Water, what is the maximum permitted developed length for an unvented 40 mm individual fixture waste pipe discharging over a gully trap?",
+       "answer": "3.500 metres",
+       "options": ["2.500 metres", "3.000 metres", "4.000 metres", "4.500 metres"]
+
+     },
+     {
+       "id": 77,
+       "question": "A grease trap is to be installed in the basement of a 125 seat restaurant. What is the minimum required capacity for the grease trap that will comply with New Zealand Building Code clause G13/AS2 Foul Water?",
+       "answer":"625 litres",
+       "options": ["250 litres", "375 litres", "500 litres", "750 litres"]
+     },
+     {
+       "id": 78,
+       "question": "Why is it not permitted to install two commercial sinks that share a single 50 mm water trap?",
+       "answer":"In the event of a waste pipe blockage, dirty water from one sink could contaminate clean water in the other.",
+       "options": [
+         "The total discharge units will exceed the number permitted.",
+         "If the waste pipe blocked, neither sink could be drained.",
+         "The temperature of the waste from a commercial sink can exceed 60°C.",
+         "The grease content in commercial kitchen sink wastes is high and can often cause blockages."
+       ]
+     },
+     {
+       "id": 79,
+       "question": "Which of the following requires the restricted zone at the base of a stack to be increased?",
+       "answer":"When the discharge from connected fixtures is expected to be foamy.",
+       "options": [
+         "When the stack is 150 mm diameter or larger.",
+         "When the stack receives 200 discharge units per floor.",
+         "When the discharge stack is less than 80 mm in diameter.",
+         "When an overflow relief gully is installed."
+       ]
+     },
+     {
+       "id": 80,
+       "question": "What is the maximum permitted length for an untrapped fixture discharge pipe that is connected to a floor waste gully?",
+       "answer":"1200 mm",
+       "options": [ "1800 mm", "2000 mm", "2500 mm", "3000 mm"]
+     },
+     {
+       "id": 81,
+       "question": "How is the fixture unit rating of a floor waste gully determined?",
+       "answer":"The sum of the unit ratings of the fixtures discharging into the floor waste gully.",
+       "options": [
+         "The length of the discharge pipe from the gully to the drain or stack.",
+         "The inlet size of the floor waste gully.",
+         "The number fixtures discharging into the floor waste gully.",
+         "The outlet size of the floor waste gully"
+       ]
+     },
+     {
+       "id": 82,
+       "question": "A floor waste gully is receiving the waste from a basin, bath and single head shower. What is the fixture unit rating of the floor waste gully?",
+       "answer":"7",
+       "options": ["4", "5", "6", "8"]
+     },
+     {
+       "id": 83,
+       "question": "Which of the following is permitted to discharge into a floor waste gully located in an adjacent room?",
+       "answer":"Tundish",
+       "options": ["Drinking fountain", "Kitchen sink", "Laundry tub", "Shower"]
+     },
+     {
+       "id": 84,
+       "question": "A sanitary plumbing discharge system is being vacuum tested for soundness. How many kPa can the pressure drop during the allocated test time before the pipework has failed the test?",
+       "answer":"3",
+       "options": [ "5", "8", "10", "15"]
+     },
+     {
+       "id": 85,
+       "question": "An air pressure test is being used to check a 100 mm diameter sanitary plumbing discharge system 120 metres in length. What is the minimum length of time required for the test?",
+       "answer":"3 minutes stabilisation followed by a 2 minute test",
+       "options": [
+         "2 minutes stabilisation followed by a 3 minute test",
+         "2 minutes stabilisation followed by a 5 minute test",
+         "3 minutes stabilisation followed by a 6 minute test",
+         "3 minutes stabilisation followed by a 10 minute test"
+       ]
+     },
+     {
+       "id": 86,
+       "question": "Which of the following is the recommended minimum distance that a mechanical excavator should be used next to a cable or pipe, according to the Guide for Safety with Underground Services?",
+       "answer":"500 mm",
+       "options": [ "600 mm", "800 mm", "1000 mm", "1200 mm"]
+     },
+     {
+       "id": 87,
+       "question": "Which of the following is the recommended minimum distance between any live overhead electric line and any part of any mobile plant or load carried, according to the Guide for Safety with Underground Services?",
+       "answer":"4 m",
+       "options": ["2 m", "5 m", "6 m", "10 m"]
+     },
+     {
+       "id": 88,
+       "question": "What is the minimum allowable diameter for the overflow pipe fitted to a safe tray under a water supply tank?",
+       "answer":"40 mm",
+       "options": ["25 mm", "32 mm", "50 mm", "65 mm"]
+     },
+     {
+       "id": 89,
+       "question": "What is the minimum permitted capacity for a storage hot water cylinder for a solar water heating system with 7 m² of solar panels?",
+       "answer":"350 litres",
+       "options": ["180 litres", "200 litres", "250 litres", "300 litres"]
+     },
+     {
+       "id": 90,
+       "question": "Why must a minimum capacity be provided for hot water storage in a solar water heating system?",
+       "answer":"To prevent the system from overheating.",
+       "options": [
+         "To provide the water at an adequate temperature.",
+         "To prevent the growth of legionella bacteria.",
+         "To ensure there is enough water to meet the demand.",
+         "To give an equal volume of water in the cylinder and panels."
+       ]
+     },
+     {
+       "id": 91,
+       "question": "Which of the following will NOT protect a solar panel when the temperature drops below freezing?",
+       "answer":"A temperature/pressure relief valve",
+       "options": [
+         "A frost valve",
+         "A circulating pump activated by a thermostat",
+         "An indirect system with glycol added",
+         "A drain-back system",
+       ]
+     },
+     {
+       "id": 92,
+       "question": "How many fixture units are allowed to be discharged from any one floor to a 100 mm discharge stack that serves four or more levels, as stated in AS/NZS 3500 Part 2: Sanitary plumbing and drainage?",
+       "answer":"125",
+       "options": ["25", "75", "100", "150"]
+     },
+     {
+       "id": 93,
+       "question": "According to the New Zealand Building Code Clause G1, which of the following fixtures are prohibited from being installed in a unisex bathroom facility?",
+       "answer":"A urinal",
+       "options": [
+         "A sanitary towel disposal unit",
+         "A shower cubicle",
+         "A cleaner’s sink",
+         "A baby changing table"
+       ]
+     },
+     {
+       "id": 94,
+       "question": "What is the minimum period that under-slab waste pipes must last in order to be compliant with the New Zealand Building Code?",
+       "answer":"50 years",
+       "options": ["5 years", "10 years", "15 years", "20 years"]
+     },
+     {
+       "id": 95,
+       "question": "In a solar water heating system, which part is known as the collector?",
+       "answer":"The solar panel",
+       "options": [
+         "The solar panel manifold system",
+         "The drain tundish",
+         "The circulating pump",
+         "The water storage cylinder"
+       ]
+     },
+     {
+       "id": 96,
+       "question": "Which of the following is a solar preheater?",
+       "answer":"An electric element that raises the water temperature slightly to start a thermo-syphon current.",
+       "options": [
+         "A solar water heating system that feeds an electric storage water cylinder.",
+         "A pump that circulates warm water when panel temperatures drop to near freezing.",
+         "A water heating system that relies solely on solar energy to reach the desired temperature.",
+         "The selective surface coating that directs rays to the solar tubes"
+]
+     },
+     {
+       "id": 97,
+       "question": "Which of the following is an advantage of using an indirect heating system?",
+       "answer":"One heat source can be used for both potable and non-potable hot water supplies.",
+       "options": [
+         "Higher temperatures can be achieved.",
+         "The temperature can be maintained at a more stable level.",
+         "The pressure rating of the circulating pump can be increased.",
+         "A tempering valve is not required on the installation."
+       ]
+     },
+     {
+       "id": 98,
+       "question": "Which of the following components would you NOT expect to find in a thermosiphon solar water heating system?",
+       "answer":"A pump",
+       "options": ["A non-return valve", "An element", "A thermostat", "An air eliminator/vent"]
+     },
+     {
+       "id": 99,
+       "question": "When is an air gap not an adequate backflow prevention method?",
+       "answer":"When installed in a toxic environment.",
+       "options": [
+         "On a tank supplying a reduced pressure zone assembly.",
+         "When used on a bidet storage tank.",
+         "In a medium hazard situation.",
+         "In a high hazard situation."
+       ]
+     },
+     {
+       "id": 100,
+       "question": "Which of the following best describes the term ‘eliminate’ in relation to hazard management at a worksite?",
+       "answer":"Replacing a noisy piece of machinery with a quieter model",
+       "options": [
+         "Constructing a barricade around a piece of machinery to prevent workers coming into contact with a hazard.",
+         "Contracting another company or person to complete a hazardous task.",
+         "Providing and wearing personal protective equipment to prevent injury.",
+         "Having a Health and Safety representative assess a task before work commences.",
+       ]
+     },
+     {
+         "id": 101,
+         "question": "Which of the following best describes the term ‘minimise’ in relation to hazard management at a work site?",
+         "answer": "Providing and wearing personal protective equipment to prevent injury.",
+         "options": [
+           "Constructing a barricade around a piece of machinery to prevent workers coming into contact with a hazard.",
+           "Contracting another company or person to complete a hazardous task.",
+           "Having a Health and Safety representative assess a task before work commences.",
+           "Replacing a noisy piece of machinery with a quieter model."
+         ]
+       },
+       {
+         "id": 102,
+         "question": "Which of the following best describes the term ‘isolate’ in relation to hazard management at a work site?",
+         "answer": "Constructing a barricade around a piece of machinery to prevent workers coming into contact with a hazard.",
+         "options": [
+           "Contracting another company or person to complete a hazardous task.",
+           "Providing and wearing personal protective equipment to prevent injury.",
+           "Having a Health and Safety representative assess a task before work commences.",
+           "Replacing a noisy piece of machinery with a quieter model."
+         ]
+       },
+       {
+         "id": 103,
+         "question": "A measured amount of liquid is moved with each stroke or rotation of the pump is a",
+         "answer": "Positive displacement pump.",
+         "options": [
+           "Non-displacement pump."
+         ]
+       },
+       {
+         "id": 104,
+         "question": "Name a type of non-displacement pump",
+         "answer": "Centrifugal pump.",
+         "options": [
+           "Double action pump.",
+           "Gear pump.",
+           "Worm pump."
+         ]
+       },
+       {
+         "id": 105,
+         "question": "What is the minimum gradient for a vent pipe as specified in the New Zealand Building Code clause G13/AS1 Foul Water?",
+         "answer": "1:80",
+         "options": [
+           "1:20",
+           "1:40",
+           "1:60",
+           "1:100"
+         ]
+       },
+       {
+         "id": 106,
+         "question": "Which of the following percentages is equivalent to a gradient of 1:60?",
+         "answer": "1.65%",
+         "options": [
+           "60%",
+           "16%",
+           "0.65%",
+           "0.60%"
+         ]
+       },
+       {
+         "id": 107,
+         "question": "A pipe is to be laid at a gradient of 1:40. How much fall per metre will the pipe have?",
+         "answer": "25 mm.",
+         "options": [
+           "40 mm.",
+           "80 mm.",
+           "250 mm.",
+           "400 mm."
+         ]
+       },
+       {
+         "id": 108,
+         "question": "How many millimetres fall will a 3 metre length of pipe that has been laid at a gradient of 1:20 have?",
+         "answer": "150",
+         "options": [
+           "0.05",
+           "0.15",
+           "1.5",
+           "15"
+         ]
+       },
+       {
+         "id": 109,
+         "question": "Which of the following items of information are required to determine the minimum allowable gradient for a discharge pipe?",
+         "answer": "The diameter of the pipe and the total discharge loading.",
+         "options": [
+           "The diameter and the length of the pipe.",
+           "The length of the pipe and the total discharge loading.",
+           "The material the pipe is constructed from and the length of the pipe.",
+           "The total discharge loading and the amount of fall available."
+         ]
+       },
+       {
+         "id": 110,
+         "question": "Which of the following can reduce the effects of temporary hard water?",
+         "answer": "Boiling.",
+         "options": [
+           "Carbon filter.",
+           "Aerator.",
+           "Line strainer.",
+           "Chlorine.",
+         ]
+       },
+       {
+         "id": 111,
+         "question": "Which of the following describes the effect increasing the pressure has on water?",
+         "answer": "Raises the boiling point.",
+         "options": [
+           "Decreases the volume.",
+           "Increases the volume.",
+           "Lowers the boiling point.",
+           "Increases the pH level (hard water)."
+         ]
+       },
+       {
+         "id": 112,
+         "question": "How many litres of water can be contained in 1 cubic metre at 4°C?",
+         "answer": "1000.",
+         "options": [
+           "10.",
+           "100.",
+           "10,000.",
+           "100,000."
+         ]
+       },
+       {
+         "id": 113,
+         "question": "Which statement best describes a forced hot water system?",
+         "answer": "A system where the water is circulated by a pump.",
+         "options": [
+           "A system that must be vented through a temperature/pressure relief (TPR) valve.",
+           "A system that uses thermosiphon currents to circulate the water.",
+           "A system where the water is heated by a high pressure gas burner.",
+           "A system that uses a high output fan to blow air over a heat exchanger filled with hot water."
+         ]
+       },
+       {
+         "id": 114,
+         "question": "Air movement in the pipe changes the pressure within the vent pipe and causes the water in the trap to move, this can cause the water to spill over the weir and the trap seal to be lost.",
+         "answer": "Oscillation.",
+         "options": [
+           "Induced siphonage.",
+           "Compression.",
+           "Momentum."
+         ]
+       },
+       {
+         "id": 115,
+         "question": "Two fixtures connected to one discharge pipe. When one fixture discharges at full bore it can reduce the pressure in the discharge pipe and suction the seal out of the other fixture.",
+         "answer": "Induced siphonage.",
+         "options": [
+           "Oscillation.",
+           "Compression.",
+           "Momentum."
+         ]
+       },
+       {
+           "id": 116,
+           "question": "When a trap is installed with a vertical drop between the fixture outlet and the trap, the water can gain too much speed and travel through the trap, leaving no or little water behind to maintain the seal.",
+           "answer": "Momentum.",
+           "options": [
+             "Oscillation.",
+             "Induced siphonage.",
+             "Compression.",
+           ]
+         },
+         {
+           "id": 117,
+           "question": "When a fixture upstream is discharged, the pressure in front of the discharged water can be increased. This increase in pressure can push foul gases through the water in the downstream trap and enter the room.",
+           "answer": "Compression.",
+           "options": [
+             "Oscillation.",
+             "Induced siphonage.",
+             "Momentum."
+           ]
+         },
+         {
+           "id": 118,
+           "question": "Which statement best describes an oxidising flame?",
+           "answer": "A flame that has equal proportions of oxygen and acetylene.",
+           "options": [
+             "A flame with a feathered intermediate cone.",
+             "A luminous flame used when welding iron or steel.",
+             "A noisy flame with a pointed, blue inner cone.",
+             "An ideal flame to use when lead burning."
+           ]
+         },
+         {
+           "id": 119,
+           "question": "Which of the following decreases as water is heated?",
+           "answer": "The density of the water.",
+           "options": [
+             "The boiling point of the water.",
+             "The pressure of the water.",
+             "The velocity of the water.",
+             "The volume of the water."
+           ]
+         },
+         {
+           "id": 120,
+           "question": "What is the maximum theoretical height that a pump is able to lift water when installed at sea level?",
+           "answer": "10.3 m.",
+           "options": [
+             "3.6 m.",
+             "7.85 m.",
+             "9.81 m.",
+             "101.3 m."
+           ]
+         },
+         {
+           "id": 121,
+           "question": "How is the head pressure of a low pressure system determined?",
+           "answer": "Measuring the vertical distance between the highest water level and the system outlet."
+           "options": [
+             "Calculating the friction losses for fittings and valves used in the system.",
+             "Timing how long it takes to fill a container when the outlet is fully open.",
+             "Measuring the developed length between the storage tank and the system outlet.",
+             "Measuring the vertical distance between the highest water level and floor level."
+           ]
+         },
+         {
+           "id": 122,
+           "question": "How does a quick recovery hot water cylinder differ from a standard hot water cylinder?",
+           "answer": "It has a second element located higher in the cylinder.",
+           "options": [
+             "It is fitted with higher grade insulation.",
+             "It operates at higher pressures.",
+             "The element has a higher kilowatt rating.",
+             "The thermostat is set to a higher temperature."
+           ]
+         },
+         {
+           "id": 123,
+           "question": "Under which circumstance is an isolating valve not required on the drain pipe from a storage hot water cylinder?",
+           "answer": "When the drain terminates outside the building with a cap or plug.",
+           "options": [
+             "When the cylinder is connected to a wet back.",
+             "When the storage hot water cylinder has a cold water expansion valve fitted.",
+             "When the thermostat is set at or below 70°C.",
+             "When the water heater is supplied from a ceiling tank."
+           ]
+         },
+         {
+           "id": 124,
+           "question": "Two kitchen sinks, one fitted with a waste disposal unit, and a dishwasher. State the minimum allowable diameter for the trap and discharge pipe. New Zealand Building Code clause G13/AS1 Foul Water.",
+           "answer": "50 mm",
+           "options": [
+             "32 mm",
+             "40 mm"
+           ]
+         },
+         {
+           "id": 125,
+           "question": "What occurs when an air admittance valve is fitted to a discharge pipe and there is a negative pressure situation within the pipe?",
+           "answer": "The negative pressure overcomes the spring pressure and pulls the valve off the seat allowing air to enter the pipe and equalise the pressure.",
+           "options": [
+             "The air admittance valve will remain closed and prevent foul air escaping through the valve.",
+             "The negative pressure overcomes the spring pressure and pulls the valve off the seat allowing sewer gases to vent out."
+           ]
+         },
+         {
+             "id": 126,
+             "question": "Describe what occurs when an air admittance valve is fitted to a discharge pipe and there is a positive pressure situation within the pipe.",
+             "answer": "The air admittance valve will remain closed and prevent foul air escaping through the valve.",
+             "options": [
+               "The negative pressure overcomes the spring pressure and pulls the valve off the seat allowing air to enter the pipe and equalise the pressure.",
+               "The negative pressure overcomes the spring pressure and pulls the valve off the seat allowing sewer gases to vent out."
+             ]
+           },
+           {
+             "id": 127,
+             "question": "Conditions that could make the atmosphere in a confined space unsafe.",
+             "answer": ""All of these",
+             "options": [
+               "Lack of oxygen",
+               "Poisonous gases",
+               "High temperature",
+               "Dust",
+             ]
+           },
+           {
+             "id": 128,
+             "question": "Give the meaning of the term ‘discharge unit’ in relation to sanitary plumbing.",
+             "answer": "Unit of measure for the discharge in a plumbing system.",
+             "options": [
+               "Unit of measuring volume of pipe.",
+               "The speed at which discharge can flow."
+             ]
+           },
+           {
+             "id": 129,
+             "question": "Give the meaning of the term ‘high hazard’ in relation to cross connection.",
+             "answer": "Has the potential to cause death.",
+             "options": [
+               "Has the potential to make you sick.",
+               "Can change colour and taste."
+             ]
+           },
+           {
+             "id": 130,
+             "question": "Which two are classed as high hazards in cross connections?",
+             "answer": "Sewage pumps and sump ejectors.","Beauty salon and hairdressers.",
+             "options": [
+               "Irrigation with chemicals.",
+               "Swimming pools, spas and fountains."
+             ]
+           },
+           {
+             "id": 131,
+             "question": "State the minimum allowable diameter for a discharge pipe receiving waste from a WC pan.",
+             "answer": "80 mm",
+             "options": [
+               "50 mm",
+               "100 mm",
+               "65 mm"
+             ]
+           },
+           {
+             "id": 132,
+             "question": "Which symbol is a Pressure reducing valve?",
+             "answer": "",
+             "options": ["A", "B", "C"]
+           },
+           {
+             "id": 133,
+             "question": "Which statement best describes an oxidising flame?",
+             "answer": "A noisy flame with a pointed, blue inner cone.",
+             "options": [
+               "A flame with a feathered intermediate cone.",
+               "A flame that has equal proportions of oxygen and acetylene.",
+               "A luminous flame used when welding iron or steel.",
+               "An ideal flame to use when lead burning."
+             ]
+           },
+           {
+             "id": 134,
+             "question": "Which of the following decreases as water is heated?",
+             "answer": "The density of the water.",
+             "options": [
+               "The boiling point of the water.",
+               "The pressure of the water.",
+               "The velocity of the water.",
+               "The volume of the water."
+             ]
+           },
+           {
+             "id": 135,
+             "question": "What is the maximum theoretical height that a pump is able to lift water when installed at sea level?",
+             "answer": "10.3 m.",
+             "options": [
+               "3.6 m.",
+               "7.85 m.",
+               "9.81 m.",
+               "101.3 m."
+             ]
+           },
+           {
+             "id": 136,
+             "question": "How does a quick recovery hot water cylinder differ from a standard hot water cylinder?",
+             "answer": "It has a second element located higher in the cylinder.",
+             "options": [
+               "It is fitted with higher grade insulation.",
+               "It operates at higher pressures.",
+               "The element has a higher kilowatt rating.",
+               "The thermostat is set to a higher temperature."
+             ]
+           },
+           {
+             "id": 137,
+             "question": "State the minimum number of years a discharge pipework installed in a wall cavity must last to comply with the New Zealand Building Code clause B2/AS1 Durability.",
+             "answer": "15 years",
+             "options": [
+               "5 years",
+               "50 years",
+               "10 years"
+             ]
+           },
+           {
+             "id": 138,
+             "question": "State the minimum number of years an under-slab discharge pipework must last to comply with the New Zealand Building Code clause B2/AS1 Durability.",
+             "answer":"50 years",
+             "options": [
+               "5 years",
+               "15 years",
+               "10 years"
+             ]
+           },
+           {
+             "id": 139,
+             "question": "State the minimum number of years a trap installed in the cupboard under a sink or basin must last to comply with the New Zealand Building Code clause B2/AS1 Durability.",
+             "answer": "5 years",
+             "options": [
+               "15 years",
+               "50 years",
+               "10 years"
+             ]
+           },
+           {
+             "id": 140,
+             "question": "State the minimum number of years a rubber boot flashing installed on a vent pipe penetrating a roof must last to comply with the New Zealand Building Code clause B2/AS1 Durability.",
+             "answer": "15 years",
+             "options": [
+               "5 years",
+               "50 years",
+               "10 years"
+             ]
+           },
+           {
+             "id": 141,
+             "question": "Where is a Venturi used in a plumbing system?",
+             "answer": "Shower mixer",
+             "options": [
+               "Cistern toilet system",
+               "Hose tap",
+               "Laundry tub"
+             ]
+           },
+  ]
+}
