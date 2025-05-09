@@ -29,6 +29,7 @@ fun QuizApp(
                 onSelectQuizType = { quizType ->
                     selectedQuizType = quizType
                     onQuizTypeSelected(quizType)
+                    viewModel.reset(quizType)
                 },
                 onQuizTypeSelected = onQuizTypeSelected,
                 tradeTom = painterResource(id = R.drawable.neonsign3)

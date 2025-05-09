@@ -7,11 +7,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.pgdquiz.R
 import androidx.compose.runtime.State
+import com.example.pgdquiz.ui.ui.QuizState
 import com.google.gson.Gson
 import java.io.InputStreamReader
 
 
 class QuizViewModel : ViewModel() {
+
+    private val quizStates: MutableMap<QuizType, QuizState> = mutableMapOf(
+        QuizType.DRAINLAYING to QuizState(),
+        QuizType.PLUMBING to QuizState(),
+        QuizType.GASFITTING to QuizState()
+    )
     private var allQuestions: List<Question> = emptyList()
     private var questions: List<Question> = emptyList()
     private val _currentQuestionIndex = mutableStateOf(0)
@@ -79,7 +86,10 @@ class QuizViewModel : ViewModel() {
 
                 val safeOptions = question.options?.filter { it.isNotEmpty() } ?: emptyList()
                 val newOptions = (safeOptions + correctAnswers).distinct().shuffled()
-                val finalOptions = if (newOptions.size < 2) listOf(correctAnswers.first(), "Unknown") else newOptions
+                val finalOptions = if (newOptions.size < 2) listOf(
+                    correctAnswers.first(),
+                    "Unknown"
+                ) else newOptions
 
                 question.copy(options = finalOptions)
             } ?: emptyList()
@@ -99,6 +109,7 @@ class QuizViewModel : ViewModel() {
             e.printStackTrace()
         }
     }
+
     fun reset(quizType: QuizType = QuizType.DEFAULT) {
         allQuestions = emptyList()
         questions = emptyList()
@@ -108,79 +119,100 @@ class QuizViewModel : ViewModel() {
         _quizComplete.value = false
         _selectedAnswers.value = mutableSetOf()
         _quizType.value = quizType
-
+        quizStates[quizType] = QuizState()
+    }
     fun restoreLife() {
-        _lives.value = 1
+        if (_lives.value <= 0) {
+            _lives.value = 1
+            _quizComplete.value = false
+        }
     }
 
-    fun nextQuestion() {
-        val selected = _selectedAnswers.value
-        val correct = currentQuestion?.correctAnswers() ?: emptyList()
+        fun nextQuestion() {
+            val selected = _selectedAnswers.value
+            val correct = currentQuestion?.correctAnswers() ?: emptyList()
 
-        if (selected.isNotEmpty()) {
-            if (selected.toSet() == correct.toSet()) {
-                _streakCount.value++
+            if (selected.isNotEmpty()) {
+                if (selected.toSet() == correct.toSet()) {
+                    _streakCount.value++
+                } else {
+                    _streakCount.value = 0
+                    if (_lives.value > 0) _lives.value--
+                }
+            }
+
+            if (_currentQuestionIndex.value < questions.size - 1) {
+                _currentQuestionIndex.value++
             } else {
-                _streakCount.value = 0
-                if (_lives.value > 0) _lives.value--
+                _quizComplete.value = true
             }
+
+            _selectedAnswers.value = mutableSetOf()
         }
 
-        if (_currentQuestionIndex.value < questions.size - 1) {
-            _currentQuestionIndex.value++
-        } else {
-            _quizComplete.value = true
-        }
+        fun restartQuiz(mode: QuizMode, context: Context, type: QuizType) {
+            _quizType.value = type
 
-        _selectedAnswers.value = mutableSetOf()
-    }
-
-    fun restartQuiz(mode: QuizMode, context: Context, type: QuizType) {
-        _quizType.value = type
-
-        val resId = when (type) {
-            QuizType.DRAINLAYING -> R.raw.drainsquestions
-            QuizType.PLUMBING -> R.raw.plumbingquestions
-            QuizType.GASFITTING -> R.raw.gasquestions
-            QuizType.DEFAULT -> error("QuizType.DEFAULT should not be used here")
-        }
-
-        loadQuestionsFromRawResource(context, resId)
-
-        val randomized = when (mode) {
-            QuizMode.EASY -> allQuestions.shuffled().take(25)
-            QuizMode.MEDIUM -> allQuestions.shuffled().take(50)
-            QuizMode.HARD -> {
-                val base = allQuestions.shuffled().take(50)
-                (base + base.shuffled().take(50)).shuffled()
+            val resId = when (type) {
+                QuizType.DRAINLAYING -> R.raw.drainsquestions
+                QuizType.PLUMBING -> R.raw.plumbingquestions
+                QuizType.GASFITTING -> R.raw.gasquestions
+                QuizType.DEFAULT -> error("QuizType.DEFAULT should not be used here")
             }
-        }
 
-        questions = randomized
-        _currentQuestionIndex.value = 0
-        _lives.value = 3
-        _streakCount.value = 0
-        _quizComplete.value = false
-    }
-    fun loadQuestions(context: Context, mode: QuizMode, quizType: QuizType) {
-        val resId = when (quizType) {
-            QuizType.DRAINLAYING -> R.raw.drainsquestions
-            QuizType.PLUMBING -> R.raw.plumbingquestions
-            QuizType.GASFITTING -> R.raw.gasquestions
-            QuizType.DEFAULT -> error("QuizType.DEFAULT should not be used here")
-        }
+            loadQuestionsFromRawResource(context, resId)
 
-        loadQuestionsFromRawResource(context, resId)
-
-        questions = when (mode) {
-            QuizMode.EASY -> allQuestions.shuffled().take(25)
-            QuizMode.MEDIUM -> allQuestions.shuffled().take(50)
-            QuizMode.HARD -> {
-                val base = allQuestions.shuffled().take(50)
-                (base + base.shuffled().take(50)).shuffled()
+            val randomized = when (mode) {
+                QuizMode.EASY -> allQuestions.shuffled().take(25)
+                QuizMode.MEDIUM -> allQuestions.shuffled().take(50)
+                QuizMode.HARD -> {
+                    val base = allQuestions.shuffled().take(50)
+                    (base + base.shuffled().take(50)).shuffled()
+                }
             }
+
+            questions = randomized
+            _currentQuestionIndex.value = 0
+            _lives.value = 3
+            _streakCount.value = 0
+            _quizComplete.value = false
         }
 
-        _currentQuestionIndex.value = 0
+        fun loadQuestions(context: Context, mode: QuizMode, quizType: QuizType) {
+            _quizType.value = quizType
+
+            val resId = when (quizType) {
+                QuizType.DRAINLAYING -> R.raw.drainsquestions
+                QuizType.PLUMBING -> R.raw.plumbingquestions
+                QuizType.GASFITTING -> R.raw.gasquestions
+                QuizType.DEFAULT -> error("QuizType.DEFAULT should not be used here")
+            }
+
+            val inputStream = context.resources.openRawResource(resId)
+            val reader = InputStreamReader(inputStream)
+            val jsonString = reader.readText()
+
+            val parsedResponse = Gson().fromJson(jsonString, QuestionsResponse::class.java)
+            reader.close()
+            inputStream.close()
+
+            val filteredQuestions = parsedResponse.questions.shuffled().take(
+                when (mode) {
+                    QuizMode.EASY -> 25
+                    QuizMode.MEDIUM -> 50
+                    QuizMode.HARD -> 100
+                }
+            )
+
+            quizStates[quizType] = quizStates[quizType]?.copy(
+                questions = filteredQuestions,
+                currentQuestionIndex = 0,
+                streakCount = quizStates[quizType]?.streakCount ?: 0,
+                lives = quizStates[quizType]?.lives ?: 3,
+                quizComplete = false,
+                selectedAnswers = mutableSetOf()
+            ) ?: QuizState(questions = filteredQuestions)
+
+            Log.d("QuizViewModel", "Loaded Questions: ${quizStates[quizType]?.questions}")
+        }
     }
-}
