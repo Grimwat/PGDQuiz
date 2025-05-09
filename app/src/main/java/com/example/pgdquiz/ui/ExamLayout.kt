@@ -86,11 +86,11 @@ fun DrainLayout(
                         .background(MaterialTheme.colorScheme.surface)
                         .padding(8.dp)
                 ) {
-                    LivesLost(
+                    LivesLost (
                         onWatchAd = {
                             viewModel.restoreLife()
                         },
-                        onExit = {onExit()},
+                        onExit = onExit,
                         examEmoji = painterResource(R.drawable.happypoo2),
                         emojiCont = "happyPoo",
                     )

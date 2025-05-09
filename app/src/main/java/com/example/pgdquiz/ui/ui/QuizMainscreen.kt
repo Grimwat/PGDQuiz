@@ -42,11 +42,11 @@ fun QuizApp(
                     selectedMode = mode
                     viewModel.loadQuestions(context, mode, selectedQuizType!!)
                 },
-                tradeTom = painterResource(id = when (selectedQuizType) {
+                tradeTom = painterResource(id = when (selectedQuizType ?: QuizType.DEFAULT) {
                     QuizType.DRAINLAYING -> R.drawable.happypoo2
                     QuizType.PLUMBING -> R.drawable.droplet
                     QuizType.GASFITTING -> R.drawable.pressure
-                    QuizType.DEFAULT, null -> R.drawable.neonsign2
+                    QuizType.DEFAULT -> R.drawable.neonsign2
                 }),
                 onBackToQuizType = {
                     selectedQuizType = null
@@ -66,11 +66,11 @@ fun QuizApp(
                 },
                 quizMode = selectedMode!!,
                 quizType = selectedQuizType!!,
-                examEmoji = painterResource(id = when (selectedQuizType) {
+                examEmoji = painterResource(id = when (selectedQuizType ?: QuizType.DEFAULT) {
                     QuizType.DRAINLAYING -> R.drawable.happypoo2
                     QuizType.PLUMBING -> R.drawable.droplet
                     QuizType.GASFITTING -> R.drawable.pressure
-                    QuizType.DEFAULT, null -> R.drawable.neonsign2
+                    QuizType.DEFAULT -> R.drawable.neonsign2
                 }),
                 examCont = selectedQuizType!!.name,
                 onBackToModeSelect = {

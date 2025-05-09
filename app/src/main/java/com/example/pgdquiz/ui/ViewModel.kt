@@ -99,6 +99,15 @@ class QuizViewModel : ViewModel() {
             e.printStackTrace()
         }
     }
+    fun reset(quizType: QuizType = QuizType.DEFAULT) {
+        allQuestions = emptyList()
+        questions = emptyList()
+        _currentQuestionIndex.value = 0
+        _streakCount.value = 0
+        _lives.value = 3
+        _quizComplete.value = false
+        _selectedAnswers.value = mutableSetOf()
+        _quizType.value = quizType
 
     fun restoreLife() {
         _lives.value = 1
