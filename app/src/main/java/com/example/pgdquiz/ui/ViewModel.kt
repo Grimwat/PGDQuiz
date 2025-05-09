@@ -45,17 +45,7 @@ class QuizViewModel : ViewModel() {
     private val gson = Gson()
 
     fun selectAnswer(answer: String) {
-        val current = _selectedAnswers.value
-        if (currentQuestion?.multipleAnswers == true) {
-            if (current.contains(answer)) {
-                current.remove(answer)
-            } else {
-                current.add(answer)
-            }
-            _selectedAnswers.value = current.toMutableSet()
-        } else {
-            _selectedAnswers.value = mutableSetOf(answer)
-        }
+        _selectedAnswers.value = mutableSetOf(answer)
     }
 
     fun loadQuestionsFromRawResource(context: Context, resId: Int) {
@@ -192,34 +182,43 @@ class QuizViewModel : ViewModel() {
             QuizType.DEFAULT -> error("QuizType.DEFAULT should not be used here")
         }
 
-        val inputStream = context.resources.openRawResource(resId)
-        val reader = InputStreamReader(inputStream)
-        val jsonString = reader.readText()
+        try {
+            val inputStream = context.resources.openRawResource(resId)
+            val reader = InputStreamReader(inputStream)
+            val jsonString = reader.readText()
 
-        val parsedResponse = Gson().fromJson(jsonString, QuestionsResponse::class.java)
-        reader.close()
-        inputStream.close()
+            val parsedResponse = gson.fromJson(jsonString, QuestionsResponse::class.java)
+            reader.close()
+            inputStream.close()
 
-
-        val filteredQuestions = parsedResponse.questions.shuffled().take(
-            when (mode) {
-                QuizMode.EASY -> 25
-                QuizMode.MEDIUM -> 50
-                QuizMode.HARD -> 100
+            if (parsedResponse.questions.isEmpty()) {
+                throw IllegalArgumentException("No questions found in the JSON file for $quizType")
             }
-        )
-        questions = filteredQuestions
 
+            questions = parsedResponse.questions.shuffled().take(
+                when (mode) {
+                    QuizMode.EASY -> 25
+                    QuizMode.MEDIUM -> 50
+                    QuizMode.HARD -> 100
+                }
+            )
 
-        quizStates[quizType] = quizStates[quizType]?.copy(
-            questions = filteredQuestions,
-            currentQuestionIndex = 0,
-            streakCount = quizStates[quizType]?.streakCount ?: 0,
-            lives = quizStates[quizType]?.lives ?: 3,
-            quizComplete = false,
-            selectedAnswers = mutableSetOf()
-        ) ?: QuizState(questions = filteredQuestions)
+            quizStates[quizType] = quizStates[quizType]?.copy(
+                questions = questions,
+                currentQuestionIndex = 0,
+                streakCount = 0,
+                lives = 3,
+                quizComplete = false,
+                selectedAnswers = mutableSetOf()
+            ) ?: QuizState(questions = questions)
 
-        Log.d("QuizViewModel", "Loaded Questions: ${quizStates[quizType]?.questions}")
+            _currentQuestionIndex.value = 0
+
+            Log.d("QuizViewModel", "Loaded Questions: ${quizStates[quizType]?.questions}")
+
+        } catch (e: Exception) {
+            Log.e("QuizViewModel", "Error loading questions: ${e.message}")
+            e.printStackTrace()
+        }
     }
     }

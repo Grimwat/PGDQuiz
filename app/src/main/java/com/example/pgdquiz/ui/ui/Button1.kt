@@ -41,8 +41,7 @@ fun AnswerButton(
     onButtonSelected: () -> Unit,
     modifier: Modifier = Modifier,
     isCorrect: Boolean,
-    showCorrectAnswer: Boolean,
-    imageOptions: Boolean
+    showCorrectAnswer: Boolean
 ) {
     Column(
         modifier = modifier,
@@ -77,27 +76,6 @@ fun AnswerButton(
                     .padding(8.dp),
                 contentAlignment = Alignment.Center
             ) {
-                if (imageOptions) {
-                    val context = LocalContext.current
-                    val imageResId = remember(optionText) {
-                        context.resources.getIdentifier(optionText, "raw", context.packageName)
-                    }
-
-                    if (imageResId != 0) {
-                        Image(
-                            painter = painterResource(id = imageResId),
-                            contentDescription = optionText,
-                            modifier = Modifier.size(64.dp)
-                        )
-                    } else {
-                        Text("Image not found", color = Color.White)
-                    }
-                } else {
-                    Text(
-                        text = optionText,
-                        color = Color.White,
-                        fontSize = 12.sp)
-                }
             }
         }
     }
@@ -123,8 +101,7 @@ fun ButtonGrid(
                 onButtonSelected = { viewModel.selectAnswer(option) },
                 modifier = Modifier.padding(vertical = 4.dp),
                 isCorrect = isCorrect,
-                showCorrectAnswer = showCorrectAnswer,
-                imageOptions = currentQuestion.imageOptions
+                showCorrectAnswer = showCorrectAnswer
             )
         }
 

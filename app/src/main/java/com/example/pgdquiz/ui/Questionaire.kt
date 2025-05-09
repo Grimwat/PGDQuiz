@@ -3,17 +3,16 @@ package com.example.pgdquiz.ui
 data class QuestionsResponse(
     val questions: List<Question>
 )
+
 data class Question(
     val id: Int,
     val question: String,
     val answer: Any,
     var options: List<String>,
     var isAnswerCorrect: Boolean = false,
-    val multipleAnswers: Boolean = false,
-    val imageOptions: Boolean = false
 ) {
     init {
-        if (options.isEmpty()) {
+        if (options.isEmpty() && correctAnswers().isEmpty()) {
             throw IllegalArgumentException("Options cannot be empty for question: $question")
         }
     }
