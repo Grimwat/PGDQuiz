@@ -36,45 +36,46 @@ fun QuizApp(
         }
 
         selectedMode == null -> {
-            val emojiResId = when (selectedQuizType) {
-                QuizType.DRAINLAYING -> R.drawable.happypoo2
-                QuizType.PLUMBING -> R.drawable.droplet
-                QuizType.GASFITTING -> R.drawable.pressure
-                QuizType.DEFAULT, null -> R.drawable.neonsign2
-            }
-
-
             QuizModeSelection(
                 quizType = selectedQuizType!!,
                 onSelectMode = { mode ->
                     selectedMode = mode
                     viewModel.loadQuestions(context, mode, selectedQuizType!!)
                 },
-                tradeTom = painterResource(id = emojiResId),
-                onBackToQuizType = { selectedQuizType = null },
+                tradeTom = painterResource(id = when (selectedQuizType) {
+                    QuizType.DRAINLAYING -> R.drawable.happypoo2
+                    QuizType.PLUMBING -> R.drawable.droplet
+                    QuizType.GASFITTING -> R.drawable.pressure
+                    QuizType.DEFAULT, null -> R.drawable.neonsign2
+                }),
+                onBackToQuizType = {
+                    selectedQuizType = null
+                    onQuizTypeSelected(QuizType.DEFAULT)
+                },
                 lives = viewModel.lives.value,
                 streak = viewModel.streakCount.value
             )
         }
 
         else -> {
-            val (examCont, emojiResId) = when (selectedQuizType) {
-                QuizType.DRAINLAYING -> "Drainlaying" to R.drawable.happypoo2
-                QuizType.PLUMBING -> "Plumbing" to R.drawable.droplet
-                QuizType.GASFITTING -> "Gasfitting" to R.drawable.pressure
-                QuizType.DEFAULT, null -> "PGD Quiz" to R.drawable.neonsign2
-            }
-            val examEmoji = painterResource(id = emojiResId)
-
             DrainLayout(
                 viewModel = viewModel,
-                onExit = { selectedMode = null },
+                onExit = {
+                    selectedMode = null
+                    onQuizTypeSelected(selectedQuizType!!)
+                },
                 quizMode = selectedMode!!,
                 quizType = selectedQuizType!!,
-                examEmoji = examEmoji,
-                examCont = examCont,
-                onBackToModeSelect = { selectedMode = null
-                    selectedQuizType = null}
+                examEmoji = painterResource(id = when (selectedQuizType) {
+                    QuizType.DRAINLAYING -> R.drawable.happypoo2
+                    QuizType.PLUMBING -> R.drawable.droplet
+                    QuizType.GASFITTING -> R.drawable.pressure
+                    QuizType.DEFAULT, null -> R.drawable.neonsign2
+                }),
+                examCont = selectedQuizType!!.name,
+                onBackToModeSelect = {
+                    selectedMode = null
+                }
             )
         }
     }

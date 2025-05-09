@@ -60,7 +60,9 @@ fun DrainLayout(
                 attempts = viewModel.lives.value,
                 streakCount = viewModel.streakCount.value,
                 modifier = Modifier.fillMaxWidth(),
-                onBack = onBackToModeSelect
+                onBack = {
+                    onBackToModeSelect()
+                }
             )
             Spacer(modifier = Modifier.padding(4.dp))
             QuestionField(
@@ -88,7 +90,7 @@ fun DrainLayout(
                         onWatchAd = {
                             viewModel.restoreLife()
                         },
-                        onExit = onExit,
+                        onExit = {onExit()},
                         examEmoji = painterResource(R.drawable.happypoo2),
                         emojiCont = "happyPoo",
                     )

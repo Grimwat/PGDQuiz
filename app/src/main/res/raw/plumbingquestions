@@ -1064,15 +1064,6 @@
            },
            {
              "id": 130,
-             "question": "Which two are classed as high hazards in cross connections?",
-             "answer": "Sewage pumps and sump ejectors.","Beauty salon and hairdressers.",
-             "options": [
-               "Irrigation with chemicals.",
-               "Swimming pools, spas and fountains."
-             ]
-           },
-           {
-             "id": 131,
              "question": "State the minimum allowable diameter for a discharge pipe receiving waste from a WC pan.",
              "answer": "80 mm",
              "options": [
@@ -1082,13 +1073,7 @@
              ]
            },
            {
-             "id": 132,
-             "question": "Which symbol is a Pressure reducing valve?",
-             "answer": "",
-             "options": ["A", "B", "C"]
-           },
-           {
-             "id": 133,
+             "id": 131,
              "question": "Which statement best describes an oxidising flame?",
              "answer": "A noisy flame with a pointed, blue inner cone.",
              "options": [
@@ -1099,7 +1084,7 @@
              ]
            },
            {
-             "id": 134,
+             "id": 132,
              "question": "Which of the following decreases as water is heated?",
              "answer": "The density of the water.",
              "options": [
@@ -1110,7 +1095,7 @@
              ]
            },
            {
-             "id": 135,
+             "id": 133,
              "question": "What is the maximum theoretical height that a pump is able to lift water when installed at sea level?",
              "answer": "10.3 m.",
              "options": [
@@ -1121,7 +1106,7 @@
              ]
            },
            {
-             "id": 136,
+             "id": 134,
              "question": "How does a quick recovery hot water cylinder differ from a standard hot water cylinder?",
              "answer": "It has a second element located higher in the cylinder.",
              "options": [
@@ -1132,7 +1117,7 @@
              ]
            },
            {
-             "id": 137,
+             "id": 135,
              "question": "State the minimum number of years a discharge pipework installed in a wall cavity must last to comply with the New Zealand Building Code clause B2/AS1 Durability.",
              "answer": "15 years",
              "options": [
@@ -1142,7 +1127,7 @@
              ]
            },
            {
-             "id": 138,
+             "id": 136,
              "question": "State the minimum number of years an under-slab discharge pipework must last to comply with the New Zealand Building Code clause B2/AS1 Durability.",
              "answer":"50 years",
              "options": [
@@ -1152,7 +1137,7 @@
              ]
            },
            {
-             "id": 139,
+             "id": 137,
              "question": "State the minimum number of years a trap installed in the cupboard under a sink or basin must last to comply with the New Zealand Building Code clause B2/AS1 Durability.",
              "answer": "5 years",
              "options": [
@@ -1162,7 +1147,7 @@
              ]
            },
            {
-             "id": 140,
+             "id": 138,
              "question": "State the minimum number of years a rubber boot flashing installed on a vent pipe penetrating a roof must last to comply with the New Zealand Building Code clause B2/AS1 Durability.",
              "answer": "15 years",
              "options": [
@@ -1172,7 +1157,7 @@
              ]
            },
            {
-             "id": 141,
+             "id": 139,
              "question": "Where is a Venturi used in a plumbing system?",
              "answer": "Shower mixer",
              "options": [
