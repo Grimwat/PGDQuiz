@@ -178,41 +178,44 @@ class QuizViewModel : ViewModel() {
             _quizComplete.value = false
         }
 
-        fun loadQuestions(context: Context, mode: QuizMode, quizType: QuizType) {
-            _quizType.value = quizType
+    fun loadQuestions(context: Context, mode: QuizMode, quizType: QuizType) {
+        _quizType.value = quizType
 
-            val resId = when (quizType) {
-                QuizType.DRAINLAYING -> R.raw.drainsquestions
-                QuizType.PLUMBING -> R.raw.plumbingquestions
-                QuizType.GASFITTING -> R.raw.gasquestions
-                QuizType.DEFAULT -> error("QuizType.DEFAULT should not be used here")
-            }
-
-            val inputStream = context.resources.openRawResource(resId)
-            val reader = InputStreamReader(inputStream)
-            val jsonString = reader.readText()
-
-            val parsedResponse = Gson().fromJson(jsonString, QuestionsResponse::class.java)
-            reader.close()
-            inputStream.close()
-
-            val filteredQuestions = parsedResponse.questions.shuffled().take(
-                when (mode) {
-                    QuizMode.EASY -> 25
-                    QuizMode.MEDIUM -> 50
-                    QuizMode.HARD -> 100
-                }
-            )
-
-            quizStates[quizType] = quizStates[quizType]?.copy(
-                questions = filteredQuestions,
-                currentQuestionIndex = 0,
-                streakCount = quizStates[quizType]?.streakCount ?: 0,
-                lives = quizStates[quizType]?.lives ?: 3,
-                quizComplete = false,
-                selectedAnswers = mutableSetOf()
-            ) ?: QuizState(questions = filteredQuestions)
-
-            Log.d("QuizViewModel", "Loaded Questions: ${quizStates[quizType]?.questions}")
+        val resId = when (quizType) {
+            QuizType.DRAINLAYING -> R.raw.drainsquestions
+            QuizType.PLUMBING -> R.raw.plumbingquestions
+            QuizType.GASFITTING -> R.raw.gasquestions
+            QuizType.DEFAULT -> error("QuizType.DEFAULT should not be used here")
         }
+
+        val inputStream = context.resources.openRawResource(resId)
+        val reader = InputStreamReader(inputStream)
+        val jsonString = reader.readText()
+
+        val parsedResponse = Gson().fromJson(jsonString, QuestionsResponse::class.java)
+        reader.close()
+        inputStream.close()
+
+
+        val filteredQuestions = parsedResponse.questions.shuffled().take(
+            when (mode) {
+                QuizMode.EASY -> 25
+                QuizMode.MEDIUM -> 50
+                QuizMode.HARD -> 100
+            }
+        )
+        questions = filteredQuestions
+
+
+        quizStates[quizType] = quizStates[quizType]?.copy(
+            questions = filteredQuestions,
+            currentQuestionIndex = 0,
+            streakCount = quizStates[quizType]?.streakCount ?: 0,
+            lives = quizStates[quizType]?.lives ?: 3,
+            quizComplete = false,
+            selectedAnswers = mutableSetOf()
+        ) ?: QuizState(questions = filteredQuestions)
+
+        Log.d("QuizViewModel", "Loaded Questions: ${quizStates[quizType]?.questions}")
+    }
     }
