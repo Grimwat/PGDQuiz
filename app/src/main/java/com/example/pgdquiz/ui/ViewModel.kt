@@ -111,14 +111,18 @@ class QuizViewModel : ViewModel() {
     }
 
     fun reset(quizType: QuizType = QuizType.DEFAULT) {
-        allQuestions = emptyList()
-        questions = emptyList()
+        _quizType.value = quizType
         _currentQuestionIndex.value = 0
         _streakCount.value = 0
         _lives.value = 3
         _quizComplete.value = false
         _selectedAnswers.value = mutableSetOf()
-        _quizType.value = quizType
+
+        if (questions.isEmpty()) {
+            allQuestions = emptyList()
+            questions = emptyList()
+        }
+
         quizStates[quizType] = QuizState()
     }
     fun restoreLife() {
