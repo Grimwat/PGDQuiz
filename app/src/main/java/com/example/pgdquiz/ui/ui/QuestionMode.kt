@@ -59,7 +59,7 @@ fun QuizModeSelection(
             QuizType.DRAINLAYING -> R.drawable.drainlogo
             QuizType.PLUMBING -> R.drawable.plumblogo
             QuizType.GASFITTING -> R.drawable.gasslogo
-            QuizType.DEFAULT, null -> R.drawable.neonsign
+            QuizType.DEFAULT -> R.drawable.arrow
         }
 
         Button(

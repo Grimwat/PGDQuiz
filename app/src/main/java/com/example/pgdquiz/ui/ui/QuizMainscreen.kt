@@ -24,7 +24,6 @@ fun QuizApp(
 
     when {
         selectedQuizType == null -> {
-            onQuizTypeSelected(QuizType.DEFAULT)
             QuizTypeSelection(
                 onSelectQuizType = { quizType ->
                     selectedQuizType = quizType
@@ -51,7 +50,6 @@ fun QuizApp(
                 }),
                 onBackToQuizType = {
                     selectedQuizType = null
-                    onQuizTypeSelected(QuizType.DEFAULT)
                 },
                 lives = viewModel.lives.value,
                 streak = viewModel.streakCount.value

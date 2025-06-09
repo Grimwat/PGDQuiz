@@ -117,6 +117,8 @@ fun PgdQuizTheme(
         quizType == QuizType.DRAINLAYING && darkTheme -> DrainDarkScheme
         quizType == QuizType.DRAINLAYING -> DrainLightScheme
 
+        quizType == QuizType.DEFAULT && darkTheme -> DarkColorScheme
+        quizType == QuizType.DEFAULT -> LightColorScheme
 
         darkTheme -> DarkColorScheme
         else -> LightColorScheme

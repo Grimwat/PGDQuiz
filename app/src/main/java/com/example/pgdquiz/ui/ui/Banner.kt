@@ -40,7 +40,7 @@ fun Banner(
         QuizType.DRAINLAYING -> "Drainlaying" to R.drawable.happypoo2
         QuizType.PLUMBING -> "Plumbing" to R.drawable.drop2
         QuizType.GASFITTING -> "Gasfitting" to R.drawable.pressure2
-        QuizType.DEFAULT -> "PGD Quiz" to R.drawable.neonsign2
+        QuizType.DEFAULT -> "Quiz App" to R.drawable.arrow
     }
 
     Box(

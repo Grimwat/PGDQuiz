@@ -74,14 +74,14 @@ class QuizViewModel : ViewModel() {
                     return@mapNotNull null
                 }
 
-                val safeOptions = question.options?.filter { it.isNotEmpty() } ?: emptyList()
-                val newOptions = (safeOptions + correctAnswers).distinct().shuffled()
-                val finalOptions = if (newOptions.size < 2) listOf(
-                    correctAnswers.first(),
-                    "Unknown"
-                ) else newOptions
-
-                question.copy(options = finalOptions)
+                val safeOptions = question.options.orEmpty().filter { it.isNotEmpty() }
+                val combined = (safeOptions + correctAnswers).distinct().shuffled()
+                val paddedOptions = when {
+                    combined.size >= 4 -> combined.take(4)
+                    combined.isNotEmpty() -> combined + List(4 - combined.size) { "Unknown" }
+                    else -> listOf("Unknown", "Unknown", "Unknown", "Unknown")
+                }
+                question.copy(options = paddedOptions)
             } ?: emptyList()
 
             allQuestions = filteredQuestions
@@ -108,9 +108,10 @@ class QuizViewModel : ViewModel() {
         _quizComplete.value = false
         _selectedAnswers.value = mutableSetOf()
 
-        if (questions.isEmpty()) {
+        if (quizType != QuizType.DEFAULT) {
             allQuestions = emptyList()
             questions = emptyList()
+            quizStates[quizType] = QuizState()
         }
 
         quizStates[quizType] = QuizState()
@@ -144,14 +145,18 @@ class QuizViewModel : ViewModel() {
             _selectedAnswers.value = mutableSetOf()
         }
 
-        fun restartQuiz(mode: QuizMode, context: Context, type: QuizType) {
-            _quizType.value = type
+        fun restartQuiz(mode: QuizMode, context: Context, quizType: QuizType) {
+            if (quizType == QuizType.DEFAULT) {
+                Log.e("QuizViewModel", "Cannot load questions for DEFAULT quiz type")
+                return
+            }
+            _quizType.value = quizType
 
-            val resId = when (type) {
+            val resId = when (quizType) {
                 QuizType.DRAINLAYING -> R.raw.drainsquestions
                 QuizType.PLUMBING -> R.raw.plumbingquestions
                 QuizType.GASFITTING -> R.raw.gasquestions
-                QuizType.DEFAULT -> error("QuizType.DEFAULT should not be used here")
+                else -> error("QuizType.DEFAULT should not be used here")
             }
 
             loadQuestionsFromRawResource(context, resId)
@@ -173,14 +178,20 @@ class QuizViewModel : ViewModel() {
         }
 
     fun loadQuestions(context: Context, mode: QuizMode, quizType: QuizType) {
+        if (quizType == QuizType.DEFAULT) {
+            Log.e("QuizViewModel", "Cannot load questions for DEFAULT quiz type")
+            return
+        }
+
         _quizType.value = quizType
 
         val resId = when (quizType) {
             QuizType.DRAINLAYING -> R.raw.drainsquestions
             QuizType.PLUMBING -> R.raw.plumbingquestions
             QuizType.GASFITTING -> R.raw.gasquestions
-            QuizType.DEFAULT -> error("QuizType.DEFAULT should not be used here")
+            else -> error("Invalid QuizType")
         }
+
 
         try {
             val inputStream = context.resources.openRawResource(resId)
@@ -195,7 +206,23 @@ class QuizViewModel : ViewModel() {
                 throw IllegalArgumentException("No questions found in the JSON file for $quizType")
             }
 
-            questions = parsedResponse.questions.shuffled().take(
+            val fixedOptionsQuestions = parsedResponse.questions.map { question ->
+                val correctAnswers = when (val ans = question.answer) {
+                    is String -> listOf(ans)
+                    is List<*> -> ans.filterIsInstance<String>()
+                    else -> emptyList()
+                }
+                val safeOptions = question.options.orEmpty().filter { it.isNotEmpty() }
+                val combined = (safeOptions + correctAnswers).distinct().shuffled()
+                val paddedOptions = when {
+                    combined.size >= 4 -> combined.take(4)
+                    combined.isNotEmpty() -> combined + List(4 - combined.size) { "Unknown" }
+                    else -> listOf("Unknown", "Unknown", "Unknown", "Unknown")
+                }
+                question.copy(options = paddedOptions)
+            }
+
+            questions = fixedOptionsQuestions.shuffled().take(
                 when (mode) {
                     QuizMode.EASY -> 25
                     QuizMode.MEDIUM -> 50

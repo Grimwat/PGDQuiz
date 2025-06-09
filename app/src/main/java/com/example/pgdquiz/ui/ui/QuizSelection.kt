@@ -119,8 +119,6 @@ fun QuizTypeSelection(
             )
         }
 
-
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()

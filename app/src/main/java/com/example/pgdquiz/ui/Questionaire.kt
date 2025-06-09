@@ -8,17 +8,14 @@ data class Question(
     val id: Int,
     val question: String,
     val answer: Any,
-    var options: List<String>,
+    var options: List<String> = emptyList(),
     var isAnswerCorrect: Boolean = false,
+    var shuffledOptions: List<String>? = null
 ) {
     init {
-        if (options.isEmpty() && correctAnswers().isEmpty()) {
-            throw IllegalArgumentException("Options cannot be empty for question: $question")
+        if ((options.isEmpty() || options.all { it.isBlank() }) && correctAnswers().isEmpty()) {
+            throw IllegalArgumentException("Options cannot be empty or invalid for question: $question")
         }
-    }
-
-    val shuffledOptions: List<String> by lazy {
-        options.shuffled()
     }
 
     fun correctAnswers(): List<String> = when (answer) {

@@ -21,9 +21,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            var selectedQuizType by remember { mutableStateOf(QuizType.DEFAULT) }
+            var selectedQuizType by remember { mutableStateOf<QuizType?>(null) }
 
-            PgdQuizTheme(quizType = selectedQuizType) {
+            PgdQuizTheme(quizType = selectedQuizType ?: QuizType.DEFAULT) {
                 QuizApp(
                     viewModel = viewModel,
                     onQuizTypeSelected = { selectedQuizType = it }

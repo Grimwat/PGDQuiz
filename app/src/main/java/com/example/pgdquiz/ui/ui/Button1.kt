@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.QuizViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -70,6 +72,13 @@ fun AnswerButton(
                     .padding(8.dp),
                 contentAlignment = Alignment.Center
             ) {
+                Text(
+                    text = optionText,
+                    color = MaterialTheme.colorScheme.onPrimary,  // ensure text is visible
+                    style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }
@@ -85,7 +94,7 @@ fun ButtonGrid(
     var showCorrectAnswer by remember { mutableStateOf(false) }
 
     Column(modifier = modifier) {
-        currentQuestion.shuffledOptions.forEach { option ->
+        currentQuestion.shuffledOptions?.forEach { option ->
             val isSelected = selectedAnswers.contains(option)
             val isCorrect = currentQuestion.isOptionCorrect(option)
 
