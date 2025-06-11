@@ -40,6 +40,7 @@ fun QuizApp(
                 quizType = selectedQuizType!!,
                 onSelectMode = { mode ->
                     selectedMode = mode
+                    viewModel.reset(selectedQuizType!!)
                     viewModel.loadQuestions(context, mode, selectedQuizType!!)
                 },
                 tradeTom = painterResource(id = when (selectedQuizType ?: QuizType.DEFAULT) {

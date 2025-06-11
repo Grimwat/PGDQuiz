@@ -24,6 +24,9 @@ class QuizViewModel : ViewModel() {
     private val _quizType = mutableStateOf(QuizType.DEFAULT)
     val quizType: State<QuizType> = _quizType
 
+    private val _quizMode = mutableStateOf(QuizMode.EASY)
+    val quizMode: State<QuizMode> = _quizMode
+
     private val _currentQuestionIndex = mutableStateOf(0)
     val currentQuestionIndex: State<Int> = _currentQuestionIndex
 
@@ -90,11 +93,12 @@ class QuizViewModel : ViewModel() {
 
     fun loadQuestions(context: Context, mode: QuizMode, quizType: QuizType) {
         if (quizType == QuizType.DEFAULT) {
-            Log.e("QuizViewModel", "Cannot load questions for DEFAULT quiz type")
+            Log.e("QuizViewModel", "❌ Cannot load questions for DEFAULT quiz type")
             return
         }
 
         _quizType.value = quizType
+        Log.d("QuizViewModel", "🟡 Loading questions for $quizType in $mode mode")
 
         val resId = when (quizType) {
             QuizType.DRAINLAYING -> R.raw.drainsquestions
@@ -107,10 +111,13 @@ class QuizViewModel : ViewModel() {
             val inputStream = context.resources.openRawResource(resId)
             val reader = InputStreamReader(inputStream)
             val jsonString = reader.readText()
+            Log.d("QuizViewModel", "📦 JSON loaded successfully (length=${jsonString.length})")
 
             val parsedResponse = gson.fromJson(jsonString, QuestionsResponse::class.java)
             reader.close()
             inputStream.close()
+
+            Log.d("QuizViewModel", "📋 Parsed ${parsedResponse.questions.size} questions from JSON")
 
             if (parsedResponse.questions.isEmpty()) {
                 throw IllegalArgumentException("No questions found in the JSON file for $quizType")
@@ -124,7 +131,10 @@ class QuizViewModel : ViewModel() {
                     combined.isNotEmpty() -> combined + List(4 - combined.size) { "Unknown" }
                     else -> List(4) { "Unknown" }
                 }
-                question.copy(options = paddedOptions)
+
+                question.copy(options = paddedOptions).also {
+                    Log.d("QuizViewModel", "🧠 Question: ${it.question.take(30)}... → Options: ${it.options}")
+                }
             }
 
             val selectedQuestions = fixedQuestions.shuffled().take(
@@ -150,15 +160,21 @@ class QuizViewModel : ViewModel() {
             _quizComplete.value = false
             _selectedAnswers.value = mutableSetOf()
 
-            Log.d("QuizViewModel", "Loaded ${selectedQuestions.size} questions for $quizType")
+            Log.d("QuizViewModel", "✅ Loaded ${selectedQuestions.size} questions for $quizType")
+            Log.d("QuizViewModel", "▶️ First question: ${selectedQuestions.firstOrNull()?.question}")
 
         } catch (e: Exception) {
-            Log.e("QuizViewModel", "Error loading questions: ${e.message}")
+            Log.e("QuizViewModel", "❌ Error loading questions: ${e.message}")
             e.printStackTrace()
         }
     }
     fun restartQuiz(mode: QuizMode, context: Context, quizType: QuizType) {
         reset(quizType)
+        loadQuestions(context, mode, quizType)
+    }
+    fun startQuiz(context: Context, mode: QuizMode, quizType: QuizType) {
+        _quizType.value = quizType
+        _quizMode.value = mode
         loadQuestions(context, mode, quizType)
     }
 }

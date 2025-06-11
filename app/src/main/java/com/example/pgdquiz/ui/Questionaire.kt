@@ -8,12 +8,10 @@ data class Question(
     val id: Int,
     val question: String,
     val answer: String,
-    var options: List<String> = emptyList(),
+    val options: List<String>,
     var isAnswerCorrect: Boolean = false,
     var shuffledOptions: List<String>? = null
 ) {
-
     fun correctAnswers(): List<String> = listOf(answer)
-
     fun isOptionCorrect(option: String): Boolean = correctAnswers().contains(option)
 }
