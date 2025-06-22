@@ -11,6 +11,7 @@ import com.example.pgdquiz.ui.QuizType
 import com.example.pgdquiz.ui.QuizModeSelection
 import com.example.pgdquiz.ui.QuizTypeSelection
 import com.example.pgdquiz.ui.QuizViewModel
+import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 
 @Composable
@@ -22,62 +23,69 @@ fun QuizApp(
     var selectedMode by remember { mutableStateOf<QuizMode?>(null) }
     val context = LocalContext.current
 
-    when {
-        selectedQuizType == null -> {
-            QuizTypeSelection(
-                onSelectQuizType = { quizType ->
-                    selectedQuizType = quizType
-                    onQuizTypeSelected(quizType)
-                    viewModel.reset(quizType)
-                },
-                onQuizTypeSelected = onQuizTypeSelected,
-                tradeTom = painterResource(id = R.drawable.neonsign3)
-            )
-        }
+    PgdQuizTheme(quizType = selectedQuizType ?: QuizType.DEFAULT) {
+        when {
+            selectedQuizType == null -> {
+                QuizTypeSelection(
+                    onSelectQuizType = { quizType ->
+                        selectedQuizType = quizType
+                        onQuizTypeSelected(quizType)
+                        viewModel.reset(quizType)
+                    },
+                    onQuizTypeSelected = onQuizTypeSelected,
+                    tradeTom = painterResource(id = R.drawable.neonsign3)
+                )
+            }
 
-        selectedMode == null -> {
-            QuizModeSelection(
-                quizType = selectedQuizType!!,
-                onSelectMode = { mode ->
-                    selectedMode = mode
-                    viewModel.startQuiz(context, mode, selectedQuizType!!)
-                },
-                tradeTom = painterResource(id = when (selectedQuizType ?: QuizType.DEFAULT) {
-                    QuizType.DRAINLAYING -> R.drawable.happypoo2
-                    QuizType.PLUMBING -> R.drawable.droplet
-                    QuizType.GASFITTING -> R.drawable.pressure
-                    QuizType.DEFAULT -> R.drawable.neonsign2
-                }),
-                onBackToQuizType = {
-                    selectedQuizType = null
-                },
-                lives = viewModel.lives.value,
-                streak = viewModel.streakCount.value
-            )
-        }
+            selectedMode == null -> {
+                QuizModeSelection(
+                    quizType = selectedQuizType!!,
+                    onSelectMode = { mode ->
+                        selectedMode = mode
+                        viewModel.startQuiz(context, mode, selectedQuizType!!)
+                    },
+                    tradeTom = painterResource(
+                        id = when (selectedQuizType ?: QuizType.DEFAULT) {
+                            QuizType.DRAINLAYING -> R.drawable.happypoo2
+                            QuizType.PLUMBING -> R.drawable.droplet
+                            QuizType.GASFITTING -> R.drawable.pressure
+                            QuizType.DEFAULT -> R.drawable.neonsign2
+                        }
+                    ),
+                    onBackToQuizType = {
+                        selectedMode = null
+                        selectedQuizType = null
+                    },
+                    lives = viewModel.lives.value,
+                    streak = viewModel.streakCount.value
+                )
+            }
 
-        else -> {
-            DrainLayout(
-                viewModel = viewModel,
-                onExit = {
-                    selectedMode = null
-                    selectedQuizType = null
-                    viewModel.reset(QuizType.DEFAULT)
-                },
-                quizMode = selectedMode!!,
-                quizType = selectedQuizType!!,
-                examEmoji = painterResource(id = when (selectedQuizType ?: QuizType.DEFAULT) {
-                    QuizType.DRAINLAYING -> R.drawable.happypoo2
-                    QuizType.PLUMBING -> R.drawable.droplet
-                    QuizType.GASFITTING -> R.drawable.pressure
-                    QuizType.DEFAULT -> R.drawable.neonsign2
-                }),
-                examCont = selectedQuizType!!.name,
-                onBackToModeSelect = {
-                    selectedMode = null
-                    viewModel.reset(selectedQuizType!!)
-                }
-            )
+            else -> {
+                DrainLayout(
+                    viewModel = viewModel,
+                    onExit = {
+                        selectedMode = null
+                        selectedQuizType = null
+                        viewModel.reset(QuizType.DEFAULT)
+                    },
+                    quizMode = selectedMode!!,
+                    quizType = selectedQuizType!!,
+                    examEmoji = painterResource(
+                        id = when (selectedQuizType ?: QuizType.DEFAULT) {
+                            QuizType.DRAINLAYING -> R.drawable.happypoo2
+                            QuizType.PLUMBING -> R.drawable.droplet
+                            QuizType.GASFITTING -> R.drawable.pressure
+                            QuizType.DEFAULT -> R.drawable.neonsign2
+                        }
+                    ),
+                    examCont = selectedQuizType!!.name,
+                    onBackToModeSelect = {
+                        selectedMode = null
+                        viewModel.reset(selectedQuizType!!)
+                    }
+                )
+            }
         }
     }
 }
