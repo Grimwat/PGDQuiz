@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,109 +46,93 @@ fun DrainLayout(
     onBackToModeSelect: () -> Unit
 ) {
     val context = LocalContext.current
-    LaunchedEffect(key1 = Unit) {
-        viewModel.startQuiz(context, quizMode, quizType)
-    }
     val lives = viewModel.lives.value
     val quizComplete = viewModel.quizComplete.value
-    val question = viewModel.currentQuestion
+    val question = viewModel.currentQuestion.value
     val selectedAnswers = viewModel.selectedAnswers.value
 
-    question?.let {
-        Text(text = it.question)
+    if (question == null) {
+        CircularProgressIndicator()
+    } else {
 
-        it.options.forEach { option ->
-            val isSelected = selectedAnswers.contains(option)
-            val isCorrect = question.isOptionCorrect(option)
-
-            AnswerButton(
-                optionText = option,
-                isSelected = isSelected,
-                onButtonSelected = { viewModel.selectAnswer(option) },
-                isCorrect = isCorrect,
-                showCorrectAnswer = viewModel.quizComplete.value, // Or manage local flag
-                modifier = Modifier.padding(vertical = 4.dp)
-            )
-        }
-    }
-
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Column(
-            modifier = modifier
-                .fillMaxHeight()
-                .background(MaterialTheme.colorScheme.background),
-            verticalArrangement = Arrangement.spacedBy(5.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Box(
+            modifier = Modifier.fillMaxSize()
         ) {
-            Banner(
-                quizType = quizType,
-                emojiCont = examCont,
-                attempts = lives,
-                streakCount = viewModel.streakCount.value,
-                modifier = Modifier.fillMaxWidth(),
-                onBack = onBackToModeSelect
-            )
-
-            Spacer(modifier = Modifier.padding(4.dp))
-
-            QuestionField(
-                question = question,
-                modifier = Modifier.padding(horizontal = 10.dp),
-                quizType = quizType
-            )
-
-            ButtonGrid(
-                viewModel = viewModel,
-                modifier = Modifier.padding(horizontal = 10.dp)
-            )
-        }
-
-        if (lives <= 0) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.5f))
+            Column(
+                modifier = modifier
+                    .fillMaxHeight()
+                    .background(MaterialTheme.colorScheme.background),
+                verticalArrangement = Arrangement.spacedBy(5.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Banner(
+                    quizType = quizType,
+                    emojiCont = examCont,
+                    attempts = lives,
+                    streakCount = viewModel.streakCount.value,
+                    modifier = Modifier.fillMaxWidth(),
+                    onBack = { onBackToModeSelect() }
+                )
+
+                Spacer(modifier = Modifier.padding(4.dp))
+
+                QuestionField(
+                    question = question,
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    quizType = quizType
+                )
+
+                ButtonGrid(
+                    viewModel = viewModel,
+                    modifier = Modifier.padding(horizontal = 10.dp)
+                )
+            }
+
+            if (lives <= 0) {
                 Box(
                     modifier = Modifier
-                        .align(Alignment.Center)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(MaterialTheme.colorScheme.surface)
-                        .padding(8.dp)
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.5f))
                 ) {
-                    LivesLost(
-                        onWatchAd = { viewModel.restoreLife() },
-                        onExit = onExit,
-                        examEmoji = painterResource(R.drawable.happypoo2),
-                        emojiCont = "happyPoo"
-                    )
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(MaterialTheme.colorScheme.surface)
+                            .padding(8.dp)
+                    ) {
+                        LivesLost(
+                            onWatchAd = { viewModel.restoreLife() },
+                            onExit = onExit,
+                            examEmoji = painterResource(R.drawable.happypoo2),
+                            emojiCont = "happyPoo"
+                        )
+                    }
                 }
             }
-        }
 
-        if (quizComplete) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.5f))
-            ) {
+            if (quizComplete) {
                 Box(
                     modifier = Modifier
-                        .align(Alignment.Center)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(MaterialTheme.colorScheme.surface)
-                        .padding(8.dp)
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.5f))
                 ) {
-                    CongratulationsScreen(
-                        examEmoji = painterResource(R.drawable.happypoo2),
-                        emojiCont = "happyPoo",
-                        onRestart = {
-                            viewModel.startQuiz(context, quizMode, quizType)
-                        },
-                        onBackToModeSelect = onBackToModeSelect
-                    )
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(MaterialTheme.colorScheme.surface)
+                            .padding(8.dp)
+                    ) {
+                        CongratulationsScreen(
+                            examEmoji = painterResource(R.drawable.happypoo2),
+                            emojiCont = "happyPoo",
+                            onRestart = {
+                                viewModel.startQuiz(context, quizMode, quizType)
+                            },
+                            onBackToModeSelect = onBackToModeSelect
+                        )
+                    }
                 }
             }
         }

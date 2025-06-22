@@ -16,12 +16,13 @@ import com.example.pgdquiz.ui.ui.QuizApp
 class MainActivity : ComponentActivity() {
     private val viewModel = QuizViewModel()
 
+    private var selectedQuizType by mutableStateOf<QuizType?>(null)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         setContent {
-            var selectedQuizType by remember { mutableStateOf<QuizType?>(null) }
 
             PgdQuizTheme(quizType = selectedQuizType ?: QuizType.DEFAULT) {
                 QuizApp(

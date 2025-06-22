@@ -89,7 +89,7 @@ fun ButtonGrid(
     modifier: Modifier = Modifier,
     viewModel: QuizViewModel = viewModel()
 ) {
-    val currentQuestion = viewModel.currentQuestion ?: return
+    val currentQuestion = viewModel.currentQuestion.value ?: return
     val selectedAnswers = viewModel.selectedAnswers.value
     var showCorrectAnswer by remember { mutableStateOf(false) }
 

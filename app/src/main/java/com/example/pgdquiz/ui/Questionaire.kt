@@ -5,7 +5,7 @@ data class QuestionsResponse(
 )
 
 data class Question(
-    val id: Int,
+    val id: Int?,
     val question: String,
     val answer: String,
     val options: List<String>,

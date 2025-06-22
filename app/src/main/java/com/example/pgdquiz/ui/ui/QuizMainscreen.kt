@@ -1,5 +1,6 @@
 package com.example.pgdquiz.ui.ui
 
+import android.util.Log
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -19,7 +20,6 @@ fun QuizApp(
 ) {
     var selectedQuizType by remember { mutableStateOf<QuizType?>(null) }
     var selectedMode by remember { mutableStateOf<QuizMode?>(null) }
-
     val context = LocalContext.current
 
     when {
@@ -40,8 +40,7 @@ fun QuizApp(
                 quizType = selectedQuizType!!,
                 onSelectMode = { mode ->
                     selectedMode = mode
-                    viewModel.reset(selectedQuizType!!)
-                    viewModel.loadQuestions(context, mode, selectedQuizType!!)
+                    viewModel.startQuiz(context, mode, selectedQuizType!!)
                 },
                 tradeTom = painterResource(id = when (selectedQuizType ?: QuizType.DEFAULT) {
                     QuizType.DRAINLAYING -> R.drawable.happypoo2
@@ -62,7 +61,8 @@ fun QuizApp(
                 viewModel = viewModel,
                 onExit = {
                     selectedMode = null
-                    onQuizTypeSelected(selectedQuizType!!)
+                    selectedQuizType = null
+                    viewModel.reset(QuizType.DEFAULT)
                 },
                 quizMode = selectedMode!!,
                 quizType = selectedQuizType!!,
@@ -75,6 +75,7 @@ fun QuizApp(
                 examCont = selectedQuizType!!.name,
                 onBackToModeSelect = {
                     selectedMode = null
+                    viewModel.reset(selectedQuizType!!)
                 }
             )
         }
