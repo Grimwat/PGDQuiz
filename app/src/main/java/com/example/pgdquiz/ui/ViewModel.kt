@@ -98,7 +98,10 @@ class QuizViewModel : ViewModel() {
                         else -> List(4) { "Unknown" }
                     }
 
-                    question.copy(options = paddedOptions).also {
+                    question.copy(
+                        options = paddedOptions,
+                        shuffledOptions = paddedOptions
+                    ).also {
                         Log.d("QuizViewModel", "🧠 Question: ${it.question.take(30)}... → Options: ${it.options}")
                     }
                 }
