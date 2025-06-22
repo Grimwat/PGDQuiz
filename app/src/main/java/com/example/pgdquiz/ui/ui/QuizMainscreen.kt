@@ -1,6 +1,6 @@
 package com.example.pgdquiz.ui.ui
 
-import android.util.Log
+
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
