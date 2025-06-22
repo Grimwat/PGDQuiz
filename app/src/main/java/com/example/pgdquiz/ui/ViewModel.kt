@@ -133,8 +133,7 @@ class QuizViewModel : ViewModel() {
             Log.d("QuizViewModel", "▶️ First question: ${selectedQuestions.firstOrNull()?.question}")
 
         } catch (e: Exception) {
-            Log.e("QuizViewModel", "❌ Error loading questions: ${e.message}")
-            e.printStackTrace()
+            Log.e("QuizViewModel", "❌ Error loading questions for $quizType: ${e.message}", e)
         }
     }
 
