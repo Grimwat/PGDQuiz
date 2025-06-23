@@ -14,6 +14,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,6 +44,54 @@ fun LivesLost(
         QuizType.GASFITTING ->  R.drawable.pressure2
         QuizType.DEFAULT -> R.drawable.arrow
     }
+    val drainlayingMessages = listOf(
+        "Got laid out",
+        "Do you even lay?",
+        "That's a Box",
+        "Bungs in the wrong place cuz",
+        "Well that'll fail inspection",
+        "The Plumber Could Do It..",
+        "Its Backfalling!",
+        "Down the drain, huh?",
+        "That one flushed your streak!",
+        "Drain again next time!"
+    )
+
+    val plumbingMessages = listOf(
+        "You sprung a leak!",
+        "Thats a Box",
+        "Pressure Dropped",
+        "I wont tell the boss",
+        "Gassfitters laughing bro",
+        "Well that'll fail inspection",
+        "You forgot a Crimp..",
+        "No better then a Drainlayer..",
+        "Pipe dream ended there.",
+        "Try plunging into it again!"
+    )
+
+    val gasfittingMessages = listOf(
+        "Gas leak detected... in your answers!",
+        "Boom! That one was tricky.",
+        "I wont tell the boss",
+        "Thats a Box",
+        "Atmospheric Pressure maybe?",
+        "Pressure dropped..",
+        "Should have been a Plumber..",
+        "Get the leak check..",
+        "You sure you tightend that fitting?",
+        "Better ventilate your thinking!"
+    )
+    val messages = when (quizType) {
+        QuizType.DRAINLAYING -> drainlayingMessages
+        QuizType.PLUMBING -> plumbingMessages
+        QuizType.GASFITTING -> gasfittingMessages
+        else -> listOf("Oops, try again!")
+    }
+
+
+    val message = remember(quizType) { messages.random() }
+
     Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.tertiary),
@@ -53,7 +102,7 @@ fun LivesLost(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                text = "All Out of Sh*ts",
+                text = message,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
