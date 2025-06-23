@@ -99,8 +99,9 @@ fun DrainLayout(
                         LivesLost(
                             onWatchAd = { viewModel.restoreLife() },
                             onExit = onExit,
-                            examEmoji = painterResource(R.drawable.happypoo2),
-                            emojiCont = "happyPoo"
+                            examEmoji = examEmoji,
+                            emojiCont = "happyPoo",
+                            quizType = quizType
                         )
                     }
                 }

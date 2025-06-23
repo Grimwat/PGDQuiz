@@ -18,21 +18,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.pgdquiz.R
+import com.example.pgdquiz.ui.QuizType
 
 @Composable
 fun LivesLost(
     modifier: Modifier = Modifier,
+    quizType: QuizType,
     examEmoji: Painter,
     emojiCont: String,
     onWatchAd: () -> Unit,
     onExit: () -> Unit,
     onUpgrade: () -> Unit = {}
 ) {
+    val examEmoji = when (quizType) {
+        QuizType.DRAINLAYING -> R.drawable.happypoo2
+        QuizType.PLUMBING -> R.drawable.drop2
+        QuizType.GASFITTING ->  R.drawable.pressure2
+        QuizType.DEFAULT -> R.drawable.arrow
+    }
     Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.tertiary),
@@ -50,7 +60,7 @@ fun LivesLost(
                 modifier = Modifier.padding(top = 8.dp)
             )
             Image(
-                painter = examEmoji,
+                painter = painterResource(id = examEmoji),
                 contentDescription = emojiCont
 
             )
