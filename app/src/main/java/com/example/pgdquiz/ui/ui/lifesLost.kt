@@ -38,11 +38,11 @@ fun LivesLost(
     onExit: () -> Unit,
     onUpgrade: () -> Unit = {}
 ) {
-    val examEmoji = when (quizType) {
-        QuizType.DRAINLAYING -> R.drawable.happypoo2
-        QuizType.PLUMBING -> R.drawable.drop2
-        QuizType.GASFITTING ->  R.drawable.pressure2
-        QuizType.DEFAULT -> R.drawable.arrow
+    val (title,examEmoji) = when (quizType) {
+        QuizType.DRAINLAYING -> "HappyPoo" to R.drawable.happypoo2
+        QuizType.PLUMBING -> "Droplet" to R.drawable.drop2
+        QuizType.GASFITTING -> "Pressure" to R.drawable.pressure2
+        QuizType.DEFAULT -> "Nothing G" to  R.drawable.arrow
     }
     val drainlayingMessages = listOf(
         "Got laid out",
