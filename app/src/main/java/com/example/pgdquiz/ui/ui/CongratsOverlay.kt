@@ -18,19 +18,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.pgdquiz.R
+import com.example.pgdquiz.ui.QuizType
 
 @Composable
 fun CongratulationsScreen(
     modifier: Modifier = Modifier,
     examEmoji: Painter,
     emojiCont: String,
+    quizType: QuizType,
     onRestart: () -> Unit,
     onBackToModeSelect: () -> Unit
 ) {
+    val (title,examEmoji) = when (quizType) {
+        QuizType.DRAINLAYING -> "HappyPoo" to R.drawable.happypoo2
+        QuizType.PLUMBING -> "Droplet" to R.drawable.drop2
+        QuizType.GASFITTING -> "Pressure" to R.drawable.pressure2
+        QuizType.DEFAULT -> "Nothing G" to  R.drawable.arrow
+    }
     Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.tertiary.copy(alpha = 0.9f)),
@@ -54,8 +64,8 @@ fun CongratulationsScreen(
                 modifier = Modifier.padding(start = 8.dp, end = 8.dp)
             )
             Image(
-                painter = examEmoji,
-                contentDescription = emojiCont
+                painter = painterResource(id = examEmoji),
+                contentDescription = title
             )
 
             Row(

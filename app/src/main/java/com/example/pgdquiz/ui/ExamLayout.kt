@@ -35,6 +35,7 @@ fun DrainLayout(
     viewModel: QuizViewModel,
     onExit: () -> Unit,
     examEmoji: Painter,
+    title: String,
     examCont: String,
     quizMode: QuizMode,
     quizType: QuizType,
@@ -100,7 +101,7 @@ fun DrainLayout(
                             onWatchAd = { viewModel.restoreLife() },
                             onExit = onExit,
                             examEmoji = examEmoji,
-                            emojiCont = "happyPoo",
+                            emojiCont = title,
                             quizType = quizType
                         )
                     }
@@ -121,12 +122,13 @@ fun DrainLayout(
                             .padding(8.dp)
                     ) {
                         CongratulationsScreen(
-                            examEmoji = painterResource(R.drawable.happypoo2),
-                            emojiCont = "happyPoo",
+                            examEmoji = examEmoji,
+                            emojiCont = title,
                             onRestart = {
                                 viewModel.startQuiz(context, quizMode, quizType)
                             },
-                            onBackToModeSelect = onBackToModeSelect
+                            onBackToModeSelect = onBackToModeSelect,
+                            quizType = quizType
                         )
                     }
                 }
