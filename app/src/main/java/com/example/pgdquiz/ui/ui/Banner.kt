@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -51,22 +52,23 @@ fun Banner(
             .border(width = 4.dp, color = MaterialTheme.colorScheme.surface),
         contentAlignment = Alignment.Center
     ) {
-        val iconSize = 40.dp
+        val iconSize = 32.dp
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 24.dp),
+                .padding(horizontal = 8.dp, vertical = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            IconButton(onClick = onBack) {
+            IconButton(onClick = onBack,
+                modifier = Modifier
+                   ) {
                 Icon(
                     painter = painterResource(id = R.drawable.arrow),
                     contentDescription = "Back",
-                    modifier = Modifier
+                    modifier = Modifier.fillMaxSize()
                         .padding(top = 16.dp)
-                        .size(iconSize)
                 )
             }
             Text(
@@ -78,7 +80,8 @@ fun Banner(
             )
 
             Row (
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier
+                    .padding(top = 16.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Image(
@@ -116,4 +119,8 @@ fun Banner(
 
 @Preview
 @Composable
-fun Drainpreview() {}
+fun Banner(
+
+) {
+
+}
