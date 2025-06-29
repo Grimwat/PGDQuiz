@@ -43,6 +43,12 @@ fun Banner(
         QuizType.GASFITTING -> "Gasfitting" to R.drawable.pressure2
         QuizType.DEFAULT -> "Quiz App" to R.drawable.arrow
     }
+    val PGDLogo = when (quizType) {
+        QuizType.DRAINLAYING -> R.drawable.drainlogo
+        QuizType.PLUMBING -> R.drawable.plumblogo
+        QuizType.GASFITTING -> R.drawable.gasslogo
+        QuizType.DEFAULT -> R.drawable.arrow
+    }
 
     Box(
         modifier = modifier
@@ -71,13 +77,14 @@ fun Banner(
                         .padding(top = 16.dp)
                 )
             }
-            Text(
-                text = title,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                .padding(start = 28.dp, top = 16.dp),
-                textAlign = TextAlign.Center
-            )
+                Text(
+                    text = title,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .padding(start = 28.dp, top = 16.dp),
+                    textAlign = TextAlign.Center
+                )
+
 
             Row (
                 modifier = Modifier
