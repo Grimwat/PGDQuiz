@@ -79,6 +79,12 @@ fun QuizApp(
                             QuizType.DEFAULT -> R.drawable.neonsign2
                         }
                     ),
+                    title = when (selectedQuizType ?: QuizType.DEFAULT) {
+                        QuizType.DRAINLAYING -> "HappyPoo"
+                        QuizType.PLUMBING -> "Droplet"
+                        QuizType.GASFITTING -> "Pressure"
+                        QuizType.DEFAULT -> "Default"
+                    },
                     examCont = selectedQuizType!!.name,
                     onBackToModeSelect = {
                         selectedMode = null

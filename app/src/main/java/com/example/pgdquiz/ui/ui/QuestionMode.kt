@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -92,8 +93,10 @@ fun QuizModeSelection(
                         .padding(start = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text("25 Questions")
-                    Text("Easy")
+                    Text("25 Questions",
+                        color = Color.White,)
+                    Text("Easy",
+                        color = Color.White,)
                 }
             }
         }
@@ -128,8 +131,10 @@ fun QuizModeSelection(
                         .padding(start = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text("50 Questions")
-                    Text("Medium")
+                    Text("50 Questions",
+                        color = Color.White)
+                    Text("Medium",
+                        color = Color.White)
                 }
             }
         }
@@ -164,8 +169,11 @@ fun QuizModeSelection(
                         .padding(start = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text("100 Questions")
-                    Text("Hard")
+                    Text("100 Questions",
+                        color = Color.White)
+
+                    Text("Hard",
+                        color = Color.White,)
                 }
             }
         }

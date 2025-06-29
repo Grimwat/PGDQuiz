@@ -22,8 +22,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.QuizViewModel
@@ -39,6 +41,26 @@ fun AnswerButton(
     isCorrect: Boolean,
     showCorrectAnswer: Boolean
 ) {
+    val backgroundBrush = when {
+        showCorrectAnswer && isCorrect -> Brush.radialGradient(
+            colors = listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.outline),
+            radius = 570f
+        )
+
+        isSelected -> Brush.radialGradient(
+            colors = listOf(MaterialTheme.colorScheme.outline, MaterialTheme.colorScheme.primary),
+            radius = 570f
+        )
+
+        else -> Brush.radialGradient(
+            colors = listOf(
+                MaterialTheme.colorScheme.primary,
+                MaterialTheme.colorScheme.background
+            ),
+            radius = 570f
+        )
+    }
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -56,25 +78,20 @@ fun AnswerButton(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(
-                        when {
-                            showCorrectAnswer && isCorrect -> MaterialTheme.colorScheme.secondary
-                            isSelected -> MaterialTheme.colorScheme.outline
-                            else -> MaterialTheme.colorScheme.primary
-                        }
-                    )
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(brush = backgroundBrush)
                     .border(
-                        width = 4.dp,
-                        color = if (isSelected) MaterialTheme.colorScheme.primary
-                        else MaterialTheme.colorScheme.outline
+                        width = 2.dp,
+                        color = if (isSelected) MaterialTheme.colorScheme.outline
+                        else MaterialTheme.colorScheme.primary,
+                        shape = RoundedCornerShape(12.dp)
                     )
-                    .padding(8.dp),
+                    .padding(12.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = optionText,
-                    color = MaterialTheme.colorScheme.onPrimary,  // ensure text is visible
+                    color = Color.White,
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
@@ -83,42 +100,41 @@ fun AnswerButton(
         }
     }
 }
+    @Composable
+    fun ButtonGrid(
+        modifier: Modifier = Modifier,
+        viewModel: QuizViewModel = viewModel()
+    ) {
+        val currentQuestion = viewModel.currentQuestion.value ?: return
+        val selectedAnswers = viewModel.selectedAnswers.value
+        var showCorrectAnswer by remember { mutableStateOf(false) }
 
-@Composable
-fun ButtonGrid(
-    modifier: Modifier = Modifier,
-    viewModel: QuizViewModel = viewModel()
-) {
-    val currentQuestion = viewModel.currentQuestion.value ?: return
-    val selectedAnswers = viewModel.selectedAnswers.value
-    var showCorrectAnswer by remember { mutableStateOf(false) }
+        Column(modifier = modifier) {
+            currentQuestion.shuffledOptions?.forEach { option ->
+                val isSelected = selectedAnswers.contains(option)
+                val isCorrect = currentQuestion.isOptionCorrect(option)
 
-    Column(modifier = modifier) {
-        currentQuestion.shuffledOptions?.forEach { option ->
-            val isSelected = selectedAnswers.contains(option)
-            val isCorrect = currentQuestion.isOptionCorrect(option)
+                AnswerButton(
+                    optionText = option,
+                    isSelected = isSelected,
+                    onButtonSelected = { viewModel.selectAnswer(option) },
+                    modifier = Modifier.padding(vertical = 4.dp),
+                    isCorrect = isCorrect,
+                    showCorrectAnswer = showCorrectAnswer
+                )
+            }
 
-            AnswerButton(
-                optionText = option,
-                isSelected = isSelected,
-                onButtonSelected = { viewModel.selectAnswer(option) },
-                modifier = Modifier.padding(vertical = 4.dp),
-                isCorrect = isCorrect,
-                showCorrectAnswer = showCorrectAnswer
+            NextButton(
+                onClick = {
+                    showCorrectAnswer = true
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        showCorrectAnswer = false
+                        viewModel.nextQuestion()
+                    }, 1500)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
             )
         }
-
-        NextButton(
-            onClick = {
-                showCorrectAnswer = true
-                Handler(Looper.getMainLooper()).postDelayed({
-                    showCorrectAnswer = false
-                    viewModel.nextQuestion()
-                }, 1500)
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
-        )
     }
-}
