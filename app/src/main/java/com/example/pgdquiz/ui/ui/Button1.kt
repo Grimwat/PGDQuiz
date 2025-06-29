@@ -44,12 +44,12 @@ fun AnswerButton(
     val backgroundBrush = when {
         showCorrectAnswer && isCorrect -> Brush.radialGradient(
             colors = listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.outline),
-            radius = 570f
+            radius = 600f
         )
 
         isSelected -> Brush.radialGradient(
             colors = listOf(MaterialTheme.colorScheme.outline, MaterialTheme.colorScheme.primary),
-            radius = 570f
+            radius = 600f
         )
 
         else -> Brush.radialGradient(
@@ -57,7 +57,7 @@ fun AnswerButton(
                 MaterialTheme.colorScheme.primary,
                 MaterialTheme.colorScheme.background
             ),
-            radius = 570f
+            radius = 600f
         )
     }
 

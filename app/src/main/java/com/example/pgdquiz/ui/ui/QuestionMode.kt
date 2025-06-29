@@ -24,8 +24,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.pgdquiz.R
 
 @Composable
@@ -54,7 +56,7 @@ fun QuizModeSelection(
             onBack = onBackToQuizType
         )
 
-        Spacer(modifier = Modifier.padding(32.dp))
+        Spacer(modifier = Modifier.padding(16.dp))
 
         val PGDLogo = when (quizType) {
             QuizType.DRAINLAYING -> R.drawable.drainlogo
@@ -68,7 +70,8 @@ fun QuizModeSelection(
             shape = RoundedCornerShape(8.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp),
+                .height(100.dp)
+                .padding(horizontal = 36.dp),
             border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.outline
@@ -76,7 +79,7 @@ fun QuizModeSelection(
         ) {
             Box(
                 modifier = Modifier.fillMaxWidth()
-                    .height(56.dp),
+                    .height(100.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
@@ -89,13 +92,14 @@ fun QuizModeSelection(
                 )
 
                 Column(
-                    modifier = Modifier
-                        .padding(start = 16.dp),
+                    modifier = Modifier,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text("25 Questions",
-                        color = Color.White,)
                     Text("Easy",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,)
+                    Text("(25 Questions)",
                         color = Color.White,)
                 }
             }
@@ -106,7 +110,8 @@ fun QuizModeSelection(
             shape = RoundedCornerShape(8.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp),
+                .height(100.dp)
+                .padding(horizontal = 36.dp),
             border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.outline
@@ -114,7 +119,7 @@ fun QuizModeSelection(
         ) {
             Box(
                 modifier = Modifier.fillMaxWidth()
-                    .height(56.dp),
+                    .height(100.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
@@ -127,13 +132,14 @@ fun QuizModeSelection(
                 )
 
                 Column(
-                    modifier = Modifier
-                        .padding(start = 16.dp),
+                    modifier = Modifier,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text("50 Questions",
-                        color = Color.White)
                     Text("Medium",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White)
+                    Text("(50 Questions)",
                         color = Color.White)
                 }
             }
@@ -144,7 +150,8 @@ fun QuizModeSelection(
             shape = RoundedCornerShape(8.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp),
+                .height(100.dp)
+                .padding(horizontal = 36.dp),
             border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.outline
@@ -152,7 +159,7 @@ fun QuizModeSelection(
         ) {
             Box(
                 modifier = Modifier.fillMaxWidth()
-                    .height(56.dp),
+                    .height(100.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
@@ -165,15 +172,15 @@ fun QuizModeSelection(
                 )
 
                 Column(
-                    modifier = Modifier
-                        .padding(start = 16.dp),
+                    modifier = Modifier,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text("100 Questions",
-                        color = Color.White)
-
                     Text("Hard",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
                         color = Color.White,)
+                    Text("(100 Questions)",
+                        color = Color.White)
                 }
             }
         }
