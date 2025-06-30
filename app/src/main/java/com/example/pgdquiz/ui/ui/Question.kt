@@ -14,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import com.example.pgdquiz.R
 import androidx.compose.ui.res.painterResource
@@ -41,7 +43,7 @@ fun QuestionField(
         modifier = modifier
             .wrapContentSize()
             .clip(RoundedCornerShape(8.dp))
-            .background(color = MaterialTheme.colorScheme.primary)
+            .background( MaterialTheme.colorScheme.primary)
             .border(width = 4.dp, color = MaterialTheme.colorScheme.outline),
         contentAlignment = Alignment.Center
     ) {
