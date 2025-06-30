@@ -96,14 +96,14 @@ class QuizViewModel : ViewModel() {
                 questions = selectedQuestions,
                 currentQuestionIndex = 0,
                 streakCount = 0,
-                lives = 3,
+                lives = 5,
                 quizComplete = false,
                 selectedAnswers = mutableSetOf()
             )
 
             _currentQuestionIndex.value = 0
             _streakCount.value = 0
-            _lives.value = 3
+            _lives.value = 5
             _quizComplete.value = false
             _selectedAnswers.value = mutableSetOf()
 
@@ -154,7 +154,7 @@ class QuizViewModel : ViewModel() {
         _quizType.value = quizType
         _currentQuestionIndex.value = 0
         _streakCount.value = 0
-        _lives.value = 3
+        _lives.value = 5
         _quizComplete.value = false
         _selectedAnswers.value = mutableSetOf()
 
@@ -197,7 +197,7 @@ class QuizViewModel : ViewModel() {
     private val _streakCount = mutableStateOf(0)
     val streakCount: State<Int> = _streakCount
 
-    private val _lives = mutableStateOf(3)
+    private val _lives = mutableStateOf(5)
     val lives: State<Int> = _lives
 
     private val _showCorrectAnswer = mutableStateOf(false)
