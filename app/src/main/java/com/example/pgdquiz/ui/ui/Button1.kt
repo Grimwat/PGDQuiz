@@ -43,7 +43,7 @@ fun AnswerButton(
 ) {
     val backgroundBrush = when {
         showCorrectAnswer && isCorrect -> Brush.radialGradient(
-            colors = listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.outline),
+            colors = listOf(MaterialTheme.colorScheme.secondary, MaterialTheme.colorScheme.secondary),
             radius = 600f
         )
 
@@ -100,41 +100,37 @@ fun AnswerButton(
         }
     }
 }
-    @Composable
-    fun ButtonGrid(
-        modifier: Modifier = Modifier,
-        viewModel: QuizViewModel = viewModel()
-    ) {
-        val currentQuestion = viewModel.currentQuestion.value ?: return
-        val selectedAnswers = viewModel.selectedAnswers.value
-        var showCorrectAnswer by remember { mutableStateOf(false) }
+@Composable
+fun ButtonGrid(
+    modifier: Modifier = Modifier,
+    viewModel: QuizViewModel = viewModel()
+) {
+    val currentQuestion = viewModel.currentQuestion.value ?: return
+    val selectedAnswers = viewModel.selectedAnswers.value
+    val showCorrectAnswer by viewModel.showCorrectAnswer
 
-        Column(modifier = modifier) {
-            currentQuestion.shuffledOptions?.forEach { option ->
-                val isSelected = selectedAnswers.contains(option)
-                val isCorrect = currentQuestion.isOptionCorrect(option)
+    Column(modifier = modifier) {
+        currentQuestion.shuffledOptions?.forEach { option ->
+            val isSelected = selectedAnswers.contains(option)
+            val isCorrect = currentQuestion.isOptionCorrect(option)
 
-                AnswerButton(
-                    optionText = option,
-                    isSelected = isSelected,
-                    onButtonSelected = { viewModel.selectAnswer(option) },
-                    modifier = Modifier.padding(vertical = 4.dp),
-                    isCorrect = isCorrect,
-                    showCorrectAnswer = showCorrectAnswer
-                )
-            }
-
-            NextButton(
-                onClick = {
-                    showCorrectAnswer = true
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        showCorrectAnswer = false
-                        viewModel.nextQuestion()
-                    }, 1500)
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp)
+            AnswerButton(
+                optionText = option,
+                isSelected = isSelected,
+                onButtonSelected = { viewModel.selectAnswer(option) },
+                modifier = Modifier.padding(vertical = 4.dp),
+                isCorrect = isCorrect,
+                showCorrectAnswer = showCorrectAnswer
             )
         }
+
+        NextButton(
+            onClick = {
+                viewModel.triggerShowCorrectAnswer()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
+        )
     }
+}

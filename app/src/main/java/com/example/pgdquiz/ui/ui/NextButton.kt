@@ -45,8 +45,8 @@ fun NextButton(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(8.dp))
-                    .background(color = MaterialTheme.colorScheme.tertiary)
-                    .border(width = 4.dp, color = MaterialTheme.colorScheme.primary)
+                    .background(color = MaterialTheme.colorScheme.primary)
+                    .border(width = 4.dp, color = MaterialTheme.colorScheme.outline)
                     .padding(24.dp),
                 contentAlignment = Alignment.Center
             ) {

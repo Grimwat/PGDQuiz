@@ -7,29 +7,15 @@ import androidx.lifecycle.ViewModel
 import com.example.pgdquiz.R
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
+import androidx.lifecycle.viewModelScope
 import com.example.pgdquiz.ui.ui.QuizState
 import com.google.gson.Gson
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.InputStreamReader
 
 
 class QuizViewModel : ViewModel() {
-
-    private val quizStates: MutableMap<QuizType, QuizState> = mutableMapOf(
-        QuizType.DRAINLAYING to QuizState(),
-        QuizType.PLUMBING to QuizState(),
-        QuizType.GASFITTING to QuizState()
-    )
-
-    private val gson = Gson()
-
-    private val _quizType = mutableStateOf(QuizType.DEFAULT)
-    val quizType: State<QuizType> = _quizType
-
-    private val _quizMode = mutableStateOf(QuizMode.EASY)
-    val quizMode: State<QuizMode> = _quizMode
-
-    private val _currentQuestionIndex = mutableStateOf(0)
-    val currentQuestionIndex: State<Int> = _currentQuestionIndex
 
     val currentQuestion: State<Question?> = derivedStateOf {
         val quizType = _quizType.value
@@ -37,24 +23,13 @@ class QuizViewModel : ViewModel() {
         quizState.questions.getOrNull(_currentQuestionIndex.value)
     }
 
-    private val _streakCount = mutableStateOf(0)
-    val streakCount: State<Int> = _streakCount
-
-    private val _lives = mutableStateOf(3)
-    val lives: State<Int> = _lives
-
-    private val _selectedAnswers = mutableStateOf(mutableSetOf<String>())
-    val selectedAnswers: State<Set<String>> = _selectedAnswers
-
-    private val _quizComplete = mutableStateOf(false)
-    val quizComplete: State<Boolean> = _quizComplete
-
     fun startQuiz(context: Context, mode: QuizMode, quizType: QuizType) {
         Log.d("QuizViewModel", "🎯 startQuiz() called with $quizType in $mode")
         _quizType.value = quizType
         _quizMode.value = mode
         loadQuestions(context, mode, quizType)
     }
+
     fun loadQuestions(context: Context, mode: QuizMode, quizType: QuizType) {
         if (quizType == QuizType.DEFAULT) {
             Log.e("QuizViewModel", "❌ Cannot load questions for DEFAULT quiz type")
@@ -102,7 +77,10 @@ class QuizViewModel : ViewModel() {
                         options = paddedOptions,
                         shuffledOptions = paddedOptions
                     ).also {
-                        Log.d("QuizViewModel", "🧠 Question: ${it.question.take(30)}... → Options: ${it.options}")
+                        Log.d(
+                            "QuizViewModel",
+                            "🧠 Question: ${it.question.take(30)}... → Options: ${it.options}"
+                        )
                     }
                 }
 
@@ -130,7 +108,10 @@ class QuizViewModel : ViewModel() {
             _selectedAnswers.value = mutableSetOf()
 
             Log.d("QuizViewModel", "✅ Loaded ${selectedQuestions.size} questions for $quizType")
-            Log.d("QuizViewModel", "▶️ First question: ${selectedQuestions.firstOrNull()?.question}")
+            Log.d(
+                "QuizViewModel",
+                "▶️ First question: ${selectedQuestions.firstOrNull()?.question}"
+            )
 
         } catch (e: Exception) {
             Log.e("QuizViewModel", "❌ Error loading questions for $quizType: ${e.message}", e)
@@ -186,4 +167,45 @@ class QuizViewModel : ViewModel() {
         reset(quizType)
         loadQuestions(context, mode, quizType)
     }
+
+    fun triggerShowCorrectAnswer() {
+        _showCorrectAnswer.value = true
+        viewModelScope.launch {
+            delay(1500L)
+            _showCorrectAnswer.value = false
+            nextQuestion()
+        }
+    }
+
+    private val quizStates: MutableMap<QuizType, QuizState> = mutableMapOf(
+        QuizType.DRAINLAYING to QuizState(),
+        QuizType.PLUMBING to QuizState(),
+        QuizType.GASFITTING to QuizState()
+    )
+
+    private val gson = Gson()
+
+    private val _quizType = mutableStateOf(QuizType.DEFAULT)
+    val quizType: State<QuizType> = _quizType
+
+    private val _quizMode = mutableStateOf(QuizMode.EASY)
+    val quizMode: State<QuizMode> = _quizMode
+
+    private val _currentQuestionIndex = mutableStateOf(0)
+    val currentQuestionIndex: State<Int> = _currentQuestionIndex
+
+    private val _streakCount = mutableStateOf(0)
+    val streakCount: State<Int> = _streakCount
+
+    private val _lives = mutableStateOf(3)
+    val lives: State<Int> = _lives
+
+    private val _showCorrectAnswer = mutableStateOf(false)
+    val showCorrectAnswer: State<Boolean> = _showCorrectAnswer
+
+    private val _selectedAnswers = mutableStateOf(mutableSetOf<String>())
+    val selectedAnswers: State<Set<String>> = _selectedAnswers
+
+    private val _quizComplete = mutableStateOf(false)
+    val quizComplete: State<Boolean> = _quizComplete
 }
