@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui
+package com.example.pgdquiz.ui.Data
 
 data class QuestionsResponse(
     val questions: List<Question>

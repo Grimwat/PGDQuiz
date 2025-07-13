@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui.ui
+package com.example.pgdquiz.ui.AppUi
 
 
 import androidx.compose.runtime.*
@@ -6,7 +6,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.DrainLayout
-import com.example.pgdquiz.ui.QuizMode
+import com.example.pgdquiz.ui.Data.QuizMode
 import com.example.pgdquiz.ui.QuizType
 import com.example.pgdquiz.ui.QuizModeSelection
 import com.example.pgdquiz.ui.QuizTypeSelection

@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui.ui
+package com.example.pgdquiz.ui.AppUi
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

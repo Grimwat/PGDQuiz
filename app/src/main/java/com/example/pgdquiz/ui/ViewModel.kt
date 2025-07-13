@@ -8,7 +8,10 @@ import com.example.pgdquiz.R
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.lifecycle.viewModelScope
-import com.example.pgdquiz.ui.ui.QuizState
+import com.example.pgdquiz.ui.Data.QuizState
+import com.example.pgdquiz.ui.Data.Question
+import com.example.pgdquiz.ui.Data.QuestionsResponse
+import com.example.pgdquiz.ui.Data.QuizMode
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

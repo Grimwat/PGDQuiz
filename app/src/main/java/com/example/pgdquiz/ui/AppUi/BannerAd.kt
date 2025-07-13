@@ -1,9 +1,9 @@
-//package com.example.pgdquiz.ui.Composables
+//package com.example.pgdquiz.AppUi.Composables
 //
 //import androidx.compose.foundation.layout.fillMaxWidth
 //import androidx.compose.runtime.Composable
-//import androidx.compose.ui.Modifier
-//import androidx.compose.ui.viewinterop.AndroidView
+//import androidx.compose.AppUi.Modifier
+//import androidx.compose.AppUi.viewinterop.AndroidView
 //import androidx.window.layout.WindowMetrics
 //import androidx.window.layout.WindowMetricsCalculator
 //import com.google.android.gms.ads.AdRequest

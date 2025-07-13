@@ -1,6 +1,6 @@
 package com.example.pgdquiz.ui
 
-//import com.example.pgdquiz.ui.Composables.BannerAd
+//import com.example.pgdquiz.AppUi.Composables.BannerAd
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,10 +21,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.example.pgdquiz.ui.ui.ButtonGrid
-import com.example.pgdquiz.ui.ui.CongratulationsScreen
-import com.example.pgdquiz.ui.ui.LivesLost
-import com.example.pgdquiz.ui.ui.QuestionField
+import com.example.pgdquiz.ui.AppUi.ButtonGrid
+import com.example.pgdquiz.ui.AppUi.CongratulationsScreen
+import com.example.pgdquiz.ui.AppUi.LivesLost
+import com.example.pgdquiz.ui.AppUi.QuestionField
+import com.example.pgdquiz.ui.Data.QuizMode
 
 
 @Composable

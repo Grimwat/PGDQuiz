@@ -1,6 +1,4 @@
-package com.example.pgdquiz.ui.ui
-
-import com.example.pgdquiz.ui.Question
+package com.example.pgdquiz.ui.Data
 
 data class QuizState(
     var questions: List<Question> = emptyList(),
