@@ -21,6 +21,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.AppUi.MainScreen.QuizTypeButton
+import com.example.pgdquiz.ui.Data.QuizType
 
 
 @Composable

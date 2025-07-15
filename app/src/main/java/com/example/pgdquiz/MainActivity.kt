@@ -7,8 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.example.pgdquiz.ui.QuizType
-import com.example.pgdquiz.ui.QuizViewModel
+import com.example.pgdquiz.ui.Data.QuizType
+import com.example.pgdquiz.ui.Logic.QuizViewModel
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 import com.example.pgdquiz.ui.AppUi.MainScreen.QuizApp
 

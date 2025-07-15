@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.pgdquiz.ui.QuizViewModel
+import com.example.pgdquiz.ui.Logic.QuizViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable

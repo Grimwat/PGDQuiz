@@ -25,8 +25,8 @@ import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Overlays.CongratulationsScr
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Overlays.LivesLost
 import com.example.pgdquiz.ui.Banner
 import com.example.pgdquiz.ui.Data.QuizMode
-import com.example.pgdquiz.ui.QuizType
-import com.example.pgdquiz.ui.QuizViewModel
+import com.example.pgdquiz.ui.Data.QuizType
+import com.example.pgdquiz.ui.Logic.QuizViewModel
 
 
 @Composable

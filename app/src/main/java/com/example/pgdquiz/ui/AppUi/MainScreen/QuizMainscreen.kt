@@ -7,10 +7,10 @@ import androidx.compose.ui.res.painterResource
 import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.DrainLayout
 import com.example.pgdquiz.ui.Data.QuizMode
-import com.example.pgdquiz.ui.QuizType
+import com.example.pgdquiz.ui.Data.QuizType
 import com.example.pgdquiz.ui.QuizModeSelection
 import com.example.pgdquiz.ui.QuizTypeSelection
-import com.example.pgdquiz.ui.QuizViewModel
+import com.example.pgdquiz.ui.Logic.QuizViewModel
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 

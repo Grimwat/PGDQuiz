@@ -26,7 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pgdquiz.R
-import com.example.pgdquiz.ui.QuizType
+import com.example.pgdquiz.ui.Data.QuizType
 
 @Composable
 fun LivesLost(

@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui
+package com.example.pgdquiz.ui.Logic
 
 import android.content.Context
 import android.util.Log
@@ -12,7 +12,7 @@ import com.example.pgdquiz.ui.Data.QuizState
 import com.example.pgdquiz.ui.Data.Question
 import com.example.pgdquiz.ui.Data.QuestionsResponse
 import com.example.pgdquiz.ui.Data.QuizMode
-import com.example.pgdquiz.ui.QuizType
+import com.example.pgdquiz.ui.Data.QuizType
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
