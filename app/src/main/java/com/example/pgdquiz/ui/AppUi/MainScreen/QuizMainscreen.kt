@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui.AppUi
+package com.example.pgdquiz.ui.AppUi.MainScreen
 
 
 import androidx.compose.runtime.*

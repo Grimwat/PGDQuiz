@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.Data.QuizMode
-import com.example.pgdquiz.ui.QuizType
 
 @Composable
 fun QuizModeSelection(

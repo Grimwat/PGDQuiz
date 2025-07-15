@@ -10,7 +10,7 @@ import androidx.compose.runtime.setValue
 import com.example.pgdquiz.ui.QuizType
 import com.example.pgdquiz.ui.QuizViewModel
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
-import com.example.pgdquiz.ui.AppUi.QuizApp
+import com.example.pgdquiz.ui.AppUi.MainScreen.QuizApp
 
 class MainActivity : ComponentActivity() {
     private val viewModel = QuizViewModel()
