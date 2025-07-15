@@ -5,7 +5,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import com.example.pgdquiz.R
-import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.DrainLayout
+import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.ExamLayout
 import com.example.pgdquiz.ui.Data.QuizMode
 import com.example.pgdquiz.ui.Data.QuizType
 import com.example.pgdquiz.ui.QuizModeSelection
@@ -62,7 +62,7 @@ fun QuizApp(
             }
 
             else -> {
-                DrainLayout(
+                ExamLayout(
                     viewModel = viewModel,
                     onExit = {
                         selectedMode = null

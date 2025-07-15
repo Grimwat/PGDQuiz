@@ -30,7 +30,7 @@ import com.example.pgdquiz.ui.Logic.QuizViewModel
 
 
 @Composable
-fun DrainLayout(
+fun ExamLayout(
     modifier: Modifier = Modifier,
     viewModel: QuizViewModel,
     onExit: () -> Unit,
