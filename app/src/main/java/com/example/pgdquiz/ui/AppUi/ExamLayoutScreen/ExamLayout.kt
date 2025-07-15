@@ -21,6 +21,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Overlays.CongratulationsScreen
+import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Overlays.LivesLost
 import com.example.pgdquiz.ui.Banner
 import com.example.pgdquiz.ui.Data.QuizMode
 import com.example.pgdquiz.ui.QuizType

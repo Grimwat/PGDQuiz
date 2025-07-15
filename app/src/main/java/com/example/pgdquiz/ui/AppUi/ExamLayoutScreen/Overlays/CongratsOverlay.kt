@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui.AppUi.ExamLayoutScreen
+package com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Overlays
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
