@@ -31,6 +31,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.pgdquiz.ui.QuizType
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 @Composable
@@ -159,15 +160,3 @@ fun QuizTypeSelection(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun QuizTypeSelectionPreview() {
-    PgdQuizTheme(quizType = QuizType.DEFAULT) {
-        QuizTypeSelection(
-            tradeTom = painterResource(id = R.drawable.neonsign),
-            onSelectQuizType = {},
-            onQuizTypeSelected = {}
-
-        )
-    }
-}
