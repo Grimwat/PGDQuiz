@@ -123,7 +123,7 @@ class QuizViewModel : ViewModel() {
     }
 
     fun selectAnswer(answer: String) {
-        _selectedAnswers.value = mutableSetOf(answer) // Only one answer at a time
+        _selectedAnswers.value = mutableSetOf(answer)
     }
 
     fun nextQuestion() {
@@ -175,7 +175,7 @@ class QuizViewModel : ViewModel() {
     fun triggerShowCorrectAnswer() {
         _showCorrectAnswer.value = true
         viewModelScope.launch {
-            delay(1500L)
+            delay(2000L)
             _showCorrectAnswer.value = false
             nextQuestion()
         }
