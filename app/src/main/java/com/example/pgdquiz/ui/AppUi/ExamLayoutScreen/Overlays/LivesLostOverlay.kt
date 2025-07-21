@@ -72,7 +72,6 @@ fun LivesLost(
 
     val gasfittingMessages = listOf(
         "Gas leak detected... in your answers!",
-        "Boom! That one was tricky.",
         "I wont tell the boss",
         "Thats a Box",
         "Atmospheric Pressure maybe?",
