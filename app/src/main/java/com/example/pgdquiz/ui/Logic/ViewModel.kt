@@ -107,7 +107,7 @@ class QuizViewModel : ViewModel() {
 
             _currentQuestionIndex.value = 0
             _streakCount.value = 0
-            _lives.value = 5
+            setCurrentLives(5)
             _quizComplete.value = false
             _selectedAnswers.value = mutableSetOf()
 
@@ -159,7 +159,7 @@ class QuizViewModel : ViewModel() {
         _quizType.value = quizType
         _currentQuestionIndex.value = 0
         _streakCount.value = 0
-        _lives.value = 5
+        setCurrentLives(5)
         _quizComplete.value = false
         _selectedAnswers.value = mutableSetOf()
 
