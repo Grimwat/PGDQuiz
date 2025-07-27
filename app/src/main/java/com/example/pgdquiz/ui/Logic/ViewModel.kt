@@ -134,7 +134,7 @@ class QuizViewModel : ViewModel() {
                 _streakCount.value++
             } else {
                 _streakCount.value = 0
-                if (_lives.value > 0) _lives.value--
+                if (currentLives > 0) setCurrentLives(currentLives - 1)
             }
         }
 
@@ -145,11 +145,12 @@ class QuizViewModel : ViewModel() {
         }
 
         _selectedAnswers.value = mutableSetOf()
+        _showCorrectAnswer.value = false
     }
 
     fun restoreLife() {
-        if (_lives.value <= 0) {
-            _lives.value = 1
+        if (currentLives <= 0) {
+            setCurrentLives(1)
             _quizComplete.value = false
         }
     }
@@ -176,11 +177,27 @@ class QuizViewModel : ViewModel() {
         _showCorrectAnswer.value = true
         viewModelScope.launch {
             delay(2000L)
-            _showCorrectAnswer.value = false
             nextQuestion()
         }
     }
 
+    private val _livesMap = mutableStateOf(
+        mutableMapOf(
+            QuizType.DRAINLAYING to 5,
+            QuizType.PLUMBING to 5,
+            QuizType.GASFITTING to 5
+        )
+    )
+    val livesMap: State<Map<QuizType, Int>> = _livesMap
+
+    val currentLives: Int
+        get() = _livesMap.value[_quizType.value] ?: 5
+
+    private fun setCurrentLives(newValue: Int) {
+        _livesMap.value = _livesMap.value.toMutableMap().apply {
+            this[_quizType.value] = newValue
+        }
+    }
     private val quizStates: MutableMap<QuizType, QuizState> = mutableMapOf(
         QuizType.DRAINLAYING to QuizState(),
         QuizType.PLUMBING to QuizState(),
@@ -200,9 +217,6 @@ class QuizViewModel : ViewModel() {
 
     private val _streakCount = mutableStateOf(0)
     val streakCount: State<Int> = _streakCount
-
-    private val _lives = mutableStateOf(5)
-    val lives: State<Int> = _lives
 
     private val _showCorrectAnswer = mutableStateOf(false)
     val showCorrectAnswer: State<Boolean> = _showCorrectAnswer
