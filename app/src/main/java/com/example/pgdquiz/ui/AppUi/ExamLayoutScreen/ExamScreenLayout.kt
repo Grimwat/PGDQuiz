@@ -42,7 +42,7 @@ fun ExamLayout(
     onBackToModeSelect: () -> Unit
 ) {
     val context = LocalContext.current
-    val lives = viewModel.lives.value
+    val lives = viewModel.currentLives
     val quizComplete = viewModel.quizComplete.value
     val question = viewModel.currentQuestion.value
     val selectedAnswers = viewModel.selectedAnswers.value
