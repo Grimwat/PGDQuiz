@@ -17,6 +17,10 @@ import com.google.gson.Gson
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.InputStreamReader
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.Date
+import java.util.Locale
 
 
 class QuizViewModel : ViewModel() {
@@ -31,6 +35,7 @@ class QuizViewModel : ViewModel() {
         Log.d("QuizViewModel", "🎯 startQuiz() called with $quizType in $mode")
         _quizType.value = quizType
         _quizMode.value = mode
+        checkAndResetLivesDaily(context)
         loadQuestions(context, mode, quizType)
     }
 
@@ -146,6 +151,21 @@ class QuizViewModel : ViewModel() {
 
         _selectedAnswers.value = mutableSetOf()
         _showCorrectAnswer.value = false
+    }
+    fun checkAndResetLivesDaily(context: Context) {
+        viewModelScope.launch {
+            val prefs = context.getSharedPreferences("lives_prefs", Context.MODE_PRIVATE)
+            val lastResetDate = prefs.getString("last_reset_date", "")
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val today = sdf.format(Date())
+
+            if (lastResetDate != today) {
+                val resetMap = QuizType.values().associateWith { 5 }.toMutableMap()
+                _livesMap.value = resetMap
+
+                prefs.edit().putString("last_reset_date", today).apply()
+            }
+        }
     }
 
     fun restoreLife() {
