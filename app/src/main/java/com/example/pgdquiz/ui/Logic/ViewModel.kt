@@ -76,16 +76,10 @@ class QuizViewModel : ViewModel() {
                 .map { question ->
                     val safeOptions = question.options.orEmpty().filter { it.isNotEmpty() }
                     val combined = (safeOptions + question.answer).distinct().shuffled()
-                    val paddedOptions = when {
-                        combined.size >= 4 -> combined.take(4)
-                        combined.isNotEmpty() -> combined + List(4 - combined.size) { "Unknown" }
-                        else -> List(4) { "Unknown" }
-                    }
+                    val finalOptions = combined.takeIf { it.isNotEmpty() } ?: listOf("Unknown")
 
-                    question.copy(
-                        options = paddedOptions,
-                        shuffledOptions = paddedOptions
-                    ).also {
+                    question.copy(shuffledOptions = finalOptions)
+                .also {
                         Log.d(
                             "QuizViewModel",
                             "🧠 Question: ${it.question.take(30)}... → Options: ${it.options}"
