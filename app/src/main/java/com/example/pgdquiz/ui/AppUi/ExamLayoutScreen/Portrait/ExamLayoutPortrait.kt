@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui.AppUi.ExamLayoutScreen
+package com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Portrait
 
 //import com.example.pgdquiz.AppUi.Composables.BannerAd
 import androidx.compose.foundation.background
@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Overlays.CongratulationsScreen
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Overlays.LivesLost
+import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.QuestionField
 import com.example.pgdquiz.ui.Banner
 import com.example.pgdquiz.ui.Data.QuizMode
 import com.example.pgdquiz.ui.Data.QuizType
@@ -30,7 +31,7 @@ import com.example.pgdquiz.ui.Logic.QuizViewModel
 
 
 @Composable
-fun ExamLayout(
+fun ExamLayoutPortrait(
     modifier: Modifier = Modifier,
     viewModel: QuizViewModel,
     onExit: () -> Unit,

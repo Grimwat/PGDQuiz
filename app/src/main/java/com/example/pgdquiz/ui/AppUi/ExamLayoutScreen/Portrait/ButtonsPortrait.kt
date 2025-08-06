@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui.AppUi.ExamLayoutScreen
+package com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Portrait
 
 
 import androidx.compose.foundation.layout.Column
@@ -11,6 +11,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.Logic.QuizViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.AnswerButton
+import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.NextButton
 
 @Composable
 fun ButtonGrid(
