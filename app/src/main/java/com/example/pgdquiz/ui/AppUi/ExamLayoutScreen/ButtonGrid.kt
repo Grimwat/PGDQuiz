@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.Logic.QuizViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -31,7 +32,8 @@ fun ButtonGrid(
                 onButtonSelected = { viewModel.selectAnswer(option) },
                 modifier = Modifier.padding(vertical = 4.dp),
                 isCorrect = isCorrect,
-                showCorrectAnswer = showCorrectAnswer
+                showCorrectAnswer = showCorrectAnswer,
+                shape = RectangleShape
             )
         }
 

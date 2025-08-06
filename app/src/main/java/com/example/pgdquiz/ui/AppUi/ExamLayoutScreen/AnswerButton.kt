@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,7 +30,8 @@ fun AnswerButton(
     onButtonSelected: () -> Unit,
     modifier: Modifier = Modifier,
     isCorrect: Boolean,
-    showCorrectAnswer: Boolean
+    showCorrectAnswer: Boolean,
+    shape: Shape
 ) {
     val backgroundBrush = when {
         showCorrectAnswer && isCorrect -> Brush.radialGradient(
@@ -58,7 +60,7 @@ fun AnswerButton(
     ) {
         Button(
             onClick = onButtonSelected,
-            shape = RectangleShape,
+            shape = shape,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
                 contentColor = Color.Unspecified
