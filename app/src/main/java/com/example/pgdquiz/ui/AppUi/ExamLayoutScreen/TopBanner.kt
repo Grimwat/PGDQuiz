@@ -28,6 +28,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.Data.QuizType
+import androidx.compose.ui.platform.LocalConfiguration
+import android.content.res.Configuration
 
 @Composable
 fun Banner(
@@ -51,6 +53,12 @@ fun Banner(
         QuizType.DEFAULT -> R.drawable.arrow
     }
 
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+    val verticalPadding = if (isLandscape) 8.dp else 16.dp
+    val iconSize = if (isLandscape) 24.dp else 32.dp
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -59,12 +67,11 @@ fun Banner(
             .border(width = 4.dp, color = MaterialTheme.colorScheme.surface),
         contentAlignment = Alignment.Center
     ) {
-        val iconSize = 32.dp
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 16.dp),
+                .padding(horizontal = 8.dp, verticalPadding),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
