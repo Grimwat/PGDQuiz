@@ -56,7 +56,7 @@ fun QuizApp(
                         selectedMode = null
                         selectedQuizType = null
                     },
-                    lives = viewModel.lives.value,
+                    lives = viewModel.currentLives,
                     streak = viewModel.streakCount.value
                 )
             }
