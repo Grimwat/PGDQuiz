@@ -49,8 +49,6 @@ fun QuizModeSelectionLandscape(
             onBack = onBackToQuizType
         )
 
-        Spacer(modifier = Modifier.padding(16.dp))
-
         val PGDLogo = when (quizType) {
             QuizType.DRAINLAYING -> R.drawable.drainlogo
             QuizType.PLUMBING -> R.drawable.plumblogo
@@ -83,9 +81,7 @@ fun QuizModeSelectionLandscape(
     }
 }
 
-@Preview(
-    showBackground = true
-)
+@Preview(name = "Landscape", showBackground = true, widthDp = 640, heightDp = 360)
 @Composable
 fun QuizModeSelectionPreview() {
     QuizModeSelectionLandscape(
