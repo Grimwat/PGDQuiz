@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -44,11 +45,11 @@ fun ModeButtonLandscape(
         border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.outline
-        )
+        ),
+        contentPadding = PaddingValues(0.dp)
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             Image(
@@ -60,10 +61,11 @@ fun ModeButtonLandscape(
                 contentScale = ContentScale.Crop
             )
 
+
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxSize()
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = label,
