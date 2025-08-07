@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ModeButton(
+fun ModeButtonPortrait(
     label: String,
     questionCountText: String,
     logoRes: Int,
