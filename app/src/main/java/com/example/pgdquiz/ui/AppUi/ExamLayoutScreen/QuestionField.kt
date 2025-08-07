@@ -24,6 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pgdquiz.ui.Data.Question
 import com.example.pgdquiz.ui.Data.QuizType
+import androidx.compose.ui.platform.LocalConfiguration
+import android.content.res.Configuration
+import androidx.compose.foundation.layout.fillMaxWidth
 
 @Composable
 fun QuestionField(
@@ -31,17 +34,26 @@ fun QuestionField(
     modifier: Modifier = Modifier,
     question: Question?,
 ) {
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
     val ExamId = when (quizType) {
         QuizType.GASFITTING -> R.drawable.gasslogo
         QuizType.PLUMBING -> R.drawable.plumblogo
         QuizType.DRAINLAYING -> R.drawable.drainlogo
         QuizType.DEFAULT -> null
     }
+
     Box(
         modifier = modifier
-            .wrapContentSize()
+            .then(
+                if (isLandscape) Modifier
+                    .fillMaxWidth()
+                else Modifier
+                    .wrapContentSize()
+            )
             .clip(RoundedCornerShape(8.dp))
-            .background( MaterialTheme.colorScheme.primary)
+            .background(MaterialTheme.colorScheme.primary)
             .border(width = 4.dp, color = MaterialTheme.colorScheme.outline),
         contentAlignment = Alignment.Center
     ) {
@@ -65,6 +77,7 @@ fun QuestionField(
         }
     }
 }
+
 @Preview
 @Composable
 fun PreviewQuestionField() {
