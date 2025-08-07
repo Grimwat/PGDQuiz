@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pgdquiz.R
+import com.example.pgdquiz.ui.AppUi.QuizModeScreen.Portrait.ModeButton
 import com.example.pgdquiz.ui.Data.QuizMode
 import com.example.pgdquiz.ui.Data.QuizType
 
@@ -67,129 +68,40 @@ fun QuizModeSelection(
             QuizType.DEFAULT -> R.drawable.arrow
         }
 
-        Button(
-            onClick = { onSelectMode(QuizMode.EASY) },
-            shape = RoundedCornerShape(8.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp)
-                .padding(horizontal = 36.dp),
-            border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.outline
-            )
-        ) {
-            Box(
-                modifier = Modifier.fillMaxWidth()
-                    .height(100.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = PGDLogo),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .alpha(0.15f),
-                    contentScale = ContentScale.Crop
-                )
+        ModeButton(
+            label = "Easy",
+            questionCountText = "(25 Questions)",
+            logoRes = PGDLogo,
+            onClick = { onSelectMode(QuizMode.EASY) }
+        )
 
-                Column(
-                    modifier = Modifier,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text("Easy",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,)
-                    Text("(25 Questions)",
-                        color = Color.White,)
-                }
-            }
-        }
+        ModeButton(
+            label = "Medium",
+            questionCountText = "(50 Questions)",
+            logoRes = PGDLogo,
+            onClick = { onSelectMode(QuizMode.MEDIUM) }
+        )
 
-        Button(
-            onClick = { onSelectMode(QuizMode.MEDIUM) },
-            shape = RoundedCornerShape(8.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp)
-                .padding(horizontal = 36.dp),
-            border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.outline
-            )
-        ) {
-            Box(
-                modifier = Modifier.fillMaxWidth()
-                    .height(100.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = PGDLogo),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .alpha(0.15f),
-                    contentScale = ContentScale.Crop
-                )
-
-                Column(
-                    modifier = Modifier,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text("Medium",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White)
-                    Text("(50 Questions)",
-                        color = Color.White)
-                }
-            }
-        }
-
-        Button(
-            onClick = { onSelectMode(QuizMode.HARD) },
-            shape = RoundedCornerShape(8.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp)
-                .padding(horizontal = 36.dp),
-            border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.outline
-            )
-        ) {
-            Box(
-                modifier = Modifier.fillMaxWidth()
-                    .height(100.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = PGDLogo),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .alpha(0.15f),
-                    contentScale = ContentScale.Crop
-                )
-
-                Column(
-                    modifier = Modifier,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text("Hard",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,)
-                    Text("(100 Questions)",
-                        color = Color.White)
-                }
-            }
-        }
+        ModeButton(
+            label = "Hard",
+            questionCountText = "(100 Questions)",
+            logoRes = PGDLogo,
+            onClick = { onSelectMode(QuizMode.HARD) }
+        )
     }
 }
 
-@Preview
+@Preview(
+    showBackground = true
+)
 @Composable
-fun QuizModePreview() {
+fun QuizModeSelectionPreview() {
+    QuizModeSelection(
+        quizType = QuizType.PLUMBING,
+        tradeTom = painterResource(id = R.drawable.plumblogo),
+        lives = 3,
+        streak = 5,
+        onBackToQuizType = {},
+        onSelectMode = {}
+    )
 }
