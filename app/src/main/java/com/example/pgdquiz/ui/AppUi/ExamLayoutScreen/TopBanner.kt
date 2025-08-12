@@ -81,7 +81,8 @@ fun Banner(
                 Icon(
                     painter = painterResource(id = R.drawable.arrow),
                     contentDescription = "Back",
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .size(iconSize)
                         .padding(top = 16.dp)
                 )
             }
