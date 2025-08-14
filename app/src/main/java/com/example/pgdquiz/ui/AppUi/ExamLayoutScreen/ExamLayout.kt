@@ -1,6 +1,7 @@
-package com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Portrait
+package com.example.pgdquiz.ui.AppUi.ExamLayoutScreen
 
 //import com.example.pgdquiz.AppUi.Composables.BannerAd
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,11 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Landscape.LandscapeGrid
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Overlays.CongratulationsScreen
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Overlays.LivesLost
-import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.QuestionField
+import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Portrait.ButtonsPortrait
 import com.example.pgdquiz.ui.Banner
 import com.example.pgdquiz.ui.Data.QuizMode
 import com.example.pgdquiz.ui.Data.QuizType
@@ -31,7 +34,7 @@ import com.example.pgdquiz.ui.Logic.QuizViewModel
 
 
 @Composable
-fun ExamLayoutPortrait(
+fun ExamLayout(
     modifier: Modifier = Modifier,
     viewModel: QuizViewModel,
     onExit: () -> Unit,
@@ -42,6 +45,8 @@ fun ExamLayoutPortrait(
     quizType: QuizType,
     onBackToModeSelect: () -> Unit
 ) {
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     val context = LocalContext.current
     val lives = viewModel.currentLives
     val quizComplete = viewModel.quizComplete.value
@@ -59,7 +64,7 @@ fun ExamLayoutPortrait(
                 modifier = modifier
                     .fillMaxHeight()
                     .background(MaterialTheme.colorScheme.background),
-                verticalArrangement = Arrangement.spacedBy(5.dp),
+                verticalArrangement = Arrangement.spacedBy(3.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Banner(
@@ -75,13 +80,18 @@ fun ExamLayoutPortrait(
 
                 QuestionField(
                     question = question,
-                    modifier = Modifier.padding(horizontal = 10.dp),
+                    modifier = Modifier.padding(horizontal = 8.dp),
                     quizType = quizType
                 )
-
-                ButtonGrid(
+                if (isLandscape){
+                    LandscapeGrid(
+                        viewModel = viewModel,
+                        modifier = modifier
+                    )
+                }
+                ButtonsPortrait(
                     viewModel = viewModel,
-                    modifier = Modifier.padding(horizontal = 10.dp)
+                    modifier = Modifier.padding(horizontal = 8.dp)
                 )
             }
 

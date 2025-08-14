@@ -15,7 +15,7 @@ import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.AnswerButton
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.NextButton
 
 @Composable
-fun ButtonGrid(
+fun ButtonsPortrait(
     modifier: Modifier = Modifier,
     viewModel: QuizViewModel = viewModel()
 ) {

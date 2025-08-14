@@ -1,5 +1,6 @@
 package com.example.pgdquiz.ui
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import com.example.pgdquiz.R
@@ -18,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.AppUi.MainScreen.QuizTypeButton
@@ -30,6 +32,9 @@ fun QuizTypeSelection(
     tradeTom: Painter,
     onQuizTypeSelected: (QuizType) -> Unit
 ) {
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
     Column(
         modifier = Modifier
             .fillMaxSize()

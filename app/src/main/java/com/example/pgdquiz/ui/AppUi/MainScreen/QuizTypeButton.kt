@@ -1,5 +1,6 @@
 package com.example.pgdquiz.ui.AppUi.MainScreen
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -23,17 +24,27 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.pgdquiz.R
+import com.example.pgdquiz.ui.Data.QuizType
+import com.example.pgdquiz.ui.theme.BackgroundLogo
 
 @Composable
 fun QuizTypeButton(
     text: String,
     backgroundColor: Color,
-    logo: Painter,
+    quiztype: QuizType,
     borderColor: Color,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
     Button(
         onClick = onClick,
         modifier = modifier
@@ -59,24 +70,29 @@ fun QuizTypeButton(
                 .padding(8.dp),
             contentAlignment = Alignment.Center
         ) {
-            Image(
-                painter = logo,
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .alpha(0.2f),
-                contentScale = ContentScale.None
+            BackgroundLogo(
+                quizType = quiztype,
+                modifier = modifier
             )
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                text.forEach { letter ->
-                    Text(
-                        text = letter.toString(),
-                        color = Color.White,
-                        style = MaterialTheme.typography.bodyLarge
-                    )
+            if (isLandscape) {
+
+                Text(
+                    text = text,
+                    color = Color.White,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            } else {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    text.forEach { letter ->
+                        Text(
+                            text = letter.toString(),
+                            color = Color.White,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    }
                 }
             }
         }

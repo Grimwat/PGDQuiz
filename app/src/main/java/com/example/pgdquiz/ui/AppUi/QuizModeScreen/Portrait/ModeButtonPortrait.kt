@@ -1,7 +1,6 @@
 package com.example.pgdquiz.ui.AppUi.QuizModeScreen.Portrait
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,20 +14,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.pgdquiz.ui.Data.QuizType
+import com.example.pgdquiz.ui.theme.BackgroundLogo
 
 @Composable
 fun ModeButtonPortrait(
     label: String,
     questionCountText: String,
-    logoRes: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    quiztype: QuizType,
+    modifier: Modifier = Modifier
 ) {
     Button(
         onClick = onClick,
@@ -48,14 +47,10 @@ fun ModeButtonPortrait(
                 .height(100.dp),
             contentAlignment = Alignment.Center
         ) {
-            Image(
-                painter = painterResource(id = logoRes),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .alpha(0.15f),
-                contentScale = ContentScale.Crop
-            )
+           BackgroundLogo(
+               quizType = quiztype,
+               modifier = modifier
+           )
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
