@@ -35,12 +35,6 @@ fun QuizModeSelection(
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
-    val PGDLogo = when (quizType) {
-        QuizType.DRAINLAYING -> R.drawable.drainlogo
-        QuizType.PLUMBING -> R.drawable.plumblogo
-        QuizType.GASFITTING -> R.drawable.gasslogo
-        QuizType.DEFAULT -> R.drawable.arrow
-    }
 
     Column(
         modifier = Modifier
@@ -63,20 +57,23 @@ fun QuizModeSelection(
                 ModeButtonLandscape(
                     label = "Easy",
                     questionCountText = "(25 Questions)",
-                    logoRes = PGDLogo,
-                    onClick = { onSelectMode(QuizMode.EASY) }
+                    onClick = { onSelectMode(QuizMode.EASY) },
+                    quizType = TODO(),
+                    modifier = TODO(),
                 )
                 ModeButtonLandscape(
                     label = "Medium",
                     questionCountText = "(50 Questions)",
-                    logoRes = PGDLogo,
-                    onClick = { onSelectMode(QuizMode.MEDIUM) }
+                    onClick = { onSelectMode(QuizMode.MEDIUM) },
+                    quizType = quiztype,
+                    modifier = TODO(),
                 )
                 ModeButtonLandscape(
                     label = "Hard",
                     questionCountText = "(100 Questions)",
-                    logoRes = PGDLogo,
-                    onClick = { onSelectMode(QuizMode.HARD) }
+                    onClick = { onSelectMode(QuizMode.HARD) },
+                    quizType = TODO(),
+                    modifier = TODO()
                 )
             }
         } else {
