@@ -69,7 +69,7 @@ fun QuizTypeSelection(
                 backgroundColor = MaterialTheme.colorScheme.onSurface,
                 borderColor = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.weight(1f),
-                logo = painterResource(R.drawable.plumblogo)
+                quiztype = QuizType,
             ) { onQuizTypeSelected(QuizType.PLUMBING)
                 onSelectQuizType(QuizType.PLUMBING) }
 
