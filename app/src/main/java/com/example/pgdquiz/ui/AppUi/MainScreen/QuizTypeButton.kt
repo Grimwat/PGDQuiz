@@ -37,7 +37,7 @@ import com.example.pgdquiz.ui.theme.BackgroundLogo
 fun QuizTypeButton(
     text: String,
     backgroundColor: Color,
-    quiztype: QuizType,
+    quizType: QuizType,
     borderColor: Color,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
@@ -71,7 +71,7 @@ fun QuizTypeButton(
             contentAlignment = Alignment.Center
         ) {
             BackgroundLogo(
-                quizType = quiztype,
+                quizType = quizType,
                 modifier = modifier
             )
             if (isLandscape) {
