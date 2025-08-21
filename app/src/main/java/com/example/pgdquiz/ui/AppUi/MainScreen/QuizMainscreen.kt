@@ -7,9 +7,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.ExamLayout
+import com.example.pgdquiz.ui.AppUi.QuizModeScreen.QuizModeSelection
 import com.example.pgdquiz.ui.Data.QuizMode
 import com.example.pgdquiz.ui.Data.QuizType
-import com.example.pgdquiz.ui.QuizModeSelectionPortrait
 import com.example.pgdquiz.ui.QuizTypeSelection
 import com.example.pgdquiz.ui.Logic.QuizViewModel
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
@@ -40,7 +40,7 @@ fun QuizApp(
             }
 
             selectedMode == null -> {
-                QuizModeSelectionPortrait(
+                QuizModeSelection(
                     quizType = selectedQuizType!!,
                     onSelectMode = { mode ->
                         selectedMode = mode
