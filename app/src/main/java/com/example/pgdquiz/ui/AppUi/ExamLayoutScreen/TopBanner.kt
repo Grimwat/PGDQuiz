@@ -58,7 +58,7 @@ fun Banner(
     val verticalPadding = if (isLandscape) 8.dp else 16.dp
     val iconSize = if (isLandscape) 24.dp else 32.dp
     val bannerEnd = if (isLandscape) 50.dp else 0.dp
-    val bannerStart = if (isLandscape)
+    val bannerStart = if (isLandscape) 8.dp else 0.dp
 
     Box(
         modifier = modifier
@@ -78,14 +78,13 @@ fun Banner(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             IconButton(onClick = onBack,
-                modifier = Modifier
+                modifier = Modifier.padding(start = bannerStart)
                    ) {
                 Icon(
                     painter = painterResource(id = R.drawable.arrow),
                     contentDescription = "Back",
                     modifier = Modifier
                         .size(iconSize)
-                        .padding(top = 16.dp)
                 )
             }
                 Text(
