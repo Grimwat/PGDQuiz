@@ -3,12 +3,12 @@ package com.example.pgdquiz.ui
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import com.example.pgdquiz.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.AppUi.MainScreen.QuizTypeButton
 import com.example.pgdquiz.ui.Data.QuizType
@@ -40,59 +39,123 @@ fun QuizTypeSelection(
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.primary)
     ) {
-
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            Image(
-                painter = tradeTom,
-                contentDescription = "TradesmanTom",
+        if (isLandscape) {
+            Row(
                 modifier = Modifier
-                    .fillMaxSize(),
-                contentScale = ContentScale.Fit
-            )
+                    .fillMaxSize()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Box(
+                    modifier = Modifier
+                        .weight(0.4f)
+                        .fillMaxHeight(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = tradeTom,
+                        contentDescription = "TradesmanTom",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Fit
+                    )
+                }
+
+                Column(
+                    modifier = Modifier
+                        .weight(0.6f)
+                        .fillMaxHeight(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    QuizType.values()
+                        .filter { it != QuizType.DEFAULT }
+                        .forEach { type ->
+                            QuizTypeButton(
+                                text = type.name,
+                                backgroundColor = when (type) {
+                                    QuizType.PLUMBING -> MaterialTheme.colorScheme.onSurface
+                                    QuizType.GASFITTING -> MaterialTheme.colorScheme.onBackground
+                                    QuizType.DRAINLAYING -> MaterialTheme.colorScheme.outline
+                                    else -> MaterialTheme.colorScheme.primary
+                                },
+                                borderColor = when (type) {
+                                    QuizType.PLUMBING -> MaterialTheme.colorScheme.secondary
+                                    QuizType.GASFITTING -> MaterialTheme.colorScheme.onPrimary
+                                    QuizType.DRAINLAYING -> MaterialTheme.colorScheme.background
+                                    else -> MaterialTheme.colorScheme.onSecondary
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(1F),
+                                quizType = type
+                            ) {
+                                onQuizTypeSelected(type)
+                                onSelectQuizType(type)
+                            }
+                        }
+                }
+                Spacer(modifier = Modifier.padding(end = 25.dp))
+            }
+        } else {
+            Column {
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = tradeTom,
+                        contentDescription = "TradesmanTom",
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        contentScale = ContentScale.Fit
+                    )
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                        .height(300.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    QuizType.values()
+                        .filter { it != QuizType.DEFAULT }
+                        .forEach { type ->
+                            QuizTypeButton(
+                                text = type.name,
+                                backgroundColor = when (type) {
+                                    QuizType.PLUMBING -> MaterialTheme.colorScheme.onSurface
+                                    QuizType.GASFITTING -> MaterialTheme.colorScheme.onBackground
+                                    QuizType.DRAINLAYING -> MaterialTheme.colorScheme.outline
+                                    else -> MaterialTheme.colorScheme.primary
+                                },
+                                borderColor = when (type) {
+                                    QuizType.PLUMBING -> MaterialTheme.colorScheme.secondary
+                                    QuizType.GASFITTING -> MaterialTheme.colorScheme.onPrimary
+                                    QuizType.DRAINLAYING -> MaterialTheme.colorScheme.background
+                                    else -> MaterialTheme.colorScheme.onSecondary
+
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(1f),
+                                quizType = type
+                            ) {
+                                onQuizTypeSelected(type)
+                                onSelectQuizType(type)
+                            }
+                        }
+                }
+                Spacer(modifier = Modifier.height(50.dp))
+            }
         }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .height(300.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            QuizTypeButton(
-                text = "PLUMBING",
-                backgroundColor = MaterialTheme.colorScheme.onSurface,
-                borderColor = MaterialTheme.colorScheme.secondary,
-                modifier = Modifier.weight(1f),
-                quiztype = QuizType,
-            ) { onQuizTypeSelected(QuizType.PLUMBING)
-                onSelectQuizType(QuizType.PLUMBING) }
-
-            QuizTypeButton(
-                text = "GASFITTING",
-                backgroundColor = MaterialTheme.colorScheme.onBackground,
-                borderColor = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier.weight(1f),
-                logo = painterResource(R.drawable.gasslogo)
-            ) { onQuizTypeSelected(QuizType.GASFITTING)
-                onSelectQuizType(QuizType.GASFITTING) }
-
-            QuizTypeButton(
-                text = "DRAINLAYING",
-                backgroundColor = MaterialTheme.colorScheme.outline,
-                borderColor = MaterialTheme.colorScheme.background,
-                modifier = Modifier.weight(1f),
-                logo = painterResource(R.drawable.drainlogo)
-            ) {onQuizTypeSelected(QuizType.DRAINLAYING)
-                onSelectQuizType(QuizType.DRAINLAYING) }
-
-        }
-        Spacer(modifier = Modifier.height(50.dp))
     }
 }
+
+
 
