@@ -7,7 +7,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -58,13 +57,16 @@ fun Banner(
 
     val verticalPadding = if (isLandscape) 8.dp else 16.dp
     val iconSize = if (isLandscape) 24.dp else 32.dp
+    val bannerEnd = if (isLandscape) 50.dp else 0.dp
+    val bannerStart = if (isLandscape)
 
     Box(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
             .background(color = MaterialTheme.colorScheme.tertiary)
-            .border(width = 4.dp, color = MaterialTheme.colorScheme.surface),
+            .border(width = 4.dp, color = MaterialTheme.colorScheme.surface)
+            .padding(end = bannerEnd),
         contentAlignment = Alignment.Center
     ) {
 

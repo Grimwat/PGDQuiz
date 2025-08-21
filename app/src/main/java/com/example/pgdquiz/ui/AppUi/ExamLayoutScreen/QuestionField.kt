@@ -49,6 +49,7 @@ fun QuestionField(
             .then(
                 if (isLandscape) Modifier
                     .fillMaxWidth()
+                    .padding(10.dp)
                 else Modifier
                     .wrapContentSize()
             )
