@@ -58,22 +58,22 @@ fun QuizModeSelection(
                     label = "Easy",
                     questionCountText = "(25 Questions)",
                     onClick = { onSelectMode(QuizMode.EASY) },
-                    quizType = TODO(),
-                    modifier = TODO(),
+                    quizType = quizType,
+                    modifier = modifier,
                 )
                 ModeButtonLandscape(
                     label = "Medium",
                     questionCountText = "(50 Questions)",
                     onClick = { onSelectMode(QuizMode.MEDIUM) },
-                    quizType = quiztype,
-                    modifier = TODO(),
+                    quizType = quizType,
+                    modifier = modifier,
                 )
                 ModeButtonLandscape(
                     label = "Hard",
                     questionCountText = "(100 Questions)",
                     onClick = { onSelectMode(QuizMode.HARD) },
-                    quizType = TODO(),
-                    modifier = TODO()
+                    quizType = quizType,
+                    modifier = modifier
                 )
             }
         } else {
@@ -81,19 +81,19 @@ fun QuizModeSelection(
             ModeButtonPortrait(
                 label = "Easy",
                 questionCountText = "(25 Questions)",
-                logoRes = PGDLogo,
+                quizType = quizType,
                 onClick = { onSelectMode(QuizMode.EASY) }
             )
             ModeButtonPortrait(
                 label = "Medium",
                 questionCountText = "(50 Questions)",
-                logoRes = PGDLogo,
+                quizType = quizType,
                 onClick = { onSelectMode(QuizMode.MEDIUM) }
             )
             ModeButtonPortrait(
                 label = "Hard",
                 questionCountText = "(100 Questions)",
-                logoRes = PGDLogo,
+                quizType = quizType,
                 onClick = { onSelectMode(QuizMode.HARD) }
             )
         }
