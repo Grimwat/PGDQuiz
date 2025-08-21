@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import com.example.pgdquiz.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.AppUi.QuizModeScreen.Landscape.ModeButtonLandscape
@@ -53,28 +54,34 @@ fun QuizModeSelection(
         )
 
         if (isLandscape) {
-            Row(modifier = modifier) {
-                ModeButtonLandscape(
-                    label = "Easy",
-                    questionCountText = "(25 Questions)",
-                    onClick = { onSelectMode(QuizMode.EASY) },
-                    quizType = quizType,
-                    modifier = modifier,
-                )
-                ModeButtonLandscape(
-                    label = "Medium",
-                    questionCountText = "(50 Questions)",
-                    onClick = { onSelectMode(QuizMode.MEDIUM) },
-                    quizType = quizType,
-                    modifier = modifier,
-                )
-                ModeButtonLandscape(
-                    label = "Hard",
-                    questionCountText = "(100 Questions)",
-                    onClick = { onSelectMode(QuizMode.HARD) },
-                    quizType = quizType,
-                    modifier = modifier
-                )
+            Row(modifier = Modifier) {
+                Column(modifier = Modifier.weight(0.5f)) {
+                    ModeButtonLandscape(
+                        label = "Easy",
+                        questionCountText = "(25 Questions)",
+                        onClick = { onSelectMode(QuizMode.EASY) },
+                        quizType = quizType,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                    ModeButtonLandscape(
+                        label = "Medium",
+                        questionCountText = "(50 Questions)",
+                        onClick = { onSelectMode(QuizMode.MEDIUM) },
+                        quizType = quizType,
+                        modifier = Modifier
+                            .fillMaxWidth()
+
+                    )
+                    ModeButtonLandscape(
+                        label = "Hard",
+                        questionCountText = "(100 Questions)",
+                        onClick = { onSelectMode(QuizMode.HARD) },
+                        quizType = quizType,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                }
             }
         } else {
             Spacer(modifier = Modifier.padding(16.dp))

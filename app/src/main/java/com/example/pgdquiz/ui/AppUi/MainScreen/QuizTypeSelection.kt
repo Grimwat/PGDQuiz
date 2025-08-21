@@ -50,7 +50,7 @@ fun QuizTypeSelection(
 
                 Box(
                     modifier = Modifier
-                        .weight(0.4f)
+                        .weight(0.6f)
                         .fillMaxHeight(),
                     contentAlignment = Alignment.Center
                 ) {
@@ -64,7 +64,8 @@ fun QuizTypeSelection(
 
                 Column(
                     modifier = Modifier
-                        .weight(0.6f)
+                        .weight(0.4f)
+                        .padding(vertical = 16.dp)
                         .fillMaxHeight(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceEvenly
