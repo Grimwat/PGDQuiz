@@ -1,4 +1,4 @@
-//package com.example.pgdquiz.AppUi.Composables
+package com.example.pgdquiz.ui.AppUi.AddManager.Adds//package com.example.pgdquiz.AppUi.Composables
 //
 //import androidx.compose.foundation.layout.fillMaxWidth
 //import androidx.compose.runtime.Composable
