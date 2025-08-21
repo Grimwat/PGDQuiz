@@ -23,7 +23,6 @@ import com.example.pgdquiz.ui.Data.QuizType
 @Composable
 fun QuizModeSelectionPortrait(
     quizType: QuizType,
-    tradeTom: Painter,
     modifier: Modifier = Modifier,
     onBackToQuizType: () -> Unit,
     lives: Int,
@@ -48,47 +47,25 @@ fun QuizModeSelectionPortrait(
 
         Spacer(modifier = Modifier.padding(16.dp))
 
-        val PGDLogo = when (quizType) {
-            QuizType.DRAINLAYING -> R.drawable.drainlogo
-            QuizType.PLUMBING -> R.drawable.plumblogo
-            QuizType.GASFITTING -> R.drawable.gasslogo
-            QuizType.DEFAULT -> R.drawable.arrow
-        }
-
         ModeButtonPortrait(
             label = "Easy",
             questionCountText = "(25 Questions)",
-            logoRes = PGDLogo,
+            quizType = quizType,
             onClick = { onSelectMode(QuizMode.EASY) }
         )
 
         ModeButtonPortrait(
             label = "Medium",
             questionCountText = "(50 Questions)",
-            logoRes = PGDLogo,
+            quizType = quizType,
             onClick = { onSelectMode(QuizMode.MEDIUM) }
         )
 
         ModeButtonPortrait(
             label = "Hard",
             questionCountText = "(100 Questions)",
-            logoRes = PGDLogo,
+            quizType = quizType,
             onClick = { onSelectMode(QuizMode.HARD) }
         )
     }
-}
-
-@Preview(
-    showBackground = true
-)
-@Composable
-fun QuizModeSelectionPreview() {
-    QuizModeSelectionPortrait(
-        quizType = QuizType.PLUMBING,
-        tradeTom = painterResource(id = R.drawable.plumblogo),
-        lives = 3,
-        streak = 5,
-        onBackToQuizType = {},
-        onSelectMode = {}
-    )
 }
