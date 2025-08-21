@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -33,23 +35,22 @@ fun ModeButtonLandscape(
 ) {
     Button(
         onClick = onClick,
+        shape = RoundedCornerShape(8.dp),
         modifier = Modifier
-            .padding(8.dp)
-            .size(110.dp),
-        shape = RoundedCornerShape(12.dp),
+            .fillMaxWidth()
+            .height(100.dp)
+            .padding(horizontal = 36.dp),
         border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.outline
-        ),
-        contentPadding = PaddingValues(0.dp)
-    ) {
+        )
+    )
+    {
         Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+            modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
         ) {
             BackgroundLogo(
-                quizType = quizType,
-                modifier = modifier
+                quizType = quizType, modifier = modifier
             )
 
             Column(
@@ -64,8 +65,7 @@ fun ModeButtonLandscape(
                     color = Color.White
                 )
                 Text(
-                    text = questionCountText,
-                    color = Color.White
+                    text = questionCountText, color = Color.White
                 )
             }
         }
