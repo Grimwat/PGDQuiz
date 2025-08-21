@@ -26,7 +26,7 @@ fun ModeButtonPortrait(
     label: String,
     questionCountText: String,
     onClick: () -> Unit,
-    quiztype: QuizType,
+    quizType: QuizType,
     modifier: Modifier = Modifier
 ) {
     Button(
@@ -47,10 +47,10 @@ fun ModeButtonPortrait(
                 .height(100.dp),
             contentAlignment = Alignment.Center
         ) {
-           BackgroundLogo(
-               quizType = quiztype,
-               modifier = modifier
-           )
+            BackgroundLogo(
+                quizType = quizType,
+                modifier = modifier
+            )
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
