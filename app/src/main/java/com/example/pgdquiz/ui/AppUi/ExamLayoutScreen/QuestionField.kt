@@ -27,6 +27,7 @@ import com.example.pgdquiz.ui.Data.QuizType
 import androidx.compose.ui.platform.LocalConfiguration
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.ui.text.style.TextOverflow
 
 @Composable
 fun QuestionField(
@@ -43,6 +44,12 @@ fun QuestionField(
         QuizType.DRAINLAYING -> R.drawable.drainlogo
         QuizType.DEFAULT -> null
     }
+    val text = question?.question ?: ""
+    val fontSize = when {
+        text.length > 160 -> 12.sp
+        text.length > 80 -> 14.sp
+        else -> 16.sp
+    }
 
     Box(
         modifier = modifier
@@ -51,7 +58,7 @@ fun QuestionField(
                     .fillMaxWidth()
                     .padding(10.dp)
                 else Modifier
-                    .wrapContentSize()
+                    .fillMaxWidth()
             )
             .clip(RoundedCornerShape(8.dp))
             .background(MaterialTheme.colorScheme.primary)
@@ -66,14 +73,17 @@ fun QuestionField(
                     .alpha(0.2f),
             )
             Text(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(16.dp))
-                    .padding(16.dp),
                 text = question?.question ?: "",
                 color = Color.White,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
-                fontSize = 14.sp
+                style = MaterialTheme.typography.bodyLarge,
+                fontSize = fontSize,
+                maxLines = Int.MAX_VALUE,
+                overflow = TextOverflow.Clip,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
             )
         }
     }

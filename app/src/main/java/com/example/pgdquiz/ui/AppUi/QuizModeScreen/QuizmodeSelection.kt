@@ -55,7 +55,9 @@ fun QuizModeSelection(
 
         if (isLandscape) {
             Row(modifier = Modifier) {
-                Column(modifier = Modifier.weight(0.5f)) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.weight(0.75f)) {
                     ModeButtonLandscape(
                         label = "Easy",
                         questionCountText = "(25 Questions)",
@@ -71,8 +73,8 @@ fun QuizModeSelection(
                         quizType = quizType,
                         modifier = Modifier
                             .fillMaxWidth()
-
                     )
+
                     ModeButtonLandscape(
                         label = "Hard",
                         questionCountText = "(100 Questions)",
@@ -80,8 +82,17 @@ fun QuizModeSelection(
                         quizType = quizType,
                         modifier = Modifier
                             .fillMaxWidth()
+
                     )
+                    Spacer(modifier = Modifier
+                        .padding(36.dp))
                 }
+
+                Spacer(
+                    modifier = Modifier
+                        .weight(0.25f)
+                        .padding(16.dp)
+                )
             }
         } else {
             Spacer(modifier = Modifier.padding(16.dp))

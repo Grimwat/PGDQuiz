@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -53,6 +54,10 @@ fun ExamLayout(
     val question = viewModel.currentQuestion.value
     val selectedAnswers = viewModel.selectedAnswers.value
 
+
+    LaunchedEffect(key1 = quizType to quizMode) {
+        viewModel.startQuiz(context ,quizMode, quizType)
+    }
     if (question == null) {
         CircularProgressIndicator()
     } else {
@@ -78,21 +83,43 @@ fun ExamLayout(
 
                 Spacer(modifier = Modifier.padding(4.dp))
 
-                QuestionField(
-                    question = question,
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                    quizType = quizType
-                )
-                if (isLandscape){
+                if (isLandscape) {
+
+                    QuestionField(
+                        question = question,
+                        modifier = Modifier
+                            .weight(0.3f)
+                            .padding(horizontal = 4.dp),
+                        quizType = quizType
+                    )
                     LandscapeGrid(
                         viewModel = viewModel,
                         modifier = modifier
                     )
                 }
-                ButtonsPortrait(
-                    viewModel = viewModel,
-                    modifier = Modifier.padding(horizontal = 8.dp)
-                )
+                    else{
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(8.dp),
+                        verticalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        QuestionField(
+                            question = question,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(0.3f, fill = false),
+                            quizType = quizType
+                        )
+
+                        ButtonsPortrait(
+                            viewModel = viewModel,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(0.6f, fill = false)
+                        )
+                    }
+                }
             }
 
             if (lives <= 0) {
@@ -136,7 +163,7 @@ fun ExamLayout(
                             examEmoji = examEmoji,
                             emojiCont = title,
                             onRestart = {
-                                viewModel.startQuiz(context, quizMode, quizType)
+                                viewModel.startQuiz(context,quizMode, quizType)
                             },
                             onBackToModeSelect = onBackToModeSelect,
                             quizType = quizType

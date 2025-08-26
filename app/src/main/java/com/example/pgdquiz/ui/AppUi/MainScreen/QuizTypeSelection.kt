@@ -68,7 +68,7 @@ fun QuizTypeSelection(
                         .padding(vertical = 16.dp)
                         .fillMaxHeight(),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceEvenly
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     QuizType.values()
                         .filter { it != QuizType.DEFAULT }
