@@ -32,7 +32,7 @@ fun ButtonsPortrait(
                 optionText = option,
                 isSelected = isSelected,
                 onButtonSelected = { viewModel.selectAnswer(option) },
-                modifier = Modifier.padding(vertical = 4.dp),
+                modifier = Modifier.padding(vertical = 2.dp),
                 isCorrect = isCorrect,
                 showCorrectAnswer = showCorrectAnswer,
                 shape = RectangleShape
