@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -21,7 +23,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun AnswerButton(
@@ -52,6 +56,11 @@ fun AnswerButton(
             radius = 600f
         )
     }
+    val fontSize = when {
+        optionText.length > 100 -> 12.sp
+        optionText.length > 60 -> 14.sp
+        else -> 16.sp
+    }
 
     Column(
         modifier = modifier,
@@ -65,7 +74,11 @@ fun AnswerButton(
                 containerColor = Color.Transparent,
                 contentColor = Color.Unspecified
             ),
-            modifier = Modifier.background(Color.Transparent)
+            modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 56.dp)
+            .wrapContentHeight()
+            .background(Color.Transparent)
         ) {
             Box(
                 modifier = Modifier
@@ -84,8 +97,11 @@ fun AnswerButton(
                 Text(
                     text = optionText,
                     color = Color.White,
+                    fontSize = fontSize,
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
+                    maxLines = Int.MAX_VALUE,
+                    overflow = TextOverflow.Clip,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
