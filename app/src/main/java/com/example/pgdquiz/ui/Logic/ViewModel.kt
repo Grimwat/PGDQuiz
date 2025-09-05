@@ -32,6 +32,12 @@ class QuizViewModel : ViewModel() {
     }
 
     fun startQuiz(context: Context, mode: QuizMode, quizType: QuizType) {
+        if (_isQuizStarted.value) {
+            Log.d("QuizViewModel", "⏩ Quiz already started, skipping re-init")
+            return
+        }
+        _isQuizStarted.value = true
+
         Log.d("QuizViewModel", "🎯 startQuiz() called with $quizType in $mode")
         _quizType.value = quizType
         _quizMode.value = mode
@@ -240,4 +246,7 @@ class QuizViewModel : ViewModel() {
 
     private val _quizComplete = mutableStateOf(false)
     val quizComplete: State<Boolean> = _quizComplete
+
+    private var _isQuizStarted = mutableStateOf(false)
+    val isQuizStarted: Boolean get() = _isQuizStarted.value
 }

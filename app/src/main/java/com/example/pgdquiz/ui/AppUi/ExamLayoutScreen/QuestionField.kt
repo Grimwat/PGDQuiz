@@ -27,6 +27,10 @@ import com.example.pgdquiz.ui.Data.QuizType
 import androidx.compose.ui.platform.LocalConfiguration
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.text.style.TextOverflow
 
 @Composable
@@ -53,12 +57,15 @@ fun QuestionField(
 
     Box(
         modifier = modifier
+            .fillMaxWidth()
             .then(
-                if (isLandscape) Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
-                else Modifier
-                    .fillMaxWidth()
+                if (isLandscape) {
+                    Modifier
+                        .wrapContentHeight()
+                        .heightIn(min = 30.dp, max = 120.dp)
+                } else {
+                    Modifier.wrapContentHeight()
+                }
             )
             .clip(RoundedCornerShape(8.dp))
             .background(MaterialTheme.colorScheme.primary)
@@ -72,19 +79,25 @@ fun QuestionField(
                 modifier = Modifier
                     .alpha(0.2f),
             )
-            Text(
-                text = question?.question ?: "",
-                color = Color.White,
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.bodyLarge,
-                fontSize = fontSize,
-                maxLines = Int.MAX_VALUE,
-                overflow = TextOverflow.Clip,
+            Box(
                 modifier = Modifier
-                    .padding(16.dp)
                     .fillMaxWidth()
-            )
+                    .verticalScroll(rememberScrollState())
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = question?.question ?: "",
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontSize = fontSize,
+                    maxLines = Int.MAX_VALUE,
+                    overflow = TextOverflow.Clip,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+            }
         }
     }
 }

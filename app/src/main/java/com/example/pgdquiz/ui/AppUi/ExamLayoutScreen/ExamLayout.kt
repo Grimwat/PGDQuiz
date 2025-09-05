@@ -7,10 +7,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -56,14 +60,19 @@ fun ExamLayout(
 
 
     LaunchedEffect(key1 = quizType to quizMode) {
-        viewModel.startQuiz(context ,quizMode, quizType)
+        if (!viewModel.isQuizStarted) {
+            viewModel.startQuiz(context, quizMode, quizType)
+        }
     }
     if (question == null) {
         CircularProgressIndicator()
     } else {
 
         Box(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(WindowInsets.navigationBars.asPaddingValues())
         ) {
             Column(
                 modifier = modifier
@@ -95,28 +104,27 @@ fun ExamLayout(
                     LandscapeGrid(
                         viewModel = viewModel,
                         modifier = modifier
+                            .weight(0.7f)
                     )
                 }
                     else{
                     Column(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(8.dp),
-                        verticalArrangement = Arrangement.SpaceBetween
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Top
                     ) {
                         QuestionField(
                             question = question,
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(0.3f, fill = false),
+                                .fillMaxWidth(),
                             quizType = quizType
                         )
+                        Spacer(modifier = Modifier.padding(4.dp))
 
                         ButtonsPortrait(
                             viewModel = viewModel,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .weight(0.6f, fill = false)
                         )
                     }
                 }
