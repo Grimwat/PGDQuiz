@@ -1,6 +1,5 @@
 package com.example.pgdquiz.ui.AppUi.ExamLayoutScreen
 
-import android.R.attr.text
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -8,7 +7,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,8 +25,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.Data.QuizType
 import kotlin.text.forEach
@@ -64,7 +62,6 @@ fun NextButton(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight()
                     .clip(RoundedCornerShape(8.dp))
                     .background(color = MaterialTheme.colorScheme.primary)
                     .border(width = 4.dp, color = MaterialTheme.colorScheme.outline)
@@ -87,8 +84,11 @@ fun NextButton(
                             Text(
                                 text = letter.toString(),
                                 color = Color.White,
-                                fontWeight = Bold,
-                                style = MaterialTheme.typography.bodyLarge
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 12.sp,
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier
+                                    .padding(4.dp)
                             )
                         }
                     }

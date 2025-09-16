@@ -5,6 +5,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.ExamLayout
 import com.example.pgdquiz.ui.AppUi.QuizModeScreen.QuizModeSelection
@@ -22,6 +23,7 @@ fun QuizApp(
 ) {
     var selectedQuizType by rememberSaveable { mutableStateOf<QuizType?>(null) }
     var selectedMode by rememberSaveable { mutableStateOf<QuizMode?>(null) }
+    val viewModel: QuizViewModel = viewModel()
     val context = LocalContext.current
 
     PgdQuizTheme(quizType = selectedQuizType ?: QuizType.DEFAULT) {

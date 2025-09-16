@@ -42,7 +42,9 @@ class QuizViewModel : ViewModel() {
         _quizType.value = quizType
         _quizMode.value = mode
         checkAndResetLivesDaily(context)
-        loadQuestions(context, mode, quizType)
+        if (quizStates[quizType]?.questions.isNullOrEmpty()) {
+            loadQuestions(context, mode, quizType)
+        }
     }
 
     fun loadQuestions(context: Context, mode: QuizMode, quizType: QuizType) {

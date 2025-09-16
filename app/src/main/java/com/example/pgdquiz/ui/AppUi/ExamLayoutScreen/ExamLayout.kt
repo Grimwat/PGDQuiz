@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Landscape.LandscapeGrid
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Overlays.CongratulationsScreen
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Overlays.LivesLost
@@ -43,7 +44,7 @@ import com.example.pgdquiz.ui.Logic.QuizViewModel
 @Composable
 fun ExamLayout(
     modifier: Modifier = Modifier,
-    viewModel: QuizViewModel,
+    viewModel: QuizViewModel = viewModel(),
     onExit: () -> Unit,
     examEmoji: Painter,
     title: String,
@@ -61,7 +62,7 @@ fun ExamLayout(
     val selectedAnswers = viewModel.selectedAnswers.value
 
 
-    LaunchedEffect(key1 = quizType to quizMode) {
+    LaunchedEffect(Unit) {
         if (!viewModel.isQuizStarted) {
             viewModel.startQuiz(context, quizMode, quizType)
         }
@@ -98,10 +99,12 @@ fun ExamLayout(
                     Row() {
                         Box(
                             modifier = Modifier
-                                .fillMaxHeight()
                                 .weight(0.85f)
                         ) {
-                            Column {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                            ) {
                                 QuestionField(
                                     question = question,
                                     modifier = Modifier
