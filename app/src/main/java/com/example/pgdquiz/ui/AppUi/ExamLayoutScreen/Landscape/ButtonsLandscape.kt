@@ -61,11 +61,5 @@ fun LandscapeGrid(
             }
         }
 
-        NextButton(
-            onClick = { viewModel.triggerShowCorrectAnswer() },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
-        )
     }
 }

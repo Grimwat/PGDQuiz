@@ -56,7 +56,7 @@ fun QuizModeSelection(
         if (isLandscape) {
             Row(modifier = Modifier) {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(5.dp),
                     modifier = Modifier.weight(0.75f)) {
                     ModeButtonLandscape(
                         label = "Easy",
@@ -84,8 +84,6 @@ fun QuizModeSelection(
                             .fillMaxWidth()
 
                     )
-                    Spacer(modifier = Modifier
-                        .padding(36.dp))
                 }
 
                 Spacer(

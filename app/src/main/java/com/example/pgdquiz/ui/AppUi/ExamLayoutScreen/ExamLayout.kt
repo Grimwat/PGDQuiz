@@ -6,12 +6,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
@@ -93,19 +95,34 @@ fun ExamLayout(
                 Spacer(modifier = Modifier.padding(4.dp))
 
                 if (isLandscape) {
-
-                    QuestionField(
-                        question = question,
-                        modifier = Modifier
-                            .weight(0.3f)
-                            .padding(horizontal = 4.dp),
-                        quizType = quizType
-                    )
-                    LandscapeGrid(
-                        viewModel = viewModel,
-                        modifier = modifier
-                            .weight(0.7f)
-                    )
+                    Row() {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .weight(0.85f)
+                        ) {
+                            Column {
+                                QuestionField(
+                                    question = question,
+                                    modifier = Modifier
+                                        .padding(horizontal = 4.dp),
+                                    quizType = quizType
+                                )
+                                LandscapeGrid(
+                                    viewModel = viewModel,
+                                    modifier = modifier
+                                )
+                            }
+                        }
+                        NextButton(
+                            onClick = { viewModel.triggerShowCorrectAnswer() },
+                            quizType = quizType,
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .weight(0.15f)
+                                .fillMaxWidth()
+                        )
+                    }
                 }
                     else{
                     Column(
@@ -123,6 +140,7 @@ fun ExamLayout(
 
                         ButtonsPortrait(
                             viewModel = viewModel,
+                            quizType = quizType,
                             modifier = Modifier
                                 .fillMaxWidth()
                         )
