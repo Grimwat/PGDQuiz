@@ -13,10 +13,12 @@ import com.example.pgdquiz.ui.Logic.QuizViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.AnswerButton
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.NextButton
+import com.example.pgdquiz.ui.Data.QuizType
 
 @Composable
 fun ButtonsPortrait(
     modifier: Modifier = Modifier,
+    quizType: QuizType,
     viewModel: QuizViewModel = viewModel()
 ) {
     val currentQuestion = viewModel.currentQuestion.value ?: return
@@ -43,6 +45,7 @@ fun ButtonsPortrait(
             onClick = {
                 viewModel.triggerShowCorrectAnswer()
             },
+            quizType = quizType,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp)
