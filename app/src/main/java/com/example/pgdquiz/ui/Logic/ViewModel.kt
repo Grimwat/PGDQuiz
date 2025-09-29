@@ -25,36 +25,30 @@ import java.util.Locale
 
 class QuizViewModel : ViewModel() {
 
+
     val currentQuestion: State<Question?> = derivedStateOf {
         val quizType = _quizType.value
         val quizState = quizStates[quizType] ?: return@derivedStateOf null
         quizState.questions.getOrNull(_currentQuestionIndex.value)
     }
 
-    fun startQuiz(context: Context, mode: QuizMode, quizType: QuizType) {
-        if (_isQuizStarted.value) {
-            Log.d("QuizViewModel", "⏩ Quiz already started, skipping re-init")
-            return
-        }
-        _isQuizStarted.value = true
 
-        Log.d("QuizViewModel", "🎯 startQuiz() called with $quizType in $mode")
+    fun startQuiz(context: Context, mode: QuizMode, quizType: QuizType) {
         _quizType.value = quizType
         _quizMode.value = mode
-        checkAndResetLivesDaily(context)
+        checkAndResetDaily(context)
+
         if (quizStates[quizType]?.questions.isNullOrEmpty()) {
             loadQuestions(context, mode, quizType)
         }
+        _isQuizStarted.value = true
     }
 
+
     fun loadQuestions(context: Context, mode: QuizMode, quizType: QuizType) {
-        if (quizType == QuizType.DEFAULT) {
-            Log.e("QuizViewModel", "❌ Cannot load questions for DEFAULT quiz type")
-            return
-        }
+        if (quizType == QuizType.DEFAULT) return
 
         _quizType.value = quizType
-        Log.d("QuizViewModel", "🟡 Loading questions for $quizType in $mode mode")
 
         val resId = when (quizType) {
             QuizType.DRAINLAYING -> R.raw.drainsquestions
@@ -67,32 +61,19 @@ class QuizViewModel : ViewModel() {
             val inputStream = context.resources.openRawResource(resId)
             val reader = InputStreamReader(inputStream)
             val jsonString = reader.readText()
-            Log.d("QuizViewModel", "📦 JSON loaded successfully (length=${jsonString.length})")
-
-            val parsedResponse = gson.fromJson(jsonString, QuestionsResponse::class.java)
             reader.close()
             inputStream.close()
 
-            Log.d("QuizViewModel", "📋 Parsed ${parsedResponse.questions.size} questions from JSON")
-
-            if (parsedResponse.questions.isEmpty()) {
-                throw IllegalArgumentException("No questions found in the JSON file for $quizType")
-            }
+            val parsedResponse = gson.fromJson(jsonString, QuestionsResponse::class.java)
 
             val fixedQuestions = parsedResponse.questions
                 .filterNotNull()
                 .map { question ->
                     val safeOptions = question.options.orEmpty().filter { it.isNotEmpty() }
                     val combined = (safeOptions + question.answer).distinct().shuffled()
-                    val finalOptions = combined.takeIf { it.isNotEmpty() } ?: listOf("Unknown")
+                    val finalOptions = combined.ifEmpty { listOf("Unknown") }
 
                     question.copy(shuffledOptions = finalOptions)
-                .also {
-                        Log.d(
-                            "QuizViewModel",
-                            "🧠 Question: ${it.question.take(30)}... → Options: ${it.options}"
-                        )
-                    }
                 }
 
             val selectedQuestions = fixedQuestions.shuffled().take(
@@ -113,39 +94,38 @@ class QuizViewModel : ViewModel() {
             )
 
             _currentQuestionIndex.value = 0
-            _streakCount.value = 0
             setCurrentLives(5)
             _quizComplete.value = false
             _selectedAnswers.value = mutableSetOf()
-
-            Log.d("QuizViewModel", "✅ Loaded ${selectedQuestions.size} questions for $quizType")
-            Log.d(
-                "QuizViewModel",
-                "▶️ First question: ${selectedQuestions.firstOrNull()?.question}"
-            )
 
         } catch (e: Exception) {
             Log.e("QuizViewModel", "❌ Error loading questions for $quizType: ${e.message}", e)
         }
     }
 
+
     fun selectAnswer(answer: String) {
         _selectedAnswers.value = mutableSetOf(answer)
     }
 
-    fun nextQuestion() {
+
+    fun nextQuestion(context: Context) {
+        checkAndResetDaily(context)
+
         val selected = _selectedAnswers.value
         val correct = currentQuestion.value?.let { listOf(it.answer) } ?: emptyList()
+        val type = _quizType.value
+
         if (selected.isNotEmpty()) {
             if (selected == correct.toSet()) {
-                _streakCount.value++
+                updateStreak(context, type, correct = true)
             } else {
-                _streakCount.value = 0
-                if (currentLives > 0) setCurrentLives(currentLives - 1)
+                updateStreak(context, type, correct = false)
+                loseLife(context, type)
             }
         }
 
-        if (_currentQuestionIndex.value < (quizStates[_quizType.value]?.questions?.size ?: 0) - 1) {
+        if (_currentQuestionIndex.value < (quizStates[type]?.questions?.size ?: 0) - 1) {
             _currentQuestionIndex.value++
         } else {
             _quizComplete.value = true
@@ -154,54 +134,81 @@ class QuizViewModel : ViewModel() {
         _selectedAnswers.value = mutableSetOf()
         _showCorrectAnswer.value = false
     }
-    fun checkAndResetLivesDaily(context: Context) {
+
+    fun triggerShowCorrectAnswer(context: Context) {
+        _showCorrectAnswer.value = true
         viewModelScope.launch {
-            val prefs = context.getSharedPreferences("lives_prefs", Context.MODE_PRIVATE)
+            delay(2000L)
+            nextQuestion(context)
+        }
+    }
+
+
+    fun checkAndResetDaily(context: Context) {
+        viewModelScope.launch {
+            val prefs = context.getSharedPreferences("quiz_progress", Context.MODE_PRIVATE)
             val lastResetDate = prefs.getString("last_reset_date", "")
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val today = sdf.format(Date())
 
             if (lastResetDate != today) {
-                val resetMap = QuizType.values().associateWith { 5 }.toMutableMap()
-                _livesMap.value = resetMap
+                val resetLives = QuizType.values().associateWith { 5 }.toMutableMap()
+                val resetStreaks = QuizType.values().associateWith { 0 }.toMutableMap()
 
-                prefs.edit().putString("last_reset_date", today).apply()
+                _livesMap.value = resetLives
+                _streakMap.value = resetStreaks
+
+                with(prefs.edit()) {
+                    putString("last_reset_date", today)
+                    QuizType.values().forEach { type ->
+                        putInt("${type.name}_lives", 5)
+                        putInt("${type.name}_streak", 0)
+                    }
+                    apply()
+                }
+            } else {
+                val loadedLives = QuizType.values().associateWith { type ->
+                    prefs.getInt("${type.name}_lives", 5)
+                }.toMutableMap()
+
+                val loadedStreaks = QuizType.values().associateWith { type ->
+                    prefs.getInt("${type.name}_streak", 0)
+                }.toMutableMap()
+
+                _livesMap.value = loadedLives
+                _streakMap.value = loadedStreaks
             }
         }
     }
 
-    fun restoreLife() {
-        if (currentLives <= 0) {
-            setCurrentLives(1)
-            _quizComplete.value = false
+    fun loseLife(context: Context, quizType: QuizType) {
+        val current = _livesMap.value[quizType] ?: 5
+        if (current > 0) {
+            val updated = current - 1
+            _livesMap.value = _livesMap.value.toMutableMap().apply {
+                this[quizType] = updated
+            }
+            val prefs = context.getSharedPreferences("quiz_progress", Context.MODE_PRIVATE)
+            prefs.edit().putInt("${quizType.name}_lives", updated).apply()
         }
     }
 
-    fun reset(quizType: QuizType = QuizType.DEFAULT) {
-        _quizType.value = quizType
-        _currentQuestionIndex.value = 0
-        _streakCount.value = 0
-        setCurrentLives(5)
-        _quizComplete.value = false
-        _selectedAnswers.value = mutableSetOf()
+    fun updateStreak(context: Context, quizType: QuizType, correct: Boolean) {
+        val current = _streakMap.value[quizType] ?: 0
+        val updated = if (correct) current + 1 else 0
 
-        if (quizType != QuizType.DEFAULT) {
-            quizStates[quizType] = QuizState()
+        _streakMap.value = _streakMap.value.toMutableMap().apply {
+            this[quizType] = updated
         }
+        val prefs = context.getSharedPreferences("quiz_progress", Context.MODE_PRIVATE)
+        prefs.edit().putInt("${quizType.name}_streak", updated).apply()
     }
 
-    fun restartQuiz(mode: QuizMode, context: Context, quizType: QuizType) {
-        reset(quizType)
-        loadQuestions(context, mode, quizType)
-    }
+    val currentLives: Int
+        get() = _livesMap.value[_quizType.value] ?: 5
 
-    fun triggerShowCorrectAnswer() {
-        _showCorrectAnswer.value = true
-        viewModelScope.launch {
-            delay(2000L)
-            nextQuestion()
-        }
-    }
+    val currentStreak: Int
+        get() = _streakMap.value[_quizType.value] ?: 0
 
     private val _livesMap = mutableStateOf(
         mutableMapOf(
@@ -212,14 +219,22 @@ class QuizViewModel : ViewModel() {
     )
     val livesMap: State<Map<QuizType, Int>> = _livesMap
 
-    val currentLives: Int
-        get() = _livesMap.value[_quizType.value] ?: 5
+    private val _streakMap = mutableStateOf(
+        mutableMapOf(
+            QuizType.DRAINLAYING to 0,
+            QuizType.PLUMBING to 0,
+            QuizType.GASFITTING to 0
+        )
+    )
+    val streakMap: State<Map<QuizType, Int>> = _streakMap
 
     private fun setCurrentLives(newValue: Int) {
         _livesMap.value = _livesMap.value.toMutableMap().apply {
             this[_quizType.value] = newValue
         }
     }
+
+
     private val quizStates: MutableMap<QuizType, QuizState> = mutableMapOf(
         QuizType.DRAINLAYING to QuizState(),
         QuizType.PLUMBING to QuizState(),
@@ -236,9 +251,6 @@ class QuizViewModel : ViewModel() {
 
     private val _currentQuestionIndex = mutableStateOf(0)
     val currentQuestionIndex: State<Int> = _currentQuestionIndex
-
-    private val _streakCount = mutableStateOf(0)
-    val streakCount: State<Int> = _streakCount
 
     private val _showCorrectAnswer = mutableStateOf(false)
     val showCorrectAnswer: State<Boolean> = _showCorrectAnswer

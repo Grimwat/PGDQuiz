@@ -62,11 +62,10 @@ fun ExamLayout(
     val selectedAnswers = viewModel.selectedAnswers.value
 
 
-    LaunchedEffect(Unit) {
-        if (!viewModel.isQuizStarted) {
-            viewModel.startQuiz(context, quizMode, quizType)
-        }
+    LaunchedEffect(quizType, quizMode) {
+        viewModel.startQuiz(context, quizMode, quizType)
     }
+
     if (question == null) {
         CircularProgressIndicator()
     } else {
