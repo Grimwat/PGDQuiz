@@ -181,6 +181,16 @@ class QuizViewModel : ViewModel() {
         }
     }
 
+    fun restoreLife(quizType: QuizType) {
+        val current = _livesMap.value[quizType] ?: 0
+        if (current <= 0) {
+            _livesMap.value = _livesMap.value.toMutableMap().apply {
+                this[quizType] = 1
+            }
+            _quizComplete.value = false
+        }
+    }
+
     fun loseLife(context: Context, quizType: QuizType) {
         val current = _livesMap.value[quizType] ?: 5
         if (current > 0) {

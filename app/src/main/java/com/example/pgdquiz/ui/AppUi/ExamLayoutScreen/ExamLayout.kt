@@ -87,7 +87,7 @@ fun ExamLayout(
                     quizType = quizType,
                     emojiCont = examCont,
                     attempts = lives,
-                    streakCount = viewModel.streakCount.value,
+                    streakCount = viewModel.streakMap.value[quizType] ?: 0,
                     modifier = Modifier.fillMaxWidth(),
                     onBack = { onBackToModeSelect() }
                 )
@@ -117,7 +117,7 @@ fun ExamLayout(
                             }
                         }
                         NextButton(
-                            onClick = { viewModel.triggerShowCorrectAnswer() },
+                            onClick = { viewModel.triggerShowCorrectAnswer(context) },
                             quizType = quizType,
                             modifier = Modifier
                                 .fillMaxHeight()
@@ -164,7 +164,7 @@ fun ExamLayout(
                             .padding(8.dp)
                     ) {
                         LivesLost(
-                            onWatchAd = { viewModel.restoreLife() },
+                            onWatchAd = { viewModel.restoreLife(quizType) },
                             onExit = onExit,
                             examEmoji = examEmoji,
                             emojiCont = title,
