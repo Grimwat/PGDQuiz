@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.Logic.QuizViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -24,6 +25,7 @@ fun ButtonsPortrait(
     val currentQuestion = viewModel.currentQuestion.value ?: return
     val selectedAnswers = viewModel.selectedAnswers.value
     val showCorrectAnswer by viewModel.showCorrectAnswer
+    val context = LocalContext.current
 
     Column(modifier = modifier) {
         currentQuestion.shuffledOptions?.forEach { option ->
@@ -43,7 +45,7 @@ fun ButtonsPortrait(
 
         NextButton(
             onClick = {
-                viewModel.triggerShowCorrectAnswer()
+                viewModel.triggerShowCorrectAnswer(context)
             },
             quizType = quizType,
             modifier = Modifier

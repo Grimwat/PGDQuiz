@@ -23,7 +23,6 @@ fun QuizApp(
 ) {
     var selectedQuizType by rememberSaveable { mutableStateOf<QuizType?>(null) }
     var selectedMode by rememberSaveable { mutableStateOf<QuizMode?>(null) }
-    val viewModel: QuizViewModel = viewModel()
     val context = LocalContext.current
 
     PgdQuizTheme(quizType = selectedQuizType ?: QuizType.DEFAULT) {
@@ -53,7 +52,7 @@ fun QuizApp(
                         selectedQuizType = null
                     },
                     lives = viewModel.currentLives,
-                    streak = viewModel.streakCount.value
+                    streak = viewModel.currentStreak
                 )
             }
 
