@@ -33,7 +33,7 @@ fun ButtonsPortrait(
 
     Column(modifier = modifier) {
         currentQuestion.shuffledOptions?.forEach { option ->
-            val isSelected = selectedAnswers.contains(option)
+            val isSelected = selectedAnswers == option
             val isCorrect = currentQuestion.isOptionCorrect(option)
 
             AnswerButton(

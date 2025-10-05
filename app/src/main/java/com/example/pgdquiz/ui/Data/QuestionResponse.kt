@@ -12,6 +12,5 @@ data class Question(
     var isAnswerCorrect: Boolean = false,
     var shuffledOptions: List<String>? = null
 ) {
-    fun correctAnswers(): List<String> = listOf(answer)
-    fun isOptionCorrect(option: String): Boolean = correctAnswers().contains(option)
+    fun isOptionCorrect(option: String): Boolean = option == answer
 }
