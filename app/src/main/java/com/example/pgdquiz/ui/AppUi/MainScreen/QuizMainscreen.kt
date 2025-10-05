@@ -1,18 +1,21 @@
-package com.example.pgdquiz.ui.AppUi.MainScreen
+package com.example.pgdquiz.ui.appUi.mainScreen
 
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.pgdquiz.R
-import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.ExamLayout
-import com.example.pgdquiz.ui.AppUi.QuizModeScreen.QuizModeSelection
-import com.example.pgdquiz.ui.Data.QuizMode
-import com.example.pgdquiz.ui.Data.QuizType
-import com.example.pgdquiz.ui.QuizTypeSelection
-import com.example.pgdquiz.ui.Logic.QuizViewModel
+import com.example.pgdquiz.ui.appUi.examLayoutScreen.ExamLayout
+import com.example.pgdquiz.ui.appUi.quizModeScreen.QuizModeSelection
+import com.example.pgdquiz.ui.data.QuizMode
+import com.example.pgdquiz.ui.data.QuizType
+import com.example.pgdquiz.ui.data.getCurrentQuizTypeLives
+import com.example.pgdquiz.ui.logic.QuizViewModel
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 
@@ -21,6 +24,8 @@ fun QuizApp(
     viewModel: QuizViewModel,
     onQuizTypeSelected: (QuizType) -> Unit,
 ) {
+
+    val state by viewModel.quizUiState.collectAsStateWithLifecycle()
     var selectedQuizType by rememberSaveable { mutableStateOf<QuizType?>(null) }
     var selectedMode by rememberSaveable { mutableStateOf<QuizMode?>(null) }
     val context = LocalContext.current
@@ -32,7 +37,7 @@ fun QuizApp(
                     onSelectQuizType = { quizType ->
                         selectedQuizType = quizType
                         onQuizTypeSelected(quizType)
-                        viewModel.reset(quizType)
+                        //  viewModel.res(quizType)
                     },
                     onQuizTypeSelected = onQuizTypeSelected,
 
@@ -51,8 +56,8 @@ fun QuizApp(
                         selectedMode = null
                         selectedQuizType = null
                     },
-                    lives = viewModel.currentLives,
-                    streak = viewModel.currentStreak
+                    lives = state.getCurrentQuizTypeLives(),
+                    streak = state.answerStreak
                 )
             }
 
@@ -62,20 +67,20 @@ fun QuizApp(
                     onExit = {
                         selectedMode = null
                         selectedQuizType = null
-                        viewModel.reset(QuizType.DEFAULT)
+                        //   viewModel.reset(QuizType.DEFAULT)
                     },
                     quizMode = selectedMode!!,
                     quizType = selectedQuizType!!,
                     examEmoji = painterResource(
                         id = when (selectedQuizType ?: QuizType.DEFAULT) {
-                            QuizType.DRAINLAYING -> R.drawable.happypoo2
+                            QuizType.DRAIN_LAYING -> R.drawable.happypoo2
                             QuizType.PLUMBING -> R.drawable.droplet
                             QuizType.GASFITTING -> R.drawable.pressure
                             QuizType.DEFAULT -> R.drawable.neonsign2
                         }
                     ),
                     title = when (selectedQuizType ?: QuizType.DEFAULT) {
-                        QuizType.DRAINLAYING -> "HappyPoo"
+                        QuizType.DRAIN_LAYING -> "HappyPoo"
                         QuizType.PLUMBING -> "Droplet"
                         QuizType.GASFITTING -> "Pressure"
                         QuizType.DEFAULT -> "Default"
@@ -83,7 +88,7 @@ fun QuizApp(
                     examCont = selectedQuizType!!.name,
                     onBackToModeSelect = {
                         selectedMode = null
-                        viewModel.reset(selectedQuizType!!)
+                        //    viewModel.reset(selectedQuizType!!)
                     }
                 )
             }

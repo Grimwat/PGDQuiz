@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Portrait
+package com.example.pgdquiz.ui.appUi.examLayoutScreen.portrait
 
 
 import androidx.compose.foundation.layout.Column
@@ -10,11 +10,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.example.pgdquiz.ui.Logic.QuizViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.AnswerButton
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.NextButton
-import com.example.pgdquiz.ui.Data.QuizType
+import com.example.pgdquiz.ui.data.QuizType
+import com.example.pgdquiz.ui.logic.QuizViewModel
 
 @Composable
 fun ButtonsPortrait(
@@ -22,9 +23,12 @@ fun ButtonsPortrait(
     quizType: QuizType,
     viewModel: QuizViewModel = viewModel()
 ) {
-    val currentQuestion = viewModel.currentQuestion.value ?: return
-    val selectedAnswers = viewModel.selectedAnswers.value
-    val showCorrectAnswer by viewModel.showCorrectAnswer
+
+    val state by viewModel.quizUiState.collectAsStateWithLifecycle()
+
+    val currentQuestion = state.currentQuestion ?: return
+    val selectedAnswers = state.selectedAnswer
+    val showCorrectAnswer = state.showCorrectAnswer
     val context = LocalContext.current
 
     Column(modifier = modifier) {

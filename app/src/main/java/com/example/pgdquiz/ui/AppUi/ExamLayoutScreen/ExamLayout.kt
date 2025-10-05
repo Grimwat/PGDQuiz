@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui.AppUi.ExamLayoutScreen
+package com.example.pgdquiz.ui.appUi.examLayoutScreen
 
 //import com.example.pgdquiz.AppUi.Composables.BannerAd
 import android.content.res.Configuration
@@ -13,15 +13,14 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,15 +29,19 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Landscape.LandscapeGrid
-import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Overlays.CongratulationsScreen
-import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Overlays.LivesLost
-import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Portrait.ButtonsPortrait
+import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.NextButton
+import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.QuestionField
 import com.example.pgdquiz.ui.Banner
-import com.example.pgdquiz.ui.Data.QuizMode
-import com.example.pgdquiz.ui.Data.QuizType
-import com.example.pgdquiz.ui.Logic.QuizViewModel
+import com.example.pgdquiz.ui.appUi.examLayoutScreen.landscape.LandscapeGrid
+import com.example.pgdquiz.ui.appUi.examLayoutScreen.overlays.CongratulationsScreen
+import com.example.pgdquiz.ui.appUi.examLayoutScreen.overlays.LivesLost
+import com.example.pgdquiz.ui.appUi.examLayoutScreen.portrait.ButtonsPortrait
+import com.example.pgdquiz.ui.data.QuizMode
+import com.example.pgdquiz.ui.data.QuizType
+import com.example.pgdquiz.ui.data.getCurrentQuizTypeLives
+import com.example.pgdquiz.ui.logic.QuizViewModel
 
 
 @Composable
@@ -56,17 +59,14 @@ fun ExamLayout(
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     val context = LocalContext.current
-    val lives = viewModel.currentLives
-    val quizComplete = viewModel.quizComplete.value
-    val question = viewModel.currentQuestion.value
-    val selectedAnswers = viewModel.selectedAnswers.value
 
+    val state by viewModel.quizUiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(quizType, quizMode) {
         viewModel.startQuiz(context, quizMode, quizType)
     }
 
-    if (question == null) {
+    if (state.currentQuestion == null) {
         CircularProgressIndicator()
     } else {
 
@@ -86,8 +86,8 @@ fun ExamLayout(
                 Banner(
                     quizType = quizType,
                     emojiCont = examCont,
-                    attempts = lives,
-                    streakCount = viewModel.streakMap.value[quizType] ?: 0,
+                    attempts = state.getCurrentQuizTypeLives(),
+                    streakCount = state.answerStreak,
                     modifier = Modifier.fillMaxWidth(),
                     onBack = { onBackToModeSelect() }
                 )
@@ -105,7 +105,7 @@ fun ExamLayout(
                                     .fillMaxHeight()
                             ) {
                                 QuestionField(
-                                    question = question,
+                                    question = state.currentQuestion,
                                     modifier = Modifier
                                         .padding(horizontal = 4.dp),
                                     quizType = quizType
@@ -125,15 +125,14 @@ fun ExamLayout(
                                 .fillMaxWidth()
                         )
                     }
-                }
-                    else{
+                } else {
                     Column(
                         modifier = Modifier
                             .fillMaxSize(),
                         verticalArrangement = Arrangement.Top
                     ) {
                         QuestionField(
-                            question = question,
+                            question = state.currentQuestion,
                             modifier = Modifier
                                 .fillMaxWidth(),
                             quizType = quizType
@@ -150,7 +149,7 @@ fun ExamLayout(
                 }
             }
 
-            if (lives <= 0) {
+            if (state.getCurrentQuizTypeLives() <= 0) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -164,7 +163,7 @@ fun ExamLayout(
                             .padding(8.dp)
                     ) {
                         LivesLost(
-                            onWatchAd = { viewModel.restoreLife(quizType) },
+                            onWatchAd = { viewModel.restoreLife() },
                             onExit = onExit,
                             examEmoji = examEmoji,
                             emojiCont = title,
@@ -174,7 +173,7 @@ fun ExamLayout(
                 }
             }
 
-            if (quizComplete) {
+            if (state.showCongratulationsScreen) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -191,7 +190,7 @@ fun ExamLayout(
                             examEmoji = examEmoji,
                             emojiCont = title,
                             onRestart = {
-                                viewModel.startQuiz(context,quizMode, quizType)
+                                viewModel.startQuiz(context, quizMode, quizType)
                             },
                             onBackToModeSelect = onBackToModeSelect,
                             quizType = quizType

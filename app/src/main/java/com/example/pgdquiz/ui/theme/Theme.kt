@@ -10,7 +10,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.example.pgdquiz.ui.Data.QuizType
+import com.example.pgdquiz.ui.data.QuizType
 
 private val DrainDarkScheme = darkColorScheme(
     primary = DarkRed,
@@ -113,8 +113,8 @@ fun PgdQuizTheme(
         quizType == QuizType.PLUMBING && darkTheme -> PlumbingDarkColorScheme
         quizType == QuizType.PLUMBING -> PlumbingColorScheme
 
-        quizType == QuizType.DRAINLAYING && darkTheme -> DrainDarkScheme
-        quizType == QuizType.DRAINLAYING -> DrainLightScheme
+        quizType == QuizType.DRAIN_LAYING && darkTheme -> DrainDarkScheme
+        quizType == QuizType.DRAIN_LAYING -> DrainLightScheme
 
         quizType == QuizType.DEFAULT && darkTheme -> DarkColorScheme
         quizType == QuizType.DEFAULT -> LightColorScheme

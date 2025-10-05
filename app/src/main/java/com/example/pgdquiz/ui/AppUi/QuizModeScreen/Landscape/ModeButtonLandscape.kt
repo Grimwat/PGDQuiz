@@ -1,10 +1,9 @@
-package com.example.pgdquiz.ui.AppUi.QuizModeScreen.Landscape
+package com.example.pgdquiz.ui.appUi.quizModeScreen.landscape
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,8 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.layout.size
-import com.example.pgdquiz.ui.Data.QuizType
+import com.example.pgdquiz.ui.data.QuizType
 import com.example.pgdquiz.ui.theme.BackgroundLogo
 
 @Composable

@@ -28,7 +28,7 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pgdquiz.R
-import com.example.pgdquiz.ui.Data.QuizType
+import com.example.pgdquiz.ui.data.QuizType
 import kotlin.text.forEach
 
 @Composable
@@ -42,7 +42,7 @@ fun NextButton(
     val ExamId = when (quizType) {
         QuizType.GASFITTING -> R.drawable.gasslogo
         QuizType.PLUMBING -> R.drawable.plumblogo
-        QuizType.DRAINLAYING -> R.drawable.drainlogo
+        QuizType.DRAIN_LAYING -> R.drawable.drainlogo
         QuizType.DEFAULT -> null
     }
 

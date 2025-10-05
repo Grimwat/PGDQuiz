@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui.Data
+package com.example.pgdquiz.ui.data
 
 enum class QuizMode {
     EASY, MEDIUM, HARD

@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.Overlays
+package com.example.pgdquiz.ui.appUi.examLayoutScreen.overlays
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -21,11 +21,10 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pgdquiz.R
-import com.example.pgdquiz.ui.Data.QuizType
+import com.example.pgdquiz.ui.data.QuizType
 
 @Composable
 fun CongratulationsScreen(
@@ -37,7 +36,7 @@ fun CongratulationsScreen(
     onBackToModeSelect: () -> Unit
 ) {
     val (title,examEmoji) = when (quizType) {
-        QuizType.DRAINLAYING -> "HappyPoo" to R.drawable.happypoo2
+        QuizType.DRAIN_LAYING -> "HappyPoo" to R.drawable.happypoo2
         QuizType.PLUMBING -> "Droplet" to R.drawable.drop2
         QuizType.GASFITTING -> "Pressure" to R.drawable.pressure2
         QuizType.DEFAULT -> "Nothing G" to  R.drawable.arrow

@@ -7,10 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.example.pgdquiz.ui.Data.QuizType
-import com.example.pgdquiz.ui.Logic.QuizViewModel
+import com.example.pgdquiz.ui.data.QuizType
+import com.example.pgdquiz.ui.logic.QuizViewModel
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
-import com.example.pgdquiz.ui.AppUi.MainScreen.QuizApp
+import com.example.pgdquiz.ui.appUi.mainScreen.QuizApp
 
 class MainActivity : ComponentActivity() {
     private val viewModel = QuizViewModel()

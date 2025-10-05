@@ -26,7 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.pgdquiz.ui.Data.QuizType
+import com.example.pgdquiz.ui.data.QuizType
 import androidx.compose.ui.platform.LocalConfiguration
 import android.content.res.Configuration
 
@@ -40,13 +40,13 @@ fun Banner(
     onBack: () -> Unit
 ) {
     val (title, examEmoji) = when (quizType) {
-        QuizType.DRAINLAYING -> "Drainlaying" to R.drawable.happypoo2
+        QuizType.DRAIN_LAYING -> "Drainlaying" to R.drawable.happypoo2
         QuizType.PLUMBING -> "Plumbing" to R.drawable.drop2
         QuizType.GASFITTING -> "Gasfitting" to R.drawable.pressure2
         QuizType.DEFAULT -> "Quiz App" to R.drawable.arrow
     }
     val PGDLogo = when (quizType) {
-        QuizType.DRAINLAYING -> R.drawable.drainlogo
+        QuizType.DRAIN_LAYING -> R.drawable.drainlogo
         QuizType.PLUMBING -> R.drawable.plumblogo
         QuizType.GASFITTING -> R.drawable.gasslogo
         QuizType.DEFAULT -> R.drawable.arrow

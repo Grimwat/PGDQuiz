@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui.AppUi.MainScreen
+package com.example.pgdquiz.ui.appUi.mainScreen
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
@@ -22,7 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import com.example.pgdquiz.ui.Data.QuizType
+import com.example.pgdquiz.ui.data.QuizType
 import com.example.pgdquiz.ui.theme.BackgroundLogo
 
 @Composable

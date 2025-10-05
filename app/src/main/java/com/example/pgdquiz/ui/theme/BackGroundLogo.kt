@@ -8,7 +8,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.example.pgdquiz.R
-import com.example.pgdquiz.ui.Data.QuizType
+import com.example.pgdquiz.ui.data.QuizType
 
 @Composable
 fun BackgroundLogo (
@@ -17,7 +17,7 @@ fun BackgroundLogo (
 ) {
 
     val PGDLogo = when (quizType) {
-        QuizType.DRAINLAYING -> R.drawable.drainlogo
+        QuizType.DRAIN_LAYING -> R.drawable.drainlogo
         QuizType.PLUMBING -> R.drawable.plumblogo
         QuizType.GASFITTING -> R.drawable.gasslogo
         QuizType.DEFAULT -> R.drawable.arrow

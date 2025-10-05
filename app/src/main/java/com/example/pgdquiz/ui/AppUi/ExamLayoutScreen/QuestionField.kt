@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,8 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.pgdquiz.ui.Data.Question
-import com.example.pgdquiz.ui.Data.QuizType
+import com.example.pgdquiz.ui.data.Question
+import com.example.pgdquiz.ui.data.QuizType
 import androidx.compose.ui.platform.LocalConfiguration
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,7 +44,7 @@ fun QuestionField(
     val ExamId = when (quizType) {
         QuizType.GASFITTING -> R.drawable.gasslogo
         QuizType.PLUMBING -> R.drawable.plumblogo
-        QuizType.DRAINLAYING -> R.drawable.drainlogo
+        QuizType.DRAIN_LAYING -> R.drawable.drainlogo
         QuizType.DEFAULT -> null
     }
     val text = question?.question ?: ""

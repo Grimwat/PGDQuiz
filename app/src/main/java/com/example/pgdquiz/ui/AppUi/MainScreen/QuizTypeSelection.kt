@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui
+package com.example.pgdquiz.ui.appUi.mainScreen
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -21,8 +21,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import com.example.pgdquiz.ui.AppUi.MainScreen.QuizTypeButton
-import com.example.pgdquiz.ui.Data.QuizType
+import com.example.pgdquiz.ui.data.QuizType
 
 
 @Composable
@@ -78,13 +77,13 @@ fun QuizTypeSelection(
                                 backgroundColor = when (type) {
                                     QuizType.PLUMBING -> MaterialTheme.colorScheme.onSurface
                                     QuizType.GASFITTING -> MaterialTheme.colorScheme.onBackground
-                                    QuizType.DRAINLAYING -> MaterialTheme.colorScheme.outline
+                                    QuizType.DRAIN_LAYING -> MaterialTheme.colorScheme.outline
                                     else -> MaterialTheme.colorScheme.primary
                                 },
                                 borderColor = when (type) {
                                     QuizType.PLUMBING -> MaterialTheme.colorScheme.secondary
                                     QuizType.GASFITTING -> MaterialTheme.colorScheme.onPrimary
-                                    QuizType.DRAINLAYING -> MaterialTheme.colorScheme.background
+                                    QuizType.DRAIN_LAYING -> MaterialTheme.colorScheme.background
                                     else -> MaterialTheme.colorScheme.onSecondary
                                 },
                                 modifier = Modifier
@@ -132,13 +131,13 @@ fun QuizTypeSelection(
                                 backgroundColor = when (type) {
                                     QuizType.PLUMBING -> MaterialTheme.colorScheme.onSurface
                                     QuizType.GASFITTING -> MaterialTheme.colorScheme.onBackground
-                                    QuizType.DRAINLAYING -> MaterialTheme.colorScheme.outline
+                                    QuizType.DRAIN_LAYING -> MaterialTheme.colorScheme.outline
                                     else -> MaterialTheme.colorScheme.primary
                                 },
                                 borderColor = when (type) {
                                     QuizType.PLUMBING -> MaterialTheme.colorScheme.secondary
                                     QuizType.GASFITTING -> MaterialTheme.colorScheme.onPrimary
-                                    QuizType.DRAINLAYING -> MaterialTheme.colorScheme.background
+                                    QuizType.DRAIN_LAYING -> MaterialTheme.colorScheme.background
                                     else -> MaterialTheme.colorScheme.onSecondary
 
                                 },

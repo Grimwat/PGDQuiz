@@ -1,7 +1,7 @@
-package com.example.pgdquiz.ui.Data
+package com.example.pgdquiz.ui.data
 
 enum class QuizType {
-    DRAINLAYING,
+    DRAIN_LAYING,
     PLUMBING,
     GASFITTING,
     DEFAULT
