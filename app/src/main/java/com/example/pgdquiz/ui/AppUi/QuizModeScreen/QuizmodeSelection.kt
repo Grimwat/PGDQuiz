@@ -17,19 +17,18 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.example.pgdquiz.ui.appUi.quizModeScreen.landscape.ModeButtonLandscape
 import com.example.pgdquiz.ui.appUi.quizModeScreen.portrait.ModeButtonPortrait
-import com.example.pgdquiz.ui.Banner
-import com.example.pgdquiz.ui.data.QuizMode
+import com.example.pgdquiz.ui.appUi.examLayoutScreen.Banner
+import com.example.pgdquiz.ui.data.QuizDifficulty
 
 import com.example.pgdquiz.ui.data.QuizType
 
 @Composable
 fun QuizModeSelection(
     quizType: QuizType,
-    modifier: Modifier = Modifier,
     onBackToQuizType: () -> Unit,
     lives: Int,
     streak: Int,
-    onSelectMode: (mode: QuizMode) -> Unit
+    onSelectDifficulty: (mode: QuizDifficulty) -> Unit
 ) {
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
@@ -59,7 +58,7 @@ fun QuizModeSelection(
                     ModeButtonLandscape(
                         label = "Easy",
                         questionCountText = "(25 Questions)",
-                        onClick = { onSelectMode(QuizMode.EASY) },
+                        onClick = { onSelectDifficulty(QuizDifficulty.EASY) },
                         quizType = quizType,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -67,7 +66,7 @@ fun QuizModeSelection(
                     ModeButtonLandscape(
                         label = "Medium",
                         questionCountText = "(50 Questions)",
-                        onClick = { onSelectMode(QuizMode.MEDIUM) },
+                        onClick = { onSelectDifficulty(QuizDifficulty.MEDIUM) },
                         quizType = quizType,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -76,7 +75,7 @@ fun QuizModeSelection(
                     ModeButtonLandscape(
                         label = "Hard",
                         questionCountText = "(100 Questions)",
-                        onClick = { onSelectMode(QuizMode.HARD) },
+                        onClick = { onSelectDifficulty(QuizDifficulty.HARD) },
                         quizType = quizType,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -96,19 +95,19 @@ fun QuizModeSelection(
                 label = "Easy",
                 questionCountText = "(25 Questions)",
                 quizType = quizType,
-                onClick = { onSelectMode(QuizMode.EASY) }
+                onClick = { onSelectDifficulty(QuizDifficulty.EASY) }
             )
             ModeButtonPortrait(
                 label = "Medium",
                 questionCountText = "(50 Questions)",
                 quizType = quizType,
-                onClick = { onSelectMode(QuizMode.MEDIUM) }
+                onClick = { onSelectDifficulty(QuizDifficulty.MEDIUM) }
             )
             ModeButtonPortrait(
                 label = "Hard",
                 questionCountText = "(100 Questions)",
                 quizType = quizType,
-                onClick = { onSelectMode(QuizMode.HARD) }
+                onClick = { onSelectDifficulty(QuizDifficulty.HARD) }
             )
         }
     }

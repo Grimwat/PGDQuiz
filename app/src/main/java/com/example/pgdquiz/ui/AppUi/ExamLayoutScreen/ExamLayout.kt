@@ -27,18 +27,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.NextButton
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.QuestionField
-import com.example.pgdquiz.ui.Banner
 import com.example.pgdquiz.ui.appUi.examLayoutScreen.landscape.LandscapeGrid
 import com.example.pgdquiz.ui.appUi.examLayoutScreen.overlays.CongratulationsScreen
 import com.example.pgdquiz.ui.appUi.examLayoutScreen.overlays.LivesLost
 import com.example.pgdquiz.ui.appUi.examLayoutScreen.portrait.ButtonsPortrait
-import com.example.pgdquiz.ui.data.QuizMode
+import com.example.pgdquiz.ui.data.QuizDifficulty
 import com.example.pgdquiz.ui.data.QuizType
 import com.example.pgdquiz.ui.data.getCurrentQuizTypeLives
 import com.example.pgdquiz.ui.logic.QuizViewModel
@@ -52,18 +50,17 @@ fun ExamLayout(
     examEmoji: Painter,
     title: String,
     examCont: String,
-    quizMode: QuizMode,
+    quizDifficulty: QuizDifficulty,
     quizType: QuizType,
     onBackToModeSelect: () -> Unit
 ) {
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-    val context = LocalContext.current
 
     val state by viewModel.quizUiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(quizType, quizMode) {
-        viewModel.startQuiz(context, quizMode, quizType)
+    LaunchedEffect(quizType, quizDifficulty) {
+        viewModel.startQuiz(quizDifficulty, quizType)
     }
 
     if (state.currentQuestion == null) {
@@ -117,7 +114,7 @@ fun ExamLayout(
                             }
                         }
                         NextButton(
-                            onClick = { viewModel.triggerShowCorrectAnswer(context) },
+                            onClick = { viewModel.triggerShowCorrectAnswer() },
                             quizType = quizType,
                             modifier = Modifier
                                 .fillMaxHeight()
@@ -190,7 +187,7 @@ fun ExamLayout(
                             examEmoji = examEmoji,
                             emojiCont = title,
                             onRestart = {
-                                viewModel.startQuiz(context, quizMode, quizType)
+                                viewModel.startQuiz(quizDifficulty, quizType)
                             },
                             onBackToModeSelect = onBackToModeSelect,
                             quizType = quizType

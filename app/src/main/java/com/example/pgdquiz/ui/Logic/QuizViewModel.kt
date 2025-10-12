@@ -1,94 +1,77 @@
 package com.example.pgdquiz.ui.logic
 
-import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pgdquiz.R
-import com.example.pgdquiz.ui.data.QuestionsResponse
-import com.example.pgdquiz.ui.data.QuizMode
+import com.example.pgdquiz.network.QuestionLoader
+import com.example.pgdquiz.network.QuizDatastore
+import com.example.pgdquiz.ui.data.QuizDifficulty
 import com.example.pgdquiz.ui.data.QuizType
 import com.example.pgdquiz.ui.data.QuizUiState
-import com.google.gson.Gson
+import com.example.pgdquiz.ui.data.getCurrentQuizTypeLives
+import com.example.pgdquiz.util.STARTING_ANSWER_STREAK
+import com.example.pgdquiz.util.STARTING_LIVES
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.io.InputStreamReader
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
-class QuizViewModel : ViewModel() {
+class QuizViewModel(
+    private val quizDatastore: QuizDatastore,
+    private val questionLoader: QuestionLoader
+) : ViewModel() {
 
     private val _quizUiState = MutableStateFlow(QuizUiState())
     val quizUiState: StateFlow<QuizUiState> = _quizUiState.asStateFlow()
 
-    fun startQuiz(context: Context, mode: QuizMode, quizType: QuizType) {
+    fun startQuiz(difficulty: QuizDifficulty, quizType: QuizType) {
         _quizUiState.update {
             it.copy(
                 isQuizStarted = true,
-                quizMode = mode,
+                quizDifficulty = difficulty,
                 quizType = quizType
             )
         }
-        checkAndResetDaily(context)
+        quizDatastore.storeDate()
+        checkLivesAndStreak()
 
         if (_quizUiState.value.questions.isEmpty()) {
-            loadQuestions(context, mode, quizType)
+            loadQuestions()
         }
     }
 
+    fun loadQuestions() {
+        if (quizUiState.value.quizType == QuizType.DEFAULT) return
 
-    fun loadQuestions(context: Context, mode: QuizMode, quizType: QuizType) {
-        if (quizType == QuizType.DEFAULT) return
+        val allQuestions = questionLoader.loadQuestions(quizUiState.value.quizType)
 
-        val resId = when (quizType) {
-            QuizType.DRAIN_LAYING -> R.raw.drainsquestions
-            QuizType.PLUMBING -> R.raw.plumbingquestions
-            QuizType.GASFITTING -> R.raw.gasquestions
-            else -> error("Invalid QuizType")
-        }
+        val fixedQuestions = allQuestions
+            .map { question ->
+               println("FUCK ${question.id}")
+               println("FUCK ${question}")
+                val safeOptions = question.options.filter { it.isNotEmpty() }
+                val combined = (safeOptions + question.answer).distinct().shuffled()
+                val finalOptions = combined.ifEmpty { listOf("Unknown") }
 
-        try {
-            val inputStream = context.resources.openRawResource(resId)
-            val reader = InputStreamReader(inputStream)
-            val jsonString = reader.readText()
-            reader.close()
-            inputStream.close()
-
-            val parsedResponse = gson.fromJson(jsonString, QuestionsResponse::class.java)
-
-            val fixedQuestions = parsedResponse.questions
-                .map { question ->
-                    val safeOptions = question.options.filter { it.isNotEmpty() }
-                    val combined = (safeOptions + question.answer).distinct().shuffled()
-                    val finalOptions = combined.ifEmpty { listOf("Unknown") }
-
-                    question.copy(shuffledOptions = finalOptions)
-                }
-
-            val selectedQuestions = fixedQuestions.shuffled().take(
-                when (mode) {
-                    QuizMode.EASY -> 25
-                    QuizMode.MEDIUM -> 50
-                    QuizMode.HARD -> 100
-                }
-            )
-
-            _quizUiState.update {
-                it.copy(
-                    questions = selectedQuestions,
-                    quizType = quizType,
-                    currentQuestionIndex = 0,
-                    quizComplete = false,
-                    currentQuestion = selectedQuestions.first()
-                )
+                question.copy(shuffledOptions = finalOptions)
             }
-        } catch (e: Exception) {
-            Log.e("QuizViewModel", "❌ Error loading questions for $quizType: ${e.message}", e)
+
+        val selectedQuestions = fixedQuestions.shuffled().take(
+            when (quizUiState.value.quizDifficulty) {
+                QuizDifficulty.EASY -> 25
+                QuizDifficulty.MEDIUM -> 50
+                QuizDifficulty.HARD -> 100
+            }
+        )
+
+        _quizUiState.update {
+            it.copy(
+                questions = selectedQuestions,
+                currentQuestionIndex = 0, // shouldn't do this when loading questions
+                quizComplete = false, // shouldn't do this when loading questions
+                currentQuestion = selectedQuestions.first()
+            )
         }
     }
 
@@ -100,21 +83,12 @@ class QuizViewModel : ViewModel() {
     }
 
 
-    fun nextQuestion(context: Context) {
-        val selected = _quizUiState.value.selectedAnswer
-        val correct = _quizUiState.value.currentQuestion?.answer == selected
-        val type = _quizUiState.value.quizType
-
-        if (correct) {
-            updateStreak(context, correct = true)
-        } else {
-            updateStreak(context, correct = false)
-            loseLife(context, type)
-        }
-
+    fun nextQuestion() {
+        updateStreak()
         val nextQuestionIndex = _quizUiState.value.currentQuestionIndex + 1
+        val thereIsMoreQuestions = nextQuestionIndex < _quizUiState.value.questions.size
         _quizUiState.update {
-            if (nextQuestionIndex < _quizUiState.value.questions.size) {
+            if (thereIsMoreQuestions) {
                 it.copy(
                     currentQuestionIndex = nextQuestionIndex,
                     selectedAnswer = "",
@@ -131,7 +105,7 @@ class QuizViewModel : ViewModel() {
         }
     }
 
-    fun triggerShowCorrectAnswer(context: Context) {
+    fun triggerShowCorrectAnswer() {
         _quizUiState.update {
             it.copy(
                 showCorrectAnswer = true
@@ -139,67 +113,42 @@ class QuizViewModel : ViewModel() {
         }
         viewModelScope.launch {
             delay(2000L)
-            nextQuestion(context)
+            nextQuestion()
         }
     }
 
-
-    fun checkAndResetDaily(context: Context) {
-        viewModelScope.launch {
-            val prefs = context.getSharedPreferences("quiz_progress", Context.MODE_PRIVATE)
-            val lastResetDate = prefs.getString("last_reset_date", "")
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val today = sdf.format(Date())
-
-            if (lastResetDate != today) {
-
-                resetDailyState()
-
-                with(prefs.edit()) {
-                    putString("last_reset_date", today)
-                    QuizType.entries.forEach { type ->
-                        putInt("${type.name}_lives", 5)
-                    }
-                    putInt("answerStreak", 0)
-                    apply()
-                }
-            } else {
-                val loadedLives = QuizType.entries.associateWith { type ->
-                    prefs.getInt("${type.name}_lives", 5)
-                }.toMutableMap()
-
-                val loadedStreaks = prefs.getInt("answerStreak", 0)
-
-                _quizUiState.update {
-                    it.copy(
-                        drainLayingQuizState = it.drainLayingQuizState.copy(
-                            lives = loadedLives[QuizType.DRAIN_LAYING]
-                                ?: 5
-                        ),
-                        plumbingQuizState = it.plumbingQuizState.copy(
-                            lives = loadedLives[QuizType.PLUMBING]
-                                ?: 5
-                        ),
-                        gasFittingQuizState = it.gasFittingQuizState.copy(
-                            lives = loadedLives[QuizType.GASFITTING]
-                                ?: 5
-                        ),
-                        answerStreak = loadedStreaks,
-                    )
-                }
-
+    fun checkLivesAndStreak() {
+        if (quizDatastore.isTodayTheSameDayAsTheStoredDate()) {
+            _quizUiState.update {
+                it.copy(
+                    drainLayingQuizState = it.drainLayingQuizState.copy(
+                        lives = quizDatastore.fetchCurrentLives(
+                            QuizType.DRAIN_LAYING
+                        )
+                    ),
+                    plumbingQuizState = it.plumbingQuizState.copy(
+                        lives = quizDatastore.fetchCurrentLives(
+                            QuizType.PLUMBING
+                        )
+                    ),
+                    gasFittingQuizState = it.gasFittingQuizState.copy(
+                        lives = quizDatastore.fetchCurrentLives(
+                            QuizType.GASFITTING
+                        )
+                    ),
+                    answerStreak = quizDatastore.fetchAnswerStreak(),
+                )
             }
-        }
-    }
-
-    fun resetDailyState() {
-        _quizUiState.update {
-            it.copy(
-                drainLayingQuizState = it.drainLayingQuizState.copy(lives = 5),
-                plumbingQuizState = it.plumbingQuizState.copy(lives = 5),
-                gasFittingQuizState = it.gasFittingQuizState.copy(lives = 5),
-                answerStreak = 0,
-            )
+        } else {
+            _quizUiState.update {
+                it.copy(
+                    drainLayingQuizState = it.drainLayingQuizState.copy(lives = STARTING_LIVES),
+                    plumbingQuizState = it.plumbingQuizState.copy(lives = STARTING_LIVES),
+                    gasFittingQuizState = it.gasFittingQuizState.copy(lives = STARTING_LIVES),
+                    answerStreak = STARTING_ANSWER_STREAK,
+                )
+            }
+            quizDatastore.resetLivesAndStreak()
         }
     }
 
@@ -207,28 +156,26 @@ class QuizViewModel : ViewModel() {
         setCurrentLives(1)
     }
 
-    fun loseLife(context: Context, quizType: QuizType) {
-        val current = when (_quizUiState.value.quizType) {
-            QuizType.DRAIN_LAYING -> _quizUiState.value.drainLayingQuizState.lives
-            QuizType.PLUMBING -> _quizUiState.value.plumbingQuizState.lives
-            QuizType.GASFITTING -> _quizUiState.value.gasFittingQuizState.lives
-            else -> 0
-        }
-        if (current > 0) {
-            val updated = current - 1
-            setCurrentLives(updated)
-            val prefs = context.getSharedPreferences("quiz_progress", Context.MODE_PRIVATE)
-            prefs.edit().putInt("${quizType.name}_lives", updated).apply()
+    fun loseLife() {
+        val currentLives = quizUiState.value.getCurrentQuizTypeLives()
+        if (currentLives > 0) {
+            val updatedLives = currentLives - 1
+            setCurrentLives(updatedLives)
+            quizDatastore.storeCurrentLives(updatedLives, quizUiState.value.quizType)
         }
     }
 
-    fun updateStreak(context: Context, correct: Boolean) {
-        val updated = if (correct) _quizUiState.value.answerStreak + 1 else 0
+    fun updateStreak() {
+        val selected = _quizUiState.value.selectedAnswer
+        val correct = _quizUiState.value.currentQuestion?.answer == selected
+        val updatedStreak = if (correct) _quizUiState.value.answerStreak + 1 else 0
         _quizUiState.update {
-            it.copy(answerStreak = updated)
+            it.copy(answerStreak = updatedStreak)
         }
-        val prefs = context.getSharedPreferences("quiz_progress", Context.MODE_PRIVATE)
-        prefs.edit().putInt("answerStreak", updated).apply()
+        if (!correct) {
+            loseLife()
+        }
+        quizDatastore.storeAnswerStreak(updatedStreak)
     }
 
     private fun setCurrentLives(newValue: Int) {
@@ -249,5 +196,4 @@ class QuizViewModel : ViewModel() {
         }
     }
 
-    private val gson = Gson()
 }
