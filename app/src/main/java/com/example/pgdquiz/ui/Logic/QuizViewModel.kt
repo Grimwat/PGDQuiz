@@ -26,6 +26,7 @@ class QuizViewModel(
     val quizUiState: StateFlow<QuizUiState> = _quizUiState.asStateFlow()
 
     fun startQuiz(difficulty: QuizDifficulty, quizType: QuizType) {
+        val isQuizTypeTheSame = quizType == quizUiState.value.quizType
         _quizUiState.update {
             it.copy(
                 isQuizStarted = true,
@@ -36,7 +37,7 @@ class QuizViewModel(
         quizDatastore.storeDate()
         checkLivesAndStreak()
 
-        if (_quizUiState.value.questions.isEmpty()) {
+        if (_quizUiState.value.questions.isEmpty() && isQuizTypeTheSame) {
             loadQuestions()
         }
     }

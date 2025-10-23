@@ -14,6 +14,7 @@ import com.example.pgdquiz.ui.appUi.examLayoutScreen.ExamLayout
 import com.example.pgdquiz.ui.appUi.quizModeScreen.QuizModeSelection
 import com.example.pgdquiz.ui.data.QuizDifficulty
 import com.example.pgdquiz.ui.data.QuizType
+import com.example.pgdquiz.ui.data.QuizUiState
 import com.example.pgdquiz.ui.data.getCurrentQuizTypeLives
 import com.example.pgdquiz.ui.logic.QuizViewModel
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
