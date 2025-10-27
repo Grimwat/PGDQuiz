@@ -53,7 +53,9 @@ class QuizViewModel(
 
             val allQuestions = questionLoader.loadQuestions(quizUiState.value.quizType)
 
-            val fixedQuestions = allQuestions
+            val nonNullQuestions = allQuestions.filterNotNull()
+
+            val fixedQuestions = nonNullQuestions
                 .map { question ->
                     println("FUCK ${question.id}")
                     println("FUCK ${question}")
