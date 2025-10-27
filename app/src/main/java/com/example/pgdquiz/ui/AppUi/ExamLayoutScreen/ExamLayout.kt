@@ -56,23 +56,22 @@ fun ExamLayout(
 ) {
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-
     val state by viewModel.quizUiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(quizType, quizDifficulty) {
         viewModel.startQuiz(quizDifficulty, quizType)
     }
-
-    if (state.currentQuestion == null) {
+Box(modifier = Modifier
+    .fillMaxSize()
+    .background(MaterialTheme.colorScheme.background)
+    .padding(WindowInsets.navigationBars.asPaddingValues()),
+    contentAlignment = Alignment.Center
+){
+    if (state.isLoading) {
         CircularProgressIndicator()
-    } else {
+    }
+     else if(state.currentQuestion != null) {
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(WindowInsets.navigationBars.asPaddingValues())
-        ) {
             Column(
                 modifier = modifier
                     .fillMaxHeight()
