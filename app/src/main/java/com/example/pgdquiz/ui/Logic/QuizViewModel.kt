@@ -26,7 +26,6 @@ class QuizViewModel(
     val quizUiState: StateFlow<QuizUiState> = _quizUiState.asStateFlow()
 
     fun startQuiz(difficulty: QuizDifficulty, quizType: QuizType) {
-        val isQuizTypeTheSame = quizType == quizUiState.value.quizType
         _quizUiState.update {
             it.copy(
                 isQuizStarted = true,
@@ -34,6 +33,7 @@ class QuizViewModel(
                 quizType = quizType
             )
         }
+        val isQuizTypeTheSame = quizType == quizUiState.value.quizType
         quizDatastore.storeDate()
         checkLivesAndStreak()
 
