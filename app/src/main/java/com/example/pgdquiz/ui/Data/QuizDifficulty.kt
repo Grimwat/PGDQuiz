@@ -1,5 +1,5 @@
 package com.example.pgdquiz.ui.data
 
-enum class QuizMode {
+enum class QuizDifficulty {
     EASY, MEDIUM, HARD
 }

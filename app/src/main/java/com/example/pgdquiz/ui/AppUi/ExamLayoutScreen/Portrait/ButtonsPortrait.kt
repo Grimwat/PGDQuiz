@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -29,7 +28,6 @@ fun ButtonsPortrait(
     val currentQuestion = state.currentQuestion ?: return
     val selectedAnswers = state.selectedAnswer
     val showCorrectAnswer = state.showCorrectAnswer
-    val context = LocalContext.current
 
     Column(modifier = modifier) {
         currentQuestion.shuffledOptions?.forEach { option ->
@@ -49,7 +47,7 @@ fun ButtonsPortrait(
 
         NextButton(
             onClick = {
-                viewModel.triggerShowCorrectAnswer(context)
+                viewModel.triggerShowCorrectAnswer()
             },
             quizType = quizType,
             modifier = Modifier

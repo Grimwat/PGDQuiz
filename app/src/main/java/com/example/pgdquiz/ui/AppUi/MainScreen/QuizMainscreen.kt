@@ -12,7 +12,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.pgdquiz.R
 import com.example.pgdquiz.ui.appUi.examLayoutScreen.ExamLayout
 import com.example.pgdquiz.ui.appUi.quizModeScreen.QuizModeSelection
-import com.example.pgdquiz.ui.data.QuizMode
+import com.example.pgdquiz.ui.data.QuizDifficulty
 import com.example.pgdquiz.ui.data.QuizType
 import com.example.pgdquiz.ui.data.getCurrentQuizTypeLives
 import com.example.pgdquiz.ui.logic.QuizViewModel
@@ -20,15 +20,16 @@ import com.example.pgdquiz.ui.theme.PgdQuizTheme
 
 
 @Composable
-fun QuizApp(
+fun QuizMainScreen(
     viewModel: QuizViewModel,
     onQuizTypeSelected: (QuizType) -> Unit,
 ) {
 
     val state by viewModel.quizUiState.collectAsStateWithLifecycle()
     var selectedQuizType by rememberSaveable { mutableStateOf<QuizType?>(null) }
-    var selectedMode by rememberSaveable { mutableStateOf<QuizMode?>(null) }
-    val context = LocalContext.current
+    var selectedMode by rememberSaveable { mutableStateOf<QuizDifficulty?>(null) }
+
+    viewModel.restoreLife()
 
     PgdQuizTheme(quizType = selectedQuizType ?: QuizType.DEFAULT) {
         when {
@@ -48,9 +49,9 @@ fun QuizApp(
             selectedMode == null -> {
                 QuizModeSelection(
                     quizType = selectedQuizType!!,
-                    onSelectMode = { mode ->
+                    onSelectDifficulty = { mode ->
                         selectedMode = mode
-                        viewModel.startQuiz(context, mode, selectedQuizType!!)
+                        viewModel.startQuiz(mode, selectedQuizType!!)
                     },
                     onBackToQuizType = {
                         selectedMode = null
@@ -69,7 +70,7 @@ fun QuizApp(
                         selectedQuizType = null
                         //   viewModel.reset(QuizType.DEFAULT)
                     },
-                    quizMode = selectedMode!!,
+                    quizDifficulty = selectedMode!!,
                     quizType = selectedQuizType!!,
                     examEmoji = painterResource(
                         id = when (selectedQuizType ?: QuizType.DEFAULT) {
