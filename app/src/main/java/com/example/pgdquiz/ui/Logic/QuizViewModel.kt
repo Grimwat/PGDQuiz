@@ -33,10 +33,11 @@ class QuizViewModel(
                 quizType = quizType
             )
         }
+        val isQuizTypeTheSame = quizType == quizUiState.value.quizType
         quizDatastore.storeDate()
         checkLivesAndStreak()
 
-        if (_quizUiState.value.questions.isEmpty()) {
+        if (_quizUiState.value.questions.isEmpty() && isQuizTypeTheSame) {
             loadQuestions()
         }
     }
