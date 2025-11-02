@@ -47,9 +47,15 @@ class QuizViewModelTest {
     @Test
     fun `startQuiz sets quizTypeDrainlaying`() {
         assertEquals(viewModel.quizUiState.value.quizType, QuizType.DEFAULT)
-        viewModel.startQuiz( QuizDifficulty.EASY, QuizType.DEFAULT,)
-        assertEquals(viewModel.quizUiState.value.quizType, QuizType.DEFAULT)
+        viewModel.startQuiz( QuizDifficulty.EASY, QuizType.DRAIN_LAYING,)
+        assertEquals(viewModel.quizUiState.value.quizType, QuizType.DRAIN_LAYING)
     }
 
+    @Test
+    fun `startQuiz sets quizTypeGassfitting`() {
+        assertEquals(viewModel.quizUiState.value.quizType, QuizType.DEFAULT)
+        viewModel.startQuiz( QuizDifficulty.EASY, QuizType.GASFITTING,)
+        assertEquals(viewModel.quizUiState.value.quizType, QuizType.GASFITTING)
+    }
 
 }
