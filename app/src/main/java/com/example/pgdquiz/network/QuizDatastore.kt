@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-
+val storedQuestion
 const val KEY_ANSWER_STREAK = "answer_streak"
 const val KEY_LIVES = "_lives"
 const val KEY_LAST_RESET_DATE = "last_reset_date"
