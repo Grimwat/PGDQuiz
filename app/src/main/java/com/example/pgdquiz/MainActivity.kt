@@ -7,8 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.example.pgdquiz.network.QuestionLoader
-import com.example.pgdquiz.network.QuizDatastore
+import com.example.pgdquiz.network.DefaultQuizDatastore
+import com.example.pgdquiz.network.DefaultQuestionLoader
 import com.example.pgdquiz.ui.appUi.mainScreen.QuizMainScreen
 import com.example.pgdquiz.ui.data.QuizType
 import com.example.pgdquiz.ui.logic.QuizViewModel
@@ -25,8 +25,8 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val viewModel = QuizViewModel(
-                quizDatastore = QuizDatastore(context = applicationContext),
-                questionLoader = QuestionLoader(context = applicationContext)
+                quizDatastore = DefaultQuizDatastore(context = applicationContext),
+                questionLoader = DefaultQuestionLoader(context = applicationContext)
             )
 
             PgdQuizTheme(quizType = selectedQuizType ?: QuizType.DEFAULT) {

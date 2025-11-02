@@ -2,8 +2,8 @@ package com.example.pgdquiz.ui.logic
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pgdquiz.network.QuestionLoader
-import com.example.pgdquiz.network.QuizDatastore
+import com.example.pgdquiz.network.interfaces.QuestionLoader
+import com.example.pgdquiz.network.interfaces.QuizDatastore
 import com.example.pgdquiz.ui.data.QuizDifficulty
 import com.example.pgdquiz.ui.data.QuizType
 import com.example.pgdquiz.ui.data.QuizUiState
@@ -55,20 +55,8 @@ class QuizViewModel(
 
             val allQuestions = questionLoader.loadQuestions(quizUiState.value.quizType)
 
-            val nonNullQuestions = allQuestions.filterNotNull()
 
-            val fixedQuestions = nonNullQuestions
-                .map { question ->
-                    println("FUCK ${question.id}")
-                    println("FUCK ${question}")
-                    val safeOptions = question.options.filter { it.isNotEmpty() }
-                    val combined = (safeOptions + question.answer).distinct().shuffled()
-                    val finalOptions = combined.ifEmpty { listOf("Unknown") }
-
-                    question.copy(shuffledOptions = finalOptions)
-                }
-
-            val selectedQuestions = fixedQuestions.shuffled().take(
+            val selectedQuestions = allQuestions.shuffled().take(
                 when (quizUiState.value.quizDifficulty) {
                     QuizDifficulty.EASY -> 25
                     QuizDifficulty.MEDIUM -> 50
@@ -76,25 +64,30 @@ class QuizViewModel(
                 }
             )
             if (selectedQuestions.isNotEmpty()) {
+                val currentQuestion = selectedQuestions.first()
                 _quizUiState.update {
                     it.copy(
                         questions = selectedQuestions,
-                        currentQuestion = selectedQuestions.first(),
+                        currentQuestion = currentQuestion,
                         currentQuestionIndex = 0,
                         quizComplete = false,
+                        isLoading = false,
+                        optionsAndAnswer = currentQuestion.getOptionsAndAnswers().shuffled(),
+
+
+                        )
+                }
+            } else {
+                println("Error: No questions loaded for ${quizUiState.value.quizType}")
+                _quizUiState.update {
+                    it.copy(
                         isLoading = false
+
                     )
                 }
             }
-         else {println("Error: No questions loaded for ${quizUiState.value.quizType}")
-        _quizUiState.update{
-            it.copy(
-                isLoading = false
-
-            )
         }
-        }
-    }}
+    }
 
 
     fun selectAnswer(answer: String) {
@@ -110,11 +103,13 @@ class QuizViewModel(
         val thereIsMoreQuestions = nextQuestionIndex < _quizUiState.value.questions.size
         _quizUiState.update {
             if (thereIsMoreQuestions) {
+                val nextQuestion = _quizUiState.value.questions[nextQuestionIndex]
                 it.copy(
                     currentQuestionIndex = nextQuestionIndex,
                     selectedAnswer = "",
                     showCorrectAnswer = false,
-                    currentQuestion = _quizUiState.value.questions[nextQuestionIndex]
+                    currentQuestion = nextQuestion
+
                 )
             } else {
                 it.copy(
