@@ -26,6 +26,9 @@ class QuizViewModel(
     val quizUiState: StateFlow<QuizUiState> = _quizUiState.asStateFlow()
 
     fun startQuiz(difficulty: QuizDifficulty, quizType: QuizType) {
+
+        val isQuizTypeTheSame = quizType == quizUiState.value.quizType
+
         _quizUiState.update {
             it.copy(
                 isQuizStarted = true,
@@ -33,7 +36,6 @@ class QuizViewModel(
                 quizType = quizType
             )
         }
-        val isQuizTypeTheSame = quizType == quizUiState.value.quizType
         quizDatastore.storeDate()
         checkLivesAndStreak()
 
@@ -42,39 +44,57 @@ class QuizViewModel(
         }
     }
 
-    fun loadQuestions() {
+    private fun loadQuestions() {
         if (quizUiState.value.quizType == QuizType.DEFAULT) return
 
-        val allQuestions = questionLoader.loadQuestions(quizUiState.value.quizType)
+        _quizUiState.update { it.copy(isLoading = true) }
 
-        val fixedQuestions = allQuestions
-            .map { question ->
-               println("FUCK ${question.id}")
-               println("FUCK ${question}")
-                val safeOptions = question.options.filter { it.isNotEmpty() }
-                val combined = (safeOptions + question.answer).distinct().shuffled()
-                val finalOptions = combined.ifEmpty { listOf("Unknown") }
+        viewModelScope.launch {
+            delay(50)
 
-                question.copy(shuffledOptions = finalOptions)
+
+            val allQuestions = questionLoader.loadQuestions(quizUiState.value.quizType)
+
+            val nonNullQuestions = allQuestions.filterNotNull()
+
+            val fixedQuestions = nonNullQuestions
+                .map { question ->
+                    println("FUCK ${question.id}")
+                    println("FUCK ${question}")
+                    val safeOptions = question.options.filter { it.isNotEmpty() }
+                    val combined = (safeOptions + question.answer).distinct().shuffled()
+                    val finalOptions = combined.ifEmpty { listOf("Unknown") }
+
+                    question.copy(shuffledOptions = finalOptions)
+                }
+
+            val selectedQuestions = fixedQuestions.shuffled().take(
+                when (quizUiState.value.quizDifficulty) {
+                    QuizDifficulty.EASY -> 25
+                    QuizDifficulty.MEDIUM -> 50
+                    QuizDifficulty.HARD -> 100
+                }
+            )
+            if (selectedQuestions.isNotEmpty()) {
+                _quizUiState.update {
+                    it.copy(
+                        questions = selectedQuestions,
+                        currentQuestion = selectedQuestions.first(),
+                        currentQuestionIndex = 0,
+                        quizComplete = false,
+                        isLoading = false
+                    )
+                }
             }
-
-        val selectedQuestions = fixedQuestions.shuffled().take(
-            when (quizUiState.value.quizDifficulty) {
-                QuizDifficulty.EASY -> 25
-                QuizDifficulty.MEDIUM -> 50
-                QuizDifficulty.HARD -> 100
-            }
-        )
-
-        _quizUiState.update {
+         else {println("Error: No questions loaded for ${quizUiState.value.quizType}")
+        _quizUiState.update{
             it.copy(
-                questions = selectedQuestions,
-                currentQuestionIndex = 0, // shouldn't do this when loading questions
-                quizComplete = false, // shouldn't do this when loading questions
-                currentQuestion = selectedQuestions.first()
+                isLoading = false
+
             )
         }
-    }
+        }
+    }}
 
 
     fun selectAnswer(answer: String) {

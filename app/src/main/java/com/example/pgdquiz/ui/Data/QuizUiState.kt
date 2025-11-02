@@ -12,6 +12,7 @@ data class QuizUiState(
     val quizDifficulty: QuizDifficulty = QuizDifficulty.EASY,
     val quizType: QuizType = QuizType.DEFAULT,
     val currentQuestion: Question? = null,
+    val isLoading: Boolean = false,
     val questions: List<Question> = emptyList(),
     val showCongratulationsScreen: Boolean = false,
     val answerStreak: Int = 0,
