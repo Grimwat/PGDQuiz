@@ -30,7 +30,7 @@ fun ButtonsPortrait(
     val showCorrectAnswer = state.showCorrectAnswer
 
     Column(modifier = modifier) {
-        currentQuestion.shuffledOptions?.forEach { option ->
+        state.optionsAndAnswer.forEach { option ->
             val isSelected = selectedAnswers == option
             val isCorrect = currentQuestion.isOptionCorrect(option)
 

@@ -16,6 +16,7 @@ data class QuizUiState(
     val questions: List<Question> = emptyList(),
     val showCongratulationsScreen: Boolean = false,
     val answerStreak: Int = 0,
+    val optionsAndAnswer: List<String> = emptyList()
 )
 
 fun QuizUiState.getCurrentQuizTypeLives(): Int {
