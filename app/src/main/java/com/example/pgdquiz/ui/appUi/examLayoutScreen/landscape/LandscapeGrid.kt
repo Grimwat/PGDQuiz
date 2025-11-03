@@ -25,7 +25,7 @@ fun LandscapeGrid(
     val currentQuestion = state.currentQuestion ?: return
     val selectedAnswers = state.selectedAnswer
     val showCorrectAnswer = state.showCorrectAnswer
-    val options = currentQuestion.shuffledOptions ?: return
+    val options = state.optionsAndAnswer
     val half = (options.size + 1) / 2
 
     Column(modifier = modifier)
