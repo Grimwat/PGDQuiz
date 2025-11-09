@@ -28,7 +28,7 @@ class FakeDataStore: QuizDatastore {
     }
 
     override fun fetchCurrentLives(quizType: QuizType): Int {
-        return 0
+        return 5
 
     }
 }
