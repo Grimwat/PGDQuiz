@@ -27,6 +27,7 @@ class QuizViewModel(
 
     fun startQuiz(difficulty: QuizDifficulty, quizType: QuizType) {
 
+
         val isQuizTypeTheSame = quizType == quizUiState.value.quizType
 
         _quizUiState.update {
@@ -39,7 +40,7 @@ class QuizViewModel(
         quizDatastore.storeDate()
         checkLivesAndStreak()
 
-        if (_quizUiState.value.questions.isEmpty() && isQuizTypeTheSame) {
+        if (_quizUiState.value.questions.isEmpty() || !isQuizTypeTheSame) {
             loadQuestions()
         }
     }
@@ -98,13 +99,13 @@ class QuizViewModel(
 
 
     fun nextQuestion() {
-        updateStreak()
-        val nextQuestionIndex = _quizUiState.value.currentQuestionIndex + 1
-        val thereIsMoreQuestions = nextQuestionIndex < _quizUiState.value.questions.size
-        _quizUiState.update {
+
+        _quizUiState.update { currentState ->
+            val nextQuestionIndex = _quizUiState.value.currentQuestionIndex + 1
+            val thereIsMoreQuestions = nextQuestionIndex < _quizUiState.value.questions.size
             if (thereIsMoreQuestions) {
                 val nextQuestion = _quizUiState.value.questions[nextQuestionIndex]
-                it.copy(
+                currentState.copy(
                     currentQuestionIndex = nextQuestionIndex,
                     selectedAnswer = "",
                     showCorrectAnswer = false,
@@ -112,7 +113,7 @@ class QuizViewModel(
 
                 )
             } else {
-                it.copy(
+                currentState.copy(
                     showCongratulationsScreen = true,
                     selectedAnswer = "",
                     showCorrectAnswer = false
@@ -122,6 +123,7 @@ class QuizViewModel(
     }
 
     fun triggerShowCorrectAnswer() {
+        updateStreak()
         _quizUiState.update {
             it.copy(
                 showCorrectAnswer = true
