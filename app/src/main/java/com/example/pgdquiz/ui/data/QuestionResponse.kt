@@ -9,6 +9,7 @@ data class Question(
     val question: String,
     val answer: String,
     val options: List<String>,
+    val quizType: QuizType
 ) {
     fun isOptionCorrect(option: String): Boolean = option == answer
 
