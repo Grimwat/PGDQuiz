@@ -84,7 +84,7 @@ fun NextButton(
                             Text(
                                 text = letter.toString(),
                                 color = Color.White,
-                                fontWeight = FontWeight.Bold,
+                                fontWeight = Bold,
                                 fontSize = 12.sp,
                                 style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier
