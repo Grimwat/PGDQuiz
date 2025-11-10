@@ -30,8 +30,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.NextButton
-import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.QuestionField
+import com.example.pgdquiz.ui.AppUi.examLayoutScreen.NextButton
+import com.example.pgdquiz.ui.AppUi.examLayoutScreen.QuestionField
 import com.example.pgdquiz.ui.appUi.examLayoutScreen.landscape.LandscapeGrid
 import com.example.pgdquiz.ui.appUi.examLayoutScreen.overlays.CongratulationsScreen
 import com.example.pgdquiz.ui.appUi.examLayoutScreen.overlays.LivesLost

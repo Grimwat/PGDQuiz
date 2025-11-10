@@ -41,12 +41,12 @@ class QuizViewModel(
         checkLivesAndStreak()
 
         if (_quizUiState.value.questions.isEmpty() || !isQuizTypeTheSame) {
-            loadQuestions()
+            loadQuestions(quizType)
         }
     }
 
-    private fun loadQuestions() {
-        if (quizUiState.value.quizType == QuizType.DEFAULT) return
+    private fun loadQuestions(quizType: QuizType) {
+        if (quizType == QuizType.DEFAULT) return
 
         _quizUiState.update { it.copy(isLoading = true) }
 

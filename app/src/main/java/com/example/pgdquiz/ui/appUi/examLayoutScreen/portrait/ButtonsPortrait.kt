@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.AnswerButton
-import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.NextButton
+import com.example.pgdquiz.ui.AppUi.examLayoutScreen.NextButton
 import com.example.pgdquiz.ui.data.QuizType
 import com.example.pgdquiz.ui.logic.QuizViewModel
 

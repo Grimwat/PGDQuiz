@@ -80,19 +80,14 @@ class QuizViewModelTest {
     @Test
     fun `updatestreak updates answerStreak`() = runTest {
         viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
-        mainDispatcherRule.testDispatcher.scheduler.runCurrent()
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
         val correctAnswer = viewModel.quizUiState.value.currentQuestion?.answer
         requireNotNull(correctAnswer) { "Test setup failed: currentQuestion was null." }
         viewModel.selectAnswer(correctAnswer)
         viewModel.updateStreak()
-        mainDispatcherRule.testDispatcher.scheduler.runCurrent()
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
         assertEquals("answerStreak should be 1 after one correct answer", 1, viewModel.quizUiState.value.answerStreak)
     }
 
-
-
-
-
-
-
 }
+
