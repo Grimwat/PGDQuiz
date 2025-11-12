@@ -1,4 +1,4 @@
-package com.example.pgdquiz.ui.AppUi.examLayoutScreen
+package com.example.pgdquiz.ui.appUi.examLayoutScreen
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -38,7 +38,7 @@ fun NextButton(
 ) {
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-    val ExamId = when (quizType) {
+    val examId = when (quizType) {
         QuizType.GASFITTING -> R.drawable.gasslogo
         QuizType.PLUMBING -> R.drawable.plumblogo
         QuizType.DRAIN_LAYING -> R.drawable.drainlogo
@@ -67,7 +67,7 @@ fun NextButton(
                     .padding(4.dp),
                 contentAlignment = Alignment.Center
             ) {
-                ExamId?.let { id ->
+                examId?.let { id ->
                     Image(
                         painter = painterResource(id),
                         contentDescription = null,
