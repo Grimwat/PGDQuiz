@@ -143,6 +143,42 @@ class QuizViewModelTest {
         assertEquals("Selected answer should be cleared", "", newState.selectedAnswer)
         assertEquals("showCorrectAnswer should be false", false, newState.showCorrectAnswer)
     }
+    // In QuizViewModelTest.kt
+
+    @Test
+    fun `triggerShowCorrectAnswer updates streak, shows answer, then advances question`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        val correctAnswer = viewModel.quizUiState.value.currentQuestion!!.answer
+        viewModel.selectAnswer(correctAnswer)
+        viewModel.triggerShowCorrectAnswer()
+        var currentState = viewModel.quizUiState.value
+        assertEquals("Answer streak should be incremented", 1, currentState.answerStreak)
+        assertTrue("showCorrectAnswer should be true immediately", currentState.showCorrectAnswer)
+        assertEquals("Question index should still be 0 before the delay", 0, currentState.currentQuestionIndex)
+        mainDispatcherRule.testDispatcher.scheduler.advanceTimeBy(2001L)
+        currentState = viewModel.quizUiState.value
+        assertEquals("Question index should be 1 after the delay", 1, currentState.currentQuestionIndex)
+    }
+    @Test
+    fun `checkLivesAndStreak resets lives and streak on a new day`() = runTest {
+        quizDatastore.setIsSameDay(false)
+        quizDatastore.storeCurrentLives(0, QuizType.PLUMBING)
+        quizDatastore.storeAnswerStreak(10)
+        viewModel.checkLivesAndStreak()
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        val currentState = viewModel.quizUiState.value
+        assertEquals("Plumbing lives should be reset to starting value", 5, currentState.plumbingQuizState.lives)
+        assertEquals("GasFitting lives should be reset to starting value", 5, currentState.gasFittingQuizState.lives)
+        assertEquals("DrainLaying lives should be reset to starting value", 5, currentState.drainLayingQuizState.lives)
+        assertEquals("Answer streak should be reset to starting value", 0, currentState.answerStreak)
+        assertEquals("Datastore lives should be reset", 5, quizDatastore.fetchCurrentLives(QuizType.PLUMBING))
+        assertEquals("Datastore streak should be reset", 0, quizDatastore.fetchAnswerStreak())
+    }
+
+
+
+
 
 
 
