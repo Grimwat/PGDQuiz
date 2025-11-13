@@ -1,6 +1,7 @@
 package com.example.pgdquiz.ui.logic
 
 import MainDispatcherRule
+import androidx.compose.animation.core.copy
 import com.example.pgdquiz.fakes.FakeDataStore
 import com.example.pgdquiz.fakes.FakeQuestionLoader
 import com.example.pgdquiz.ui.data.QuizDifficulty
@@ -117,6 +118,34 @@ class QuizViewModelTest {
         assertTrue("Questions list should be empty", viewModel.quizUiState.value.questions.isEmpty())
         assertEquals("isLoading should be false after failing to load questions", false, viewModel.quizUiState.value.isLoading)
     }
+    @Test
+    fun `nextQuestion updates to next question`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        val expectedNextQuestion = viewModel.quizUiState.value.questions[1]
+        viewModel.nextQuestion()
+        val newState = viewModel.quizUiState.value
+        assertEquals("Question index should be 1", 1, newState.currentQuestionIndex)
+        assertEquals("Current question should be the second question in the list", expectedNextQuestion, newState.currentQuestion)
+        assertEquals("Selected answer should be cleared", "", newState.selectedAnswer)
+        assertEquals("showCorrectAnswer should be false", false, newState.showCorrectAnswer)
+    }
+    @Test
+    fun `nextQuestion shows congratulations screen on last question`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        viewModel.nextQuestion()
+        viewModel.nextQuestion()
+        assertEquals("Should be on the last question", 2, viewModel.quizUiState.value.currentQuestionIndex)
+        viewModel.nextQuestion()
+        val newState = viewModel.quizUiState.value
+        assertTrue("showCongratulationsScreen should be true", newState.showCongratulationsScreen)
+        assertEquals("Selected answer should be cleared", "", newState.selectedAnswer)
+        assertEquals("showCorrectAnswer should be false", false, newState.showCorrectAnswer)
+    }
+
+
+
 
 }
 

@@ -46,7 +46,6 @@ class QuizViewModel(
     }
 
     private fun loadQuestions(quizType: QuizType) {
-        if (quizType == QuizType.DEFAULT) return
 
         _quizUiState.update { it.copy(isLoading = true) }
 
@@ -54,7 +53,7 @@ class QuizViewModel(
             delay(50)
 
 
-            val allQuestions = questionLoader.loadQuestions(quizUiState.value.quizType)
+            val allQuestions = questionLoader.loadQuestions(quizType)
 
 
             val selectedQuestions = allQuestions.shuffled().take(
