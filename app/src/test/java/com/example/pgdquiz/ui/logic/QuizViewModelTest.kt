@@ -6,6 +6,7 @@ import com.example.pgdquiz.fakes.FakeDataStore
 import com.example.pgdquiz.fakes.FakeQuestionLoader
 import com.example.pgdquiz.ui.data.QuizDifficulty
 import com.example.pgdquiz.ui.data.QuizType
+import com.example.pgdquiz.util.STARTING_LIVES
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -143,8 +144,6 @@ class QuizViewModelTest {
         assertEquals("Selected answer should be cleared", "", newState.selectedAnswer)
         assertEquals("showCorrectAnswer should be false", false, newState.showCorrectAnswer)
     }
-    // In QuizViewModelTest.kt
-
     @Test
     fun `triggerShowCorrectAnswer updates streak, shows answer, then advances question`() = runTest {
         viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
@@ -175,6 +174,20 @@ class QuizViewModelTest {
         assertEquals("Datastore lives should be reset", 5, quizDatastore.fetchCurrentLives(QuizType.PLUMBING))
         assertEquals("Datastore streak should be reset", 0, quizDatastore.fetchAnswerStreak())
     }
+    @Test
+    fun `restoreLife sets lives for the current quiz type to 5`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertEquals("Lives should be 5 initially", 5, viewModel.quizUiState.value.plumbingQuizState.lives)
+        viewModel.loseLife()
+        assertEquals("Lives should be 4 after losing one", 4, viewModel.quizUiState.value.plumbingQuizState.lives)
+        viewModel.restoreLife()
+        val currentState = viewModel.quizUiState.value
+        assertEquals("Plumbing lives should be restored to 5", 5, currentState.plumbingQuizState.lives)
+        assertEquals("GasFitting lives should not be changed", STARTING_LIVES, currentState.gasFittingQuizState.lives)
+        assertEquals("DrainLaying lives should not be changed", STARTING_LIVES, currentState.drainLayingQuizState.lives)
+    }
+
 
 
 

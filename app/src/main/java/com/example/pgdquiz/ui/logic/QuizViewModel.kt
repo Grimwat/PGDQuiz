@@ -170,8 +170,12 @@ class QuizViewModel(
     }
 
     fun restoreLife() {
-        setCurrentLives(1)
+        val currentLives = quizUiState.value.getCurrentQuizTypeLives()
+        val updatedLives = currentLives + 1
+        setCurrentLives(updatedLives)
+        quizDatastore.storeCurrentLives(updatedLives, quizUiState.value.quizType)
     }
+
 
     fun loseLife() {
         val currentLives = quizUiState.value.getCurrentQuizTypeLives()
