@@ -88,6 +88,35 @@ class QuizViewModelTest {
         mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
         assertEquals("answerStreak should be 1 after one correct answer", 1, viewModel.quizUiState.value.answerStreak)
     }
+    @Test
+    fun `QuizDifficulty sets easy questions`() = runTest {
+    assertEquals(viewModel.quizUiState.value.questions.size, 0)
+    viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+    mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+    assertEquals(viewModel.quizUiState.value.questions.size, 3)
+    }
+    @Test
+    fun `QuizDifficulty sets medium questions`() = runTest {
+        assertEquals(viewModel.quizUiState.value.questions.size, 0)
+        viewModel.startQuiz(QuizDifficulty.MEDIUM, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertEquals(viewModel.quizUiState.value.questions.size, 3)
+    }
+    @Test
+    fun `QuizDifficulty sets hard questions`() = runTest {
+        assertEquals(viewModel.quizUiState.value.questions.size, 0)
+        viewModel.startQuiz(QuizDifficulty.HARD, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertEquals(viewModel.quizUiState.value.questions.size, 3)
+    }
+    @Test
+    fun `isLoading is false when no questions are loaded`() = runTest {
+        assertEquals(false, viewModel.quizUiState.value.isLoading)
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.DEFAULT)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertTrue("Questions list should be empty", viewModel.quizUiState.value.questions.isEmpty())
+        assertEquals("isLoading should be false after failing to load questions", false, viewModel.quizUiState.value.isLoading)
+    }
 
 }
 

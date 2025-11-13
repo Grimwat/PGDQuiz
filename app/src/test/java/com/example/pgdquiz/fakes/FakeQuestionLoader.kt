@@ -81,8 +81,8 @@ class FakeQuestionLoader : QuestionLoader {
                     options = listOf("water tank", "swimming pool"),
                     quizType = QuizType.DRAIN_LAYING
                 )
-
             )
+            QuizType.DEFAULT -> emptyList()
 
 
             else -> emptyList()
