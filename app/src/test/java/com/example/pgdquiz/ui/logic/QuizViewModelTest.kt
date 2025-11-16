@@ -8,6 +8,7 @@ import com.example.pgdquiz.ui.data.QuizDifficulty
 import com.example.pgdquiz.ui.data.QuizType
 import com.example.pgdquiz.util.STARTING_LIVES
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -175,7 +176,7 @@ class QuizViewModelTest {
         assertEquals("Datastore streak should be reset", 0, quizDatastore.fetchAnswerStreak())
     }
     @Test
-    fun `restoreLife sets lives for the current quiz type to 5`() = runTest {
+    fun `restoreLife sets lives for the plumbing type to 5`() = runTest {
         viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
         mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
         assertEquals("Lives should be 5 initially", 5, viewModel.quizUiState.value.plumbingQuizState.lives)
@@ -187,6 +188,204 @@ class QuizViewModelTest {
         assertEquals("GasFitting lives should not be changed", STARTING_LIVES, currentState.gasFittingQuizState.lives)
         assertEquals("DrainLaying lives should not be changed", STARTING_LIVES, currentState.drainLayingQuizState.lives)
     }
+    @Test
+    fun `restoreLife sets lives for the drainlaying type to 5`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.DRAIN_LAYING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertEquals("Lives should be 5 initially", 5, viewModel.quizUiState.value.drainLayingQuizState.lives)
+        viewModel.loseLife()
+        assertEquals("Lives should be 4 after losing one", 4, viewModel.quizUiState.value.drainLayingQuizState.lives)
+        viewModel.restoreLife()
+        val currentState = viewModel.quizUiState.value
+        assertEquals("DrainLaying lives should be restored to 5", 5, currentState.drainLayingQuizState.lives)
+        assertEquals("GasFitting lives should not be changed", STARTING_LIVES, currentState.gasFittingQuizState.lives)
+        assertEquals("Plumbing lives should not be changed", STARTING_LIVES, currentState.plumbingQuizState.lives)
+    }
+    @Test
+    fun `restoreLife sets lives for the gasfitting type to 5`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.GASFITTING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertEquals(
+            "Lives should be 5 initially",
+            5,
+            viewModel.quizUiState.value.gasFittingQuizState.lives
+        )
+        viewModel.loseLife()
+        assertEquals(
+            "Lives should be 4 after losing one",
+            4,
+            viewModel.quizUiState.value.gasFittingQuizState.lives
+        )
+        viewModel.restoreLife()
+        val currentState = viewModel.quizUiState.value
+        assertEquals(
+            "GasFitting lives should be restored to 5",
+            5,
+            currentState.gasFittingQuizState.lives
+        )
+        assertEquals(
+            "Plumbing lives should not be changed",
+            STARTING_LIVES,
+            currentState.plumbingQuizState.lives
+        )
+        assertEquals(
+            "DrainLaying lives should not be changed",
+            STARTING_LIVES,
+            currentState.drainLayingQuizState.lives
+        )
+    }
+    @Test
+    fun `updateStreak increments streak and stores it on correct answer`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        val initialLives = viewModel.quizUiState.value.plumbingQuizState.lives
+        val initialStreak = viewModel.quizUiState.value.answerStreak
+        val correctAnswer = viewModel.quizUiState.value.currentQuestion!!.answer
+        viewModel.selectAnswer(correctAnswer)
+        viewModel.updateStreak()
+        val currentState = viewModel.quizUiState.value
+        val expectedStreak = initialStreak + 1
+        assertEquals("Answer streak should be incremented", expectedStreak, currentState.answerStreak)
+        assertEquals("Lives should not change on correct answer", initialLives, currentState.plumbingQuizState.lives)
+        assertEquals("Datastore should be updated with the new streak", expectedStreak, quizDatastore.fetchAnswerStreak())
+    }
+    @Test
+    fun `updateStreak resets streak and loses a life on incorrect answer`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        viewModel.selectAnswer(viewModel.quizUiState.value.currentQuestion!!.answer)
+        viewModel.updateStreak()
+        assertEquals("Streak should be 1 initially for this test", 1, viewModel.quizUiState.value.answerStreak)
+        val initialLives = viewModel.quizUiState.value.plumbingQuizState.lives
+        val correctAnswer = viewModel.quizUiState.value.currentQuestion!!.answer
+        val incorrectAnswer = "Some wrong answer"
+        Assert.assertNotEquals(correctAnswer, incorrectAnswer)
+        viewModel.selectAnswer(incorrectAnswer)
+        viewModel.updateStreak()
+        val currentState = viewModel.quizUiState.value
+        assertEquals("Answer streak should be reset to 0", 0, currentState.answerStreak)
+        assertEquals("A life should be lost on incorrect answer", initialLives - 1, currentState.plumbingQuizState.lives)
+        assertEquals("Datastore should be updated with the reset streak", 0, quizDatastore.fetchAnswerStreak())
+    }
+    @Test
+    fun `loseLife does nothing when lives are already zero`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        val startingLives = viewModel.quizUiState.value.plumbingQuizState.lives
+        assertEquals("Should start with starting lives", STARTING_LIVES, startingLives)
+        for (i in 1..startingLives) {
+            viewModel.loseLife()
+        }
+        assertEquals("Lives should be 0 after losing them all", 0, viewModel.quizUiState.value.plumbingQuizState.lives)
+        viewModel.loseLife()
+        val finalLives = viewModel.quizUiState.value.plumbingQuizState.lives
+        assertEquals("Lives should remain 0 and not go negative", 0, finalLives)
+    }
+    @Test
+    fun `updateStreak handles null currentQuestion by treating answer as incorrect`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.DEFAULT)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        Assert.assertNull("To test this path, currentQuestion must be null", viewModel.quizUiState.value.currentQuestion)
+        quizDatastore.storeAnswerStreak(5)
+        viewModel.checkLivesAndStreak()
+        viewModel.selectAnswer("some answer")
+        assertEquals("Pre-condition: Streak should be 5", 5, viewModel.quizUiState.value.answerStreak)
+        viewModel.updateStreak()
+        assertEquals("Streak should be reset to 0 when question is null", 0, viewModel.quizUiState.value.answerStreak)
+        assertEquals("Datastore streak should also be reset to 0", 0, quizDatastore.fetchAnswerStreak())
+    }
+
+    @Test
+    fun `setCurrentLives does nothing when quizType is DEFAULT`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.DEFAULT)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        val initialPlumbingLives = viewModel.quizUiState.value.plumbingQuizState.lives
+        val initialGasFittingLives = viewModel.quizUiState.value.gasFittingQuizState.lives
+        val initialDrainLayingLives = viewModel.quizUiState.value.drainLayingQuizState.lives
+        assertEquals("Pre-condition: Quiz type should be DEFAULT", QuizType.DEFAULT, viewModel.quizUiState.value.quizType)
+        viewModel.loseLife()
+        val currentState = viewModel.quizUiState.value
+        assertEquals("Plumbing lives should not change", initialPlumbingLives, currentState.plumbingQuizState.lives)
+        assertEquals("GasFitting lives should not change", initialGasFittingLives, currentState.gasFittingQuizState.lives)
+        assertEquals("DrainLaying lives should not change", initialDrainLayingLives, currentState.drainLayingQuizState.lives)
+    }
+    @Test
+    fun `startQuiz reloads questions when quiz type is different`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        val stateAfterFirstQuiz = viewModel.quizUiState.value
+        assertEquals("Pre-condition: Quiz type should be PLUMBING", QuizType.PLUMBING, stateAfterFirstQuiz.quizType)
+        assertFalse("Pre-condition: Questions list should NOT be empty", stateAfterFirstQuiz.questions.isEmpty())
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.GASFITTING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        val stateAfterSecondQuiz = viewModel.quizUiState.value
+        assertEquals("Quiz type should now be GASFITTING", QuizType.GASFITTING, stateAfterSecondQuiz.quizType)
+        assertEquals("The questions should have been reloaded for GASFITTING", 3, stateAfterSecondQuiz.questions.size)
+    }
+    @Test
+    fun `startQuiz loads questions when question list is initially empty`() = runTest {
+        assertTrue(
+            "Pre-condition: The list of questions should be empty",
+            viewModel.quizUiState.value.questions.isEmpty()
+        )
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertFalse(
+            "Questions should now be loaded",
+            viewModel.quizUiState.value.questions.isEmpty()
+        )
+        assertEquals(
+            "There should be 3 plumbing questions",
+            3,
+            viewModel.quizUiState.value.questions.size
+        )
+    }
+    @Test
+    fun `startQuiz reloads questions when switching to a different quiz type`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        val stateAfterFirstQuiz = viewModel.quizUiState.value
+        assertFalse(
+            "Pre-condition: Questions list must NOT be empty for this test",
+            stateAfterFirstQuiz.questions.isEmpty()
+        )
+        assertEquals(
+            "Pre-condition: Quiz type should be PLUMBING",
+            QuizType.PLUMBING,
+            stateAfterFirstQuiz.quizType
+        )
+
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.GASFITTING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+
+        val stateAfterSecondQuiz = viewModel.quizUiState.value
+        assertEquals(
+            "Quiz type should have switched to GASFITTING",
+            QuizType.GASFITTING,
+            stateAfterSecondQuiz.quizType
+        )
+        assertEquals(
+            "Questions should have been reloaded for GASFITTING",
+            3,
+            stateAfterSecondQuiz.questions.size
+        )
+        assertEquals(
+            "The current question should be a GASFITTING question",
+            QuizType.GASFITTING,
+            stateAfterSecondQuiz.currentQuestion?.quizType
+        )
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

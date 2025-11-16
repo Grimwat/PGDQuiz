@@ -16,8 +16,7 @@ class FakeQuestionLoader : QuestionLoader {
                     options = listOf(
                         "To catch fallen jewelry",
                         "To increase water pressure",
-                        "To filter water"
-                    ),
+                        "To filter water"),
                     quizType = QuizType.PLUMBING
                 ),
                 Question(
