@@ -1,7 +1,7 @@
-package com.example.pgdquiz.network
+package com.example.pgdquiz.domain
 
 import android.content.Context
-import com.example.pgdquiz.network.interfaces.QuizDatastore
+import com.example.pgdquiz.domain.interfaces.QuizDatastore
 import com.example.pgdquiz.ui.data.QuizType
 import com.example.pgdquiz.util.STARTING_ANSWER_STREAK
 import com.example.pgdquiz.util.STARTING_LIVES

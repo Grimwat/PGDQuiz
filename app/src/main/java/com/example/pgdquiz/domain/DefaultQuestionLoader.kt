@@ -1,9 +1,9 @@
-package com.example.pgdquiz.network
+package com.example.pgdquiz.domain
 
 import android.content.Context
 import android.util.Log
 import com.example.pgdquiz.R
-import com.example.pgdquiz.network.interfaces.QuestionLoader
+import com.example.pgdquiz.domain.interfaces.QuestionLoader
 import com.example.pgdquiz.ui.data.Question
 import com.example.pgdquiz.ui.data.QuestionsResponse
 import com.example.pgdquiz.ui.data.QuizType

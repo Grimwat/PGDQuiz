@@ -1,6 +1,6 @@
 package com.example.pgdquiz.fakes
 
-import com.example.pgdquiz.network.interfaces.QuestionLoader
+import com.example.pgdquiz.domain.interfaces.QuestionLoader
 import com.example.pgdquiz.ui.data.Question
 import com.example.pgdquiz.ui.data.QuizType
 
