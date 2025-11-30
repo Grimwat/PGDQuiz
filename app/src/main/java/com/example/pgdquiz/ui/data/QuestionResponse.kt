@@ -9,8 +9,10 @@ data class Question(
     val question: String,
     val answer: String,
     val options: List<String>,
-    var isAnswerCorrect: Boolean = false,
-    var shuffledOptions: List<String>? = null
+    val quizType: QuizType
 ) {
     fun isOptionCorrect(option: String): Boolean = option == answer
+
+    fun getOptionsAndAnswers(): List<String> = (options + answer).shuffled()
+
 }

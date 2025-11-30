@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.pgdquiz.ui.AppUi.ExamLayoutScreen.AnswerButton
+import com.example.pgdquiz.ui.appUi.examLayoutScreen.AnswerButton
 import com.example.pgdquiz.ui.logic.QuizViewModel
 
 @Composable
@@ -25,7 +25,7 @@ fun LandscapeGrid(
     val currentQuestion = state.currentQuestion ?: return
     val selectedAnswers = state.selectedAnswer
     val showCorrectAnswer = state.showCorrectAnswer
-    val options = currentQuestion.shuffledOptions ?: return
+    val options = state.optionsAndAnswer
     val half = (options.size + 1) / 2
 
     Column(modifier = modifier)
