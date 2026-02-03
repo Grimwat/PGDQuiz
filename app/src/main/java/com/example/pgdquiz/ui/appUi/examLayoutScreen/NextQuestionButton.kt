@@ -36,8 +36,6 @@ fun NextButton(
     quizType: QuizType,
     modifier: Modifier = Modifier
 ) {
-    val configuration = LocalConfiguration.current
-    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     val examId = when (quizType) {
         QuizType.GASFITTING -> R.drawable.gasslogo
         QuizType.PLUMBING -> R.drawable.plumblogo
@@ -74,26 +72,12 @@ fun NextButton(
                         modifier = Modifier
                             .alpha(0.2f),
                     )
-                if (isLandscape) {
                     Column(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        "Next Question".forEach { letter ->
-                            Text(
-                                text = letter.toString(),
-                                color = Color.White,
-                                fontWeight = Bold,
-                                fontSize = 12.sp,
-                                style = MaterialTheme.typography.bodyLarge,
-                                modifier = Modifier
-                                    .padding(4.dp)
-                            )
-                        }
+                    ){
                     }
                 }
-                         else{
-
                         Text(
                             text = "Next Question",
                             color = Color.White,
@@ -103,6 +87,4 @@ fun NextButton(
                     }
                     }
                 }
-            }
 
-        }
