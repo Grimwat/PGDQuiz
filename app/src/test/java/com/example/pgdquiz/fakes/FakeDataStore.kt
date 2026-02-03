@@ -2,13 +2,13 @@ package com.example.pgdquiz.fakes
 
 import com.example.pgdquiz.domain.interfaces.QuizDatastore
 import com.example.pgdquiz.ui.data.QuizType
-import com.example.pgdquiz.util.STARTING_ANSWER_STREAK
 import com.example.pgdquiz.util.STARTING_LIVES
 
 class FakeDataStore : QuizDatastore {
     private var isSameDay = true
-    private var lives = STARTING_LIVES
-    private var streak = STARTING_ANSWER_STREAK
+    private var livesPerType = mutableMapOf<QuizType, Int>()
+    private var answerstreak = 0
+    var isDateStored: Boolean = false
 
     fun setIsSameDay(isSame: Boolean) {
         this.isSameDay = isSame
@@ -19,22 +19,25 @@ class FakeDataStore : QuizDatastore {
     }
 
     override fun storeDate() {
+        isDateStored = true
     }
 
     override fun resetLivesAndStreak() {
-        this.lives = STARTING_LIVES
-        this.streak = STARTING_ANSWER_STREAK
+        this.livesPerType.clear()
+        this.answerstreak = 0
+        isDateStored = true
     }
 
     override fun storeAnswerStreak(streak: Int) {
-        this.streak = streak
+        this.answerstreak = streak
     }
 
-    override fun fetchAnswerStreak(): Int = streak
+    override fun fetchAnswerStreak(): Int = answerstreak
 
     override fun storeCurrentLives(lives: Int, quizType: QuizType) {
-        this.lives = lives
+        livesPerType[quizType] = lives
     }
 
-    override fun fetchCurrentLives(quizType: QuizType): Int = lives
+    override fun fetchCurrentLives(quizType: QuizType): Int {
+    return livesPerType[quizType] ?: STARTING_LIVES }
 }

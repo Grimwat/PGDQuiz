@@ -18,7 +18,8 @@ class DefaultQuestionLoader(private val context: Context): QuestionLoader {
             QuizType.DRAIN_LAYING -> R.raw.drainsquestions
             QuizType.PLUMBING -> R.raw.plumbingquestions
             QuizType.GASFITTING -> R.raw.gasquestions
-            else -> error("Invalid QuizType")
+            else -> error ("invalid QuizType")
+
         }
 
         try {
@@ -29,6 +30,7 @@ class DefaultQuestionLoader(private val context: Context): QuestionLoader {
             inputStream.close()
 
             return gson.fromJson(jsonString, QuestionsResponse::class.java).questions
+
         } catch (e: Exception) {
             Log.e("QuizViewModel", "❌ Error loading questions for $quizType: ${e.message}", e)
             return emptyList()

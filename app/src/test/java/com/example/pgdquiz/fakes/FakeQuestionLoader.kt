@@ -6,7 +6,7 @@ import com.example.pgdquiz.ui.data.QuizType
 
 class FakeQuestionLoader : QuestionLoader {
     override fun loadQuestions(quizType: QuizType): List<Question> {
-        // Use a when statement to return the correct list based on the quizType
+
         return when (quizType) {
             QuizType.PLUMBING -> listOf(
                 Question(

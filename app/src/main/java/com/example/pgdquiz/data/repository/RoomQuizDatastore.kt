@@ -3,6 +3,7 @@ package com.example.pgdquiz.data.repository
 import com.example.pgdquiz.data.database.dao.UserStatsDao
 import com.example.pgdquiz.domain.interfaces.QuizDatastore
 import com.example.pgdquiz.ui.data.QuizType
+import com.example.pgdquiz.util.STARTING_LIVES
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -75,6 +76,6 @@ class RoomQuizDatastore(
 
     override fun fetchCurrentLives(quizType: QuizType): Int {
         val stats = runBlocking { userStatsDao.getOrInitUserStats() }
-        return stats.livesPerType[quizType] ?: 3
+        return stats.livesPerType[quizType] ?: STARTING_LIVES
     }
 }

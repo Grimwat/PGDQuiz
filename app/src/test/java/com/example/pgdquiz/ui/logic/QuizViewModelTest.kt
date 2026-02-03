@@ -44,6 +44,14 @@ class QuizViewModelTest {
         assertTrue(viewModel.quizUiState.value.isQuizStarted)
     }
     @Test
+    fun `startQuiz updates last played date`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertTrue("Date should be stored when quiz starts", quizDatastore.isDateStored)
+    }
+
+    @Test
     fun `startQuiz sets quizDifficultyEasy`() {
         assertEquals(viewModel.quizUiState.value.quizDifficulty, QuizDifficulty.EASY)
         viewModel.startQuiz( QuizDifficulty.EASY, QuizType.DEFAULT)
@@ -375,24 +383,18 @@ class QuizViewModelTest {
             stateAfterSecondQuiz.currentQuestion?.quizType
         )
     }
+    @Test
+    fun `ViewModel init loads stored lives and streak immediately`() = runTest {
+        quizDatastore.storeCurrentLives(2, QuizType.PLUMBING)
+        quizDatastore.storeAnswerStreak(15)
 
+        val newViewModel = QuizViewModel(quizDatastore, questionLoader)
 
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        assertEquals(2, newViewModel.quizUiState.value.plumbingQuizState.lives)
+        assertEquals(15, newViewModel.quizUiState.value.answerStreak)
+    }
 
 
 }
