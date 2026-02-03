@@ -1,11 +1,16 @@
 package com.example.pgdquiz.ui.appUi.mainScreen
 
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.pgdquiz.R
@@ -28,15 +33,23 @@ fun QuizMainScreen(
     var selectedQuizType by rememberSaveable { mutableStateOf<QuizType?>(null) }
     var selectedMode by rememberSaveable { mutableStateOf<QuizDifficulty?>(null) }
 
-    viewModel.restoreLife()
+    //viewModel.restoreLife()
 
     PgdQuizTheme(quizType = selectedQuizType ?: QuizType.DEFAULT) {
+        if (state.isLoading) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            )
+            { CircularProgressIndicator() }
+        }
         when {
             selectedQuizType == null -> {
                 QuizTypeSelection(
                     onSelectQuizType = { quizType ->
                         selectedQuizType = quizType
                         onQuizTypeSelected(quizType)
+                        viewModel.setQuizType(quizType)
                         //  viewModel.res(quizType)
                     },
                     onQuizTypeSelected = onQuizTypeSelected,
