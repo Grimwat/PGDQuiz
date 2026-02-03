@@ -25,6 +25,9 @@ class QuizViewModel(
     private val _quizUiState = MutableStateFlow(QuizUiState())
     val quizUiState: StateFlow<QuizUiState> = _quizUiState.asStateFlow()
 
+    init {
+        checkLivesAndStreak()
+    }
 
     fun startQuiz(difficulty: QuizDifficulty, quizType: QuizType) {
 
@@ -39,11 +42,19 @@ class QuizViewModel(
                 quizType = quizType
             )
         }
+
+
         quizDatastore.storeDate()
-        checkLivesAndStreak()
+
 
         if (shouldLoadNewQuestions) {
             loadQuestions(quizType)
+        }
+    }
+
+    fun setQuizType (quizType: QuizType){
+        _quizUiState.update {
+            it.copy(quizType = quizType)
         }
     }
 
@@ -111,7 +122,8 @@ class QuizViewModel(
                     currentQuestionIndex = nextQuestionIndex,
                     selectedAnswer = "",
                     showCorrectAnswer = false,
-                    currentQuestion = nextQuestion
+                    currentQuestion = nextQuestion,
+                    optionsAndAnswer = nextQuestion.getOptionsAndAnswers().shuffled()
 
                 )
             } else {
@@ -125,19 +137,21 @@ class QuizViewModel(
     }
 
     fun triggerShowCorrectAnswer() {
+
+        viewModelScope.launch {
         updateStreak()
         _quizUiState.update {
             it.copy(
                 showCorrectAnswer = true
             )
         }
-        viewModelScope.launch {
+
             delay(2000L)
             nextQuestion()
         }
     }
 
-    fun checkLivesAndStreak() {
+     private fun checkLivesAndStreak() {
         if (quizDatastore.isTodayTheSameDayAsTheStoredDate()) {
             _quizUiState.update {
                 it.copy(
@@ -200,6 +214,14 @@ class QuizViewModel(
             loseLife()
         }
         quizDatastore.storeAnswerStreak(updatedStreak)
+    }
+    private fun initializeUserStats() {
+        _quizUiState.update { it.copy(isLoading = true) }
+
+        viewModelScope.launch {
+            checkLivesAndStreak()
+            _quizUiState.update { it.copy(isLoading = false) }
+        }
     }
 
     private fun setCurrentLives(newValue: Int) {
