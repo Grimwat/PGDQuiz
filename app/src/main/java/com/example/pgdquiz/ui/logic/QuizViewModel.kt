@@ -87,14 +87,6 @@ class QuizViewModel(
         }
     }
 
-
-    fun setQuizType (quizType: QuizType){
-        _quizUiState.update {
-            it.copy(quizType = quizType)
-        }
-    }
-
-
     fun selectAnswer(answer: String) {
         _quizUiState.update {
             it.copy(selectedAnswer = answer)

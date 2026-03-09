@@ -333,6 +333,30 @@ class QuizViewModelTest {
     }
 
     @Test
+    fun `init stays at DEFAULT quizType when lastQuizType is null`() = runTest {
+        val fakeDatastore = FakeDataStore()
+
+
+        val testViewModel = QuizViewModel(fakeDatastore, questionLoader)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertEquals(QuizType.DEFAULT, testViewModel.quizUiState.value.quizType)
+    }
+    @Test
+    fun `init loads lastQuizType from datastore when not null`() = runTest {
+        val fakeDatastore = FakeDataStore()
+        fakeDatastore.storeLastQuizType(QuizType.GASFITTING)
+
+
+        val testViewModel = QuizViewModel(fakeDatastore, questionLoader)
+
+
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+
+
+        assertEquals(QuizType.GASFITTING, testViewModel.quizUiState.value.quizType)
+    }
+    @Test
     fun `startQuiz when questions already loaded updates difficulty and starts quiz`() = runTest {
         viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
         mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
