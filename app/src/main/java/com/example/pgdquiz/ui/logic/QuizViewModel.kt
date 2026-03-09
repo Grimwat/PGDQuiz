@@ -26,80 +26,71 @@ class QuizViewModel(
     val quizUiState: StateFlow<QuizUiState> = _quizUiState.asStateFlow()
 
     init {
-        checkLivesAndStreak()
+        initializeUserStats()
     }
+
 
     fun startQuiz(difficulty: QuizDifficulty, quizType: QuizType) {
 
-        val currentState = quizUiState.value
-        val shouldLoadNewQuestions =
-            currentState.questions.isEmpty() || quizType != currentState.quizType
+        viewModelScope.launch {
+            _quizUiState.update { it.copy(isLoading = true) }
+            refreshStats()
 
-        _quizUiState.update {
-            it.copy(
-                isQuizStarted = true,
-                quizDifficulty = difficulty,
-                quizType = quizType
-            )
-        }
+            val currentState = _quizUiState.value
+            val shouldLoadNewQuestions =
+                currentState.questions.isEmpty() || quizType != currentState.quizType
 
+            if (shouldLoadNewQuestions) {
+                delay(50)
 
-        quizDatastore.storeDate()
+                val allQuestions = questionLoader.loadQuestions(quizType)
+                val selectedQuestions = allQuestions.shuffled().take(
+                    when (difficulty) {
+                        QuizDifficulty.EASY -> 25
+                        QuizDifficulty.MEDIUM -> 50
+                        QuizDifficulty.HARD -> 100
+                    }
+                )
 
+                if (selectedQuestions.isNotEmpty()) {
+                    val currentQuestion = selectedQuestions.first()
+                    _quizUiState.update {
+                        it.copy(
+                            isQuizStarted = true,
+                            quizDifficulty = difficulty,
+                            quizType = quizType,
+                            questions = selectedQuestions,
+                            currentQuestion = currentQuestion,
+                            currentQuestionIndex = 0,
+                            quizComplete = false,
+                            isLoading = false,
+                            optionsAndAnswer = currentQuestion.getOptionsAndAnswers().shuffled()
+                        )
+                    }
+                } else {
+                    _quizUiState.update {
+                        it.copy(isLoading = false)
+                    }
+                }
+            } else {
+                _quizUiState.update {
+                    it.copy(
+                        isQuizStarted = true,
+                        quizDifficulty = difficulty,
+                        quizType = quizType,
+                        isLoading = false
+                    )
+                }
+            }
 
-        if (shouldLoadNewQuestions) {
-            loadQuestions(quizType)
+            quizDatastore.storeDate()
         }
     }
+
 
     fun setQuizType (quizType: QuizType){
         _quizUiState.update {
             it.copy(quizType = quizType)
-        }
-    }
-
-
-    private fun loadQuestions(quizType: QuizType) {
-
-        _quizUiState.update { it.copy(isLoading = true) }
-
-        viewModelScope.launch {
-            delay(50)
-
-
-            val allQuestions = questionLoader.loadQuestions(quizType)
-
-
-            val selectedQuestions = allQuestions.shuffled().take(
-                when (quizUiState.value.quizDifficulty) {
-                    QuizDifficulty.EASY -> 25
-                    QuizDifficulty.MEDIUM -> 50
-                    QuizDifficulty.HARD -> 100
-                }
-            )
-            if (selectedQuestions.isNotEmpty()) {
-                val currentQuestion = selectedQuestions.first()
-                _quizUiState.update {
-                    it.copy(
-                        questions = selectedQuestions,
-                        currentQuestion = currentQuestion,
-                        currentQuestionIndex = 0,
-                        quizComplete = false,
-                        isLoading = false,
-                        optionsAndAnswer = currentQuestion.getOptionsAndAnswers().shuffled(),
-
-
-                        )
-                }
-            } else {
-                println("Error: No questions loaded for ${quizUiState.value.quizType}")
-                _quizUiState.update {
-                    it.copy(
-                        isLoading = false
-
-                    )
-                }
-            }
         }
     }
 
@@ -114,10 +105,10 @@ class QuizViewModel(
     fun nextQuestion() {
 
         _quizUiState.update { currentState ->
-            val nextQuestionIndex = _quizUiState.value.currentQuestionIndex + 1
-            val thereIsMoreQuestions = nextQuestionIndex < _quizUiState.value.questions.size
+            val nextQuestionIndex = currentState.currentQuestionIndex + 1
+            val thereIsMoreQuestions = nextQuestionIndex < currentState.questions.size
             if (thereIsMoreQuestions) {
-                val nextQuestion = _quizUiState.value.questions[nextQuestionIndex]
+                val nextQuestion = currentState.questions[nextQuestionIndex]
                 currentState.copy(
                     currentQuestionIndex = nextQuestionIndex,
                     selectedAnswer = "",
@@ -151,55 +142,25 @@ class QuizViewModel(
         }
     }
 
-     private fun checkLivesAndStreak() {
-        if (quizDatastore.isTodayTheSameDayAsTheStoredDate()) {
-            _quizUiState.update {
-                it.copy(
-                    drainLayingQuizState = it.drainLayingQuizState.copy(
-                        lives = quizDatastore.fetchCurrentLives(
-                            QuizType.DRAIN_LAYING
-                        )
-                    ),
-                    plumbingQuizState = it.plumbingQuizState.copy(
-                        lives = quizDatastore.fetchCurrentLives(
-                            QuizType.PLUMBING
-                        )
-                    ),
-                    gasFittingQuizState = it.gasFittingQuizState.copy(
-                        lives = quizDatastore.fetchCurrentLives(
-                            QuizType.GASFITTING
-                        )
-                    ),
-                    answerStreak = quizDatastore.fetchAnswerStreak(),
-                )
-            }
-        } else {
-            _quizUiState.update {
-                it.copy(
-                    drainLayingQuizState = it.drainLayingQuizState.copy(lives = STARTING_LIVES),
-                    plumbingQuizState = it.plumbingQuizState.copy(lives = STARTING_LIVES),
-                    gasFittingQuizState = it.gasFittingQuizState.copy(lives = STARTING_LIVES),
-                    answerStreak = STARTING_ANSWER_STREAK,
-                )
-            }
-            quizDatastore.resetLivesAndStreak()
-        }
-    }
 
     fun restoreLife() {
-        val currentLives = quizUiState.value.getCurrentQuizTypeLives()
-        val updatedLives = currentLives + 1
-        setCurrentLives(updatedLives)
-        quizDatastore.storeCurrentLives(updatedLives, quizUiState.value.quizType)
+        viewModelScope.launch {
+            val currentLives = quizUiState.value.getCurrentQuizTypeLives()
+            val updatedLives = currentLives + 1
+            setCurrentLives(updatedLives)
+            quizDatastore.storeCurrentLives(updatedLives, quizUiState.value.quizType)
+        }
     }
 
 
     fun loseLife() {
-        val currentLives = quizUiState.value.getCurrentQuizTypeLives()
-        if (currentLives > 0) {
-            val updatedLives = currentLives - 1
-            setCurrentLives(updatedLives)
-            quizDatastore.storeCurrentLives(updatedLives, quizUiState.value.quizType)
+        viewModelScope.launch {
+            val currentLives = quizUiState.value.getCurrentQuizTypeLives()
+            if (currentLives > 0) {
+                val updatedLives = currentLives - 1
+                setCurrentLives(updatedLives)
+                quizDatastore.storeCurrentLives(updatedLives, quizUiState.value.quizType)
+            }
         }
     }
 
@@ -215,11 +176,46 @@ class QuizViewModel(
         }
         quizDatastore.storeAnswerStreak(updatedStreak)
     }
+    private suspend fun refreshStats() {
+        if (quizDatastore.isTodayTheSameDayAsTheStoredDate()) {
+            _quizUiState.update {
+                it.copy(
+                    drainLayingQuizState = it.drainLayingQuizState.copy(
+                        lives = quizDatastore.fetchCurrentLives(QuizType.DRAIN_LAYING)
+                    ),
+                    plumbingQuizState = it.plumbingQuizState.copy(
+                        lives = quizDatastore.fetchCurrentLives(QuizType.PLUMBING)
+                    ),
+                    gasFittingQuizState = it.gasFittingQuizState.copy(
+                        lives = quizDatastore.fetchCurrentLives(QuizType.GASFITTING)
+                    ),
+                    answerStreak = quizDatastore.fetchAnswerStreak(),
+                )
+            }
+        } else {
+            quizDatastore.resetLivesAndStreak()
+            _quizUiState.update {
+                it.copy(
+                    drainLayingQuizState = it.drainLayingQuizState.copy(lives = STARTING_LIVES),
+                    plumbingQuizState = it.plumbingQuizState.copy(lives = STARTING_LIVES),
+                    gasFittingQuizState = it.gasFittingQuizState.copy(lives = STARTING_LIVES),
+                    answerStreak = STARTING_ANSWER_STREAK,
+                )
+            }
+        }
+    }
+
     private fun initializeUserStats() {
         _quizUiState.update { it.copy(isLoading = true) }
 
         viewModelScope.launch {
-            checkLivesAndStreak()
+            refreshStats()
+            val lastQuizType = quizDatastore.fetchLastQuizType()
+            if (lastQuizType != null){
+                _quizUiState.update {
+                    it.copy(quizType = lastQuizType)
+                }
+            }
             _quizUiState.update { it.copy(isLoading = false) }
         }
     }

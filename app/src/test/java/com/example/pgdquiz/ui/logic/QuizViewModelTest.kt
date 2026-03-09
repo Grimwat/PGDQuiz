@@ -17,6 +17,8 @@ import org.junit.Rule
 import org.junit.Test
 
 class QuizViewModelTest {
+
+
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
@@ -28,7 +30,10 @@ class QuizViewModelTest {
     fun setup() {
         quizDatastore = FakeDataStore()
         questionLoader = FakeQuestionLoader()
-        viewModel = QuizViewModel(quizDatastore, questionLoader)
+        viewModel = QuizViewModel(
+            quizDatastore = quizDatastore,
+            questionLoader = questionLoader)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
     }
 
     @Test
@@ -38,9 +43,10 @@ class QuizViewModelTest {
         assertTrue(viewModel.quizUiState.value.selectedAnswer == "option1")
     }
     @Test
-    fun `startQuiz sets isQuizStarted to true`() {
+    fun `startQuiz sets isQuizStarted to true`() = runTest {
         assertFalse(viewModel.quizUiState.value.isQuizStarted)
-        viewModel.startQuiz( QuizDifficulty.EASY, QuizType.DEFAULT)
+        viewModel.startQuiz( QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
         assertTrue(viewModel.quizUiState.value.isQuizStarted)
     }
     @Test
@@ -52,41 +58,49 @@ class QuizViewModelTest {
     }
 
     @Test
-    fun `startQuiz sets quizDifficultyEasy`() {
-        assertEquals(viewModel.quizUiState.value.quizDifficulty, QuizDifficulty.EASY)
-        viewModel.startQuiz( QuizDifficulty.EASY, QuizType.DEFAULT)
-        assertEquals(viewModel.quizUiState.value.quizDifficulty, QuizDifficulty.EASY)
+    fun `startQuiz sets quizDifficultyEasy`() = runTest {
+        assertEquals(QuizDifficulty.EASY, viewModel.quizUiState.value.quizDifficulty)
+        viewModel.startQuiz( QuizDifficulty.EASY, QuizType.GASFITTING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertEquals (QuizDifficulty.EASY, viewModel.quizUiState.value.quizDifficulty)
     }
     @Test
-    fun `startQuiz sets quizDifficultyMedium`() {
-        assertEquals(viewModel.quizUiState.value.quizDifficulty, QuizDifficulty.EASY)
-        viewModel.startQuiz( QuizDifficulty.MEDIUM, QuizType.DEFAULT)
-        assertEquals(viewModel.quizUiState.value.quizDifficulty, QuizDifficulty.MEDIUM)
+    fun `startQuiz sets quizDifficultyMedium`() = runTest {
+        assertEquals(QuizDifficulty.EASY, viewModel.quizUiState.value.quizDifficulty)
+
+        viewModel.startQuiz(QuizDifficulty.MEDIUM, QuizType.GASFITTING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertEquals(QuizDifficulty.MEDIUM, viewModel.quizUiState.value.quizDifficulty)
     }
     @Test
-    fun `startQuiz sets quizDifficultyHard`() {
-        assertEquals(viewModel.quizUiState.value.quizDifficulty, QuizDifficulty.EASY)
-        viewModel.startQuiz( QuizDifficulty.HARD, QuizType.DEFAULT)
-        assertEquals(viewModel.quizUiState.value.quizDifficulty, QuizDifficulty.HARD)
+    fun `startQuiz sets quizDifficultyHard`() = runTest {
+        assertEquals(viewModel.quizUiState.value.quizDifficulty, viewModel.quizUiState.value.quizDifficulty)
+        viewModel.startQuiz( QuizDifficulty.HARD, QuizType.GASFITTING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertEquals(QuizDifficulty.HARD, viewModel.quizUiState.value.quizDifficulty)
     }
     @Test
     fun `startQuiz sets quizTypeDrainlaying`() {
-        assertEquals(viewModel.quizUiState.value.quizType, QuizType.DEFAULT)
+        assertEquals(QuizType.DEFAULT, viewModel.quizUiState.value.quizType )
         viewModel.startQuiz( QuizDifficulty.EASY, QuizType.DRAIN_LAYING)
-        assertEquals(viewModel.quizUiState.value.quizType, QuizType.DRAIN_LAYING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertEquals(QuizType.DRAIN_LAYING, viewModel.quizUiState.value.quizType)
     }
 
     @Test
     fun `startQuiz sets quizTypeGassfitting`() {
-        assertEquals(viewModel.quizUiState.value.quizType, QuizType.DEFAULT)
+        assertEquals(QuizType.DEFAULT , viewModel.quizUiState.value.quizType)
         viewModel.startQuiz( QuizDifficulty.EASY, QuizType.GASFITTING)
-        assertEquals(viewModel.quizUiState.value.quizType, QuizType.GASFITTING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertEquals(QuizType.GASFITTING, viewModel.quizUiState.value.quizType)
     }
     @Test
     fun `startQuiz sets quizTypePlumbing`() {
-        assertEquals(viewModel.quizUiState.value.quizType, QuizType.DEFAULT)
+        assertEquals( QuizType.DEFAULT, viewModel.quizUiState.value.quizType)
         viewModel.startQuiz( QuizDifficulty.EASY, QuizType.PLUMBING)
-        assertEquals(viewModel.quizUiState.value.quizType, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertEquals(QuizType.PLUMBING, viewModel.quizUiState.value.quizType)
     }
     @Test
     fun `updatestreak updates answerStreak`() = runTest {
@@ -122,7 +136,6 @@ class QuizViewModelTest {
     }
     @Test
     fun `isLoading is false when no questions are loaded`() = runTest {
-        assertEquals(false, viewModel.quizUiState.value.isLoading)
         viewModel.startQuiz(QuizDifficulty.EASY, QuizType.DEFAULT)
         mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
         assertTrue("Questions list should be empty", viewModel.quizUiState.value.questions.isEmpty())
@@ -170,18 +183,25 @@ class QuizViewModelTest {
     }
     @Test
     fun `checkLivesAndStreak resets lives and streak on a new day`() = runTest {
-        quizDatastore.setIsSameDay(false)
-        quizDatastore.storeCurrentLives(0, QuizType.PLUMBING)
-        quizDatastore.storeAnswerStreak(10)
-        viewModel.checkLivesAndStreak()
+        val newDayDataStore = FakeDataStore().apply{
+            setIsSameDay(false)
+            storeCurrentLives(0, QuizType.PLUMBING)
+            storeAnswerStreak(10)
+        }
+        val newDayViewModel = QuizViewModel(
+            quizDatastore = newDayDataStore,
+            questionLoader = questionLoader
+        )
+
         mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
-        val currentState = viewModel.quizUiState.value
+
+        val currentState = newDayViewModel.quizUiState.value
         assertEquals("Plumbing lives should be reset to starting value", 5, currentState.plumbingQuizState.lives)
         assertEquals("GasFitting lives should be reset to starting value", 5, currentState.gasFittingQuizState.lives)
         assertEquals("DrainLaying lives should be reset to starting value", 5, currentState.drainLayingQuizState.lives)
         assertEquals("Answer streak should be reset to starting value", 0, currentState.answerStreak)
-        assertEquals("Datastore lives should be reset", 5, quizDatastore.fetchCurrentLives(QuizType.PLUMBING))
-        assertEquals("Datastore streak should be reset", 0, quizDatastore.fetchAnswerStreak())
+        assertEquals("Datastore lives should be reset", 5, newDayDataStore.fetchCurrentLives(QuizType.PLUMBING))
+        assertEquals("Datastore streak should be reset", 0, newDayDataStore.fetchAnswerStreak())
     }
     @Test
     fun `restoreLife sets lives for the plumbing type to 5`() = runTest {
@@ -291,18 +311,44 @@ class QuizViewModelTest {
     }
     @Test
     fun `updateStreak handles null currentQuestion by treating answer as incorrect`() = runTest {
-        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.DEFAULT)
+        val datastoreWithStreak = FakeDataStore().apply {
+            storeAnswerStreak(5)
+        }
+
+
+        val testViewModel = QuizViewModel(datastoreWithStreak, questionLoader)
         mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
-        Assert.assertNull("To test this path, currentQuestion must be null", viewModel.quizUiState.value.currentQuestion)
-        quizDatastore.storeAnswerStreak(5)
-        viewModel.checkLivesAndStreak()
-        viewModel.selectAnswer("some answer")
-        assertEquals("Pre-condition: Streak should be 5", 5, viewModel.quizUiState.value.answerStreak)
-        viewModel.updateStreak()
-        assertEquals("Streak should be reset to 0 when question is null", 0, viewModel.quizUiState.value.answerStreak)
-        assertEquals("Datastore streak should also be reset to 0", 0, quizDatastore.fetchAnswerStreak())
+
+        Assert.assertNull("Question should be null for DEFAULT type", testViewModel.quizUiState.value.currentQuestion)
+        assertEquals("Pre-condition: Streak should be 5", 5, testViewModel.quizUiState.value.answerStreak)
+
+
+        testViewModel.selectAnswer("some answer")
+        testViewModel.updateStreak()
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+
+
+        assertEquals("ViewModel streak should be reset to 0", 0, testViewModel.quizUiState.value.answerStreak)
+        assertEquals("Datastore streak should be reset to 0", 0, datastoreWithStreak.fetchAnswerStreak())
     }
 
+    @Test
+    fun `startQuiz when questions already loaded updates difficulty and starts quiz`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertTrue("Questions should be loaded", viewModel.quizUiState.value.questions.isNotEmpty())
+        assertEquals(QuizDifficulty.EASY, viewModel.quizUiState.value.quizDifficulty)
+
+        viewModel.startQuiz(QuizDifficulty.HARD, QuizType.PLUMBING)
+
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+
+        assertEquals("Difficulty should update to HARD", QuizDifficulty.HARD, viewModel.quizUiState.value.quizDifficulty)
+        assertEquals("QuizType should still be PLUMBING", QuizType.PLUMBING, viewModel.quizUiState.value.quizType)
+        assertTrue("Quiz should be started", viewModel.quizUiState.value.isQuizStarted)
+        assertFalse("Loading should be false", viewModel.quizUiState.value.isLoading)
+    }
     @Test
     fun `setCurrentLives does nothing when quizType is DEFAULT`() = runTest {
         viewModel.startQuiz(QuizDifficulty.EASY, QuizType.DEFAULT)

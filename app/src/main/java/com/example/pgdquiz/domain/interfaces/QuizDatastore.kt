@@ -7,7 +7,9 @@ interface QuizDatastore {
     fun storeDate()
     fun resetLivesAndStreak()
     fun storeAnswerStreak(answerStreak: Int)
-    fun fetchAnswerStreak(): Int
-    fun storeCurrentLives(numberOfLives: Int, quizType: QuizType)
+    suspend fun fetchAnswerStreak(): Int
+    suspend fun storeCurrentLives(numberOfLives: Int, quizType: QuizType)
+    suspend fun fetchLastQuizType(): QuizType?
+    suspend fun storeLastQuizType(quizType: QuizType)
     fun fetchCurrentLives(quizType: QuizType): Int
 }
