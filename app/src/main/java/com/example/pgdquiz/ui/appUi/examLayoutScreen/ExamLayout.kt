@@ -6,14 +6,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -110,10 +108,15 @@ Box(modifier = Modifier
                     )
                 }
             } else {
-                Column(
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .weight(1f),
+                        .weight(1f)
+                        .padding(horizontal = 16.dp) // Apply horizontal padding to the whole container
+                ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     QuestionField(
@@ -131,7 +134,18 @@ Box(modifier = Modifier
                         quizType = quizType,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(1f)
+
+                    )
+                }
+                    NextButton(
+                        onClick = {
+                            viewModel.triggerShowCorrectAnswer()
+                        },
+                        quizType = quizType,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.BottomCenter)
+                            .padding(horizontal = 16.dp)
                     )
                 }
             }

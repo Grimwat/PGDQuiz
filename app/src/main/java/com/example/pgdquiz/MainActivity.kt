@@ -27,6 +27,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             val app = application as QuizApplication
 
+            val questionLoader = DefaultQuestionLoader(context = applicationContext)
+
             val viewModel: QuizViewModel = viewModel(
                 factory = QuizViewModelFactory(
                     quizDatastore = app.quizDatastore,

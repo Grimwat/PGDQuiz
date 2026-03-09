@@ -49,7 +49,7 @@ fun QuizMainScreen(
                     onSelectQuizType = { quizType ->
                         selectedQuizType = quizType
                         onQuizTypeSelected(quizType)
-                        viewModel.setQuizType(quizType)
+
                         //  viewModel.res(quizType)
                     },
                     onQuizTypeSelected = onQuizTypeSelected,

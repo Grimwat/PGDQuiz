@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -54,7 +55,9 @@ fun NextButton(
                 containerColor = Color.Transparent,
                 contentColor = Color.Unspecified
             ),
-            modifier = Modifier.background(Color.Transparent)
+            modifier = Modifier
+                .height(76.dp)
+                .background(Color.Transparent)
         ) {
             Box(
                 modifier = Modifier
@@ -62,7 +65,7 @@ fun NextButton(
                     .clip(RoundedCornerShape(8.dp))
                     .background(color = MaterialTheme.colorScheme.primary)
                     .border(width = 4.dp, color = MaterialTheme.colorScheme.outline)
-                    .padding(4.dp),
+                    .padding(2.dp),
                 contentAlignment = Alignment.Center
             ) {
                 examId?.let { id ->
