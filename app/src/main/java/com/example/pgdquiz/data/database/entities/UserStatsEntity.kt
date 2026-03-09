@@ -9,5 +9,6 @@ data class UserStatsEntity(
     @PrimaryKey val id: Int = 0,
     val lastPlayedTimestamp: Long = 0L,
     val currentStreak: Int = 0,
+    val lastQuizType: QuizType? = null,
     val livesPerType: Map<QuizType, Int> = emptyMap()
 )
