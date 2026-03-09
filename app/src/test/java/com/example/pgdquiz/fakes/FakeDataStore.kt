@@ -10,6 +10,17 @@ class FakeDataStore : QuizDatastore {
     private var answerstreak = 0
     var isDateStored: Boolean = false
 
+    private var lastQuizType: QuizType? = null
+
+    override suspend fun fetchLastQuizType(): QuizType? {
+        return lastQuizType
+    }
+
+override suspend fun storeLastQuizType(quizType: QuizType) {
+    lastQuizType = quizType
+}
+
+
     fun setIsSameDay(isSame: Boolean) {
         this.isSameDay = isSame
     }
@@ -32,9 +43,9 @@ class FakeDataStore : QuizDatastore {
         this.answerstreak = streak
     }
 
-    override fun fetchAnswerStreak(): Int = answerstreak
+    override suspend fun fetchAnswerStreak(): Int = answerstreak
 
-    override fun storeCurrentLives(lives: Int, quizType: QuizType) {
+    override suspend fun storeCurrentLives(lives: Int, quizType: QuizType) {
         livesPerType[quizType] = lives
     }
 

@@ -14,6 +14,8 @@ import androidx.core.content.edit
 const val KEY_ANSWER_STREAK = "answer_streak"
 const val KEY_LIVES = "_lives"
 const val KEY_LAST_RESET_DATE = "last_reset_date"
+const val KEY_LAST_QUIZ_TYPE = "last_quiz_type"
+
 
 class DefaultQuizDatastore(context: Context): QuizDatastore {
 
@@ -46,15 +48,24 @@ class DefaultQuizDatastore(context: Context): QuizDatastore {
         prefs.edit { putInt(KEY_ANSWER_STREAK, answerStreak) }
     }
 
-    override fun fetchAnswerStreak(): Int {
+    override suspend fun fetchAnswerStreak(): Int {
         return prefs.getInt(KEY_ANSWER_STREAK, STARTING_ANSWER_STREAK)
     }
 
-    override fun storeCurrentLives(numberOfLives: Int, quizType: QuizType) {
+    override suspend fun storeCurrentLives(numberOfLives: Int, quizType: QuizType) {
         prefs.edit { putInt("${quizType.name}$KEY_LIVES", numberOfLives) }
     }
 
     override fun fetchCurrentLives(quizType: QuizType): Int {
         return prefs.getInt("${quizType.name}$KEY_LIVES", STARTING_LIVES)
+    }
+    override suspend fun fetchLastQuizType(): QuizType? {
+        val typeName = prefs.getString(KEY_LAST_QUIZ_TYPE, null)
+        return typeName?. let { QuizType.valueOf(it) }
+    }
+
+    override suspend fun storeLastQuizType(quizType: QuizType) {
+        prefs.edit { putString(KEY_LAST_QUIZ_TYPE, quizType.name) }
+
     }
 }
