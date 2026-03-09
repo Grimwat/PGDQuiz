@@ -55,16 +55,6 @@ fun ButtonsPortrait(
                 shape = RectangleShape
             )
         }
-        item {
-            NextButton(
-                onClick = {
-                    viewModel.triggerShowCorrectAnswer()
-                },
-                quizType = quizType,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp)
-            )
-        }
+
     }
 }
