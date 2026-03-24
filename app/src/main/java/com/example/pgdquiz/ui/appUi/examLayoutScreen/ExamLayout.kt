@@ -38,6 +38,7 @@ import com.example.pgdquiz.ui.appUi.examLayoutScreen.overlays.LivesLost
 import com.example.pgdquiz.ui.appUi.examLayoutScreen.portrait.ButtonsPortrait
 import com.example.pgdquiz.ui.data.QuizDifficulty
 import com.example.pgdquiz.ui.data.QuizType
+import com.example.pgdquiz.ui.data.getCurrentQuestions
 import com.example.pgdquiz.ui.data.getCurrentQuizTypeLives
 import com.example.pgdquiz.ui.logic.QuizViewModel
 
@@ -54,6 +55,7 @@ fun ExamLayout(
     quizType: QuizType,
     onBackToModeSelect: () -> Unit
 ) {
+    val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     val state by viewModel.quizUiState.collectAsStateWithLifecycle()
@@ -143,7 +145,16 @@ fun ExamLayout(
                         }
                         NextButton(
                             onClick = {
-                                viewModel.triggerShowCorrectAnswer()
+                                val totalQuestions = state.getCurrentQuestions().size
+                                val currentIndex = state.currentQuestionIndex
+
+                                if (viewModel.shouldShowInterstitial(currentIndex, totalQuestions)) {
+                                    (context as? MainActivity)?.showInterstitialAd {
+                                        viewModel.triggerShowCorrectAnswer()
+                                    }
+                                } else {
+                                    viewModel.triggerShowCorrectAnswer()
+                                }
                             },
                             quizType = quizType,
                             modifier = Modifier
@@ -203,9 +214,15 @@ fun ExamLayout(
                         examEmoji = examEmoji,
                         emojiCont = title,
                         onRestart = {
-                            viewModel.startQuiz(quizDifficulty, quizType)
+                            (context as? MainActivity)?.showInterstitialAd {
+                                viewModel.startQuiz(quizDifficulty, quizType)
+                            }
                         },
-                        onBackToModeSelect = onBackToModeSelect,
+                        onBackToModeSelect = {
+                            (context as? MainActivity)?.showInterstitialAd {
+                                onBackToModeSelect()
+                            }
+                        },
                         quizType = quizType
                     )
                 }

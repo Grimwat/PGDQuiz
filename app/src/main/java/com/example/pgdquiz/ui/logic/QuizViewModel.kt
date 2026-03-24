@@ -160,6 +160,10 @@ class QuizViewModel(
     fun dismissRewardSuccess() {
         _quizUiState.update { it.copy(isShowingRewardSuccess = false) }
     }
+    fun shouldShowInterstitial(currentIndex: Int, totalQuestions: Int): Boolean {
+        val questionNumber = currentIndex + 1
+        return (questionNumber % 10 == 0 && questionNumber != 0) || questionNumber == totalQuestions
+    }
 
 
     fun loseLife() {

@@ -9,12 +9,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pgdquiz.MainActivity
 import com.example.pgdquiz.ui.appUi.examLayoutScreen.AnswerButton
 import com.example.pgdquiz.ui.appUi.examLayoutScreen.NextButton
 import com.example.pgdquiz.ui.data.QuizType
+import com.example.pgdquiz.ui.data.getCurrentQuestions
 import com.example.pgdquiz.ui.logic.QuizViewModel
 
 @Composable
@@ -23,7 +26,7 @@ fun LandscapeGrid(
     quizType: QuizType,
     viewModel: QuizViewModel = viewModel()
 ) {
-
+    val context = LocalContext.current
     val state by viewModel.quizUiState.collectAsStateWithLifecycle()
     val currentQuestion = state.currentQuestion
 
@@ -56,7 +59,17 @@ fun LandscapeGrid(
         item {
             NextButton(
                 onClick = {
-                    viewModel.triggerShowCorrectAnswer()
+
+                    val totalQuestions = state.getCurrentQuestions().size
+                    val currentIndex = state.currentQuestionIndex
+
+                    if (viewModel.shouldShowInterstitial(currentIndex, totalQuestions)) {
+                        (context as? MainActivity)?.showInterstitialAd {
+                            viewModel.triggerShowCorrectAnswer()
+                        }
+                    } else {
+                        viewModel.triggerShowCorrectAnswer()
+                    }
                 },
                 quizType = quizType,
                 modifier = Modifier

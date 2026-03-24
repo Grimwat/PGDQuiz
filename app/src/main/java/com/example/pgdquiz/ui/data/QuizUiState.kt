@@ -28,3 +28,7 @@ fun QuizUiState.getCurrentQuizTypeLives(): Int {
         else -> 0
     }
 }
+
+fun QuizUiState.getCurrentQuestions(): List<Question> {
+    return questions
+}
