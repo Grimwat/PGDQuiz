@@ -1,6 +1,8 @@
 package com.example.pgdquiz.ui.appUi.examLayoutScreen
 
-//import com.example.pgdquiz.AppUi.Composables.BannerAd
+
+import androidx.compose.ui.platform.LocalContext
+import com.example.pgdquiz.MainActivity
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +31,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pgdquiz.ui.appUi.addManager.adds.RewardAdSuccess
 import com.example.pgdquiz.ui.appUi.examLayoutScreen.landscape.LandscapeGrid
 import com.example.pgdquiz.ui.appUi.examLayoutScreen.overlays.CongratulationsScreen
 import com.example.pgdquiz.ui.appUi.examLayoutScreen.overlays.LivesLost
@@ -58,147 +61,161 @@ fun ExamLayout(
     LaunchedEffect(quizType, quizDifficulty) {
         viewModel.startQuiz(quizDifficulty, quizType)
     }
-Box(modifier = Modifier
-    .fillMaxSize()
-    .background(MaterialTheme.colorScheme.background)
-    .padding(WindowInsets.navigationBars.asPaddingValues()),
-    contentAlignment = Alignment.Center
-) {
-    if (state.isLoading) {
-        CircularProgressIndicator()
-    } else if (state.currentQuestion != null) {
-        Column(
-            modifier = modifier
-                .fillMaxHeight()
-                .background(MaterialTheme.colorScheme.background),
-            verticalArrangement = Arrangement.spacedBy(3.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Banner(
-                quizType = quizType,
-                emojiCont = examCont,
-                attempts = state.getCurrentQuizTypeLives(),
-                streakCount = state.answerStreak,
-                modifier = Modifier.fillMaxWidth(),
-                onBack = { onBackToModeSelect() }
-            )
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(WindowInsets.navigationBars.asPaddingValues()),
+        contentAlignment = Alignment.Center
+    ) {
+        if (state.isLoading) {
+            CircularProgressIndicator()
+        } else if (state.currentQuestion != null) {
+            Column(
+                modifier = modifier
+                    .fillMaxHeight()
+                    .background(MaterialTheme.colorScheme.background),
+                verticalArrangement = Arrangement.spacedBy(3.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Banner(
+                    quizType = quizType,
+                    emojiCont = examCont,
+                    attempts = state.getCurrentQuizTypeLives(),
+                    streakCount = state.answerStreak,
+                    modifier = Modifier.fillMaxWidth(),
+                    onBack = { onBackToModeSelect() }
+                )
 
-            Spacer(modifier = Modifier.padding(8.dp))
+                Spacer(modifier = Modifier.padding(8.dp))
 
-            if (isLandscape) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .weight(1f)
-                        .padding(horizontal = 16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    QuestionField(
-                        question = state.currentQuestion,
+                if (isLandscape) {
+                    Column(
                         modifier = Modifier
-                            .padding(bottom = 16.dp),
-                        quizType = quizType
-                    )
-                    LandscapeGrid(
-                        viewModel = viewModel,
-                        quizType = quizType,
-                        modifier = Modifier
-                            .fillMaxHeight()
+                            .fillMaxSize()
                             .weight(1f)
-                    )
+                            .padding(horizontal = 16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        QuestionField(
+                            question = state.currentQuestion,
+                            modifier = Modifier
+                                .padding(bottom = 16.dp),
+                            quizType = quizType
+                        )
+                        LandscapeGrid(
+                            viewModel = viewModel,
+                            quizType = quizType,
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .weight(1f)
+                        )
+                    }
+                } else {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(1f)
+                            .padding(horizontal = 16.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            QuestionField(
+                                question = state.currentQuestion,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp)
+                                    .padding(bottom = 8.dp),
+                                quizType = quizType
+                            )
+                            Spacer(modifier = Modifier.padding(4.dp))
+
+                            ButtonsPortrait(
+                                viewModel = viewModel,
+                                quizType = quizType,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+
+                            )
+                        }
+                        NextButton(
+                            onClick = {
+                                viewModel.triggerShowCorrectAnswer()
+                            },
+                            quizType = quizType,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(Alignment.BottomCenter)
+                                .padding(horizontal = 16.dp)
+                        )
+                    }
                 }
-            } else {
+            }
+        }
+
+        val context = LocalContext.current
+
+        if (state.getCurrentQuizTypeLives() <= 0) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f))
+            ) {
                 Box(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .weight(1f)
-                        .padding(horizontal = 16.dp) // Apply horizontal padding to the whole container
+                        .align(Alignment.Center)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.surface)
+                        .padding(8.dp)
                 ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    QuestionField(
-                        question = state.currentQuestion,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                            .padding(bottom = 8.dp),
+                    LivesLost(
+                        onWatchAd = {
+                            (context as? MainActivity)?.showRewardedAd {
+                                viewModel.restoreLife()
+                            }
+                        },
+                        onExit = onExit,
+                        examEmoji = examEmoji,
+                        emojiCont = title,
                         quizType = quizType
                     )
-                    Spacer(modifier = Modifier.padding(4.dp))
-
-                    ButtonsPortrait(
-                        viewModel = viewModel,
-                        quizType = quizType,
-                        modifier = Modifier
-                            .fillMaxWidth()
-
-                    )
                 }
-                    NextButton(
-                        onClick = {
-                            viewModel.triggerShowCorrectAnswer()
+            }
+        }
+
+        if (state.showCongratulationsScreen) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f))
+            ) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.surface)
+                        .padding(8.dp)
+                ) {
+                    CongratulationsScreen(
+                        examEmoji = examEmoji,
+                        emojiCont = title,
+                        onRestart = {
+                            viewModel.startQuiz(quizDifficulty, quizType)
                         },
-                        quizType = quizType,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .align(Alignment.BottomCenter)
-                            .padding(horizontal = 16.dp)
+                        onBackToModeSelect = onBackToModeSelect,
+                        quizType = quizType
                     )
                 }
             }
         }
-    }
 
-    if (state.getCurrentQuizTypeLives() <= 0) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.5f))
-        ) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colorScheme.surface)
-                    .padding(8.dp)
-            ) {
-                LivesLost(
-                    onWatchAd = { viewModel.restoreLife() },
-                    onExit = onExit,
-                    examEmoji = examEmoji,
-                    emojiCont = title,
-                    quizType = quizType
-                )
-            }
+        if (state.isShowingRewardSuccess) {
+            RewardAdSuccess(
+                onDismiss = { viewModel.dismissRewardSuccess() }
+            )
         }
     }
-
-    if (state.showCongratulationsScreen) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.5f))
-        ) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colorScheme.surface)
-                    .padding(8.dp)
-            ) {
-                CongratulationsScreen(
-                    examEmoji = examEmoji,
-                    emojiCont = title,
-                    onRestart = {
-                        viewModel.startQuiz(quizDifficulty, quizType)
-                    },
-                    onBackToModeSelect = onBackToModeSelect,
-                    quizType = quizType
-                )
-            }
-        }
-    }
-}}
+}

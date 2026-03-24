@@ -69,7 +69,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-//    implementation("com.google.android.gms:play-services-ads:23.4.0")
+    implementation("com.google.android.gms:play-services-ads:23.4.0")
     implementation("androidx.window:window:1.3.0")
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)

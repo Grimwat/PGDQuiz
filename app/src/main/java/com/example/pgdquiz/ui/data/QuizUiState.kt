@@ -9,6 +9,7 @@ data class QuizUiState(
     val selectedAnswer: String = "",
     val showCorrectAnswer: Boolean = false,
     val currentQuestionIndex: Int = 0,
+    val isShowingRewardSuccess: Boolean = false,
     val quizDifficulty: QuizDifficulty = QuizDifficulty.EASY,
     val quizType: QuizType = QuizType.DEFAULT,
     val currentQuestion: Question? = null,

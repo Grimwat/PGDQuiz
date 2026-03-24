@@ -137,11 +137,28 @@ class QuizViewModel(
 
     fun restoreLife() {
         viewModelScope.launch {
-            val currentLives = quizUiState.value.getCurrentQuizTypeLives()
-            val updatedLives = currentLives + 1
-            setCurrentLives(updatedLives)
-            quizDatastore.storeCurrentLives(updatedLives, quizUiState.value.quizType)
+            _quizUiState.update { currentState ->
+                val updatedState = when (currentState.quizType) {
+                    QuizType.DRAIN_LAYING -> currentState.copy(
+                        drainLayingQuizState = currentState.drainLayingQuizState.copy(lives = 1)
+                    )
+                    QuizType.PLUMBING -> currentState.copy(
+                        plumbingQuizState = currentState.plumbingQuizState.copy(lives = 1)
+                    )
+                    QuizType.GASFITTING -> currentState.copy(
+                        gasFittingQuizState = currentState.gasFittingQuizState.copy(lives = 1)
+                    )
+                    else -> currentState
+                }
+                updatedState.copy(isShowingRewardSuccess = true)
+            }
+
+            quizDatastore.storeCurrentLives(1, _quizUiState.value.quizType)
         }
+    }
+
+    fun dismissRewardSuccess() {
+        _quizUiState.update { it.copy(isShowingRewardSuccess = false) }
     }
 
 
