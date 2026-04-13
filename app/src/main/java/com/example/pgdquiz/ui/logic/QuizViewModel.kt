@@ -26,7 +26,10 @@ class QuizViewModel(
     val quizUiState: StateFlow<QuizUiState> = _quizUiState.asStateFlow()
 
     init {
-        initializeUserStats()
+        viewModelScope.launch {
+            delay(500L)
+            initializeUserStats()
+        }
     }
 
 
@@ -122,12 +125,12 @@ class QuizViewModel(
     fun triggerShowCorrectAnswer() {
 
         viewModelScope.launch {
-        updateStreak()
-        _quizUiState.update {
-            it.copy(
-                showCorrectAnswer = true
-            )
-        }
+            updateStreak()
+            _quizUiState.update {
+                it.copy(
+                    showCorrectAnswer = true
+                )
+            }
 
             delay(2000L)
             nextQuestion()
@@ -142,12 +145,15 @@ class QuizViewModel(
                     QuizType.DRAIN_LAYING -> currentState.copy(
                         drainLayingQuizState = currentState.drainLayingQuizState.copy(lives = 1)
                     )
+
                     QuizType.PLUMBING -> currentState.copy(
                         plumbingQuizState = currentState.plumbingQuizState.copy(lives = 1)
                     )
+
                     QuizType.GASFITTING -> currentState.copy(
                         gasFittingQuizState = currentState.gasFittingQuizState.copy(lives = 1)
                     )
+
                     else -> currentState
                 }
                 updatedState.copy(isShowingRewardSuccess = true)
@@ -160,9 +166,13 @@ class QuizViewModel(
     fun dismissRewardSuccess() {
         _quizUiState.update { it.copy(isShowingRewardSuccess = false) }
     }
+
     fun shouldShowInterstitial(currentIndex: Int, totalQuestions: Int): Boolean {
         val questionNumber = currentIndex + 1
-        return (questionNumber % 10 == 0 && questionNumber != 0) || questionNumber == totalQuestions
+        if (totalQuestions <= 0) return false
+        val isEveryTen = questionNumber % 2 == 0 && questionNumber != 0
+        val isLastQuestion = questionNumber == totalQuestions
+        return isEveryTen && !isLastQuestion
     }
 
 
@@ -187,8 +197,11 @@ class QuizViewModel(
         if (!correct) {
             loseLife()
         }
-        quizDatastore.storeAnswerStreak(updatedStreak)
+        viewModelScope.launch {
+            quizDatastore.storeAnswerStreak(updatedStreak)
+        }
     }
+
     private suspend fun refreshStats() {
         if (quizDatastore.isTodayTheSameDayAsTheStoredDate()) {
             _quizUiState.update {
@@ -218,20 +231,19 @@ class QuizViewModel(
         }
     }
 
-    private fun initializeUserStats() {
+    private suspend fun initializeUserStats() {
         _quizUiState.update { it.copy(isLoading = true) }
 
-        viewModelScope.launch {
             refreshStats()
             val lastQuizType = quizDatastore.fetchLastQuizType()
-            if (lastQuizType != null){
+            if (lastQuizType != null) {
                 _quizUiState.update {
                     it.copy(quizType = lastQuizType)
                 }
             }
             _quizUiState.update { it.copy(isLoading = false) }
         }
-    }
+
 
     private fun setCurrentLives(newValue: Int) {
         when (_quizUiState.value.quizType) {
@@ -250,5 +262,14 @@ class QuizViewModel(
             else -> {}
         }
     }
-
+    fun canShowAd(): Boolean {
+        val state = _quizUiState.value
+        return shouldShowInterstitial(state.currentQuestionIndex, state.questions.size)
+    }
+    fun handleRewardEarned() {
+        viewModelScope.launch {
+            restoreLife()
+            _quizUiState.update { it.copy(isShowingRewardSuccess = true) }
+        }
+    }
 }

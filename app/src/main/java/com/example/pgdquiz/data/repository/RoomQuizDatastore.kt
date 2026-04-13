@@ -16,13 +16,12 @@ class RoomQuizDatastore(
 ) : QuizDatastore {
 
 
-    override fun isTodayTheSameDayAsTheStoredDate(): Boolean {
-        return runBlocking(Dispatchers.IO) {
+    override suspend fun isTodayTheSameDayAsTheStoredDate(): Boolean {
+        return withContext(Dispatchers.IO) {
             val stats = userStatsDao.getOrInitUserStats()
             val storedTime = stats.lastPlayedTimestamp
-            if (storedTime == 0L) {
-                return@runBlocking false
-            }
+            if (storedTime == 0L) return@withContext false
+
 
 
             val storedCalendar = Calendar.getInstance().apply { timeInMillis = storedTime }
@@ -32,13 +31,13 @@ class RoomQuizDatastore(
         }
     }
 
-    override fun storeDate() = runBlocking((Dispatchers.IO)){
+    override suspend fun storeDate() = withContext((Dispatchers.IO)){
             val currentStats = userStatsDao.getOrInitUserStats()
             val updatedStats = currentStats.copy(lastPlayedTimestamp = System.currentTimeMillis())
             userStatsDao.insertOrUpdate(updatedStats)
     }
 
-    override fun resetLivesAndStreak() = runBlocking(Dispatchers.IO) {
+    override suspend fun resetLivesAndStreak() = withContext(Dispatchers.IO) {
             val currentStats = userStatsDao.getOrInitUserStats()
             val updatedStats = currentStats.copy(
                 currentStreak = 0,
@@ -47,7 +46,7 @@ class RoomQuizDatastore(
             userStatsDao.insertOrUpdate(updatedStats)
     }
 
-    override fun storeAnswerStreak(answerStreak: Int) = runBlocking(Dispatchers.IO) {
+    override suspend fun storeAnswerStreak(answerStreak: Int) = withContext(Dispatchers.IO) {
             val currentStats = userStatsDao.getOrInitUserStats()
             val updatedStats = currentStats.copy(currentStreak = answerStreak)
             userStatsDao.insertOrUpdate(updatedStats)
@@ -65,7 +64,7 @@ class RoomQuizDatastore(
         userStatsDao.insertOrUpdate(updatedStats)
     }
 
-    override fun fetchCurrentLives(quizType: QuizType): Int = runBlocking(Dispatchers.IO) {
+    override suspend fun fetchCurrentLives(quizType: QuizType): Int = withContext(Dispatchers.IO) {
         userStatsDao.getOrInitUserStats().livesPerType[quizType]?: STARTING_LIVES
     }
     override suspend fun fetchLastQuizType(): QuizType? = withContext(Dispatchers.IO) {

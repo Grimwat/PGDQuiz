@@ -147,9 +147,11 @@ fun ExamLayout(
                             onClick = {
                                 val totalQuestions = state.getCurrentQuestions().size
                                 val currentIndex = state.currentQuestionIndex
+                                val activity = context as? MainActivity
 
-                                if (viewModel.shouldShowInterstitial(currentIndex, totalQuestions)) {
-                                    (context as? MainActivity)?.showInterstitialAd {
+                                if (viewModel.canShowAd()) {
+                                    activity?.showInterstitialAd {
+
                                         viewModel.triggerShowCorrectAnswer()
                                     }
                                 } else {
@@ -185,7 +187,7 @@ fun ExamLayout(
                     LivesLost(
                         onWatchAd = {
                             (context as? MainActivity)?.showRewardedAd {
-                                viewModel.restoreLife()
+                                viewModel.handleRewardEarned()
                             }
                         },
                         onExit = onExit,

@@ -2,114 +2,95 @@ package com.example.pgdquiz
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pgdquiz.domain.DefaultQuestionLoader
+import com.example.pgdquiz.ui.appUi.addManager.adds.UnSkipAddManager
 import com.example.pgdquiz.ui.appUi.mainScreen.QuizMainScreen
 import com.example.pgdquiz.ui.data.QuizType
 import com.example.pgdquiz.ui.logic.QuizViewModel
 import com.example.pgdquiz.ui.logic.QuizViewModelFactory
 import com.example.pgdquiz.ui.theme.PgdQuizTheme
-import com.google.android.gms.ads.AdError
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.FullScreenContentCallback
-import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
-import com.google.android.gms.ads.rewarded.RewardedAd
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 
 class MainActivity : ComponentActivity() {
 
     private var selectedQuizType by mutableStateOf<QuizType?>(null)
-    private var interstitialAd: InterstitialAd? = null
-    private var rewardedAd : RewardedAd? = null
+
+    private var adManager: UnSkipAddManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        MobileAds.initialize(this) {}
-        loadRewardedAd( )
+        adManager = UnSkipAddManager(this)
+
+        try {
+            MobileAds.initialize(this) { _ ->
+                window.decorView.postDelayed({
+                    if (!isFinishing) {
+                        Log.d("ADS", "Initial loading of ads started...")
+                        adManager?.loadAllAds()
+                    }
+                }, 1500)
+            }
+        } catch (e: Exception) {
+            Log.e("ADS_ERROR", "AdMob failed: ${e.message}")
+        }
+
         setContent {
-            val app = application as QuizApplication
+            val app = application as? QuizApplication
 
-            val questionLoader = DefaultQuestionLoader(context = applicationContext)
-
-            val viewModel: QuizViewModel = viewModel(
-                factory = QuizViewModelFactory(
-                    quizDatastore = app.quizDatastore,
-                    questionLoader = DefaultQuestionLoader(context = applicationContext)
+            if (app != null) {
+                val viewModel: QuizViewModel = viewModel(
+                    factory = QuizViewModelFactory(
+                        quizDatastore = app.quizDatastore,
+                        questionLoader = DefaultQuestionLoader(this@MainActivity)
+                    )
                 )
-            )
 
-            PgdQuizTheme(quizType = selectedQuizType ?: QuizType.DEFAULT) {
-                QuizMainScreen(
-                    viewModel = viewModel,
-                    onQuizTypeSelected = { selectedQuizType = it }
-                )
+                PgdQuizTheme(quizType = selectedQuizType ?: QuizType.DEFAULT) {
+                    QuizMainScreen(
+                        viewModel = viewModel,
+                        onQuizTypeSelected = { selectedQuizType = it }
+                    )
+                }
+            } else {
+
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text("Error: QuizApplication not recognized. Check Manifest.")
+                }
+                Log.e("FATAL", "QuizApplication cast failed. Is it in AndroidManifest?")
             }
         }
-    }
-    private fun loadInterstitialAd() {
-        val adRequest = AdRequest.Builder().build()
-        InterstitialAd.load(this, "ca-app-pub-3940256099942544/1033173712", adRequest,
-            object : InterstitialAdLoadCallback() {
-                override fun onAdLoaded(ad: InterstitialAd) { interstitialAd = ad }
-                override fun onAdFailedToLoad(error: LoadAdError) { interstitialAd = null }
-            })
     }
 
     fun showInterstitialAd(onAdDismissed: () -> Unit) {
-        if (interstitialAd != null) {
-            interstitialAd?.fullScreenContentCallback = object :
-                FullScreenContentCallback() {
-                override fun onAdDismissedFullScreenContent() {
-                    interstitialAd = null
-                    loadInterstitialAd()
-                    onAdDismissed()
-                }
-                override fun onAdFailedToShowFullScreenContent(error: AdError) {
-                    onAdDismissed()
-                }
-            }
-            interstitialAd?.show(this)
+        val manager = adManager
+        if (manager != null) {
+            manager.showInterstitial(this, onAdDismissed)
         } else {
             onAdDismissed()
-            loadInterstitialAd()
         }
     }
-    private fun loadRewardedAd() {
-        val adRequest = AdRequest.Builder().build()
-        RewardedAd.load(
-            this,
-            "ca-app-pub-7804898639422438/6470745786",
-            adRequest,
-            object : RewardedAdLoadCallback() {
-                override fun onAdLoaded(ad: RewardedAd) {
-                    rewardedAd = ad
-                }
-                override fun onAdFailedToLoad(error: LoadAdError) {
-                    rewardedAd = null
-                }
-            }
-        )
-    }
+
     fun showRewardedAd(onRewardEarned: () -> Unit) {
-        rewardedAd?.let { ad ->
-            ad.show(this) { _ ->
-                onRewardEarned()
-                loadRewardedAd()
-            }
-        } ?: run {
+        val manager = adManager
+        if (manager != null) {
+            manager.showRewarded(this, onRewardEarned)
+        } else {
             onRewardEarned()
-            loadRewardedAd()
         }
     }
 }

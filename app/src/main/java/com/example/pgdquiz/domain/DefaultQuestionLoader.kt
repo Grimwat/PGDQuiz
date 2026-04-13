@@ -14,26 +14,28 @@ class DefaultQuestionLoader(private val context: Context): QuestionLoader {
     private val gson = Gson()
 
     override fun loadQuestions(quizType: QuizType): List<Question> {
+
         val resId = when (quizType) {
             QuizType.DRAIN_LAYING -> R.raw.drainsquestions
             QuizType.PLUMBING -> R.raw.plumbingquestions
             QuizType.GASFITTING -> R.raw.gasquestions
-            else -> error ("invalid QuizType")
-
+            else -> {
+                Log.d("QuestionLoader", "Waiting for valid QuizType...")
+                return emptyList()
+            }
         }
 
-        try {
-            val inputStream = context.resources.openRawResource(resId)
-            val reader = InputStreamReader(inputStream)
-            val jsonString = reader.readText()
-            reader.close()
-            inputStream.close()
+        return try {
 
-            return gson.fromJson(jsonString, QuestionsResponse::class.java).questions
-
+            context.resources.openRawResource(resId).use { inputStream ->
+                InputStreamReader(inputStream).use { reader ->
+                    val response = gson.fromJson(reader, QuestionsResponse::class.java)
+                    response?.questions ?: emptyList()
+                }
+            }
         } catch (e: Exception) {
-            Log.e("QuizViewModel", "❌ Error loading questions for $quizType: ${e.message}", e)
-            return emptyList()
+            Log.e("QuestionLoader", "❌ Error loading questions: ${e.message}")
+            emptyList()
         }
     }
 }

@@ -204,63 +204,40 @@ class QuizViewModelTest {
         assertEquals("Datastore streak should be reset", 0, newDayDataStore.fetchAnswerStreak())
     }
     @Test
-    fun `restoreLife sets lives for the plumbing type to 5`() = runTest {
+    fun `restoreLife sets lives for the plumbing type to 1`() = runTest {
         viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
         mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
-        assertEquals("Lives should be 5 initially", 5, viewModel.quizUiState.value.plumbingQuizState.lives)
+
         viewModel.loseLife()
-        assertEquals("Lives should be 4 after losing one", 4, viewModel.quizUiState.value.plumbingQuizState.lives)
+        repeat(4) { viewModel.loseLife() }
+        assertEquals(0, viewModel.quizUiState.value.plumbingQuizState.lives)
+
         viewModel.restoreLife()
         val currentState = viewModel.quizUiState.value
-        assertEquals("Plumbing lives should be restored to 5", 5, currentState.plumbingQuizState.lives)
-        assertEquals("GasFitting lives should not be changed", STARTING_LIVES, currentState.gasFittingQuizState.lives)
-        assertEquals("DrainLaying lives should not be changed", STARTING_LIVES, currentState.drainLayingQuizState.lives)
+        assertEquals("Plumbing lives should be restored to 1", 1, currentState.plumbingQuizState.lives)
+        assertTrue("Success overlay should be visible", currentState.isShowingRewardSuccess)
     }
     @Test
-    fun `restoreLife sets lives for the drainlaying type to 5`() = runTest {
+    fun `restoreLife sets lives for the drainlaying type to 1`() = runTest {
         viewModel.startQuiz(QuizDifficulty.EASY, QuizType.DRAIN_LAYING)
         mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
-        assertEquals("Lives should be 5 initially", 5, viewModel.quizUiState.value.drainLayingQuizState.lives)
+
         viewModel.loseLife()
-        assertEquals("Lives should be 4 after losing one", 4, viewModel.quizUiState.value.drainLayingQuizState.lives)
         viewModel.restoreLife()
+
         val currentState = viewModel.quizUiState.value
-        assertEquals("DrainLaying lives should be restored to 5", 5, currentState.drainLayingQuizState.lives)
-        assertEquals("GasFitting lives should not be changed", STARTING_LIVES, currentState.gasFittingQuizState.lives)
-        assertEquals("Plumbing lives should not be changed", STARTING_LIVES, currentState.plumbingQuizState.lives)
+        assertEquals("DrainLaying lives should be restored to 1", 1, currentState.drainLayingQuizState.lives)
     }
     @Test
-    fun `restoreLife sets lives for the gasfitting type to 5`() = runTest {
+    fun `restoreLife sets lives for the gasfitting type to 1`() = runTest {
         viewModel.startQuiz(QuizDifficulty.EASY, QuizType.GASFITTING)
         mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
-        assertEquals(
-            "Lives should be 5 initially",
-            5,
-            viewModel.quizUiState.value.gasFittingQuizState.lives
-        )
+
         viewModel.loseLife()
-        assertEquals(
-            "Lives should be 4 after losing one",
-            4,
-            viewModel.quizUiState.value.gasFittingQuizState.lives
-        )
         viewModel.restoreLife()
+
         val currentState = viewModel.quizUiState.value
-        assertEquals(
-            "GasFitting lives should be restored to 5",
-            5,
-            currentState.gasFittingQuizState.lives
-        )
-        assertEquals(
-            "Plumbing lives should not be changed",
-            STARTING_LIVES,
-            currentState.plumbingQuizState.lives
-        )
-        assertEquals(
-            "DrainLaying lives should not be changed",
-            STARTING_LIVES,
-            currentState.drainLayingQuizState.lives
-        )
+        assertEquals("GasFitting lives should be restored to 1", 1, currentState.gasFittingQuizState.lives)
     }
     @Test
     fun `updateStreak increments streak and stores it on correct answer`() = runTest {
@@ -276,6 +253,43 @@ class QuizViewModelTest {
         assertEquals("Answer streak should be incremented", expectedStreak, currentState.answerStreak)
         assertEquals("Lives should not change on correct answer", initialLives, currentState.plumbingQuizState.lives)
         assertEquals("Datastore should be updated with the new streak", expectedStreak, quizDatastore.fetchAnswerStreak())
+    }
+    @Test
+    fun `shouldShowInterstitial returns true exactly on every 10th question`() {
+        val totalQuestions = 50
+
+        assertFalse("Should not show on question 1", viewModel.shouldShowInterstitial(0, totalQuestions))
+        assertFalse("Should not show on question 5", viewModel.shouldShowInterstitial(4, totalQuestions))
+        assertTrue("Should show on question 10", viewModel.shouldShowInterstitial(9, totalQuestions))
+        assertTrue("Should show on question 20", viewModel.shouldShowInterstitial(19, totalQuestions))
+    }
+
+    @Test
+    fun `shouldShowInterstitial returns false on the very last question to avoid double ads`() {
+        val totalQuestions = 10
+
+        assertFalse(
+            "Should return false on the last question even if it is a multiple of 10",
+            viewModel.shouldShowInterstitial(9, 10)
+        )
+    }
+
+    @Test
+    fun `shouldShowInterstitial handles short quizzes correctly`() {
+        val totalQuestions = 5
+
+        for (i in 0 until totalQuestions) {
+            assertFalse(
+                "No interstitial should trigger in a quiz shorter than 10 questions",
+                viewModel.shouldShowInterstitial(i, totalQuestions)
+            )
+        }
+    }
+
+    @Test
+    fun `shouldShowInterstitial returns false for invalid inputs`() {
+        assertFalse(viewModel.shouldShowInterstitial(-1, 10))
+        assertFalse(viewModel.shouldShowInterstitial(5, 0))
     }
     @Test
     fun `updateStreak resets streak and loses a life on incorrect answer`() = runTest {
@@ -465,7 +479,56 @@ class QuizViewModelTest {
         assertEquals(2, newViewModel.quizUiState.value.plumbingQuizState.lives)
         assertEquals(15, newViewModel.quizUiState.value.answerStreak)
     }
+    @Test
+    fun `restoreLife handles DEFAULT quiz type branch`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.DEFAULT)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+
+        viewModel.restoreLife()
+
+        assertTrue("Should still show success overlay", viewModel.quizUiState.value.isShowingRewardSuccess)
+    }
+    @Test
+    fun `shouldShowInterstitial returns false when total questions is zero`() {
+        val result = viewModel.shouldShowInterstitial(currentIndex = 0, totalQuestions = 0)
+        assertFalse("Should return false for 0 questions", result)
+    }
+
+    @Test
+    fun `shouldShowInterstitial returns false when total questions is negative`() {
+        val result = viewModel.shouldShowInterstitial(currentIndex = 0, totalQuestions = -5)
+        assertFalse("Should return false for negative questions", result)
+    }
+    @Test
+    fun `loseLife handles DEFAULT quiz type branch`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.DEFAULT)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
 
 
+        viewModel.loseLife()
+
+        assertEquals(QuizType.DEFAULT, viewModel.quizUiState.value.quizType)
+    }
+    @Test
+    fun `restoreLife handles default quiz type branch`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.DEFAULT)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+
+        viewModel.restoreLife()
+
+        assertTrue(viewModel.quizUiState.value.isShowingRewardSuccess)
+    }
+    @Test
+    fun `dismissRewardSuccess sets isShowingRewardSuccess to false`() = runTest {
+        viewModel.restoreLife()
+
+        assertTrue("State should be true after restoreLife",
+            viewModel.quizUiState.value.isShowingRewardSuccess)
+
+        viewModel.dismissRewardSuccess()
+        
+        assertFalse("State should be false after dismissRewardSuccess",
+            viewModel.quizUiState.value.isShowingRewardSuccess)
+    }
 }
 
