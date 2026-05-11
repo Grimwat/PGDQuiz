@@ -3,6 +3,7 @@ package com.example.pgdquiz.data.database.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.pgdquiz.ui.data.QuizType
+import com.example.pgdquiz.ui.data.SubscriptionTier
 
 @Entity(tableName = "user_stats")
 data class UserStatsEntity(
@@ -10,5 +11,6 @@ data class UserStatsEntity(
     val lastPlayedTimestamp: Long = 0L,
     val currentStreak: Int = 0,
     val lastQuizType: QuizType? = null,
-    val livesPerType: Map<QuizType, Int> = emptyMap()
+    val livesPerType: Map<QuizType, Int> = emptyMap(),
+    val subscriptionTier: SubscriptionTier = SubscriptionTier.FREE
 )

@@ -15,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pgdquiz.billing.BillingManager
 import com.example.pgdquiz.domain.DefaultQuestionLoader
 import com.example.pgdquiz.ui.appUi.addManager.adds.UnSkipAddManager
 import com.example.pgdquiz.ui.appUi.mainScreen.QuizMainScreen
@@ -29,9 +30,17 @@ class MainActivity : ComponentActivity() {
     private var selectedQuizType by mutableStateOf<QuizType?>(null)
 
     private var adManager: UnSkipAddManager? = null
+    private var billingManager: BillingManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val app = application as QuizApplication
+
+        billingManager = BillingManager(this) { tier ->
+            viewModel?.updateSubscriptionTier(tier)
+        }
+        app.billingManager = billingManager!!
+        billingManager?.initialize()
         enableEdgeToEdge()
 
         adManager = UnSkipAddManager(this)
@@ -75,7 +84,18 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+    override fun onDestroy() {
+        super.onDestroy()
+        billingManager?.destroy()
+    }
 
+    fun launchApprenticeSubscription() {
+        billingManager?.launchApprenticeFlow(this)
+    }
+
+    fun launchTradesmanPurchase() {
+        billingManager?.launchTradesmanFlow(this)
+    }
     fun showInterstitialAd(onAdDismissed: () -> Unit) {
         val manager = adManager
         if (manager != null) {

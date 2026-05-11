@@ -3,6 +3,7 @@ package com.example.pgdquiz.data.repository
 import com.example.pgdquiz.data.database.dao.UserStatsDao
 import com.example.pgdquiz.domain.interfaces.QuizDatastore
 import com.example.pgdquiz.ui.data.QuizType
+import com.example.pgdquiz.ui.data.SubscriptionTier
 import com.example.pgdquiz.util.STARTING_LIVES
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +31,14 @@ class RoomQuizDatastore(
                         storedCalendar.get(Calendar.DAY_OF_YEAR) == currentCalendar.get(Calendar.DAY_OF_YEAR)
         }
     }
+    override suspend fun fetchSubscriptionTier(): SubscriptionTier = withContext(Dispatchers.IO) {
+        userStatsDao.getOrInitUserStats().subscriptionTier
+    }
 
+    override suspend fun storeSubscriptionTier(tier: SubscriptionTier) = withContext(Dispatchers.IO) {
+        val currentStats = userStatsDao.getOrInitUserStats()
+        userStatsDao.insertOrUpdate(currentStats.copy(subscriptionTier = tier))
+    }
     override suspend fun storeDate() = withContext((Dispatchers.IO)){
             val currentStats = userStatsDao.getOrInitUserStats()
             val updatedStats = currentStats.copy(lastPlayedTimestamp = System.currentTimeMillis())

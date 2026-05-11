@@ -1,6 +1,7 @@
 package com.example.pgdquiz.domain.interfaces
 
 import com.example.pgdquiz.ui.data.QuizType
+import com.example.pgdquiz.ui.data.SubscriptionTier
 
 interface QuizDatastore {
     suspend fun isTodayTheSameDayAsTheStoredDate(): Boolean
@@ -12,4 +13,6 @@ interface QuizDatastore {
     suspend fun fetchLastQuizType(): QuizType?
     suspend fun storeLastQuizType(quizType: QuizType)
     suspend fun fetchCurrentLives(quizType: QuizType): Int
+    suspend fun fetchSubscriptionTier(): SubscriptionTier
+    suspend fun storeSubscriptionTier(tier: SubscriptionTier)
 }

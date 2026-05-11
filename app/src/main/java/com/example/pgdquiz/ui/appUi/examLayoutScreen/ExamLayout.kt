@@ -148,10 +148,12 @@ fun ExamLayout(
                                 val totalQuestions = state.getCurrentQuestions().size
                                 val currentIndex = state.currentQuestionIndex
                                 val activity = context as? MainActivity
-
+                                if (state.currentQuestionIndex >= totalQuestions - 1){
                                 if (viewModel.canShowAd()) {
                                     activity?.showInterstitialAd {
-
+                                        viewModel.nextQuestion()
+                                    }
+                                }else {
                                         viewModel.triggerShowCorrectAnswer()
                                     }
                                 } else {

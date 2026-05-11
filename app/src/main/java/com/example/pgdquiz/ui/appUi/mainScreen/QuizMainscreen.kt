@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -33,7 +34,6 @@ fun QuizMainScreen(
     var selectedQuizType by rememberSaveable { mutableStateOf<QuizType?>(null) }
     var selectedMode by rememberSaveable { mutableStateOf<QuizDifficulty?>(null) }
 
-    //viewModel.restoreLife()
 
     PgdQuizTheme(quizType = selectedQuizType ?: QuizType.DEFAULT) {
         if (state.isLoading) {
@@ -59,6 +59,9 @@ fun QuizMainScreen(
             }
 
             selectedMode == null -> {
+                LaunchedEffect(Unit) {
+                    viewModel.refreshForDifficultyScreen()
+                }
                 QuizModeSelection(
                     quizType = selectedQuizType!!,
                     onSelectDifficulty = { mode ->

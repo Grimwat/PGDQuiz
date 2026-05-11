@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import androidx.core.content.edit
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 const val KEY_ANSWER_STREAK = "answer_streak"
@@ -21,22 +23,27 @@ class DefaultQuizDatastore(context: Context): QuizDatastore {
 
     private val prefs = context.getSharedPreferences("quiz_progress", Context.MODE_PRIVATE)
 
-    var today: String = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+    private fun getTodayString(): String =
+        SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
-    override fun isTodayTheSameDayAsTheStoredDate(): Boolean {
+    override suspend fun isTodayTheSameDayAsTheStoredDate(): Boolean =
+        withContext(Dispatchers.IO) {
+        val today = getTodayString()
         val lastStoredDate = prefs.getString(KEY_LAST_RESET_DATE, "")
-        val todayIsDifferentStored = lastStoredDate != today
-        if (todayIsDifferentStored) {
+
+        val isSameDay = lastStoredDate == today
+
+        if (!isSameDay) {
             resetLivesAndStreak()
         }
-        return todayIsDifferentStored
+        return@withContext isSameDay
     }
 
-    override fun storeDate() {
-        prefs.edit { putString(KEY_LAST_RESET_DATE, today) }
+    override suspend fun storeDate() = withContext(Dispatchers.IO) {
+        prefs.edit(commit = true) { putString(KEY_LAST_RESET_DATE, getTodayString()) }
     }
 
-    override fun resetLivesAndStreak() {
+    override suspend fun resetLivesAndStreak() = withContext(Dispatchers.IO) {
         QuizType.entries.forEach { type ->
             prefs.edit { putInt("${type.name}$KEY_LIVES", STARTING_LIVES) }
         }
@@ -44,27 +51,27 @@ class DefaultQuizDatastore(context: Context): QuizDatastore {
 
     }
 
-    override fun storeAnswerStreak(answerStreak: Int) {
+    override suspend fun storeAnswerStreak(answerStreak: Int) = withContext(Dispatchers.IO) {
         prefs.edit { putInt(KEY_ANSWER_STREAK, answerStreak) }
     }
 
-    override suspend fun fetchAnswerStreak(): Int {
-        return prefs.getInt(KEY_ANSWER_STREAK, STARTING_ANSWER_STREAK)
+    override suspend fun fetchAnswerStreak(): Int = withContext(Dispatchers.IO) {
+        return@withContext prefs.getInt(KEY_ANSWER_STREAK, STARTING_ANSWER_STREAK)
     }
 
-    override suspend fun storeCurrentLives(numberOfLives: Int, quizType: QuizType) {
+    override suspend fun storeCurrentLives(numberOfLives: Int, quizType: QuizType) = withContext(Dispatchers.IO) {
         prefs.edit { putInt("${quizType.name}$KEY_LIVES", numberOfLives) }
     }
 
-    override fun fetchCurrentLives(quizType: QuizType): Int {
-        return prefs.getInt("${quizType.name}$KEY_LIVES", STARTING_LIVES)
+    override suspend fun fetchCurrentLives(quizType: QuizType): Int = withContext(Dispatchers.IO) {
+        return@withContext prefs.getInt("${quizType.name}$KEY_LIVES", STARTING_LIVES)
     }
-    override suspend fun fetchLastQuizType(): QuizType? {
+    override suspend fun fetchLastQuizType(): QuizType? = withContext(Dispatchers.IO) {
         val typeName = prefs.getString(KEY_LAST_QUIZ_TYPE, null)
-        return typeName?. let { QuizType.valueOf(it) }
+        return@withContext typeName?. let { QuizType.valueOf(it) }
     }
 
-    override suspend fun storeLastQuizType(quizType: QuizType) {
+    override suspend fun storeLastQuizType(quizType: QuizType) = withContext(Dispatchers.IO)  {
         prefs.edit { putString(KEY_LAST_QUIZ_TYPE, quizType.name) }
 
     }

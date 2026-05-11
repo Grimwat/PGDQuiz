@@ -17,8 +17,13 @@ data class QuizUiState(
     val questions: List<Question> = emptyList(),
     val showCongratulationsScreen: Boolean = false,
     val answerStreak: Int = 0,
-    val optionsAndAnswer: List<String> = emptyList()
+    val optionsAndAnswer: List<String> = emptyList(),
+    val subscriptionTier: SubscriptionTier = SubscriptionTier.FREE
 )
+fun QuizUiState.isPremium() = subscriptionTier != SubscriptionTier.FREE
+fun QuizUiState.hasNoAds() = subscriptionTier == SubscriptionTier.APPRENTICE
+        || subscriptionTier == SubscriptionTier.TRADESMAN
+fun QuizUiState.hasUnlimitedLives() = subscriptionTier != SubscriptionTier.FREE
 
 fun QuizUiState.getCurrentQuizTypeLives(): Int {
     return when (quizType) {

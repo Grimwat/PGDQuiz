@@ -7,7 +7,9 @@ import com.example.pgdquiz.domain.interfaces.QuizDatastore
 import com.example.pgdquiz.ui.data.QuizDifficulty
 import com.example.pgdquiz.ui.data.QuizType
 import com.example.pgdquiz.ui.data.QuizUiState
+import com.example.pgdquiz.ui.data.SubscriptionTier
 import com.example.pgdquiz.ui.data.getCurrentQuizTypeLives
+import com.example.pgdquiz.ui.data.hasUnlimitedLives
 import com.example.pgdquiz.util.STARTING_ANSWER_STREAK
 import com.example.pgdquiz.util.STARTING_LIVES
 import kotlinx.coroutines.delay
@@ -36,7 +38,12 @@ class QuizViewModel(
     fun startQuiz(difficulty: QuizDifficulty, quizType: QuizType) {
 
         viewModelScope.launch {
-            _quizUiState.update { it.copy(isLoading = true) }
+            _quizUiState.update { it.copy(
+                isLoading = true,
+                showCongratulationsScreen = false,
+                quizComplete = false,
+                currentQuestionIndex = 0
+            ) }
             refreshStats()
 
             val currentState = _quizUiState.value
@@ -101,17 +108,17 @@ class QuizViewModel(
 
         _quizUiState.update { currentState ->
             val nextQuestionIndex = currentState.currentQuestionIndex + 1
-            val thereIsMoreQuestions = nextQuestionIndex < currentState.questions.size
-            if (thereIsMoreQuestions) {
-                val nextQuestion = currentState.questions[nextQuestionIndex]
-                currentState.copy(
-                    currentQuestionIndex = nextQuestionIndex,
-                    selectedAnswer = "",
-                    showCorrectAnswer = false,
-                    currentQuestion = nextQuestion,
-                    optionsAndAnswer = nextQuestion.getOptionsAndAnswers().shuffled()
+            if (nextQuestionIndex < currentState.questions.size) {
 
-                )
+                val nextQuestion = currentState.questions[nextQuestionIndex]
+                    currentState.copy(
+                        currentQuestionIndex = nextQuestionIndex,
+                        selectedAnswer = "",
+                        showCorrectAnswer = false,
+                        currentQuestion = nextQuestion,
+                        optionsAndAnswer = nextQuestion.getOptionsAndAnswers().shuffled()
+                    )
+
             } else {
                 currentState.copy(
                     showCongratulationsScreen = true,
@@ -131,12 +138,10 @@ class QuizViewModel(
                     showCorrectAnswer = true
                 )
             }
-
             delay(2000L)
-            nextQuestion()
+                nextQuestion()
         }
     }
-
 
     fun restoreLife() {
         viewModelScope.launch {
@@ -170,13 +175,14 @@ class QuizViewModel(
     fun shouldShowInterstitial(currentIndex: Int, totalQuestions: Int): Boolean {
         val questionNumber = currentIndex + 1
         if (totalQuestions <= 0) return false
-        val isEveryTen = questionNumber % 2 == 0 && questionNumber != 0
+        val isEveryTen = questionNumber % 10 == 0 && questionNumber != 0
         val isLastQuestion = questionNumber == totalQuestions
         return isEveryTen && !isLastQuestion
     }
 
 
     fun loseLife() {
+        if (quizUiState.value.hasUnlimitedLives()) return
         viewModelScope.launch {
             val currentLives = quizUiState.value.getCurrentQuizTypeLives()
             if (currentLives > 0) {
@@ -187,6 +193,18 @@ class QuizViewModel(
         }
     }
 
+    fun updateSubscriptionTier(tier: SubscriptionTier) {
+        viewModelScope.launch {
+            quizDatastore.storeSubscriptionTier(tier)
+            _quizUiState.update { it.copy(subscriptionTier = tier) }
+        }
+    }
+
+    fun refreshForDifficultyScreen() {
+        viewModelScope.launch {
+            refreshStats()
+        }
+    }
     fun updateStreak() {
         val selected = _quizUiState.value.selectedAnswer
         val correct = _quizUiState.value.currentQuestion?.answer == selected
@@ -241,8 +259,11 @@ class QuizViewModel(
                     it.copy(quizType = lastQuizType)
                 }
             }
+        val tier = quizDatastore.fetchSubscriptionTier()
+        _quizUiState.update { it.copy(subscriptionTier = tier) }
+
             _quizUiState.update { it.copy(isLoading = false) }
-        }
+    }
 
 
     private fun setCurrentLives(newValue: Int) {

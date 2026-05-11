@@ -11,10 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pgdquiz.ui.appUi.quizModeScreen.landscape.ModeButtonLandscape
 import com.example.pgdquiz.ui.appUi.quizModeScreen.portrait.ModeButtonPortrait
 import com.example.pgdquiz.ui.appUi.examLayoutScreen.Banner

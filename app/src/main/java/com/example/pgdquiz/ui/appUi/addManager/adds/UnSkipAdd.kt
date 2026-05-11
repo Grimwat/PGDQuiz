@@ -14,6 +14,8 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 class UnSkipAddManager(private val context: Context) {
     private var interstitialAd: InterstitialAd? = null
     private var rewardedAd: RewardedAd? = null
+    private var isInterstitialLoading = false
+    private var isRewardedLoading = false
 
     fun loadAllAds() {
         loadInterstitial()
@@ -22,17 +24,21 @@ class UnSkipAddManager(private val context: Context) {
 
 
     private fun loadInterstitial() {
+        if (isInterstitialLoading || interstitialAd != null) return
+        isInterstitialLoading = true
         val adRequest = AdRequest.Builder().build()
         InterstitialAd.load(
-            context.applicationContext,
+            context,
             "ca-app-pub-3940256099942544/1033173712",
             adRequest,
             object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: InterstitialAd) {
                     interstitialAd = ad
+                    isInterstitialLoading = false
                 }
                 override fun onAdFailedToLoad(adError: LoadAdError) {
                     interstitialAd = null
+                    isInterstitialLoading = false
                     android.util.Log.e("AdMob", "Interstitial failed: ${adError.message}")
                 }
             }
@@ -63,17 +69,21 @@ class UnSkipAddManager(private val context: Context) {
 
 
     private fun loadRewarded() {
+        if (isRewardedLoading || rewardedAd != null) return
+        isRewardedLoading = true
         val adRequest = AdRequest.Builder().build()
         RewardedAd.load(
-            context.applicationContext,
+            context,
             "ca-app-pub-3940256099942544/5224354917",
             adRequest,
             object : RewardedAdLoadCallback() {
                 override fun onAdLoaded(ad: RewardedAd) {
                     rewardedAd = ad
+                    isRewardedLoading = false
                 }
                 override fun onAdFailedToLoad(adError: LoadAdError) {
                     rewardedAd = null
+                    isRewardedLoading = false
                 }
             }
         )
