@@ -2,6 +2,7 @@ package com.example.pgdquiz.data.database
 
 import androidx.room.TypeConverter
 import com.example.pgdquiz.ui.data.QuizType
+import com.example.pgdquiz.ui.data.SubscriptionTier
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -20,5 +21,25 @@ class Converters {
         if (json == null) return emptyMap()
         val type = object : TypeToken<Map<QuizType, Int>>() {}.type
         return gson.fromJson(json, type) ?: emptyMap()
+    }
+
+    @TypeConverter
+    fun fromQuizType(quizType: QuizType?): String? {
+        return quizType?.name
+    }
+
+    @TypeConverter
+    fun toQuizType(value: String?): QuizType? {
+        return value?.let { QuizType.valueOf(it) }
+    }
+
+    @TypeConverter
+    fun fromSubscriptionTier(tier: SubscriptionTier?): String? {
+        return tier?.name
+    }
+
+    @TypeConverter
+    fun toSubscriptionTier(value: String?): SubscriptionTier? {
+        return value?.let { SubscriptionTier.valueOf(it) }
     }
 }

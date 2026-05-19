@@ -11,8 +11,8 @@ class BillingManager(
     private val onTierUpdated: (SubscriptionTier) -> Unit
 ) {
     companion object {
-        const val APPRENTICE_PRODUCT_ID = "apprentice_weekly"   // set in Play Console
-        const val TRADESMAN_PRODUCT_ID = "tradesman_lifetime"   // set in Play Console
+        const val APPRENTICE_PRODUCT_ID = "apprentice_weekly"
+        const val TRADESMAN_PRODUCT_ID = "tradesman_lifetime"
     }
 
     private val billingClient = BillingClient.newBuilder(context)

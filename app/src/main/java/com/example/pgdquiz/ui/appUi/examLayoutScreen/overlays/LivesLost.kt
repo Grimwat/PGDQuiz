@@ -33,9 +33,11 @@ fun LivesLost(
     quizType: QuizType,
     examEmoji: Painter,
     emojiCont: String,
-    onWatchAd: () -> Unit,
+    onWatchAd: (() -> Unit)?,
     onExit: () -> Unit,
-    onUpgrade: () -> Unit = {}
+    onUpgrade: () -> Unit = {},
+    onUpgradeApprentice: () -> Unit = {},
+    onUpgradeTradesman: () -> Unit = {}
 ) {
     val (title,examEmoji) = when (quizType) {
         QuizType.DRAIN_LAYING -> "HappyPoo" to R.drawable.happypoo2
@@ -117,16 +119,18 @@ fun LivesLost(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(8.dp)
             ) {
-                Button(
-                    onClick = onWatchAd,
-                    shape = RoundedCornerShape(8.dp),
-                    border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.outline,
-                        contentColor = Color.White
-                    )
-                ) {
-                    Text("Gain 1 attempt")
+                if (onWatchAd != null) {
+                    Button(
+                        onClick = onWatchAd,
+                        shape = RoundedCornerShape(8.dp),
+                        border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.outline,
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text("Gain 1 attempt")
+                    }
                 }
 
                 Button(
@@ -147,18 +151,29 @@ fun LivesLost(
             }
 
             Button(
-                onClick = onUpgrade,
-                enabled = false,
+                onClick = onUpgradeApprentice,
                 shape = RoundedCornerShape(8.dp),
-                modifier = Modifier.padding(bottom = 8.dp),
-                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
+                modifier = Modifier.padding(horizontal = 8.dp),
+                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.outline,
-                    disabledContainerColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
-                    disabledContentColor = Color.White.copy(alpha = 0.3f)
+                    contentColor = Color.White
                 )
             ) {
-                Text("Upgrade to Premium")
+                Text("Upgrade: Apprentice")
+            }
+
+            Button(
+                onClick = onUpgradeTradesman,
+                shape = RoundedCornerShape(8.dp),
+                modifier = Modifier.padding(bottom = 8.dp, start = 8.dp, end = 8.dp),
+                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.outline,
+                    contentColor = Color.White
+                )
+            ) {
+                Text("Upgrade: Tradesman")
             }
         }
     }

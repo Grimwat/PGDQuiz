@@ -109,7 +109,6 @@ class QuizViewModel(
         _quizUiState.update { currentState ->
             val nextQuestionIndex = currentState.currentQuestionIndex + 1
             if (nextQuestionIndex < currentState.questions.size) {
-
                 val nextQuestion = currentState.questions[nextQuestionIndex]
                     currentState.copy(
                         currentQuestionIndex = nextQuestionIndex,
@@ -182,7 +181,7 @@ class QuizViewModel(
 
 
     fun loseLife() {
-        if (quizUiState.value.hasUnlimitedLives()) return
+        if (_quizUiState.value.hasUnlimitedLives()) return
         viewModelScope.launch {
             val currentLives = quizUiState.value.getCurrentQuizTypeLives()
             if (currentLives > 0) {

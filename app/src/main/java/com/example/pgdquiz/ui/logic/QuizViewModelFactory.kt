@@ -2,7 +2,6 @@ package com.example.pgdquiz.ui.logic
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.pgdquiz.domain.DefaultQuizDatastore
 import com.example.pgdquiz.domain.DefaultQuestionLoader
 import com.example.pgdquiz.domain.interfaces.QuizDatastore
 

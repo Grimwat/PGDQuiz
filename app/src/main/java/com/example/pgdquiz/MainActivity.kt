@@ -28,16 +28,16 @@ import com.google.android.gms.ads.MobileAds
 class MainActivity : ComponentActivity() {
 
     private var selectedQuizType by mutableStateOf<QuizType?>(null)
-
     private var adManager: UnSkipAddManager? = null
     private var billingManager: BillingManager? = null
+    private var quizViewModel: QuizViewModel? = null 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val app = application as QuizApplication
 
         billingManager = BillingManager(this) { tier ->
-            viewModel?.updateSubscriptionTier(tier)
+            quizViewModel?.updateSubscriptionTier(tier)
         }
         app.billingManager = billingManager!!
         billingManager?.initialize()
@@ -68,6 +68,7 @@ class MainActivity : ComponentActivity() {
                         questionLoader = DefaultQuestionLoader(this@MainActivity)
                     )
                 )
+                quizViewModel = viewModel
 
                 PgdQuizTheme(quizType = selectedQuizType ?: QuizType.DEFAULT) {
                     QuizMainScreen(
@@ -76,7 +77,6 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             } else {
-
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text("Error: QuizApplication not recognized. Check Manifest.")
                 }
