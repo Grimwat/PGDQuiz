@@ -1,0 +1,21 @@
+package com.tradezmantom.pgdquiz
+
+import android.app.Application
+import com.tradezmantom.pgdquiz.billing.BillingManager
+import com.tradezmantom.pgdquiz.data.database.AppDatabase
+import com.tradezmantom.pgdquiz.data.repository.RoomQuizDatastore
+import com.tradezmantom.pgdquiz.domain.interfaces.QuizDatastore
+
+class QuizApplication : Application() {
+
+    val database by lazy { AppDatabase.getDatabase(this) }
+
+    val quizDatastore: QuizDatastore by lazy {
+        RoomQuizDatastore(database.userStatsDao())
+    }
+    lateinit var billingManager: BillingManager
+
+    override fun onCreate() {
+        super.onCreate()
+    }
+}

@@ -288,7 +288,7 @@
         },
         {
             "id": "27",
-            "question": "flue terminal and another flue terminal?",
+            "question": "What is the minimum distance between a flue terminal and another flue terminal?",
             "answer": "200 mm.",
             "options": [
                 "400 mm.",

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.pgdquiz"
+    namespace = "com.tradezmantom.pgdquiz"
     compileSdk = 36
 
     signingConfigs {
@@ -18,11 +18,11 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.pgdquiz"
+        applicationId = "com.tradezmantom.pgdquiz"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        targetSdk = 35
+        versionCode = 4
+        versionName = "1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -32,8 +32,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
+            isShrinkResources = false
             signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
