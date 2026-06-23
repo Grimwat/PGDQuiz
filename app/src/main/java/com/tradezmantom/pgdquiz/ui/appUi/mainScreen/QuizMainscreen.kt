@@ -58,7 +58,6 @@ fun QuizMainScreen(
                         selectedQuizType = quizType
                         onQuizTypeSelected(quizType)
 
-                        //  viewModel.res(quizType)
                     },
                     onQuizTypeSelected = onQuizTypeSelected,
 
@@ -99,7 +98,6 @@ fun QuizMainScreen(
                     onExit = {
                         selectedMode = null
                         selectedQuizType = null
-                        //   viewModel.reset(QuizType.DEFAULT)
                     },
                     quizDifficulty = selectedMode!!,
                     quizType = selectedQuizType!!,

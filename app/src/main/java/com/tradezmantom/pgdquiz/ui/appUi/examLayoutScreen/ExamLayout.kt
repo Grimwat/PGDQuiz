@@ -47,6 +47,7 @@ import com.tradezmantom.pgdquiz.ui.data.getCurrentQuestions
 import com.tradezmantom.pgdquiz.ui.data.getCurrentQuizTypeLives
 import com.tradezmantom.pgdquiz.ui.data.hasNoAds
 import com.tradezmantom.pgdquiz.ui.data.hasUnlimitedLives
+import com.tradezmantom.pgdquiz.ui.data.isPremium
 import com.tradezmantom.pgdquiz.ui.logic.QuizViewModel
 
 
@@ -99,7 +100,11 @@ fun ExamLayout(
                                 streakCount = state.answerStreak,
                                 modifier = Modifier.fillMaxWidth(),
                                 hasUnlimitedLives = state.hasUnlimitedLives(),
-                                onBack = { onBackToModeSelect() }
+                                isPremium = state.isPremium(),
+                                onBack = { onBackToModeSelect() },
+                                onUpgrade = {
+                                    (context as? MainActivity)?.launchApprenticeSubscription()
+                                }
                             )
                             Spacer(modifier = Modifier.padding(8.dp))
                             Column(
@@ -159,7 +164,11 @@ fun ExamLayout(
                                 streakCount = state.answerStreak,
                                 modifier = Modifier.fillMaxWidth(),
                                 hasUnlimitedLives = state.hasUnlimitedLives(),
-                                onBack = { onBackToModeSelect() }
+                                isPremium = state.isPremium(),
+                                onBack = { onBackToModeSelect() },
+                                onUpgrade = {
+                                    (context as? MainActivity)?.launchApprenticeSubscription()
+                                }
                             )
                             Spacer(modifier = Modifier.padding(8.dp))
                             QuestionField(
@@ -185,12 +194,9 @@ fun ExamLayout(
                             onClick = {
                                 val totalQuestions = state.getCurrentQuestions().size
                                 val activity = context as? MainActivity
-                                if (state.currentQuestionIndex >= totalQuestions - 1) {
-                                    if (viewModel.canShowAd() && showAds) {
-                                        activity?.showInterstitialAd {
-                                            viewModel.nextQuestion()
-                                        }
-                                    } else {
+
+                                if (viewModel.canShowAd() && showAds) {
+                                    activity?.showInterstitialAd {
                                         viewModel.triggerShowCorrectAnswer()
                                     }
                                 } else {

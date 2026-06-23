@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -21,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -85,24 +87,42 @@ fun AnswerButton(
                     .clip(RoundedCornerShape(12.dp))
                     .background(brush = backgroundBrush)
                     .border(
-                        width = 2.dp,
-                        color = if (isSelected) MaterialTheme.colorScheme.outline
-                        else MaterialTheme.colorScheme.primary,
+                        width = if (isSelected || (showCorrectAnswer && isCorrect)) 2.dp else 1.dp,
+                        color = when {
+                            showCorrectAnswer && isCorrect -> Color.Green
+                            isSelected -> MaterialTheme.colorScheme.outline
+                            else -> MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+                        },
                         shape = RoundedCornerShape(12.dp)
                     )
                     .padding(12.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = optionText,
-                    color = Color.White,
-                    fontSize = fontSize,
-                    style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Center,
-                    maxLines = Int.MAX_VALUE,
-                    overflow = TextOverflow.Clip,
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = optionText,
+                        color = Color.White,
+                        fontSize = fontSize,
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center,
+                        maxLines = Int.MAX_VALUE,
+                        overflow = TextOverflow.Clip,
+                        modifier = Modifier.weight(1f)
+                    )
+                    if (showCorrectAnswer && isCorrect) {
+                        Text(
+                            text = "✓",
+                            color = Color.Green,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            modifier = Modifier.padding(start = 8.dp)
+                        )
+                    }
+                }
             }
         }
     }

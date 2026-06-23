@@ -109,6 +109,7 @@ class QuizViewModel(
         _quizUiState.update { currentState ->
             val nextQuestionIndex = currentState.currentQuestionIndex + 1
             if (nextQuestionIndex < currentState.questions.size) {
+
                 val nextQuestion = currentState.questions[nextQuestionIndex]
                     currentState.copy(
                         currentQuestionIndex = nextQuestionIndex,
@@ -137,7 +138,7 @@ class QuizViewModel(
                     showCorrectAnswer = true
                 )
             }
-            delay(2000L)
+            delay(3500L)
                 nextQuestion()
         }
     }

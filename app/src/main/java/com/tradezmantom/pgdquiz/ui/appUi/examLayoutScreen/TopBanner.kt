@@ -29,6 +29,18 @@ import androidx.compose.ui.unit.dp
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 import androidx.compose.ui.platform.LocalConfiguration
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun Banner(
@@ -38,96 +50,159 @@ fun Banner(
     attempts: Int,
     streakCount: Int,
     hasUnlimitedLives: Boolean = false,
-    onBack: () -> Unit
+    isPremium: Boolean = false,
+    onBack: () -> Unit,
+    onUpgrade: (() -> Unit)? = null
 ) {
     val (title, examEmoji) = when (quizType) {
-        QuizType.DRAIN_LAYING -> "Drainlaying" to R.drawable.happypoo2
-        QuizType.PLUMBING -> "Plumbing" to R.drawable.drop2
-        QuizType.GASFITTING -> "Gasfitting" to R.drawable.pressure2
+        QuizType.DRAIN_LAYING -> "Drainlaying" to R.drawable.drainlogo
+        QuizType.PLUMBING -> "Plumbing" to R.drawable.plumblogo
+        QuizType.GASFITTING -> "Gasfitting" to R.drawable.gasslogo
         QuizType.DEFAULT -> "Quiz App" to R.drawable.arrow
-    }
-    val PGDLogo = when (quizType) {
-        QuizType.DRAIN_LAYING -> R.drawable.drainlogo
-        QuizType.PLUMBING -> R.drawable.plumblogo
-        QuizType.GASFITTING -> R.drawable.gasslogo
-        QuizType.DEFAULT -> R.drawable.arrow
     }
 
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
-    val verticalPadding = if (isLandscape) 8.dp else 16.dp
-    val iconSize = if (isLandscape) 24.dp else 32.dp
-    val bannerEnd = if (isLandscape) 50.dp else 0.dp
-    val bannerStart = if (isLandscape) 8.dp else 0.dp
+    val verticalPadding = if (isLandscape) 6.dp else 10.dp
+    val iconSize = if (isLandscape) 24.dp else 28.dp
+    val glowColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
 
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .background(color = MaterialTheme.colorScheme.tertiary)
-            .border(width = 4.dp, color = MaterialTheme.colorScheme.surface)
-            .padding(end = bannerEnd),
+            .shadow(
+                elevation = 8.dp,
+                shape = RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp),
+                ambientColor = glowColor,
+                spotColor = glowColor
+            )
+            .clip(RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp))
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.outline,
+                        MaterialTheme.colorScheme.tertiary.copy(alpha = 0.85f)
+                    )
+                )
+            )
+            .border(
+                width = 1.5.dp,
+                brush = Brush.horizontalGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.primary,
+                        MaterialTheme.colorScheme.outline,
+                        MaterialTheme.colorScheme.primary
+                    )
+                ),
+                shape = RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp)
+            ),
         contentAlignment = Alignment.Center
     ) {
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = verticalPadding),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+        Column(
+            modifier = Modifier.fillMaxWidth()
         ) {
-            IconButton(onClick = onBack,
-                modifier = Modifier.padding(start = bannerStart)
-                   ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.arrow),
-                    contentDescription = "Back",
-                    modifier = Modifier
-                        .size(iconSize)
-                )
-            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = verticalPadding),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                IconButton(onClick = onBack) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.arrow),
+                        contentDescription = "Back",
+                        modifier = Modifier.size(iconSize),
+                        tint = Color.White
+                    )
+                }
+
                 Text(
                     text = title,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(start = 28.dp, top = 16.dp),
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 16.sp,
+                    color = Color.White,
                     textAlign = TextAlign.Center
                 )
 
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.flame1),
+                        contentDescription = "Streak",
+                        modifier = Modifier
+                            .size(iconSize)
+                            .clip(RoundedCornerShape(4.dp)),
+                        contentScale = ContentScale.Fit
+                    )
+                    Text(
+                        text = streakCount.toString(),
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        fontSize = 14.sp
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Image(
+                        painter = painterResource(examEmoji),
+                        contentDescription = emojiCont,
+                        modifier = Modifier
+                            .size(iconSize)
+                            .clip(RoundedCornerShape(4.dp)),
+                        contentScale = ContentScale.Fit
+                    )
+                    Text(
+                        text = if (hasUnlimitedLives) "∞" else attempts.toString(),
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        fontSize = 14.sp
+                    )
+                }
+            }
 
-            Row (
-                modifier = Modifier
-                    .padding(top = 16.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.flame1),
-                    contentDescription = "Streak Icon",
+            if (!isPremium && onUpgrade != null) {
+                Button(
+                    onClick = onUpgrade,
+                    shape = RoundedCornerShape(8.dp),
+                    contentPadding = PaddingValues(0.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
                     modifier = Modifier
-                        .size(iconSize)
-                        .clip(RoundedCornerShape(8.dp)),
-                    contentScale = ContentScale.Fit
-                )
-                Text(
-                    text = streakCount.toString(),
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(top = 10.dp)
-                )
-                Image(
-                    painter = painterResource(examEmoji),
-                    contentDescription = emojiCont,
-                    modifier = Modifier
-                        .size(iconSize)
-                        .clip(RoundedCornerShape(8.dp)),
-                    contentScale = ContentScale.Fit
-                )
-                Text(
-                    text = if (hasUnlimitedLives) "∞" else attempts.toString(),
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(top = 10.dp)
-                )
+                        .fillMaxWidth()
+                        .height(32.dp)
+                        .padding(horizontal = 12.dp)
+                        .padding(bottom = 8.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                brush = Brush.horizontalGradient(
+                                    colors = listOf(
+                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
+                                        MaterialTheme.colorScheme.outline.copy(alpha = 0.6f),
+                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
+                                    )
+                                ),
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                            .border(
+                                1.dp,
+                                MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
+                                RoundedCornerShape(8.dp)
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "⚡ Upgrade to remove ads & unlimited lives",
+                            color = Color.White.copy(alpha = 0.9f),
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold,
+                            letterSpacing = 0.3.sp
+                        )
+                    }
+                }
             }
         }
     }

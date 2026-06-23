@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -34,6 +35,7 @@ fun QuizModeSelection(
     onBackToQuizType: () -> Unit,
     lives: Int,
     streak: Int,
+    onUpgrade: () -> Unit = {},
     hasUnlimitedLives: Boolean = false,
     onSelectDifficulty: (mode: QuizDifficulty) -> Unit,
     showAds: Boolean = true
@@ -62,7 +64,9 @@ fun QuizModeSelection(
                     streakCount = streak,
                     modifier = Modifier.fillMaxWidth(),
                     hasUnlimitedLives = hasUnlimitedLives,
-                    onBack = onBackToQuizType
+                    isPremium = !showAds,
+                    onBack = onBackToQuizType,
+                    onUpgrade = onUpgrade
                 )
                 Column(
                     verticalArrangement = Arrangement.spacedBy(5.dp),
@@ -116,21 +120,26 @@ fun QuizModeSelection(
                 .background(MaterialTheme.colorScheme.background),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
+            Banner(
+                quizType = quizType,
+                emojiCont = "Exam Icon",
+                attempts = lives,
+                streakCount = streak,
+                modifier = Modifier.fillMaxWidth(),
+                hasUnlimitedLives = hasUnlimitedLives,
+                isPremium = !showAds,
+                onBack = onBackToQuizType,
+                onUpgrade = onUpgrade
+            )
             Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(20.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp, vertical = 200.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Banner(
-                    quizType = quizType,
-                    emojiCont = "Exam Icon",
-                    attempts = lives,
-                    streakCount = streak,
-                    modifier = Modifier.fillMaxWidth(),
-                    hasUnlimitedLives = hasUnlimitedLives,
-                    onBack = onBackToQuizType
-                )
-                Spacer(modifier = Modifier.padding(16.dp))
+
                 ModeButtonPortrait(
                     label = "Easy",
                     questionCountText = "(25 Questions)",
@@ -156,6 +165,7 @@ fun QuizModeSelection(
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
+                        .navigationBarsPadding()
                 )
             }
         }

@@ -6,6 +6,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -19,11 +21,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.tradezmantom.pgdquiz.R
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 
@@ -40,28 +46,58 @@ fun NextButton(
         QuizType.DEFAULT -> null
     }
 
+    val gradientBrush = Brush.horizontalGradient(
+        colors = listOf(
+            MaterialTheme.colorScheme.primary,
+            MaterialTheme.colorScheme.outline,
+            MaterialTheme.colorScheme.primary
+        )
+    )
+
+    val glowColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)
+
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
         Button(
             onClick = onClick,
-            shape = RectangleShape,
+            shape = RoundedCornerShape(16.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
                 contentColor = Color.Unspecified
             ),
+            contentPadding = PaddingValues(0.dp),
+            elevation = ButtonDefaults.buttonElevation(
+                defaultElevation = 8.dp,
+                pressedElevation = 2.dp
+            ),
             modifier = Modifier
-                .height(76.dp)
-                .background(Color.Transparent)
+                .fillMaxWidth()
+                .height(64.dp)
+                .shadow(
+                    elevation = 12.dp,
+                    shape = RoundedCornerShape(16.dp),
+                    ambientColor = glowColor,
+                    spotColor = glowColor
+                )
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(color = MaterialTheme.colorScheme.primary)
-                    .border(width = 4.dp, color = MaterialTheme.colorScheme.outline)
-                    .padding(2.dp),
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(brush = gradientBrush)
+                    .border(
+                        width = 2.dp,
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(
+                                MaterialTheme.colorScheme.outline,
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+                                MaterialTheme.colorScheme.outline
+                            )
+                        ),
+                        shape = RoundedCornerShape(16.dp)
+                    ),
                 contentAlignment = Alignment.Center
             ) {
                 examId?.let { id ->
@@ -69,21 +105,18 @@ fun NextButton(
                         painter = painterResource(id),
                         contentDescription = null,
                         modifier = Modifier
-                            .alpha(0.2f),
+                            .fillMaxSize()
+                            .alpha(0.15f),
                     )
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ){
-                    }
                 }
-                        Text(
-                            text = "Next Question",
-                            color = Color.White,
-                            fontWeight = Bold
-                        )
-                        }
-                    }
-                    }
-                }
-
+                Text(
+                    text = "Next Question",
+                    color = Color.White,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 16.sp,
+                    letterSpacing = 1.sp
+                )
+            }
+        }
+    }
+}

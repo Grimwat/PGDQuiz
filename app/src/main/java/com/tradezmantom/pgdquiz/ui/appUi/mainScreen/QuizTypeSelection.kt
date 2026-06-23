@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -39,6 +40,7 @@ fun QuizTypeSelection(
             .background(color = MaterialTheme.colorScheme.primary)
     ) {
         if (isLandscape) {
+
             Row(
                 modifier = Modifier
                     .fillMaxSize()
@@ -46,7 +48,6 @@ fun QuizTypeSelection(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
                 Box(
                     modifier = Modifier
                         .weight(0.6f)
@@ -60,7 +61,6 @@ fun QuizTypeSelection(
                         contentScale = ContentScale.Fit
                     )
                 }
-
                 Column(
                     modifier = Modifier
                         .weight(0.4f)
@@ -99,35 +99,45 @@ fun QuizTypeSelection(
                 Spacer(modifier = Modifier.padding(end = 25.dp))
             }
         } else {
-            Column {
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
+
                 Box(
                     modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .weight(0.55f),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
                         painter = tradeTom,
                         contentDescription = "TradesmanTom",
-                        modifier = Modifier
-                            .fillMaxSize(),
+                        modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Fit
                     )
                 }
 
-                Row(
+
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .height(300.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
+                        .weight(0.45f)  // ADD THIS
+                        .padding(horizontal = 24.dp)
+                        .padding(bottom = 32.dp)
+                        .navigationBarsPadding(),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     QuizType.values()
                         .filter { it != QuizType.DEFAULT }
                         .forEach { type ->
                             QuizTypeButton(
-                                text = type.name,
+                                text = when (type) {
+                                    QuizType.DRAIN_LAYING -> "Drainlaying"
+                                    QuizType.PLUMBING -> "Plumbing"
+                                    QuizType.GASFITTING -> "Gasfitting"
+                                    else -> type.name
+                                },
                                 backgroundColor = when (type) {
                                     QuizType.PLUMBING -> MaterialTheme.colorScheme.onSurface
                                     QuizType.GASFITTING -> MaterialTheme.colorScheme.onBackground
@@ -139,7 +149,6 @@ fun QuizTypeSelection(
                                     QuizType.GASFITTING -> MaterialTheme.colorScheme.onPrimary
                                     QuizType.DRAIN_LAYING -> MaterialTheme.colorScheme.background
                                     else -> MaterialTheme.colorScheme.onSecondary
-
                                 },
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -151,11 +160,8 @@ fun QuizTypeSelection(
                             }
                         }
                 }
-                Spacer(modifier = Modifier.height(50.dp))
             }
         }
     }
 }
-
-
 

@@ -30,6 +30,8 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.style.TextOverflow
 
 @Composable
@@ -54,6 +56,8 @@ fun QuestionField(
         else -> 16.sp
     }
 
+    val glowColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -66,23 +70,45 @@ fun QuestionField(
                     Modifier.wrapContentHeight()
                 }
             )
-            .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colorScheme.primary)
-            .border(width = 4.dp, color = MaterialTheme.colorScheme.outline),
+            .shadow(
+                elevation = 12.dp,
+                shape = RoundedCornerShape(12.dp),
+                ambientColor = glowColor,
+                spotColor = glowColor
+            )
+            .clip(RoundedCornerShape(12.dp))
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.primary,
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.85f)
+                    )
+                )
+            )
+            .border(
+                width = 1.5.dp,  // thinner than before
+                brush = Brush.linearGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.outline,
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                        MaterialTheme.colorScheme.outline
+                    )
+                ),
+                shape = RoundedCornerShape(12.dp)
+            ),
         contentAlignment = Alignment.Center
     ) {
         ExamId?.let { id ->
             Image(
                 painter = painterResource(id),
                 contentDescription = null,
-                modifier = Modifier
-                    .alpha(0.2f),
+                modifier = Modifier.alpha(0.15f)  // slightly more subtle
             )
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .verticalScroll(rememberScrollState())
-                    .padding(8.dp)
+                    .padding(12.dp)  // slightly more padding for readability
             ) {
                 Text(
                     text = question?.question ?: "",
@@ -93,14 +119,12 @@ fun QuestionField(
                     fontSize = fontSize,
                     maxLines = Int.MAX_VALUE,
                     overflow = TextOverflow.Clip,
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }
     }
 }
-
 @Preview
 @Composable
 fun PreviewQuestionField() {

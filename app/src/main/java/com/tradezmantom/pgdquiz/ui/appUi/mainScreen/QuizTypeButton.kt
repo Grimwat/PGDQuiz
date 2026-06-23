@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 import com.tradezmantom.pgdquiz.ui.theme.BackgroundLogo
@@ -66,27 +67,14 @@ fun QuizTypeButton(
                 quizType = quizType,
                 modifier = modifier
             )
-            if (isLandscape) {
 
-                Text(
-                    text = text,
-                    color = Color.White,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            } else {
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    text.forEach { letter ->
-                        Text(
-                            text = letter.toString(),
-                            color = Color.White,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    }
-                }
-            }
+            Text(
+                text = text,
+                color = Color.White,
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.Center,
+                maxLines = 1
+            )
         }
     }
 }
