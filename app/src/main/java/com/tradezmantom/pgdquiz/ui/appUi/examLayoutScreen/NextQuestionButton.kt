@@ -17,6 +17,11 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -32,6 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tradezmantom.pgdquiz.R
 import com.tradezmantom.pgdquiz.ui.data.QuizType
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun NextButton(
@@ -39,6 +46,9 @@ fun NextButton(
     quizType: QuizType,
     modifier: Modifier = Modifier
 ) {
+    var isClickable by remember { mutableStateOf(true) }
+    val scope = rememberCoroutineScope()
+
     val examId = when (quizType) {
         QuizType.GASFITTING -> R.drawable.gasslogo
         QuizType.PLUMBING -> R.drawable.plumblogo
@@ -61,11 +71,23 @@ fun NextButton(
         contentAlignment = Alignment.Center
     ) {
         Button(
-            onClick = onClick,
+            onClick = {
+                if (isClickable) {
+                    isClickable = false
+                    onClick()
+                    scope.launch {
+                        delay(1500L)
+                        isClickable = true
+                    }
+                }
+            },
+            enabled = isClickable,
             shape = RoundedCornerShape(16.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
-                contentColor = Color.Unspecified
+                contentColor = Color.Unspecified,
+                disabledContainerColor = Color.Transparent,
+                disabledContentColor = Color.Unspecified
             ),
             contentPadding = PaddingValues(0.dp),
             elevation = ButtonDefaults.buttonElevation(
@@ -86,7 +108,19 @@ fun NextButton(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(16.dp))
-                    .background(brush = gradientBrush)
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = if (isClickable) listOf(
+                                MaterialTheme.colorScheme.primary,
+                                MaterialTheme.colorScheme.outline,
+                                MaterialTheme.colorScheme.primary
+                            ) else listOf(
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.4f),
+                                MaterialTheme.colorScheme.outline.copy(alpha = 0.4f),
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.4f)
+                            )
+                        )
+                    )
                     .border(
                         width = 2.dp,
                         brush = Brush.horizontalGradient(
@@ -110,7 +144,7 @@ fun NextButton(
                     )
                 }
                 Text(
-                    text = "Next Question",
+                    text = if (isClickable) "Next Question" else "...",
                     color = Color.White,
                     fontWeight = FontWeight.ExtraBold,
                     fontSize = 16.sp,

@@ -1,6 +1,9 @@
 package com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.portrait
 
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +18,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -23,8 +27,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.AnswerButton
@@ -115,6 +122,35 @@ fun ButtonsPortrait(
                                 )
                             )
                         )
+                )
+            }
+        }
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .height(40.dp)
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Transparent,
+                            if (showScrollIndicator) MaterialTheme.colorScheme.background.copy(alpha = 0.9f)
+                            else Color.Transparent
+                        )
+                    )
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            AnimatedVisibility(
+                visible = showScrollIndicator,
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+                Text(
+                    text = "▼ scroll",
+                    color = Color.White.copy(alpha = 0.7f),
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold
                 )
             }
         }

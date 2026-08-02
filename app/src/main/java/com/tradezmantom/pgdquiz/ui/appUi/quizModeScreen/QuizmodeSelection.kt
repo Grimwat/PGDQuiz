@@ -7,12 +7,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.MaterialTheme
@@ -21,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import com.tradezmantom.pgdquiz.MainActivity
 import com.tradezmantom.pgdquiz.ui.appUi.addManager.adds.BannerAd
 import com.tradezmantom.pgdquiz.ui.appUi.quizModeScreen.landscape.ModeButtonLandscape
 import com.tradezmantom.pgdquiz.ui.appUi.quizModeScreen.portrait.ModeButtonPortrait
@@ -38,86 +43,84 @@ fun QuizModeSelection(
     onUpgrade: () -> Unit = {},
     hasUnlimitedLives: Boolean = false,
     onSelectDifficulty: (mode: QuizDifficulty) -> Unit,
-    showAds: Boolean = true
+    showAds: Boolean = true,
 ) {
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
     if (isLandscape) {
-
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
+                .windowInsetsPadding(WindowInsets.systemBars),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
+            Banner(
+                quizType = quizType,
+                emojiCont = "Exam Icon",
+                attempts = lives,
+                streakCount = streak,
+                modifier = Modifier.fillMaxWidth(),
+                hasUnlimitedLives = hasUnlimitedLives,
+                isPremium = !showAds,
+                onBack = onBackToQuizType,
+                onUpgrade = onUpgrade
+            )
+            Row(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxHeight(),
-                verticalArrangement = Arrangement.spacedBy(20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Banner(
+                ModeButtonLandscape(
+                    label = "Easy",
+                    questionCountText = "(25 Questions)",
+                    onClick = { onSelectDifficulty(QuizDifficulty.EASY) },
                     quizType = quizType,
-                    emojiCont = "Exam Icon",
-                    attempts = lives,
-                    streakCount = streak,
-                    modifier = Modifier.fillMaxWidth(),
-                    hasUnlimitedLives = hasUnlimitedLives,
-                    isPremium = !showAds,
-                    onBack = onBackToQuizType,
-                    onUpgrade = onUpgrade
+                    modifier = Modifier.weight(1f).fillMaxHeight(0.7f)
                 )
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(5.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    ModeButtonLandscape(
-                        label = "Easy",
-                        questionCountText = "(25 Questions)",
-                        onClick = { onSelectDifficulty(QuizDifficulty.EASY) },
-                        quizType = quizType,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    ModeButtonLandscape(
-                        label = "Medium",
-                        questionCountText = "(50 Questions)",
-                        onClick = { onSelectDifficulty(QuizDifficulty.MEDIUM) },
-                        quizType = quizType,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    ModeButtonLandscape(
-                        label = "Hard",
-                        questionCountText = "(100 Questions)",
-                        onClick = { onSelectDifficulty(QuizDifficulty.HARD) },
-                        quizType = quizType,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
+                ModeButtonLandscape(
+                    label = "Medium",
+                    questionCountText = "(50 Questions)",
+                    onClick = { onSelectDifficulty(QuizDifficulty.MEDIUM) },
+                    quizType = quizType,
+                    modifier = Modifier.weight(1f).fillMaxHeight(0.7f)
+                )
+                ModeButtonLandscape(
+                    label = "Hard",
+                    questionCountText = "(100 Questions)",
+                    onClick = { onSelectDifficulty(QuizDifficulty.HARD) },
+                    quizType = quizType,
+                    modifier = Modifier.weight(1f).fillMaxHeight(0.7f)
+                )
             }
-
-            if (showAds) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .wrapContentWidth(),
-                    contentAlignment = Alignment.Center
-                ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+            ) {
+                if (showAds) {
                     BannerAd(
                         modifier = Modifier
-                            .width(160.dp)
-                            .fillMaxHeight()
+                            .fillMaxWidth()
+                            .height(60.dp)
                     )
                 }
             }
         }
+    }
 
-    } else {
+                else {
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
+                .background(MaterialTheme.colorScheme.background)
+                .windowInsetsPadding(WindowInsets.systemBars),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Banner(
@@ -135,8 +138,8 @@ fun QuizModeSelection(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp, vertical = 200.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                    .padding(horizontal = 24.dp),
+                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
@@ -159,14 +162,18 @@ fun QuizModeSelection(
                     onClick = { onSelectDifficulty(QuizDifficulty.HARD) }
                 )
             }
-
-            if (showAds) {
-                BannerAd(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .navigationBarsPadding()
-                )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+            ) {
+                if (showAds) {
+                    BannerAd(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(60.dp)
+                    )
+                }
             }
         }
     }

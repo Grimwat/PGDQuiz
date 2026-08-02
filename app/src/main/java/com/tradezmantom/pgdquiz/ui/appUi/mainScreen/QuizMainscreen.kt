@@ -16,10 +16,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.tradezmantom.pgdquiz.MainActivity
 import com.tradezmantom.pgdquiz.R
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.ExamLayout
+import com.tradezmantom.pgdquiz.ui.appUi.findActivity
 import com.tradezmantom.pgdquiz.ui.appUi.quizModeScreen.QuizModeSelection
 import com.tradezmantom.pgdquiz.ui.data.QuizDifficulty
 import com.tradezmantom.pgdquiz.ui.data.QuizType
@@ -35,7 +38,7 @@ fun QuizMainScreen(
     viewModel: QuizViewModel,
     onQuizTypeSelected: (QuizType) -> Unit,
 ) {
-
+    val context = LocalContext.current
     val state by viewModel.quizUiState.collectAsStateWithLifecycle()
     var selectedQuizType by rememberSaveable { mutableStateOf<QuizType?>(null) }
     var selectedMode by rememberSaveable { mutableStateOf<QuizDifficulty?>(null) }
@@ -85,8 +88,10 @@ fun QuizMainScreen(
                     lives = state.getCurrentQuizTypeLives(),
                     streak = state.answerStreak,
                     showAds = !state.hasNoAds(),
-                    hasUnlimitedLives = state.hasUnlimitedLives()
-                )
+                    hasUnlimitedLives = state.hasUnlimitedLives(),
+                    onUpgrade = {
+                        (context.findActivity() as? MainActivity)?.launchApprenticeSubscription()
+                    })
             }
 
             else -> {
@@ -118,7 +123,6 @@ fun QuizMainScreen(
                     examCont = selectedQuizType!!.name,
                     onBackToModeSelect = {
                         selectedMode = null
-                        //    viewModel.reset(selectedQuizType!!)
                     }
                 )
             }

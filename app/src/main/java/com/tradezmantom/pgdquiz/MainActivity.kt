@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tradezmantom.pgdquiz.billing.BillingManager
@@ -31,9 +32,10 @@ class MainActivity : ComponentActivity() {
     private var selectedQuizType by mutableStateOf<QuizType?>(null)
     private var adManager: UnSkipAddManager? = null
     private var billingManager: BillingManager? = null
-    private var quizViewModel: QuizViewModel? = null 
+    private var quizViewModel: QuizViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         val app = application as QuizApplication
 

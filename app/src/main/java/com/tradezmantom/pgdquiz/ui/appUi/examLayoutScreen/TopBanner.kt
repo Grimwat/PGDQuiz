@@ -105,7 +105,7 @@ fun Banner(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = verticalPadding),
+                    .padding(horizontal = 14.dp, vertical = verticalPadding),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {

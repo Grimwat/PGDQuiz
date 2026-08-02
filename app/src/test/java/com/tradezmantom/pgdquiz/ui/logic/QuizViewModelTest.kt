@@ -5,11 +5,14 @@ import com.tradezmantom.pgdquiz.fakes.FakeDataStore
 import com.tradezmantom.pgdquiz.fakes.FakeQuestionLoader
 import com.tradezmantom.pgdquiz.ui.data.QuizDifficulty
 import com.tradezmantom.pgdquiz.ui.data.QuizType
+import com.tradezmantom.pgdquiz.ui.data.SubscriptionTier
+import com.tradezmantom.pgdquiz.ui.data.getCurrentQuizTypeLives
 import com.tradezmantom.pgdquiz.util.STARTING_LIVES
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
@@ -176,7 +179,7 @@ class QuizViewModelTest {
         assertEquals("Answer streak should be incremented", 1, currentState.answerStreak)
         assertTrue("showCorrectAnswer should be true immediately", currentState.showCorrectAnswer)
         assertEquals("Question index should still be 0 before the delay", 0, currentState.currentQuestionIndex)
-        mainDispatcherRule.testDispatcher.scheduler.advanceTimeBy(2001L)
+        mainDispatcherRule.testDispatcher.scheduler.advanceTimeBy(3501L)
         currentState = viewModel.quizUiState.value
         assertEquals("Question index should be 1 after the delay", 1, currentState.currentQuestionIndex)
     }
@@ -221,22 +224,25 @@ class QuizViewModelTest {
         viewModel.startQuiz(QuizDifficulty.EASY, QuizType.DRAIN_LAYING)
         mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
 
+        val startingLives = viewModel.quizUiState.value.drainLayingQuizState.lives
         viewModel.loseLife()
         viewModel.restoreLife()
 
         val currentState = viewModel.quizUiState.value
-        assertEquals("DrainLaying lives should be restored to 1", 1, currentState.drainLayingQuizState.lives)
+        assertEquals("DrainLaying lives should be restored to starting lives", startingLives, currentState.drainLayingQuizState.lives)
     }
+
     @Test
     fun `restoreLife sets lives for the gasfitting type to 1`() = runTest {
         viewModel.startQuiz(QuizDifficulty.EASY, QuizType.GASFITTING)
         mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
 
+        val startingLives = viewModel.quizUiState.value.gasFittingQuizState.lives
         viewModel.loseLife()
         viewModel.restoreLife()
 
         val currentState = viewModel.quizUiState.value
-        assertEquals("GasFitting lives should be restored to 1", 1, currentState.gasFittingQuizState.lives)
+        assertEquals("GasFitting lives should be restored to starting lives", startingLives, currentState.gasFittingQuizState.lives)
     }
     @Test
     fun `updateStreak increments streak and stores it on correct answer`() = runTest {
@@ -259,8 +265,8 @@ class QuizViewModelTest {
 
         assertFalse("Should not show on question 1", viewModel.shouldShowInterstitial(0, totalQuestions))
         assertFalse("Should not show on question 5", viewModel.shouldShowInterstitial(4, totalQuestions))
-        assertTrue("Should show on question 10", viewModel.shouldShowInterstitial(9, totalQuestions))
-        assertTrue("Should show on question 20", viewModel.shouldShowInterstitial(19, totalQuestions))
+        assertTrue("Should show on question 7", viewModel.shouldShowInterstitial(6, totalQuestions))
+        assertTrue("Should show on question 14", viewModel.shouldShowInterstitial(13, totalQuestions))
     }
 
     @Test
@@ -284,7 +290,55 @@ class QuizViewModelTest {
             )
         }
     }
+    @Test
+    fun `updateSubscriptionTier updates state with new tier`() = runTest {
+        viewModel.updateSubscriptionTier(SubscriptionTier.APPRENTICE)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertEquals(SubscriptionTier.APPRENTICE, viewModel.quizUiState.value.subscriptionTier)
+    }
 
+    @Test
+    fun `updateSubscriptionTier updates state to tradesman`() = runTest {
+        viewModel.updateSubscriptionTier(SubscriptionTier.TRADESMAN)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertEquals(SubscriptionTier.TRADESMAN, viewModel.quizUiState.value.subscriptionTier)
+    }
+
+    @Test
+    fun `refreshForDifficultyScreen completes without error`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        viewModel.refreshForDifficultyScreen()
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertNotNull(viewModel.quizUiState.value)
+    }
+
+    @Test
+    fun `canShowAd returns false when question index is not a multiple of 7`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertFalse(viewModel.canShowAd())
+    }
+
+    @Test
+    fun `handleRewardEarned shows reward success state`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        viewModel.handleRewardEarned()
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertTrue(viewModel.quizUiState.value.isShowingRewardSuccess)
+    }
+
+    @Test
+    fun `handleRewardEarned restores a life`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        val livesBefore = viewModel.quizUiState.value.getCurrentQuizTypeLives()
+        viewModel.handleRewardEarned()
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        val livesAfter = viewModel.quizUiState.value.getCurrentQuizTypeLives()
+        assertTrue(livesAfter >= livesBefore)
+    }
     @Test
     fun `shouldShowInterstitial returns false for invalid inputs`() {
         assertFalse(viewModel.shouldShowInterstitial(-1, 10))

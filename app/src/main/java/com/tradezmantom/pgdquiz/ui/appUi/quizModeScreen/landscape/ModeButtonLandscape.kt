@@ -34,10 +34,9 @@ fun ModeButtonLandscape(
     Button(
         onClick = onClick,
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier
             .height(90.dp)
-            .padding(horizontal = 36.dp),
+            .padding(horizontal = 8.dp),
         border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.outline

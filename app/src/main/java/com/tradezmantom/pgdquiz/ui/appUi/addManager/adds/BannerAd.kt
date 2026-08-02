@@ -30,7 +30,7 @@ AndroidView(
 
     AdView(it).apply {
         setAdSize(AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(it, adWith))
-        adUnitId = "ca-app-pub-7804898639422438/7706754800"
+        adUnitId = "ca-app-pub-7804898639422438/9682004736"
         loadAd(AdRequest.Builder().build())
     }
 

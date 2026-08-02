@@ -29,7 +29,7 @@ class UnSkipAddManager(private val context: Context) {
         val adRequest = AdRequest.Builder().build()
         InterstitialAd.load(
             context,
-            "ca-app-pub-7804898639422438/8087257393",
+            "ca-app-pub-7804898639422438/3140647116",
             adRequest,
             object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: InterstitialAd) {
@@ -74,7 +74,7 @@ class UnSkipAddManager(private val context: Context) {
         val adRequest = AdRequest.Builder().build()
         RewardedAd.load(
             context,
-            "ca-app-pub-7804898639422438/6470745786",
+            "ca-app-pub-7804898639422438/1149028735",
             adRequest,
             object : RewardedAdLoadCallback() {
                 override fun onAdLoaded(ad: RewardedAd) {

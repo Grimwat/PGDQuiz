@@ -15,9 +15,12 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,6 +44,7 @@ import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.landscape.LandscapeGri
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.overlays.CongratulationsScreen
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.overlays.LivesLost
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.portrait.ButtonsPortrait
+import com.tradezmantom.pgdquiz.ui.appUi.findActivity
 import com.tradezmantom.pgdquiz.ui.data.QuizDifficulty
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 import com.tradezmantom.pgdquiz.ui.data.getCurrentQuestions
@@ -83,14 +87,23 @@ fun ExamLayout(
         if (state.isLoading) {
             CircularProgressIndicator()
         } else if (state.currentQuestion != null) {
-                if (isLandscape) {
-                    Row(modifier = Modifier.fillMaxSize()) {
+            if (isLandscape) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .windowInsetsPadding(WindowInsets.systemBars)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                    ) {
+
                         Column(
                             modifier = Modifier
                                 .weight(1f)
-                                .fillMaxHeight()
-                                .background(MaterialTheme.colorScheme.background),
-                            verticalArrangement = Arrangement.spacedBy(3.dp),
+                                .fillMaxHeight(),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Banner(
@@ -103,48 +116,44 @@ fun ExamLayout(
                                 isPremium = state.isPremium(),
                                 onBack = { onBackToModeSelect() },
                                 onUpgrade = {
-                                    (context as? MainActivity)?.launchApprenticeSubscription()
+                                    (context.findActivity() as? MainActivity)?.launchApprenticeSubscription()
                                 }
                             )
-                            Spacer(modifier = Modifier.padding(8.dp))
-                            Column(
+                            QuestionField(
+                                question = state.currentQuestion,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(1f)
+                                    .padding(horizontal = 12.dp),
+                                quizType = quizType
+                            )
+                        }
+
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
+                        ) {
+                            LandscapeGrid(
+                                viewModel = viewModel,
+                                quizType = quizType,
                                 modifier = Modifier
                                     .fillMaxSize()
-                                    .padding(horizontal = 16.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                QuestionField(
-                                    question = state.currentQuestion,
-                                    modifier = Modifier.padding(bottom = 16.dp),
-                                    quizType = quizType
-                                )
-                                LandscapeGrid(
-                                    viewModel = viewModel,
-                                    quizType = quizType,
-                                    modifier = Modifier
-                                        .fillMaxHeight()
-                                        .weight(1f)
-                                )
-                            }
-
-                            if (showAds) {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxHeight()
-                                        .wrapContentWidth(),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    BannerAd(
-                                        modifier = Modifier
-                                            .width(160.dp)
-                                            .fillMaxHeight()
-                                    )
-                                }
-                            }
+                                    .padding(horizontal = 12.dp)
+                            )
                         }
                     }
 
-                } else {
+                    if (showAds) {
+                        BannerAd(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(60.dp)
+                        )
+                    }
+                }
+            }
+            else {
                     Column(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.SpaceBetween
@@ -207,6 +216,8 @@ fun ExamLayout(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp)
+                                .padding(bottom = 8.dp)
+
                         )
 
                         if (showAds) {

@@ -73,7 +73,11 @@ fun QuizTypeSelection(
                         .filter { it != QuizType.DEFAULT }
                         .forEach { type ->
                             QuizTypeButton(
-                                text = type.name,
+                                text = when (type) {
+                                    QuizType.DRAIN_LAYING -> "Drainlaying"
+                                    QuizType.PLUMBING -> "Plumbing"
+                                    QuizType.GASFITTING -> "Gasfitting"
+                                    else -> type.name },
                                 backgroundColor = when (type) {
                                     QuizType.PLUMBING -> MaterialTheme.colorScheme.onSurface
                                     QuizType.GASFITTING -> MaterialTheme.colorScheme.onBackground
@@ -121,7 +125,7 @@ fun QuizTypeSelection(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(0.45f)  // ADD THIS
+                        .weight(0.45f)
                         .padding(horizontal = 24.dp)
                         .padding(bottom = 32.dp)
                         .navigationBarsPadding(),
