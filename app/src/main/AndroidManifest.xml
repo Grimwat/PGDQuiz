@@ -18,11 +18,11 @@
         tools:targetApi="31">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7804898639422438~3385926914" />
+            android:value="ca-app-pub-7804898639422438~8102696733" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.PgdQuiz">
+            android:theme="@style/Theme.PgdQuiz.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
