@@ -3,7 +3,16 @@ package com.tradezmantom.pgdquiz.billing
 import android.app.Activity
 import android.content.Context
 import android.util.Log
-import com.android.billingclient.api.*
+import com.android.billingclient.api.AcknowledgePurchaseParams
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClientStateListener
+import com.android.billingclient.api.BillingFlowParams
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.PendingPurchasesParams
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.QueryProductDetailsParams
+import com.android.billingclient.api.QueryPurchasesParams
 import com.tradezmantom.pgdquiz.ui.data.SubscriptionTier
 
 class BillingManager(
@@ -15,18 +24,27 @@ class BillingManager(
         const val TRADESMAN_PRODUCT_ID = "tradesman_lifetime"
     }
 
-    private val billingClient = BillingClient.newBuilder(context)
-        .setListener { billingResult, purchases ->
-            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                purchases?.forEach { handlePurchase(it) }
+    private val purchasesUpdatedListener = PurchasesUpdatedListener { billingResult, purchases ->
+        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
+            for (purchase in purchases) {
+                handlePurchase(purchase)
             }
         }
-        .enablePendingPurchases()
+    }
+
+    private val billingClient = BillingClient.newBuilder(context)
+        .setListener(purchasesUpdatedListener)
+        .enablePendingPurchases(
+            PendingPurchasesParams.newBuilder()
+                .enableOneTimeProducts()
+                .build()
+        )
         .build()
 
     fun initialize() {
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(result: BillingResult) {
+                Log.d("BILLING", "onBillingSetupFinished code=${result.responseCode} msg=${result.debugMessage}")
                 if (result.responseCode == BillingClient.BillingResponseCode.OK) {
                     checkExistingPurchases()
                 }
@@ -46,77 +64,103 @@ class BillingManager(
     }
 
     private fun launchSubscriptionFlow(activity: Activity, productId: String) {
+        Log.d("BILLING", "launchSubscriptionFlow called for $productId")
+        val product = QueryProductDetailsParams.Product.newBuilder()
+            .setProductId(productId)
+            .setProductType(BillingClient.ProductType.SUBS)
+            .build()
+
+        val productList = java.util.ArrayList<QueryProductDetailsParams.Product>()
+        productList.add(product)
+
         val params = QueryProductDetailsParams.newBuilder()
-            .setProductList(listOf(
-                QueryProductDetailsParams.Product.newBuilder()
-                    .setProductId(productId)
-                    .setProductType(BillingClient.ProductType.SUBS)
-                    .build()
-            )).build()
+            .setProductList(productList)
+            .build()
 
-        billingClient.queryProductDetailsAsync(params) { result, productDetailsList ->
-            if (result.responseCode == BillingClient.BillingResponseCode.OK
-                && productDetailsList.isNotEmpty()) {
+        billingClient.queryProductDetailsAsync(params) { result, queryResult ->
+            Log.d(
+                "BILLING",
+                "queryProductDetailsAsync result code=${result.responseCode} msg=${result.debugMessage}"
+            )
+            if (result.responseCode != BillingClient.BillingResponseCode.OK) return@queryProductDetailsAsync
 
-                val product = productDetailsList.first()
-                val offerToken = product.subscriptionOfferDetails
-                    ?.firstOrNull()?.offerToken ?: return@queryProductDetailsAsync
-
-                val flowParams = BillingFlowParams.newBuilder()
-                    .setProductDetailsParamsList(listOf(
-                        BillingFlowParams.ProductDetailsParams.newBuilder()
-                            .setProductDetails(product)
-                            .setOfferToken(offerToken)
-                            .build()
-                    )).build()
-
-                billingClient.launchBillingFlow(activity, flowParams)
+            val list = queryResult.productDetailsList
+            Log.d("BILLING", "product list size=${list.size}")
+            if (list.isEmpty()) {
+                Log.w("BILLING", "product list EMPTY, bailing"); return@queryProductDetailsAsync
             }
+
+            val productDetails = list[0]
+            val subOfferDetails = productDetails.subscriptionOfferDetails
+            Log.d("BILLING", "subscriptionOfferDetails=${subOfferDetails?.size ?: "null"}")
+            if (subOfferDetails == null || subOfferDetails.isEmpty()) {
+                Log.w("BILLING", "no offer details, bailing"); return@queryProductDetailsAsync
+            }
+
+            val offerToken = subOfferDetails[0].offerToken
+
+            val pdParams = BillingFlowParams.ProductDetailsParams.newBuilder()
+                .setProductDetails(productDetails)
+                .setOfferToken(offerToken)
+                .build()
+            val flowParams = BillingFlowParams.newBuilder()
+                .setProductDetailsParamsList(listOf(pdParams))
+                .build()
+            val billingResult = billingClient.launchBillingFlow(activity, flowParams)
+            Log.d(
+                "BILLING",
+                "launchBillingFlow result code=${billingResult.responseCode} msg=${billingResult.debugMessage}"
+            )
         }
     }
-
     private fun launchOneTimePurchaseFlow(activity: Activity, productId: String) {
+        val product = QueryProductDetailsParams.Product.newBuilder()
+            .setProductId(productId)
+            .setProductType(BillingClient.ProductType.INAPP)
+            .build()
+
+        val productList = java.util.ArrayList<QueryProductDetailsParams.Product>()
+        productList.add(product)
+
         val params = QueryProductDetailsParams.newBuilder()
-            .setProductList(listOf(
-                QueryProductDetailsParams.Product.newBuilder()
-                    .setProductId(productId)
-                    .setProductType(BillingClient.ProductType.INAPP)
-                    .build()
-            )).build()
+            .setProductList(productList)
+            .build()
 
-        billingClient.queryProductDetailsAsync(params) { result, productDetailsList ->
-            if (result.responseCode == BillingClient.BillingResponseCode.OK
-                && productDetailsList.isNotEmpty()) {
+        billingClient.queryProductDetailsAsync(params) { result, queryResult ->
+            if (result.responseCode != BillingClient.BillingResponseCode.OK) return@queryProductDetailsAsync
+            val list = queryResult.productDetailsList
+            if (list.isEmpty()) return@queryProductDetailsAsync
+            val productDetails = list[0]
 
-                val flowParams = BillingFlowParams.newBuilder()
-                    .setProductDetailsParamsList(listOf(
-                        BillingFlowParams.ProductDetailsParams.newBuilder()
-                            .setProductDetails(productDetailsList.first())
-                            .build()
-                    )).build()
-
-                billingClient.launchBillingFlow(activity, flowParams)
-            }
+            val pdParams = BillingFlowParams.ProductDetailsParams.newBuilder()
+                .setProductDetails(productDetails)
+                .build()
+            val flowParams = BillingFlowParams.newBuilder()
+                .setProductDetailsParamsList(listOf(pdParams))
+                .build()
+            billingClient.launchBillingFlow(activity, flowParams)
         }
     }
 
     private fun checkExistingPurchases() {
-        // Check one-time purchases (Tradesman)
         billingClient.queryPurchasesAsync(
             QueryPurchasesParams.newBuilder()
                 .setProductType(BillingClient.ProductType.INAPP)
                 .build()
         ) { _, purchases ->
-            purchases.forEach { handlePurchase(it) }
+            if (purchases != null) {
+                for (purchase in purchases) handlePurchase(purchase)
+            }
         }
 
-        // Check subscriptions (Apprentice)
         billingClient.queryPurchasesAsync(
             QueryPurchasesParams.newBuilder()
                 .setProductType(BillingClient.ProductType.SUBS)
                 .build()
         ) { _, purchases ->
-            purchases.forEach { handlePurchase(it) }
+            if (purchases != null) {
+                for (purchase in purchases) handlePurchase(purchase)
+            }
         }
     }
 
@@ -128,7 +172,6 @@ class BillingManager(
             purchase.products.contains(APPRENTICE_PRODUCT_ID) -> SubscriptionTier.APPRENTICE
             else -> return
         }
-
 
         if (!purchase.isAcknowledged) {
             val ackParams = AcknowledgePurchaseParams.newBuilder()
