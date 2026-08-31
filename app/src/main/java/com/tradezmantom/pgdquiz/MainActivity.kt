@@ -26,6 +26,7 @@ import com.tradezmantom.pgdquiz.ui.logic.QuizViewModel
 import com.tradezmantom.pgdquiz.ui.logic.QuizViewModelFactory
 import com.tradezmantom.pgdquiz.ui.theme.PgdQuizTheme
 import com.google.android.gms.ads.MobileAds
+import kotlinx.coroutines.flow.StateFlow
 
 class MainActivity : ComponentActivity() {
 
@@ -110,12 +111,16 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    fun showRewardedAd(onRewardEarned: () -> Unit) {
+    fun showRewardedAd(onRewardEarned: () -> Unit, onAdUnavailable: () -> Unit = {}) {
         val manager = adManager
         if (manager != null) {
-            manager.showRewarded(this, onRewardEarned)
+            manager.showRewarded(this, onRewardEarned, onAdUnavailable)
         } else {
-            onRewardEarned()
+            onAdUnavailable()
         }
     }
+
+
+    val rewardedAdReady: StateFlow<Boolean>?
+        get() = adManager?.rewardedAdReady
 }

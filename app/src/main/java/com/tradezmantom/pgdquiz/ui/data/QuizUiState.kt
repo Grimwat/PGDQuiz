@@ -17,6 +17,8 @@ data class QuizUiState(
     val questions: List<Question> = emptyList(),
     val showCongratulationsScreen: Boolean = false,
     val answerStreak: Int = 0,
+    val bestStreak: Int = 0,
+    val correctAnswersCount: Int = 0,
     val optionsAndAnswer: List<String> = emptyList(),
     val subscriptionTier: SubscriptionTier = SubscriptionTier.FREE
 )

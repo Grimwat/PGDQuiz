@@ -29,8 +29,8 @@ android {
         applicationId = "com.tradezmantom.pgdquiz"
         minSdk = 24
         targetSdk = 37
-        versionCode = 9
-        versionName = "2.2"
+        versionCode = 12
+        versionName = "3.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -90,7 +90,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0")
 
     androidTestImplementation("androidx.test:core-ktx:1.7.0")
-    androidTestImplementation("androidx.test:runner:1.7.2")
+    androidTestImplementation("androidx.test:runner:1.7.0")
     implementation("androidx.core:core-splashscreen:1.0.1")
     androidTestImplementation("androidx.test:rules:1.7.0")
     androidTestImplementation("androidx.test.ext:junit-ktx:1.3.0")

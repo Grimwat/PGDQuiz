@@ -42,7 +42,9 @@ class QuizViewModel(
                 isLoading = true,
                 showCongratulationsScreen = false,
                 quizComplete = false,
-                currentQuestionIndex = 0
+                currentQuestionIndex = 0,
+                correctAnswersCount = 0,
+                bestStreak = 0
             ) }
             refreshStats()
 
@@ -111,13 +113,13 @@ class QuizViewModel(
             if (nextQuestionIndex < currentState.questions.size) {
 
                 val nextQuestion = currentState.questions[nextQuestionIndex]
-                    currentState.copy(
-                        currentQuestionIndex = nextQuestionIndex,
-                        selectedAnswer = "",
-                        showCorrectAnswer = false,
-                        currentQuestion = nextQuestion,
-                        optionsAndAnswer = nextQuestion.getOptionsAndAnswers().shuffled()
-                    )
+                currentState.copy(
+                    currentQuestionIndex = nextQuestionIndex,
+                    selectedAnswer = "",
+                    showCorrectAnswer = false,
+                    currentQuestion = nextQuestion,
+                    optionsAndAnswer = nextQuestion.getOptionsAndAnswers().shuffled()
+                )
 
             } else {
                 currentState.copy(
@@ -139,7 +141,7 @@ class QuizViewModel(
                 )
             }
             delay(3500L)
-                nextQuestion()
+            nextQuestion()
         }
     }
     fun restoreLife() {
@@ -214,7 +216,11 @@ class QuizViewModel(
         val correct = _quizUiState.value.currentQuestion?.answer == selected
         val updatedStreak = if (correct) _quizUiState.value.answerStreak + 1 else 0
         _quizUiState.update {
-            it.copy(answerStreak = updatedStreak)
+            it.copy(
+                answerStreak = updatedStreak,
+                bestStreak = maxOf(it.bestStreak, updatedStreak),
+                correctAnswersCount = if (correct) it.correctAnswersCount + 1 else it.correctAnswersCount
+            )
         }
         if (!correct) {
             loseLife()
@@ -256,17 +262,17 @@ class QuizViewModel(
     private suspend fun initializeUserStats() {
         _quizUiState.update { it.copy(isLoading = true) }
 
-            refreshStats()
-            val lastQuizType = quizDatastore.fetchLastQuizType()
-            if (lastQuizType != null) {
-                _quizUiState.update {
-                    it.copy(quizType = lastQuizType)
-                }
+        refreshStats()
+        val lastQuizType = quizDatastore.fetchLastQuizType()
+        if (lastQuizType != null) {
+            _quizUiState.update {
+                it.copy(quizType = lastQuizType)
             }
+        }
         val tier = quizDatastore.fetchSubscriptionTier()
         _quizUiState.update { it.copy(subscriptionTier = tier) }
 
-            _quizUiState.update { it.copy(isLoading = false) }
+        _quizUiState.update { it.copy(isLoading = false) }
     }
 
 

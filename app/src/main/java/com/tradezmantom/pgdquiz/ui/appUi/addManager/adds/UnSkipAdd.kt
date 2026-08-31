@@ -2,6 +2,7 @@ package com.tradezmantom.pgdquiz.ui.appUi.addManager.adds
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -10,12 +11,18 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class UnSkipAddManager(private val context: Context) {
     private var interstitialAd: InterstitialAd? = null
     private var rewardedAd: RewardedAd? = null
     private var isInterstitialLoading = false
     private var isRewardedLoading = false
+
+    private val _rewardedAdReady = MutableStateFlow(false)
+    val rewardedAdReady: StateFlow<Boolean> = _rewardedAdReady.asStateFlow()
 
     fun loadAllAds() {
         loadInterstitial()
@@ -35,11 +42,16 @@ class UnSkipAddManager(private val context: Context) {
                 override fun onAdLoaded(ad: InterstitialAd) {
                     interstitialAd = ad
                     isInterstitialLoading = false
+                    Log.d("ADS", "Interstitial loaded successfully")
                 }
                 override fun onAdFailedToLoad(adError: LoadAdError) {
                     interstitialAd = null
                     isInterstitialLoading = false
-                    android.util.Log.e("AdMob", "Interstitial failed: ${adError.message}")
+                    Log.e(
+                        "ADS",
+                        "Interstitial failed to load: code=${adError.code} " +
+                                "domain=${adError.domain} message=${adError.message}"
+                    )
                 }
             }
         )
@@ -56,12 +68,18 @@ class UnSkipAddManager(private val context: Context) {
 
                 override fun onAdFailedToShowFullScreenContent(adError: AdError) {
                     interstitialAd = null
+                    Log.e(
+                        "ADS",
+                        "Interstitial failed to show: code=${adError.code} " +
+                                "domain=${adError.domain} message=${adError.message}"
+                    )
                     loadInterstitial()
                     onAdDismissed()
                 }
             }
             interstitialAd?.show(activity)
         } else {
+            Log.d("ADS", "Interstitial not ready when requested, skipping")
             onAdDismissed()
             loadInterstitial()
         }
@@ -71,6 +89,7 @@ class UnSkipAddManager(private val context: Context) {
     private fun loadRewarded() {
         if (isRewardedLoading || rewardedAd != null) return
         isRewardedLoading = true
+        _rewardedAdReady.value = false
         val adRequest = AdRequest.Builder().build()
         RewardedAd.load(
             context,
@@ -80,34 +99,57 @@ class UnSkipAddManager(private val context: Context) {
                 override fun onAdLoaded(ad: RewardedAd) {
                     rewardedAd = ad
                     isRewardedLoading = false
+                    _rewardedAdReady.value = true
+                    Log.d("ADS", "Rewarded ad loaded successfully")
                 }
                 override fun onAdFailedToLoad(adError: LoadAdError) {
                     rewardedAd = null
                     isRewardedLoading = false
+                    _rewardedAdReady.value = false
+                    Log.e(
+                        "ADS",
+                        "Rewarded ad failed to load: code=${adError.code} " +
+                                "domain=${adError.domain} message=${adError.message}"
+                    )
                 }
             }
         )
     }
 
-    fun showRewarded(activity: Activity, onRewardEarned: () -> Unit) {
-        if (rewardedAd != null) {
-            rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+
+    fun showRewarded(
+        activity: Activity,
+        onRewardEarned: () -> Unit,
+        onAdUnavailable: () -> Unit = {}
+    ) {
+        val ad = rewardedAd
+        if (ad != null) {
+            ad.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
                     rewardedAd = null
+                    _rewardedAdReady.value = false
                     loadRewarded()
                 }
                 override fun onAdFailedToShowFullScreenContent(adError: AdError) {
                     rewardedAd = null
+                    _rewardedAdReady.value = false
+                    Log.e(
+                        "ADS",
+                        "Rewarded ad failed to show: code=${adError.code} " +
+                                "domain=${adError.domain} message=${adError.message}"
+                    )
                     loadRewarded()
+                    onAdUnavailable()
                 }
             }
-            rewardedAd?.show(activity) { _ ->
+            ad.show(activity) { _ ->
                 onRewardEarned()
             }
         } else {
 
-            onRewardEarned()
+            Log.d("ADS", "Rewarded ad not ready when requested, no reward granted")
             loadRewarded()
+            onAdUnavailable()
         }
     }
 }

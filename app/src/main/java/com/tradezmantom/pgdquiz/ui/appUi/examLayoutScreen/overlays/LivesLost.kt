@@ -1,6 +1,5 @@
 package com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.overlays
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -15,8 +14,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,10 +46,13 @@ fun LivesLost(
     examEmoji: Painter,
     emojiCont: String,
     onWatchAd: (() -> Unit)?,
+    watchAdEnabled: Boolean = true,
     onExit: () -> Unit,
     onUpgrade: () -> Unit = {},
     onUpgradeApprentice: () -> Unit = {},
-    onUpgradeTradesman: () -> Unit = {}
+    onUpgradeTradesman: () -> Unit = {},
+    apprenticePriceText: String = "NZD$30/week",
+    tradesmanPriceText: String = "NZD$300 Lifetime"
 ) {
     val (title, examEmoji) = when (quizType) {
         QuizType.DRAIN_LAYING -> "HappyPoo" to R.drawable.happypoo2
@@ -91,8 +97,11 @@ fun LivesLost(
         )
     )
 
+    val adActionColor = Color(0xFF1A8FBF)
+    val adActionColorDark = Color(0xFF106487)
+
     Box(
-        modifier = Modifier
+        modifier = modifier
             .shadow(
                 elevation = 16.dp,
                 shape = RoundedCornerShape(16.dp),
@@ -112,21 +121,27 @@ fun LivesLost(
                 ),
                 shape = RoundedCornerShape(16.dp)
             )
-            .padding(16.dp),
+            .padding(20.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
             Text(
                 text = message,
-                fontSize = 20.sp,
+                fontSize = 22.sp,
                 fontWeight = FontWeight.ExtraBold,
                 textAlign = TextAlign.Center,
                 color = Color.White,
                 letterSpacing = 0.5.sp,
                 modifier = Modifier.padding(top = 4.dp, start = 8.dp, end = 8.dp)
+            )
+            Text(
+                text = "You're out of lives!",
+                fontSize = 14.sp,
+                textAlign = TextAlign.Center,
+                color = Color.White.copy(alpha = 0.8f)
             )
 
             Image(
@@ -135,39 +150,57 @@ fun LivesLost(
                 modifier = Modifier.size(80.dp)
             )
 
-            // Action buttons row
             Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 if (onWatchAd != null) {
+                    val effectiveAdColor = if (watchAdEnabled) adActionColor else adActionColor.copy(alpha = 0.4f)
+                    val effectiveAdColorDark = if (watchAdEnabled) adActionColorDark else adActionColorDark.copy(alpha = 0.4f)
                     Button(
                         onClick = onWatchAd,
+                        enabled = watchAdEnabled,
                         shape = RoundedCornerShape(12.dp),
                         contentPadding = PaddingValues(0.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Transparent,
+                            disabledContainerColor = Color.Transparent
+                        ),
                         modifier = Modifier
                             .weight(1f)
                             .height(48.dp)
-                            .shadow(6.dp, RoundedCornerShape(12.dp), ambientColor = glowColor, spotColor = glowColor)
+                            .shadow(6.dp, RoundedCornerShape(12.dp), ambientColor = effectiveAdColor.copy(alpha = 0.5f), spotColor = effectiveAdColor.copy(alpha = 0.5f))
                     ) {
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .background(
                                     brush = Brush.horizontalGradient(
-                                        colors = listOf(
-                                            MaterialTheme.colorScheme.primary,
-                                            MaterialTheme.colorScheme.outline
-                                        )
+                                        colors = listOf(effectiveAdColor, effectiveAdColorDark)
                                     ),
                                     shape = RoundedCornerShape(12.dp)
                                 )
-                                .border(1.5.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(12.dp)),
+                                .border(1.5.dp, effectiveAdColorDark, RoundedCornerShape(12.dp)),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text("Gain 1 attempt", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.PlayArrow,
+                                    contentDescription = null,
+                                    tint = Color.White,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                                Text(
+                                    if (watchAdEnabled) "Watch Ad for +1 Attempt" else "Loading Ad…",
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 12.sp,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
                         }
                     }
                 }
@@ -196,67 +229,97 @@ fun LivesLost(
                 }
             }
 
-            // Upgrade buttons
-            Button(
-                onClick = onUpgradeApprentice,
-                shape = RoundedCornerShape(12.dp),
-                contentPadding = PaddingValues(0.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp)
-                    .padding(horizontal = 8.dp)
-                    .shadow(6.dp, RoundedCornerShape(12.dp), ambientColor = glowColor, spotColor = glowColor)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(
-                            brush = Brush.horizontalGradient(
-                                colors = listOf(
-                                    MaterialTheme.colorScheme.outline,
-                                    MaterialTheme.colorScheme.primary,
-                                    MaterialTheme.colorScheme.outline
-                                )
-                            ),
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                        .border(1.5.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(12.dp)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("⚡ Apprentice — $25/week", color = Color.White, fontWeight = FontWeight.ExtraBold, fontSize = 13.sp)
-                }
-            }
+            HorizontalDivider(
+                color = Color.White.copy(alpha = 0.15f),
+                modifier = Modifier.fillMaxWidth()
+            )
+            Text(
+                text = "Or upgrade for unlimited attempts",
+                fontSize = 10.sp,
+                fontWeight = FontWeight.Medium,
+                color = Color.White.copy(alpha = 0.6f),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
 
-            Button(
-                onClick = onUpgradeTradesman,
-                shape = RoundedCornerShape(12.dp),
-                contentPadding = PaddingValues(0.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp)
-                    .padding(horizontal = 8.dp, vertical = 0.dp)
-                    .padding(bottom = 4.dp)
-                    .shadow(6.dp, RoundedCornerShape(12.dp), ambientColor = glowColor, spotColor = glowColor)
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Box(
+                Button(
+                    onClick = onUpgradeApprentice,
+                    shape = RoundedCornerShape(10.dp),
+                    contentPadding = PaddingValues(0.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
                     modifier = Modifier
-                        .fillMaxSize()
-                        .background(
-                            brush = Brush.horizontalGradient(
-                                colors = listOf(
-                                    MaterialTheme.colorScheme.primary,
-                                    MaterialTheme.colorScheme.outline,
-                                    MaterialTheme.colorScheme.primary
-                                )
-                            ),
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                        .border(1.5.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(12.dp)),
-                    contentAlignment = Alignment.Center
+                        .fillMaxWidth()
+                        .height(36.dp)
                 ) {
-                    Text("🔨 Tradesman", color = Color.White, fontWeight = FontWeight.ExtraBold, fontSize = 13.sp)
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                brush = Brush.horizontalGradient(
+                                    colors = listOf(
+                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
+                                        MaterialTheme.colorScheme.outline.copy(alpha = 0.6f),
+                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
+                                    )
+                                ),
+                                shape = RoundedCornerShape(10.dp)
+                            )
+                            .border(
+                                1.dp,
+                                MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
+                                RoundedCornerShape(10.dp)
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "\u26A1 Apprentice — $apprenticePriceText",
+                            color = Color.White.copy(alpha = 0.9f),
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+
+                Button(
+                    onClick = onUpgradeTradesman,
+                    shape = RoundedCornerShape(10.dp),
+                    contentPadding = PaddingValues(0.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(36.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                brush = Brush.horizontalGradient(
+                                    colors = listOf(
+                                        MaterialTheme.colorScheme.outline.copy(alpha = 0.6f),
+                                        MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
+                                        MaterialTheme.colorScheme.outline.copy(alpha = 0.6f)
+                                    )
+                                ),
+                                shape = RoundedCornerShape(10.dp)
+                            )
+                            .border(
+                                1.dp,
+                                MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
+                                RoundedCornerShape(10.dp)
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "\uD83D\uDD28 Tradesman — $tradesmanPriceText",
+                            color = Color.White.copy(alpha = 0.9f),
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                 }
             }
         }

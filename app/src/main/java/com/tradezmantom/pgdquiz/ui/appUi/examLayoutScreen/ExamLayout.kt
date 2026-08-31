@@ -26,16 +26,21 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tradezmantom.pgdquiz.ui.appUi.addManager.adds.BannerAd
@@ -56,6 +61,21 @@ import com.tradezmantom.pgdquiz.ui.logic.QuizViewModel
 
 
 @Composable
+private fun QuestionProgressIndicator(
+    currentIndex: Int,
+    totalQuestions: Int,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = "Question ${currentIndex + 1} of $totalQuestions",
+        fontSize = 13.sp,
+        fontWeight = FontWeight.SemiBold,
+        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+        modifier = modifier
+    )
+}
+
+@Composable
 fun ExamLayout(
     modifier: Modifier = Modifier,
     viewModel: QuizViewModel = viewModel(),
@@ -72,6 +92,9 @@ fun ExamLayout(
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     val state by viewModel.quizUiState.collectAsStateWithLifecycle()
     val showAds = !state.hasNoAds()
+    val mainActivity = context as? MainActivity
+    val rewardedAdReady by (mainActivity?.rewardedAdReady?.collectAsStateWithLifecycle(initialValue = false)
+        ?: remember { mutableStateOf(false) })
 
     LaunchedEffect(quizType, quizDifficulty) {
         viewModel.startQuiz(quizDifficulty, quizType)
@@ -119,6 +142,11 @@ fun ExamLayout(
                                     (context.findActivity() as? MainActivity)?.launchApprenticeSubscription()
                                 }
                             )
+                            QuestionProgressIndicator(
+                                currentIndex = state.currentQuestionIndex,
+                                totalQuestions = state.getCurrentQuestions().size,
+                                modifier = Modifier.padding(top = 4.dp)
+                            )
                             QuestionField(
                                 question = state.currentQuestion,
                                 modifier = Modifier
@@ -154,81 +182,86 @@ fun ExamLayout(
                 }
             }
             else {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+
                     Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.SpaceBetween
+                        modifier = modifier
+                            .weight(1f)
+                            .background(MaterialTheme.colorScheme.background),
+                        verticalArrangement = Arrangement.spacedBy(3.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-
-                        Column(
-                            modifier = modifier
-                                .weight(1f)
-                                .background(MaterialTheme.colorScheme.background),
-                            verticalArrangement = Arrangement.spacedBy(3.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Banner(
-                                quizType = quizType,
-                                emojiCont = examCont,
-                                attempts = state.getCurrentQuizTypeLives(),
-                                streakCount = state.answerStreak,
-                                modifier = Modifier.fillMaxWidth(),
-                                hasUnlimitedLives = state.hasUnlimitedLives(),
-                                isPremium = state.isPremium(),
-                                onBack = { onBackToModeSelect() },
-                                onUpgrade = {
-                                    (context as? MainActivity)?.launchApprenticeSubscription()
-                                }
-                            )
-                            Spacer(modifier = Modifier.padding(8.dp))
-                            QuestionField(
-                                question = state.currentQuestion,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 16.dp)
-                                    .padding(bottom = 8.dp),
-                                quizType = quizType
-                            )
-                            Spacer(modifier = Modifier.padding(4.dp))
-                            ButtonsPortrait(
-                                viewModel = viewModel,
-                                quizType = quizType,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .weight(1f)
-                                    .padding(horizontal = 16.dp)
-                            )
-                        }
-
-                        NextButton(
-                            onClick = {
-                                val totalQuestions = state.getCurrentQuestions().size
-                                val activity = context as? MainActivity
-
-                                if (viewModel.canShowAd() && showAds) {
-                                    activity?.showInterstitialAd {
-                                        viewModel.triggerShowCorrectAnswer()
-                                    }
-                                } else {
-                                    viewModel.triggerShowCorrectAnswer()
-                                }
-                            },
+                        Banner(
                             quizType = quizType,
+                            emojiCont = examCont,
+                            attempts = state.getCurrentQuizTypeLives(),
+                            streakCount = state.answerStreak,
+                            modifier = Modifier.fillMaxWidth(),
+                            hasUnlimitedLives = state.hasUnlimitedLives(),
+                            isPremium = state.isPremium(),
+                            onBack = { onBackToModeSelect() },
+                            onUpgrade = {
+                                (context as? MainActivity)?.launchApprenticeSubscription()
+                            }
+                        )
+                        Spacer(modifier = Modifier.padding(8.dp))
+                        QuestionProgressIndicator(
+                            currentIndex = state.currentQuestionIndex,
+                            totalQuestions = state.getCurrentQuestions().size,
+                            modifier = Modifier.padding(bottom = 4.dp)
+                        )
+                        QuestionField(
+                            question = state.currentQuestion,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp)
-                                .padding(bottom = 8.dp)
-
+                                .padding(bottom = 8.dp),
+                            quizType = quizType
                         )
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        ButtonsPortrait(
+                            viewModel = viewModel,
+                            quizType = quizType,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                                .padding(horizontal = 16.dp)
+                        )
+                    }
 
-                        if (showAds) {
-                            BannerAd(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .wrapContentHeight()
-                            )
-                        }
+                    NextButton(
+                        onClick = {
+                            val totalQuestions = state.getCurrentQuestions().size
+                            val activity = context as? MainActivity
+
+                            if (viewModel.canShowAd() && showAds) {
+                                activity?.showInterstitialAd {
+                                    viewModel.triggerShowCorrectAnswer()
+                                }
+                            } else {
+                                viewModel.triggerShowCorrectAnswer()
+                            }
+                        },
+                        quizType = quizType,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = 8.dp)
+
+                    )
+
+                    if (showAds) {
+                        BannerAd(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                        )
                     }
                 }
+            }
         }
 
         if (state.getCurrentQuizTypeLives() <= 0 && !state.hasUnlimitedLives()) {
@@ -246,10 +279,19 @@ fun ExamLayout(
                 ) {
                     LivesLost(
                         onWatchAd = if (showAds) {{
-                            (context as? MainActivity)?.showRewardedAd {
-                                viewModel.handleRewardEarned()
-                            }
+                            (context as? MainActivity)?.showRewardedAd(
+                                onRewardEarned = {
+                                    viewModel.handleRewardEarned()
+                                },
+                                onAdUnavailable = {
+                                    // Ad wasn't ready yet — no reward was granted.
+                                    // Swap this Log line for a Snackbar/Toast if you
+                                    // want to surface it to the user directly.
+                                    android.util.Log.d("ADS", "Rewarded ad unavailable, no attempt granted")
+                                }
+                            )
                         }} else null,
+                        watchAdEnabled = rewardedAdReady,
                         onExit = onExit,
                         examEmoji = examEmoji,
                         emojiCont = title,
@@ -279,8 +321,14 @@ fun ExamLayout(
                         .padding(8.dp)
                 ) {
                     CongratulationsScreen(
-                        examEmoji = examEmoji,
-                        emojiCont = title,
+                        quizType = quizType,
+                        totalQuestions = state.getCurrentQuestions().size,
+                        correctAnswers = state.correctAnswersCount,
+                        bestStreak = state.bestStreak,
+                        isPremium = state.isPremium(),
+                        onUpgrade = {
+                            (context as? MainActivity)?.launchApprenticeSubscription()
+                        },
                         onRestart = {
                             if (showAds) {
                                 (context as? MainActivity)?.showInterstitialAd {
@@ -298,8 +346,7 @@ fun ExamLayout(
                             } else {
                                 onBackToModeSelect()
                             }
-                        },
-                        quizType = quizType
+                        }
                     )
                 }
             }

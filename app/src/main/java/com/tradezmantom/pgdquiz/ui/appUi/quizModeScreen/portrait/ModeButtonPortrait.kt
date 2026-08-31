@@ -1,6 +1,5 @@
 package com.tradezmantom.pgdquiz.ui.appUi.quizModeScreen.portrait
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -9,65 +8,72 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tradezmantom.pgdquiz.ui.data.QuizDifficulty
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 import com.tradezmantom.pgdquiz.ui.theme.BackgroundLogo
+import androidx.compose.material3.Text
+
+private fun difficultyColors(difficulty: QuizDifficulty): Pair<Color, Color> {
+    return when (difficulty) {
+        QuizDifficulty.EASY -> Color(0xFF1B6B1B) to Color(0xFF3DDC3D)
+        QuizDifficulty.MEDIUM -> Color(0xFF8A7A0A) to Color(0xFFE0C020)
+        QuizDifficulty.HARD -> Color(0xFF7A1414) to Color(0xFFE0303A)
+    }
+}
+
 @Composable
 fun ModeButtonPortrait(
     label: String,
     questionCountText: String,
     onClick: () -> Unit,
     quizType: QuizType,
+    difficulty: QuizDifficulty,
     modifier: Modifier = Modifier
 ) {
-    val gradientBrush = Brush.horizontalGradient(
-        colors = listOf(
-            MaterialTheme.colorScheme.primary,
-            MaterialTheme.colorScheme.outline
-        )
-    )
+    val (fillColor, glowColor) = difficultyColors(difficulty)
 
     Button(
         onClick = onClick,
         shape = RoundedCornerShape(16.dp),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .height(80.dp)
-            .padding(horizontal = 24.dp),
+            .height(80.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent
         ),
         contentPadding = PaddingValues(0.dp),
         elevation = ButtonDefaults.buttonElevation(
-            defaultElevation = 6.dp,  // adds depth
+            defaultElevation = 6.dp,
             pressedElevation = 2.dp
         )
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(brush = gradientBrush, shape = RoundedCornerShape(16.dp))
+                .shadow(
+                    elevation = 10.dp,
+                    shape = RoundedCornerShape(16.dp),
+                    ambientColor = glowColor.copy(alpha = 0.6f),
+                    spotColor = glowColor.copy(alpha = 0.6f)
+                )
+                .background(color = fillColor, shape = RoundedCornerShape(16.dp))
                 .border(
                     width = 2.dp,
                     brush = Brush.horizontalGradient(
-                        colors = listOf(
-                            MaterialTheme.colorScheme.outline,
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
-                        )
+                        colors = listOf(glowColor, glowColor.copy(alpha = 0.5f))
                     ),
                     shape = RoundedCornerShape(16.dp)
                 ),
@@ -75,7 +81,7 @@ fun ModeButtonPortrait(
         ) {
             BackgroundLogo(
                 quizType = quizType,
-                modifier = Modifier.alpha(0.15f)
+                modifier = Modifier.alpha(0.12f)
             )
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -89,7 +95,7 @@ fun ModeButtonPortrait(
                 )
                 Text(
                     text = questionCountText,
-                    color = Color.White.copy(alpha = 0.8f),
+                    color = Color.White.copy(alpha = 0.85f),
                     fontSize = 13.sp
                 )
             }

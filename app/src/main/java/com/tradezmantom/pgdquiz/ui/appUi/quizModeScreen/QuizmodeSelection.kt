@@ -73,7 +73,7 @@ fun QuizModeSelection(
                     .weight(1f)
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 ModeButtonLandscape(
@@ -81,6 +81,7 @@ fun QuizModeSelection(
                     questionCountText = "(25 Questions)",
                     onClick = { onSelectDifficulty(QuizDifficulty.EASY) },
                     quizType = quizType,
+                    difficulty = QuizDifficulty.EASY,
                     modifier = Modifier.weight(1f).fillMaxHeight(0.7f)
                 )
                 ModeButtonLandscape(
@@ -88,6 +89,7 @@ fun QuizModeSelection(
                     questionCountText = "(50 Questions)",
                     onClick = { onSelectDifficulty(QuizDifficulty.MEDIUM) },
                     quizType = quizType,
+                    difficulty = QuizDifficulty.MEDIUM,
                     modifier = Modifier.weight(1f).fillMaxHeight(0.7f)
                 )
                 ModeButtonLandscape(
@@ -95,6 +97,7 @@ fun QuizModeSelection(
                     questionCountText = "(100 Questions)",
                     onClick = { onSelectDifficulty(QuizDifficulty.HARD) },
                     quizType = quizType,
+                    difficulty = QuizDifficulty.HARD,
                     modifier = Modifier.weight(1f).fillMaxHeight(0.7f)
                 )
             }
@@ -114,7 +117,7 @@ fun QuizModeSelection(
         }
     }
 
-                else {
+    else {
 
         Column(
             modifier = Modifier
@@ -139,7 +142,7 @@ fun QuizModeSelection(
                     .weight(1f)
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp),
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
@@ -147,18 +150,21 @@ fun QuizModeSelection(
                     label = "Easy",
                     questionCountText = "(25 Questions)",
                     quizType = quizType,
+                    difficulty = QuizDifficulty.EASY,
                     onClick = { onSelectDifficulty(QuizDifficulty.EASY) }
                 )
                 ModeButtonPortrait(
                     label = "Medium",
                     questionCountText = "(50 Questions)",
                     quizType = quizType,
+                    difficulty = QuizDifficulty.MEDIUM,
                     onClick = { onSelectDifficulty(QuizDifficulty.MEDIUM) }
                 )
                 ModeButtonPortrait(
                     label = "Hard",
                     questionCountText = "(100 Questions)",
                     quizType = quizType,
+                    difficulty = QuizDifficulty.HARD,
                     onClick = { onSelectDifficulty(QuizDifficulty.HARD) }
                 )
             }

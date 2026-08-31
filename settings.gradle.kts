@@ -24,4 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "PgdQuiz"
 include(":app")
- 
+include(":shared")
