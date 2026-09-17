@@ -18,6 +18,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tradezmantom.pgdquiz.billing.BillingManager
+import com.tradezmantom.pgdquiz.billing.PlatformContext
+import com.tradezmantom.pgdquiz.billing.PurchaseLauncher
 import com.tradezmantom.pgdquiz.domain.DefaultQuestionLoader
 import com.tradezmantom.pgdquiz.ui.appUi.addManager.adds.UnSkipAddManager
 import com.tradezmantom.pgdquiz.ui.appUi.mainScreen.QuizMainScreen
@@ -40,7 +42,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val app = application as QuizApplication
 
-        billingManager = BillingManager(this) { tier ->
+        billingManager = BillingManager(PlatformContext(this)) { tier ->
             quizViewModel?.updateSubscriptionTier(tier)
         }
         app.billingManager = billingManager!!
@@ -96,11 +98,11 @@ class MainActivity : ComponentActivity() {
     }
 
     fun launchApprenticeSubscription() {
-        billingManager?.launchApprenticeFlow(this)
+        billingManager?.launchApprenticeFlow(PurchaseLauncher(this))
     }
 
     fun launchTradesmanPurchase() {
-        billingManager?.launchTradesmanFlow(this)
+        billingManager?.launchTradesmanFlow(PurchaseLauncher(this))
     }
     fun showInterstitialAd(onAdDismissed: () -> Unit) {
         val manager = adManager
