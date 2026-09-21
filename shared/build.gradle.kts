@@ -4,15 +4,14 @@ plugins {
     alias(libs.plugins.android.lint)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.compose.multiplatform)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
     android {
         namespace = "com.tradezmantom.pgdquiz.shared"   // was com.example.shared
         compileSdk {
-            version = release(36) {
-                minorApiLevel = 1
-            }
+            version = release(37)
         }
         minSdk = 24
 
@@ -35,6 +34,7 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(compose.runtime)
+                implementation(libs.kotlinx.serialization.json)
             }
         }
 

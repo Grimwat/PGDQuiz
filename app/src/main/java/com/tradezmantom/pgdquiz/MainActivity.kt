@@ -73,7 +73,7 @@ class MainActivity : ComponentActivity() {
                 val viewModel: QuizViewModel = viewModel(
                     factory = QuizViewModelFactory(
                         quizDatastore = app.quizDatastore,
-                        questionLoader = DefaultQuestionLoader(this@MainActivity)
+                        questionLoader = DefaultQuestionLoader(PlatformContext(this@MainActivity))
                     )
                 )
                 quizViewModel = viewModel

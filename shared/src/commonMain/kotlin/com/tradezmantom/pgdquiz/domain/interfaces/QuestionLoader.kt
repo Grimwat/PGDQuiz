@@ -5,5 +5,5 @@ import com.tradezmantom.pgdquiz.ui.data.QuizType
 
 interface QuestionLoader {
 
-    fun loadQuestions(quizType: QuizType): List<Question>
+    suspend fun loadQuestions(quizType: QuizType): List<Question>
 }

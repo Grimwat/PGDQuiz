@@ -5,7 +5,7 @@ import com.tradezmantom.pgdquiz.ui.data.Question
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 
 class FakeQuestionLoader : QuestionLoader {
-    override fun loadQuestions(quizType: QuizType): List<Question> {
+    override suspend fun loadQuestions(quizType: QuizType): List<Question> {
 
         return when (quizType) {
             QuizType.PLUMBING -> listOf(
