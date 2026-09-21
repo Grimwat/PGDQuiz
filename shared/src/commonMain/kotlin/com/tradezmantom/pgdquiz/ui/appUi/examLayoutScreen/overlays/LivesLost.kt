@@ -55,7 +55,7 @@ fun LivesLost(
     onUpgrade: () -> Unit = {},
     onUpgradeApprentice: () -> Unit = {},
     onUpgradeTradesman: () -> Unit = {},
-    apprenticePriceText: String = "NZD$30/week",
+    apprenticePriceText: String = "NZD$10/week",
     tradesmanPriceText: String = "NZD$300 Lifetime"
 ) {
     val (title, examEmoji) = when (quizType) {

@@ -16,6 +16,12 @@ kotlin {
         }
         minSdk = 24
 
+        // Works around a com.android.kotlin.multiplatform.library + AGP bug where
+        // Compose Multiplatform resources never get copied into the Android APK's
+        // assets, crashing at runtime with MissingResourceException. See
+        // https://youtrack.jetbrains.com/issue/CMP-9547
+        experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
+
         withHostTestBuilder { }
         withDeviceTestBuilder {
             sourceSetTreeName = "test"
