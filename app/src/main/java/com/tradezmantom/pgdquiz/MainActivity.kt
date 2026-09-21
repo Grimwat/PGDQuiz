@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -21,6 +22,8 @@ import com.tradezmantom.pgdquiz.billing.BillingManager
 import com.tradezmantom.pgdquiz.billing.PlatformContext
 import com.tradezmantom.pgdquiz.billing.PurchaseLauncher
 import com.tradezmantom.pgdquiz.domain.DefaultQuestionLoader
+import com.tradezmantom.pgdquiz.ui.appUi.LocalQuizPlatformActions
+import com.tradezmantom.pgdquiz.ui.appUi.QuizPlatformActions
 import com.tradezmantom.pgdquiz.ui.appUi.addManager.adds.UnSkipAddManager
 import com.tradezmantom.pgdquiz.ui.appUi.mainScreen.QuizMainScreen
 import com.tradezmantom.pgdquiz.ui.data.QuizType
@@ -28,9 +31,10 @@ import com.tradezmantom.pgdquiz.ui.logic.QuizViewModel
 import com.tradezmantom.pgdquiz.ui.logic.QuizViewModelFactory
 import com.tradezmantom.pgdquiz.ui.theme.PgdQuizTheme
 import com.google.android.gms.ads.MobileAds
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), QuizPlatformActions {
 
     private var selectedQuizType by mutableStateOf<QuizType?>(null)
     private var adManager: UnSkipAddManager? = null
@@ -78,11 +82,13 @@ class MainActivity : ComponentActivity() {
                 )
                 quizViewModel = viewModel
 
-                PgdQuizTheme(quizType = selectedQuizType ?: QuizType.DEFAULT) {
-                    QuizMainScreen(
-                        viewModel = viewModel,
-                        onQuizTypeSelected = { selectedQuizType = it }
-                    )
+                CompositionLocalProvider(LocalQuizPlatformActions provides this@MainActivity) {
+                    PgdQuizTheme(quizType = selectedQuizType ?: QuizType.DEFAULT) {
+                        QuizMainScreen(
+                            viewModel = viewModel,
+                            onQuizTypeSelected = { selectedQuizType = it }
+                        )
+                    }
                 }
             } else {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -97,14 +103,14 @@ class MainActivity : ComponentActivity() {
         billingManager?.destroy()
     }
 
-    fun launchApprenticeSubscription() {
+    override fun launchApprenticeSubscription() {
         billingManager?.launchApprenticeFlow(PurchaseLauncher(this))
     }
 
-    fun launchTradesmanPurchase() {
+    override fun launchTradesmanPurchase() {
         billingManager?.launchTradesmanFlow(PurchaseLauncher(this))
     }
-    fun showInterstitialAd(onAdDismissed: () -> Unit) {
+    override fun showInterstitialAd(onAdDismissed: () -> Unit) {
         val manager = adManager
         if (manager != null) {
             manager.showInterstitial(this, onAdDismissed)
@@ -113,7 +119,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    fun showRewardedAd(onRewardEarned: () -> Unit, onAdUnavailable: () -> Unit = {}) {
+    override fun showRewardedAd(onRewardEarned: () -> Unit, onAdUnavailable: () -> Unit) {
         val manager = adManager
         if (manager != null) {
             manager.showRewarded(this, onRewardEarned, onAdUnavailable)
@@ -122,7 +128,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private val fallbackRewardedAdReady = MutableStateFlow(false)
 
-    val rewardedAdReady: StateFlow<Boolean>?
-        get() = adManager?.rewardedAdReady
+    override val rewardedAdReady: StateFlow<Boolean>
+        get() = adManager?.rewardedAdReady ?: fallbackRewardedAdReady
 }

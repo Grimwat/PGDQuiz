@@ -14,17 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import com.tradezmantom.pgdquiz.R
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tradezmantom.pgdquiz.ui.appUi.isLandscapeOrientation
 import com.tradezmantom.pgdquiz.ui.data.Question
 import com.tradezmantom.pgdquiz.ui.data.QuizType
-import androidx.compose.ui.platform.LocalConfiguration
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -33,6 +29,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.style.TextOverflow
+import org.jetbrains.compose.resources.painterResource
+import pgdquiz.shared.generated.resources.Res
+import pgdquiz.shared.generated.resources.drainlogo
+import pgdquiz.shared.generated.resources.gasslogo
+import pgdquiz.shared.generated.resources.plumblogo
 
 @Composable
 fun QuestionField(
@@ -40,13 +41,12 @@ fun QuestionField(
     modifier: Modifier = Modifier,
     question: Question?,
 ) {
-    val configuration = LocalConfiguration.current
-    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+    val isLandscape = isLandscapeOrientation()
 
-    val ExamId = when (quizType) {
-        QuizType.GASFITTING -> R.drawable.gasslogo
-        QuizType.PLUMBING -> R.drawable.plumblogo
-        QuizType.DRAIN_LAYING -> R.drawable.drainlogo
+    val examId = when (quizType) {
+        QuizType.GASFITTING -> Res.drawable.gasslogo
+        QuizType.PLUMBING -> Res.drawable.plumblogo
+        QuizType.DRAIN_LAYING -> Res.drawable.drainlogo
         QuizType.DEFAULT -> null
     }
     val text = question?.question ?: ""
@@ -98,7 +98,7 @@ fun QuestionField(
             ),
         contentAlignment = Alignment.Center
     ) {
-        ExamId?.let { id ->
+        examId?.let { id ->
             Image(
                 painter = painterResource(id),
                 contentDescription = null,
@@ -124,9 +124,4 @@ fun QuestionField(
             }
         }
     }
-}
-@Preview
-@Composable
-fun PreviewQuestionField() {
-
 }

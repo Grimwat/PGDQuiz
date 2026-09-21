@@ -30,15 +30,18 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tradezmantom.pgdquiz.R
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.painterResource
+import pgdquiz.shared.generated.resources.Res
+import pgdquiz.shared.generated.resources.drainlogo
+import pgdquiz.shared.generated.resources.gasslogo
+import pgdquiz.shared.generated.resources.plumblogo
 
 @Composable
 fun NextButton(
@@ -50,9 +53,9 @@ fun NextButton(
     val scope = rememberCoroutineScope()
 
     val examId = when (quizType) {
-        QuizType.GASFITTING -> R.drawable.gasslogo
-        QuizType.PLUMBING -> R.drawable.plumblogo
-        QuizType.DRAIN_LAYING -> R.drawable.drainlogo
+        QuizType.GASFITTING -> Res.drawable.gasslogo
+        QuizType.PLUMBING -> Res.drawable.plumblogo
+        QuizType.DRAIN_LAYING -> Res.drawable.drainlogo
         QuizType.DEFAULT -> null
     }
 

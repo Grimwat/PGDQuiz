@@ -1,6 +1,5 @@
 package com.tradezmantom.pgdquiz.ui.appUi.mainScreen
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -20,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.tradezmantom.pgdquiz.ui.data.QuizType
@@ -35,9 +33,6 @@ fun QuizTypeButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-    val configuration = LocalConfiguration.current
-    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-
     Button(
         onClick = onClick,
         modifier = modifier

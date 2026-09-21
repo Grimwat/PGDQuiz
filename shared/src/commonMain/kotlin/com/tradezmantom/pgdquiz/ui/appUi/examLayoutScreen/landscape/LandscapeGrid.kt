@@ -27,16 +27,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.tradezmantom.pgdquiz.MainActivity
+import com.tradezmantom.pgdquiz.ui.appUi.LocalQuizPlatformActions
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.AnswerButton
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.NextButton
-import com.tradezmantom.pgdquiz.ui.appUi.findActivity
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 import com.tradezmantom.pgdquiz.ui.data.getCurrentQuestions
 import com.tradezmantom.pgdquiz.ui.logic.QuizViewModel
@@ -47,7 +45,7 @@ fun LandscapeGrid(
     quizType: QuizType,
     viewModel: QuizViewModel = viewModel()
 ) {
-    val context = LocalContext.current
+    val platformActions = LocalQuizPlatformActions.current
     val state by viewModel.quizUiState.collectAsStateWithLifecycle()
     val currentQuestion = state.currentQuestion
     val listState = rememberLazyListState()
@@ -111,7 +109,7 @@ fun LandscapeGrid(
                         val totalQuestions = state.getCurrentQuestions().size
                         val currentIndex = state.currentQuestionIndex
                         if (viewModel.shouldShowInterstitial(currentIndex, totalQuestions)) {
-                            (context.findActivity() as? MainActivity)?.showInterstitialAd {
+                            platformActions.showInterstitialAd {
                                 viewModel.triggerShowCorrectAnswer()
                             }
                         } else {

@@ -1,7 +1,8 @@
+@file:OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
+
 package com.tradezmantom.pgdquiz.ui.appUi.mainScreen
 
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,13 +17,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.backhandler.BackHandler
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.tradezmantom.pgdquiz.MainActivity
-import com.tradezmantom.pgdquiz.R
+import com.tradezmantom.pgdquiz.ui.appUi.LocalQuizPlatformActions
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.ExamLayout
-import com.tradezmantom.pgdquiz.ui.appUi.findActivity
 import com.tradezmantom.pgdquiz.ui.appUi.quizModeScreen.QuizModeSelection
 import com.tradezmantom.pgdquiz.ui.data.QuizDifficulty
 import com.tradezmantom.pgdquiz.ui.data.QuizType
@@ -31,6 +29,13 @@ import com.tradezmantom.pgdquiz.ui.data.hasNoAds
 import com.tradezmantom.pgdquiz.ui.data.hasUnlimitedLives
 import com.tradezmantom.pgdquiz.ui.logic.QuizViewModel
 import com.tradezmantom.pgdquiz.ui.theme.PgdQuizTheme
+import org.jetbrains.compose.resources.painterResource
+import pgdquiz.shared.generated.resources.Res
+import pgdquiz.shared.generated.resources.droplet
+import pgdquiz.shared.generated.resources.happypoo2
+import pgdquiz.shared.generated.resources.neonsign2
+import pgdquiz.shared.generated.resources.neonsign3
+import pgdquiz.shared.generated.resources.pressure
 
 
 @Composable
@@ -38,7 +43,7 @@ fun QuizMainScreen(
     viewModel: QuizViewModel,
     onQuizTypeSelected: (QuizType) -> Unit,
 ) {
-    val context = LocalContext.current
+    val platformActions = LocalQuizPlatformActions.current
     val state by viewModel.quizUiState.collectAsStateWithLifecycle()
     var selectedQuizType by rememberSaveable { mutableStateOf<QuizType?>(null) }
     var selectedMode by rememberSaveable { mutableStateOf<QuizDifficulty?>(null) }
@@ -64,7 +69,7 @@ fun QuizMainScreen(
                     },
                     onQuizTypeSelected = onQuizTypeSelected,
 
-                    tradeTom = painterResource(id = R.drawable.neonsign3)
+                    tradeTom = painterResource(Res.drawable.neonsign3)
                 )
             }
 
@@ -90,7 +95,7 @@ fun QuizMainScreen(
                     showAds = !state.hasNoAds(),
                     hasUnlimitedLives = state.hasUnlimitedLives(),
                     onUpgrade = {
-                        (context.findActivity() as? MainActivity)?.launchApprenticeSubscription()
+                        platformActions.launchApprenticeSubscription()
                     })
             }
 
@@ -107,11 +112,11 @@ fun QuizMainScreen(
                     quizDifficulty = selectedMode!!,
                     quizType = selectedQuizType!!,
                     examEmoji = painterResource(
-                        id = when (selectedQuizType ?: QuizType.DEFAULT) {
-                            QuizType.DRAIN_LAYING -> R.drawable.happypoo2
-                            QuizType.PLUMBING -> R.drawable.droplet
-                            QuizType.GASFITTING -> R.drawable.pressure
-                            QuizType.DEFAULT -> R.drawable.neonsign2
+                        when (selectedQuizType ?: QuizType.DEFAULT) {
+                            QuizType.DRAIN_LAYING -> Res.drawable.happypoo2
+                            QuizType.PLUMBING -> Res.drawable.droplet
+                            QuizType.GASFITTING -> Res.drawable.pressure
+                            QuizType.DEFAULT -> Res.drawable.neonsign2
                         }
                     ),
                     title = when (selectedQuizType ?: QuizType.DEFAULT) {

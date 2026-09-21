@@ -31,13 +31,17 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tradezmantom.pgdquiz.R
 import com.tradezmantom.pgdquiz.ui.data.QuizType
+import org.jetbrains.compose.resources.painterResource
+import pgdquiz.shared.generated.resources.Res
+import pgdquiz.shared.generated.resources.arrow
+import pgdquiz.shared.generated.resources.drop2
+import pgdquiz.shared.generated.resources.happypoo2
+import pgdquiz.shared.generated.resources.pressure2
 
 @Composable
 fun LivesLost(
@@ -55,10 +59,10 @@ fun LivesLost(
     tradesmanPriceText: String = "NZD$300 Lifetime"
 ) {
     val (title, examEmoji) = when (quizType) {
-        QuizType.DRAIN_LAYING -> "HappyPoo" to R.drawable.happypoo2
-        QuizType.PLUMBING -> "Droplet" to R.drawable.drop2
-        QuizType.GASFITTING -> "Pressure" to R.drawable.pressure2
-        QuizType.DEFAULT -> "Nothing G" to R.drawable.arrow
+        QuizType.DRAIN_LAYING -> "HappyPoo" to Res.drawable.happypoo2
+        QuizType.PLUMBING -> "Droplet" to Res.drawable.drop2
+        QuizType.GASFITTING -> "Pressure" to Res.drawable.pressure2
+        QuizType.DEFAULT -> "Nothing G" to Res.drawable.arrow
     }
 
     val drainlayingMessages = listOf(
@@ -145,7 +149,7 @@ fun LivesLost(
             )
 
             Image(
-                painter = painterResource(id = examEmoji),
+                painter = painterResource(examEmoji),
                 contentDescription = emojiCont,
                 modifier = Modifier.size(80.dp)
             )

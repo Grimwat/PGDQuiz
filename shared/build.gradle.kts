@@ -35,11 +35,20 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(compose.runtime)
+                implementation(compose.ui)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.animation)
+                implementation(compose.components.resources)
+                implementation(compose.materialIconsExtended)
+                implementation("org.jetbrains.compose.ui:ui-backhandler:${libs.versions.composeMultiplatform.get()}")
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.kotlinx.datetime)
                 api(libs.androidx.room.runtime)
                 implementation(libs.androidx.sqlite.bundled)
                 api(libs.androidx.lifecycle.viewmodel)
+                implementation(libs.androidx.lifecycle.viewmodel.compose)
+                implementation(libs.androidx.lifecycle.runtime.compose)
             }
         }
 
@@ -52,7 +61,8 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.android.billing.ktx)
-                implementation(compose.ui)
+                implementation("com.google.android.gms:play-services-ads:25.4.0")
+                implementation("androidx.window:window:1.5.1")
             }
         }
 

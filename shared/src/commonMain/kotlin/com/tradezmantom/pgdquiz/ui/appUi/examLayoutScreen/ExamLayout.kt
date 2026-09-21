@@ -1,9 +1,6 @@
 package com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen
 
 
-import androidx.compose.ui.platform.LocalContext
-import com.tradezmantom.pgdquiz.MainActivity
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,26 +27,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.tradezmantom.pgdquiz.ui.appUi.addManager.adds.BannerAd
+import com.tradezmantom.pgdquiz.ui.appUi.LocalQuizPlatformActions
+import com.tradezmantom.pgdquiz.ui.appUi.PlatformBannerAd
 import com.tradezmantom.pgdquiz.ui.appUi.addManager.adds.RewardAdSuccess
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.landscape.LandscapeGrid
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.overlays.CongratulationsScreen
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.overlays.LivesLost
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.portrait.ButtonsPortrait
-import com.tradezmantom.pgdquiz.ui.appUi.findActivity
+import com.tradezmantom.pgdquiz.ui.appUi.isLandscapeOrientation
 import com.tradezmantom.pgdquiz.ui.data.QuizDifficulty
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 import com.tradezmantom.pgdquiz.ui.data.getCurrentQuestions
@@ -87,14 +82,11 @@ fun ExamLayout(
     quizType: QuizType,
     onBackToModeSelect: () -> Unit
 ) {
-    val context = LocalContext.current
-    val configuration = LocalConfiguration.current
-    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+    val platformActions = LocalQuizPlatformActions.current
+    val isLandscape = isLandscapeOrientation()
     val state by viewModel.quizUiState.collectAsStateWithLifecycle()
     val showAds = !state.hasNoAds()
-    val mainActivity = context as? MainActivity
-    val rewardedAdReady by (mainActivity?.rewardedAdReady?.collectAsStateWithLifecycle(initialValue = false)
-        ?: remember { mutableStateOf(false) })
+    val rewardedAdReady by platformActions.rewardedAdReady.collectAsStateWithLifecycle(initialValue = false)
 
     LaunchedEffect(quizType, quizDifficulty) {
         viewModel.startQuiz(quizDifficulty, quizType)
@@ -139,7 +131,7 @@ fun ExamLayout(
                                 isPremium = state.isPremium(),
                                 onBack = { onBackToModeSelect() },
                                 onUpgrade = {
-                                    (context.findActivity() as? MainActivity)?.launchApprenticeSubscription()
+                                    platformActions.launchApprenticeSubscription()
                                 }
                             )
                             QuestionProgressIndicator(
@@ -173,7 +165,7 @@ fun ExamLayout(
                     }
 
                     if (showAds) {
-                        BannerAd(
+                        PlatformBannerAd(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(60.dp)
@@ -204,7 +196,7 @@ fun ExamLayout(
                             isPremium = state.isPremium(),
                             onBack = { onBackToModeSelect() },
                             onUpgrade = {
-                                (context as? MainActivity)?.launchApprenticeSubscription()
+                                platformActions.launchApprenticeSubscription()
                             }
                         )
                         Spacer(modifier = Modifier.padding(8.dp))
@@ -234,11 +226,8 @@ fun ExamLayout(
 
                     NextButton(
                         onClick = {
-                            val totalQuestions = state.getCurrentQuestions().size
-                            val activity = context as? MainActivity
-
                             if (viewModel.canShowAd() && showAds) {
-                                activity?.showInterstitialAd {
+                                platformActions.showInterstitialAd {
                                     viewModel.triggerShowCorrectAnswer()
                                 }
                             } else {
@@ -254,7 +243,7 @@ fun ExamLayout(
                     )
 
                     if (showAds) {
-                        BannerAd(
+                        PlatformBannerAd(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentHeight()
@@ -279,15 +268,15 @@ fun ExamLayout(
                 ) {
                     LivesLost(
                         onWatchAd = if (showAds) {{
-                            (context as? MainActivity)?.showRewardedAd(
+                            platformActions.showRewardedAd(
                                 onRewardEarned = {
                                     viewModel.handleRewardEarned()
                                 },
                                 onAdUnavailable = {
                                     // Ad wasn't ready yet — no reward was granted.
-                                    // Swap this Log line for a Snackbar/Toast if you
-                                    // want to surface it to the user directly.
-                                    android.util.Log.d("ADS", "Rewarded ad unavailable, no attempt granted")
+                                    // Swap this for a Snackbar/Toast if you want to
+                                    // surface it to the user directly.
+                                    println("ADS: Rewarded ad unavailable, no attempt granted")
                                 }
                             )
                         }} else null,
@@ -297,10 +286,10 @@ fun ExamLayout(
                         emojiCont = title,
                         quizType = quizType,
                         onUpgradeApprentice = {
-                            (context as? MainActivity)?.launchApprenticeSubscription()
+                            platformActions.launchApprenticeSubscription()
                         },
                         onUpgradeTradesman = {
-                            (context as? MainActivity)?.launchTradesmanPurchase()
+                            platformActions.launchTradesmanPurchase()
                         }
                     )
                 }
@@ -327,11 +316,11 @@ fun ExamLayout(
                         bestStreak = state.bestStreak,
                         isPremium = state.isPremium(),
                         onUpgrade = {
-                            (context as? MainActivity)?.launchApprenticeSubscription()
+                            platformActions.launchApprenticeSubscription()
                         },
                         onRestart = {
                             if (showAds) {
-                                (context as? MainActivity)?.showInterstitialAd {
+                                platformActions.showInterstitialAd {
                                     viewModel.startQuiz(quizDifficulty, quizType)
                                 }
                             } else {
@@ -340,7 +329,7 @@ fun ExamLayout(
                         },
                         onBackToModeSelect = {
                             if (showAds) {
-                                (context as? MainActivity)?.showInterstitialAd {
+                                platformActions.showInterstitialAd {
                                     onBackToModeSelect()
                                 }
                             } else {

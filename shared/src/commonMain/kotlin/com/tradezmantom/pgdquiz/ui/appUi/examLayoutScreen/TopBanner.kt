@@ -16,19 +16,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.tradezmantom.pgdquiz.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.tradezmantom.pgdquiz.ui.appUi.isLandscapeOrientation
 import com.tradezmantom.pgdquiz.ui.data.QuizType
-import androidx.compose.ui.platform.LocalConfiguration
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -41,6 +37,13 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
+import org.jetbrains.compose.resources.painterResource
+import pgdquiz.shared.generated.resources.Res
+import pgdquiz.shared.generated.resources.arrow
+import pgdquiz.shared.generated.resources.drainlogo
+import pgdquiz.shared.generated.resources.flame1
+import pgdquiz.shared.generated.resources.gasslogo
+import pgdquiz.shared.generated.resources.plumblogo
 
 @Composable
 fun Banner(
@@ -55,14 +58,13 @@ fun Banner(
     onUpgrade: (() -> Unit)? = null
 ) {
     val (title, examEmoji) = when (quizType) {
-        QuizType.DRAIN_LAYING -> "Drainlaying" to R.drawable.drainlogo
-        QuizType.PLUMBING -> "Plumbing" to R.drawable.plumblogo
-        QuizType.GASFITTING -> "Gasfitting" to R.drawable.gasslogo
-        QuizType.DEFAULT -> "Quiz App" to R.drawable.arrow
+        QuizType.DRAIN_LAYING -> "Drainlaying" to Res.drawable.drainlogo
+        QuizType.PLUMBING -> "Plumbing" to Res.drawable.plumblogo
+        QuizType.GASFITTING -> "Gasfitting" to Res.drawable.gasslogo
+        QuizType.DEFAULT -> "Quiz App" to Res.drawable.arrow
     }
 
-    val configuration = LocalConfiguration.current
-    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+    val isLandscape = isLandscapeOrientation()
 
     val verticalPadding = if (isLandscape) 6.dp else 10.dp
     val iconSize = if (isLandscape) 24.dp else 28.dp
@@ -111,7 +113,7 @@ fun Banner(
             ) {
                 IconButton(onClick = onBack) {
                     Icon(
-                        painter = painterResource(id = R.drawable.arrow),
+                        painter = painterResource(Res.drawable.arrow),
                         contentDescription = "Back",
                         modifier = Modifier.size(iconSize),
                         tint = Color.White
@@ -131,7 +133,7 @@ fun Banner(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.flame1),
+                        painter = painterResource(Res.drawable.flame1),
                         contentDescription = "Streak",
                         modifier = Modifier
                             .size(iconSize)
@@ -206,14 +208,4 @@ fun Banner(
             }
         }
     }
-}
-
-
-
-@Preview
-@Composable
-fun Banner(
-
-) {
-
 }

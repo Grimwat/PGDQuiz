@@ -7,10 +7,10 @@ import com.tradezmantom.pgdquiz.ui.data.SubscriptionTier
 import com.tradezmantom.pgdquiz.util.STARTING_LIVES
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 class DefaultQuizDatastore(
     private val userStatsDao: UserStatsDao

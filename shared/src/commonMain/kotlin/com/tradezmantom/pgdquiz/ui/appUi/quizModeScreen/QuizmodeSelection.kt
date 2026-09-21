@@ -1,6 +1,5 @@
 package com.tradezmantom.pgdquiz.ui.appUi.quizModeScreen
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,10 +22,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import com.tradezmantom.pgdquiz.MainActivity
-import com.tradezmantom.pgdquiz.ui.appUi.addManager.adds.BannerAd
+import com.tradezmantom.pgdquiz.ui.appUi.PlatformBannerAd
+import com.tradezmantom.pgdquiz.ui.appUi.isLandscapeOrientation
 import com.tradezmantom.pgdquiz.ui.appUi.quizModeScreen.landscape.ModeButtonLandscape
 import com.tradezmantom.pgdquiz.ui.appUi.quizModeScreen.portrait.ModeButtonPortrait
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.Banner
@@ -45,8 +43,7 @@ fun QuizModeSelection(
     onSelectDifficulty: (mode: QuizDifficulty) -> Unit,
     showAds: Boolean = true,
 ) {
-    val configuration = LocalConfiguration.current
-    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+    val isLandscape = isLandscapeOrientation()
 
     if (isLandscape) {
         Column(
@@ -107,7 +104,7 @@ fun QuizModeSelection(
                     .height(60.dp)
             ) {
                 if (showAds) {
-                    BannerAd(
+                    PlatformBannerAd(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(60.dp)
@@ -174,7 +171,7 @@ fun QuizModeSelection(
                     .height(60.dp)
             ) {
                 if (showAds) {
-                    BannerAd(
+                    PlatformBannerAd(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(60.dp)
