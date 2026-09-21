@@ -3,24 +3,27 @@ package com.tradezmantom.pgdquiz.data.database
 import androidx.room.TypeConverter
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 import com.tradezmantom.pgdquiz.ui.data.SubscriptionTier
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class Converters {
     companion object {
-        private val gson = Gson()
+        private val json = Json { ignoreUnknownKeys = true }
     }
 
     @TypeConverter
     fun fromLivesMap(map: Map<QuizType, Int>?): String {
-        return gson.toJson(map ?: emptyMap<QuizType, Int>())
+        return json.encodeToString(map ?: emptyMap())
     }
 
     @TypeConverter
-    fun toLivesMap(json: String?): Map<QuizType, Int> {
-        if (json == null) return emptyMap()
-        val type = object : TypeToken<Map<QuizType, Int>>() {}.type
-        return gson.fromJson(json, type) ?: emptyMap()
+    fun toLivesMap(value: String?): Map<QuizType, Int> {
+        if (value.isNullOrBlank()) return emptyMap()
+        return try {
+            json.decodeFromString(value)
+        } catch (e: Exception) {
+            emptyMap()
+        }
     }
 
     @TypeConverter

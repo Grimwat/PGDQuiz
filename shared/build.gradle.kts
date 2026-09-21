@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.devtools.ksp)
 }
 
 kotlin {
@@ -35,6 +36,10 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(compose.runtime)
                 implementation(libs.kotlinx.serialization.json)
+                implementation(libs.kotlinx.datetime)
+                api(libs.androidx.room.runtime)
+                implementation(libs.androidx.sqlite.bundled)
+                api(libs.androidx.lifecycle.viewmodel)
             }
         }
 
@@ -64,3 +69,9 @@ kotlin {
         }
     }
 }}
+
+dependencies {
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspIosArm64", libs.androidx.room.compiler)
+    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
+}

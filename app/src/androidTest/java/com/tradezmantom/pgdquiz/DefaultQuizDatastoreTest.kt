@@ -1,13 +1,15 @@
 package com.tradezmantom.pgdquiz
 
 import androidx.room.Room
+import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.tradezmantom.pgdquiz.data.database.AppDatabase
-import com.tradezmantom.pgdquiz.data.repository.RoomQuizDatastore
+import com.tradezmantom.pgdquiz.data.repository.DefaultQuizDatastore
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 import com.tradezmantom.pgdquiz.ui.data.SubscriptionTier
 import com.tradezmantom.pgdquiz.util.STARTING_LIVES
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -20,18 +22,20 @@ import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
-class RoomQuizDatastoreTest {
+class DefaultQuizDatastoreTest {
 
     private lateinit var database: AppDatabase
-    private lateinit var datastore: RoomQuizDatastore
+    private lateinit var datastore: DefaultQuizDatastore
 
     @Before
     fun setup() {
-        database = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
-            AppDatabase::class.java
-        ).allowMainThreadQueries().build()
-        datastore = RoomQuizDatastore(database.userStatsDao())
+        database = Room.inMemoryDatabaseBuilder<AppDatabase>(
+            ApplicationProvider.getApplicationContext()
+        )
+            .setDriver(BundledSQLiteDriver())
+            .setQueryCoroutineContext(Dispatchers.IO)
+            .build()
+        datastore = DefaultQuizDatastore(database.userStatsDao())
     }
 
     @After

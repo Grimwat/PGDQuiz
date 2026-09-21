@@ -34,6 +34,15 @@ class QuizViewModel(
         }
     }
 
+    // Swift-friendly alternative to collecting quizUiState directly (Swift can't consume
+    // a Kotlin Flow without extra tooling like SKIE). Call close() on the result to stop observing.
+    fun watchUiState(onEach: (QuizUiState) -> Unit): Closeable {
+        val job = viewModelScope.launch {
+            quizUiState.collect { onEach(it) }
+        }
+        return Closeable(job)
+    }
+
 
     fun startQuiz(difficulty: QuizDifficulty, quizType: QuizType) {
 
