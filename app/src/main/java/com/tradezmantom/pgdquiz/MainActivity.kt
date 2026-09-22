@@ -137,6 +137,24 @@ class MainActivity : ComponentActivity(), QuizPlatformActions {
         }
     }
 
+    override fun showLivesLostInterstitial(onAdDismissed: () -> Unit) {
+        val manager = adManager
+        if (manager != null) {
+            manager.showLivesLostInterstitial(this, onAdDismissed)
+        } else {
+            onAdDismissed()
+        }
+    }
+
+    override fun showCongratulationsInterstitial(onAdDismissed: () -> Unit) {
+        val manager = adManager
+        if (manager != null) {
+            manager.showCongratulationsInterstitial(this, onAdDismissed)
+        } else {
+            onAdDismissed()
+        }
+    }
+
     private val fallbackRewardedAdReady = MutableStateFlow(false)
 
     override val rewardedAdReady: StateFlow<Boolean>

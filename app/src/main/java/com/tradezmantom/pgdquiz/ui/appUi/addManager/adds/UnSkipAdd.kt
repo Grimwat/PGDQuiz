@@ -19,9 +19,13 @@ class UnSkipAddManager(private val context: Context) {
     private var interstitialAd: InterstitialAd? = null
     private var rewardedAd: RewardedAd? = null
     private var quizTypeChangeInterstitialAd: InterstitialAd? = null
+    private var livesLostInterstitialAd: InterstitialAd? = null
+    private var congratulationsInterstitialAd: InterstitialAd? = null
     private var isInterstitialLoading = false
     private var isRewardedLoading = false
     private var isQuizTypeChangeInterstitialLoading = false
+    private var isLivesLostInterstitialLoading = false
+    private var isCongratulationsInterstitialLoading = false
 
     private val _rewardedAdReady = MutableStateFlow(false)
     val rewardedAdReady: StateFlow<Boolean> = _rewardedAdReady.asStateFlow()
@@ -30,6 +34,8 @@ class UnSkipAddManager(private val context: Context) {
         loadInterstitial()
         loadRewarded()
         loadQuizTypeChangeInterstitial()
+        loadLivesLostInterstitial()
+        loadCongratulationsInterstitial()
     }
 
 
@@ -145,6 +151,126 @@ class UnSkipAddManager(private val context: Context) {
             Log.d("ADS", "Quiz type change interstitial not ready when requested, skipping")
             onAdDismissed()
             loadQuizTypeChangeInterstitial()
+        }
+    }
+
+
+    private fun loadLivesLostInterstitial() {
+        if (isLivesLostInterstitialLoading || livesLostInterstitialAd != null) return
+        isLivesLostInterstitialLoading = true
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(
+            context,
+            // TODO: replace with the real AdMob interstitial ad unit ID for the
+            // "lives lost" placement once created in AdMob. This is Google's shared
+            // test interstitial ID so the placement works out of the box.
+            "ca-app-pub-3940256099942544/1033173712",
+            adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdLoaded(ad: InterstitialAd) {
+                    livesLostInterstitialAd = ad
+                    isLivesLostInterstitialLoading = false
+                    Log.d("ADS", "Lives lost interstitial loaded successfully")
+                }
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    livesLostInterstitialAd = null
+                    isLivesLostInterstitialLoading = false
+                    Log.e(
+                        "ADS",
+                        "Lives lost interstitial failed to load: code=${adError.code} " +
+                                "domain=${adError.domain} message=${adError.message}"
+                    )
+                }
+            }
+        )
+    }
+
+    fun showLivesLostInterstitial(activity: Activity, onAdDismissed: () -> Unit) {
+        val ad = livesLostInterstitialAd
+        if (ad != null) {
+            ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    livesLostInterstitialAd = null
+                    loadLivesLostInterstitial()
+                    onAdDismissed()
+                }
+
+                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                    livesLostInterstitialAd = null
+                    Log.e(
+                        "ADS",
+                        "Lives lost interstitial failed to show: code=${adError.code} " +
+                                "domain=${adError.domain} message=${adError.message}"
+                    )
+                    loadLivesLostInterstitial()
+                    onAdDismissed()
+                }
+            }
+            ad.show(activity)
+        } else {
+            Log.d("ADS", "Lives lost interstitial not ready when requested, skipping")
+            onAdDismissed()
+            loadLivesLostInterstitial()
+        }
+    }
+
+
+    private fun loadCongratulationsInterstitial() {
+        if (isCongratulationsInterstitialLoading || congratulationsInterstitialAd != null) return
+        isCongratulationsInterstitialLoading = true
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(
+            context,
+            // TODO: replace with the real AdMob interstitial ad unit ID for the
+            // "quiz completed" placement once created in AdMob. This is Google's shared
+            // test interstitial ID so the placement works out of the box.
+            "ca-app-pub-3940256099942544/1033173712",
+            adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdLoaded(ad: InterstitialAd) {
+                    congratulationsInterstitialAd = ad
+                    isCongratulationsInterstitialLoading = false
+                    Log.d("ADS", "Congratulations interstitial loaded successfully")
+                }
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    congratulationsInterstitialAd = null
+                    isCongratulationsInterstitialLoading = false
+                    Log.e(
+                        "ADS",
+                        "Congratulations interstitial failed to load: code=${adError.code} " +
+                                "domain=${adError.domain} message=${adError.message}"
+                    )
+                }
+            }
+        )
+    }
+
+    fun showCongratulationsInterstitial(activity: Activity, onAdDismissed: () -> Unit) {
+        val ad = congratulationsInterstitialAd
+        if (ad != null) {
+            ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    congratulationsInterstitialAd = null
+                    loadCongratulationsInterstitial()
+                    onAdDismissed()
+                }
+
+                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                    congratulationsInterstitialAd = null
+                    Log.e(
+                        "ADS",
+                        "Congratulations interstitial failed to show: code=${adError.code} " +
+                                "domain=${adError.domain} message=${adError.message}"
+                    )
+                    loadCongratulationsInterstitial()
+                    onAdDismissed()
+                }
+            }
+            ad.show(activity)
+        } else {
+            Log.d("ADS", "Congratulations interstitial not ready when requested, skipping")
+            onAdDismissed()
+            loadCongratulationsInterstitial()
         }
     }
 

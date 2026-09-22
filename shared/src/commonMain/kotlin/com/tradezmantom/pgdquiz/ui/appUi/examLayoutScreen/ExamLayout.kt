@@ -87,9 +87,29 @@ fun ExamLayout(
     val state by viewModel.quizUiState.collectAsStateWithLifecycle()
     val showAds = !state.hasNoAds()
     val rewardedAdReady by platformActions.rewardedAdReady.collectAsStateWithLifecycle(initialValue = false)
+    // getCurrentQuizTypeLives() falls back to 0 while state.quizType hasn't caught up to this
+    // screen's quizType yet (e.g. right after startQuiz() is called but before it completes) —
+    // require them to match so that transient window is never mistaken for "out of lives".
+    val isOutOfLives = state.quizType == quizType &&
+            state.getCurrentQuizTypeLives() <= 0 &&
+            !state.hasUnlimitedLives()
 
     LaunchedEffect(quizType, quizDifficulty) {
         viewModel.startQuiz(quizDifficulty, quizType)
+    }
+
+    // Fire once each time these are newly reached — an impression count per event lets
+    // AdMob reporting double as a "how many people run out of lives / finish" signal.
+    LaunchedEffect(isOutOfLives) {
+        if (isOutOfLives && showAds) {
+            platformActions.showLivesLostInterstitial {}
+        }
+    }
+
+    LaunchedEffect(state.showCongratulationsScreen) {
+        if (state.showCongratulationsScreen && showAds) {
+            platformActions.showCongratulationsInterstitial {}
+        }
     }
 
     Box(
@@ -253,7 +273,7 @@ fun ExamLayout(
             }
         }
 
-        if (state.getCurrentQuizTypeLives() <= 0 && !state.hasUnlimitedLives()) {
+        if (isOutOfLives) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
