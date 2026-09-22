@@ -42,6 +42,10 @@ private class IosQuizPlatformActions(
     override fun showRewardedAd(onRewardEarned: () -> Unit, onAdUnavailable: () -> Unit) {
         onAdUnavailable()
     }
+
+    override fun showQuizTypeChangeInterstitial(onAdDismissed: () -> Unit) {
+        onAdDismissed()
+    }
 }
 
 @Suppress("FunctionName")

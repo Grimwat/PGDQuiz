@@ -47,6 +47,17 @@ fun QuizMainScreen(
     val state by viewModel.quizUiState.collectAsStateWithLifecycle()
     var selectedQuizType by rememberSaveable { mutableStateOf<QuizType?>(null) }
     var selectedMode by rememberSaveable { mutableStateOf<QuizDifficulty?>(null) }
+    // Tracks the last quiz type actually chosen (independent of selectedQuizType, which gets
+    // reset to null whenever the user backs out to the type-selection screen) so a switch
+    // between two real quiz types — e.g. Plumbing -> Drainlaying — can be detected and shown
+    // an interstitial. Switching in from having no prior selection (previous == null) never
+    // triggers this, so a first-ever pick doesn't show an ad.
+    var lastChosenQuizType by rememberSaveable { mutableStateOf<QuizType?>(null) }
+
+    fun applySelectedQuizType(quizType: QuizType) {
+        selectedQuizType = quizType
+        onQuizTypeSelected(quizType)
+    }
 
 
     PgdQuizTheme(quizType = selectedQuizType ?: QuizType.DEFAULT) {
@@ -63,9 +74,18 @@ fun QuizMainScreen(
             selectedQuizType == null -> {
                 QuizTypeSelection(
                     onSelectQuizType = { quizType ->
-                        selectedQuizType = quizType
-                        onQuizTypeSelected(quizType)
-
+                        val previous = lastChosenQuizType
+                        lastChosenQuizType = quizType
+                        val isSwitchBetweenQuizTypes = previous != null &&
+                                previous != QuizType.DEFAULT &&
+                                previous != quizType
+                        if (isSwitchBetweenQuizTypes && !state.hasNoAds()) {
+                            platformActions.showQuizTypeChangeInterstitial {
+                                applySelectedQuizType(quizType)
+                            }
+                        } else {
+                            applySelectedQuizType(quizType)
+                        }
                     },
                     onQuizTypeSelected = onQuizTypeSelected,
 

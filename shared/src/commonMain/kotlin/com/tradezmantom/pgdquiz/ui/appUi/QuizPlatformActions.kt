@@ -14,6 +14,7 @@ interface QuizPlatformActions {
     fun launchTradesmanPurchase()
     fun showInterstitialAd(onAdDismissed: () -> Unit)
     fun showRewardedAd(onRewardEarned: () -> Unit, onAdUnavailable: () -> Unit = {})
+    fun showQuizTypeChangeInterstitial(onAdDismissed: () -> Unit)
 }
 
 val LocalQuizPlatformActions = staticCompositionLocalOf<QuizPlatformActions> {

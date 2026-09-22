@@ -128,6 +128,15 @@ class MainActivity : ComponentActivity(), QuizPlatformActions {
         }
     }
 
+    override fun showQuizTypeChangeInterstitial(onAdDismissed: () -> Unit) {
+        val manager = adManager
+        if (manager != null) {
+            manager.showQuizTypeChangeInterstitial(this, onAdDismissed)
+        } else {
+            onAdDismissed()
+        }
+    }
+
     private val fallbackRewardedAdReady = MutableStateFlow(false)
 
     override val rewardedAdReady: StateFlow<Boolean>

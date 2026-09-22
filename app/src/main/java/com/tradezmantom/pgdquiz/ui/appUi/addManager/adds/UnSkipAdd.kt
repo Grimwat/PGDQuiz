@@ -18,8 +18,10 @@ import kotlinx.coroutines.flow.asStateFlow
 class UnSkipAddManager(private val context: Context) {
     private var interstitialAd: InterstitialAd? = null
     private var rewardedAd: RewardedAd? = null
+    private var quizTypeChangeInterstitialAd: InterstitialAd? = null
     private var isInterstitialLoading = false
     private var isRewardedLoading = false
+    private var isQuizTypeChangeInterstitialLoading = false
 
     private val _rewardedAdReady = MutableStateFlow(false)
     val rewardedAdReady: StateFlow<Boolean> = _rewardedAdReady.asStateFlow()
@@ -27,6 +29,7 @@ class UnSkipAddManager(private val context: Context) {
     fun loadAllAds() {
         loadInterstitial()
         loadRewarded()
+        loadQuizTypeChangeInterstitial()
     }
 
 
@@ -82,6 +85,66 @@ class UnSkipAddManager(private val context: Context) {
             Log.d("ADS", "Interstitial not ready when requested, skipping")
             onAdDismissed()
             loadInterstitial()
+        }
+    }
+
+
+    private fun loadQuizTypeChangeInterstitial() {
+        if (isQuizTypeChangeInterstitialLoading || quizTypeChangeInterstitialAd != null) return
+        isQuizTypeChangeInterstitialLoading = true
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(
+            context,
+            // TODO: replace with the real AdMob interstitial ad unit ID for the
+            // "quiz type changed" placement once created in AdMob. This is Google's
+            // shared test interstitial ID so the placement works out of the box.
+            "ca-app-pub-3940256099942544/1033173712",
+            adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdLoaded(ad: InterstitialAd) {
+                    quizTypeChangeInterstitialAd = ad
+                    isQuizTypeChangeInterstitialLoading = false
+                    Log.d("ADS", "Quiz type change interstitial loaded successfully")
+                }
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    quizTypeChangeInterstitialAd = null
+                    isQuizTypeChangeInterstitialLoading = false
+                    Log.e(
+                        "ADS",
+                        "Quiz type change interstitial failed to load: code=${adError.code} " +
+                                "domain=${adError.domain} message=${adError.message}"
+                    )
+                }
+            }
+        )
+    }
+
+    fun showQuizTypeChangeInterstitial(activity: Activity, onAdDismissed: () -> Unit) {
+        val ad = quizTypeChangeInterstitialAd
+        if (ad != null) {
+            ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    quizTypeChangeInterstitialAd = null
+                    loadQuizTypeChangeInterstitial()
+                    onAdDismissed()
+                }
+
+                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                    quizTypeChangeInterstitialAd = null
+                    Log.e(
+                        "ADS",
+                        "Quiz type change interstitial failed to show: code=${adError.code} " +
+                                "domain=${adError.domain} message=${adError.message}"
+                    )
+                    loadQuizTypeChangeInterstitial()
+                    onAdDismissed()
+                }
+            }
+            ad.show(activity)
+        } else {
+            Log.d("ADS", "Quiz type change interstitial not ready when requested, skipping")
+            onAdDismissed()
+            loadQuizTypeChangeInterstitial()
         }
     }
 
