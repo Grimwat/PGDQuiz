@@ -15,7 +15,7 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
 
 @Composable
-fun BannerAd(modifier: Modifier = Modifier) {
+fun BannerAd(adUnitId: String, modifier: Modifier = Modifier) {
     AndroidView(
         modifier = modifier
             .fillMaxWidth(),
@@ -34,7 +34,7 @@ fun BannerAd(modifier: Modifier = Modifier) {
 
             AdView(it).apply {
                 setAdSize(AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(it, adWidth))
-                adUnitId = "ca-app-pub-7804898639422438/9682004736"
+                this.adUnitId = adUnitId
 
                 adListener = object : AdListener() {
                     override fun onAdLoaded() {

@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.tradezmantom.pgdquiz.ui.appUi.BannerAdPlacement
 import com.tradezmantom.pgdquiz.ui.appUi.LocalQuizPlatformActions
 import com.tradezmantom.pgdquiz.ui.appUi.PlatformBannerAd
 import com.tradezmantom.pgdquiz.ui.appUi.addManager.adds.RewardAdSuccess
@@ -96,20 +97,6 @@ fun ExamLayout(
 
     LaunchedEffect(quizType, quizDifficulty) {
         viewModel.startQuiz(quizDifficulty, quizType)
-    }
-
-    // Fire once each time these are newly reached — an impression count per event lets
-    // AdMob reporting double as a "how many people run out of lives / finish" signal.
-    LaunchedEffect(isOutOfLives) {
-        if (isOutOfLives && showAds) {
-            platformActions.showLivesLostInterstitial {}
-        }
-    }
-
-    LaunchedEffect(state.showCongratulationsScreen) {
-        if (state.showCongratulationsScreen && showAds) {
-            platformActions.showCongratulationsInterstitial {}
-        }
     }
 
     Box(
@@ -186,6 +173,7 @@ fun ExamLayout(
 
                     if (showAds) {
                         PlatformBannerAd(
+                            placement = BannerAdPlacement.QUIZ_SCREEN,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(60.dp)
@@ -264,6 +252,7 @@ fun ExamLayout(
 
                     if (showAds) {
                         PlatformBannerAd(
+                            placement = BannerAdPlacement.QUIZ_SCREEN,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentHeight()
@@ -287,6 +276,7 @@ fun ExamLayout(
                         .padding(8.dp)
                 ) {
                     LivesLost(
+                        showAds = showAds,
                         onWatchAd = if (showAds) {{
                             platformActions.showRewardedAd(
                                 onRewardEarned = {
@@ -330,6 +320,7 @@ fun ExamLayout(
                         .padding(8.dp)
                 ) {
                     CongratulationsScreen(
+                        showAds = showAds,
                         quizType = quizType,
                         totalQuestions = state.getCurrentQuestions().size,
                         correctAnswers = state.correctAnswersCount,

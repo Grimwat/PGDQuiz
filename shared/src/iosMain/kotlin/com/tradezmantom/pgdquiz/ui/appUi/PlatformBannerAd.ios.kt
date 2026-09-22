@@ -5,5 +5,5 @@ import androidx.compose.ui.Modifier
 
 // No ad SDK wired up on iOS yet.
 @Composable
-actual fun PlatformBannerAd(modifier: Modifier) {
+actual fun PlatformBannerAd(placement: BannerAdPlacement, modifier: Modifier) {
 }

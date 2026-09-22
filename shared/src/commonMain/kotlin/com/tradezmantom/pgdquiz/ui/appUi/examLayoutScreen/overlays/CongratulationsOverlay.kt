@@ -36,6 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
+import com.tradezmantom.pgdquiz.ui.appUi.BannerAdPlacement
+import com.tradezmantom.pgdquiz.ui.appUi.PlatformBannerAd
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 import kotlin.math.roundToInt
 
@@ -47,6 +49,7 @@ fun CongratulationsScreen(
     correctAnswers: Int,
     bestStreak: Int,
     isPremium: Boolean = false,
+    showAds: Boolean = true,
     onUpgrade: (() -> Unit)? = null,
     onRestart: () -> Unit,
     onBackToModeSelect: () -> Unit
@@ -236,6 +239,13 @@ fun CongratulationsScreen(
                         Text("Back to Home", color = Color.White, fontWeight = FontWeight.Bold)
                     }
                 }
+            }
+
+            if (showAds) {
+                PlatformBannerAd(
+                    placement = BannerAdPlacement.QUIZ_COMPLETED,
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }

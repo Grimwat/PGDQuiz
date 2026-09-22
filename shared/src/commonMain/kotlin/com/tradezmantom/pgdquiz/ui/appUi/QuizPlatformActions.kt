@@ -15,8 +15,6 @@ interface QuizPlatformActions {
     fun showInterstitialAd(onAdDismissed: () -> Unit)
     fun showRewardedAd(onRewardEarned: () -> Unit, onAdUnavailable: () -> Unit = {})
     fun showQuizTypeChangeInterstitial(onAdDismissed: () -> Unit)
-    fun showLivesLostInterstitial(onAdDismissed: () -> Unit)
-    fun showCongratulationsInterstitial(onAdDismissed: () -> Unit)
 }
 
 val LocalQuizPlatformActions = staticCompositionLocalOf<QuizPlatformActions> {

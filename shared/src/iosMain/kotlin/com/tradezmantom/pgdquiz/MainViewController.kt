@@ -46,14 +46,6 @@ private class IosQuizPlatformActions(
     override fun showQuizTypeChangeInterstitial(onAdDismissed: () -> Unit) {
         onAdDismissed()
     }
-
-    override fun showLivesLostInterstitial(onAdDismissed: () -> Unit) {
-        onAdDismissed()
-    }
-
-    override fun showCongratulationsInterstitial(onAdDismissed: () -> Unit) {
-        onAdDismissed()
-    }
 }
 
 @Suppress("FunctionName")

@@ -35,6 +35,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tradezmantom.pgdquiz.ui.appUi.BannerAdPlacement
+import com.tradezmantom.pgdquiz.ui.appUi.PlatformBannerAd
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 import org.jetbrains.compose.resources.painterResource
 import pgdquiz.shared.generated.resources.Res
@@ -51,6 +53,7 @@ fun LivesLost(
     emojiCont: String,
     onWatchAd: (() -> Unit)?,
     watchAdEnabled: Boolean = true,
+    showAds: Boolean = true,
     onExit: () -> Unit,
     onUpgrade: () -> Unit = {},
     onUpgradeApprentice: () -> Unit = {},
@@ -325,6 +328,13 @@ fun LivesLost(
                         )
                     }
                 }
+            }
+
+            if (showAds) {
+                PlatformBannerAd(
+                    placement = BannerAdPlacement.LIVES_LOST,
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }
