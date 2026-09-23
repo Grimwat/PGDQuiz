@@ -190,9 +190,10 @@ class QuizViewModel(
     fun shouldShowInterstitial(currentIndex: Int, totalQuestions: Int): Boolean {
         val questionNumber = currentIndex + 1
         if (totalQuestions <= 0) return false
-        val isEveryTen = questionNumber % 7 == 0 && questionNumber != 0
+        // Every 4th question, so a free user who burns all 5 lives still sees one.
+        val isAdQuestion = questionNumber % 4 == 0 && questionNumber != 0
         val isLastQuestion = questionNumber == totalQuestions
-        return isEveryTen && !isLastQuestion
+        return isAdQuestion && !isLastQuestion
     }
 
 
@@ -212,6 +213,15 @@ class QuizViewModel(
         viewModelScope.launch {
             quizDatastore.storeSubscriptionTier(tier)
             _quizUiState.update { it.copy(subscriptionTier = tier) }
+        }
+    }
+
+    fun dismissWelcomeOverlay(dontShowAgain: Boolean) {
+        _quizUiState.update { it.copy(showWelcomeOverlay = false) }
+        if (dontShowAgain) {
+            viewModelScope.launch {
+                quizDatastore.storeHideWelcomeOverlay(true)
+            }
         }
     }
 
@@ -281,7 +291,10 @@ class QuizViewModel(
         val tier = quizDatastore.fetchSubscriptionTier()
         _quizUiState.update { it.copy(subscriptionTier = tier) }
 
-        _quizUiState.update { it.copy(isLoading = false) }
+        val hideWelcomeOverlay = quizDatastore.fetchHideWelcomeOverlay()
+        _quizUiState.update {
+            it.copy(isLoading = false, showWelcomeOverlay = !hideWelcomeOverlay)
+        }
     }
 
 

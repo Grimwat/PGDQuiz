@@ -20,7 +20,8 @@ data class QuizUiState(
     val bestStreak: Int = 0,
     val correctAnswersCount: Int = 0,
     val optionsAndAnswer: List<String> = emptyList(),
-    val subscriptionTier: SubscriptionTier = SubscriptionTier.FREE
+    val subscriptionTier: SubscriptionTier = SubscriptionTier.FREE,
+    val showWelcomeOverlay: Boolean = false
 )
 fun QuizUiState.isPremium() = subscriptionTier != SubscriptionTier.FREE
 fun QuizUiState.hasNoAds() = subscriptionTier == SubscriptionTier.APPRENTICE

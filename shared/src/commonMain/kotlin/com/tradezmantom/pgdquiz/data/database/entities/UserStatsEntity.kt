@@ -12,5 +12,6 @@ data class UserStatsEntity(
     val currentStreak: Int = 0,
     val lastQuizType: QuizType? = null,
     val livesPerType: Map<QuizType, Int> = emptyMap(),
-    val subscriptionTier: SubscriptionTier = SubscriptionTier.FREE
+    val subscriptionTier: SubscriptionTier = SubscriptionTier.FREE,
+    val hideWelcomeOverlay: Boolean = false
 )

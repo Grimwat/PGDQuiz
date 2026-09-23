@@ -15,4 +15,6 @@ interface QuizDatastore {
     suspend fun fetchCurrentLives(quizType: QuizType): Int
     suspend fun fetchSubscriptionTier(): SubscriptionTier
     suspend fun storeSubscriptionTier(tier: SubscriptionTier)
+    suspend fun fetchHideWelcomeOverlay(): Boolean
+    suspend fun storeHideWelcomeOverlay(hide: Boolean)
 }

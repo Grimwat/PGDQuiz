@@ -38,6 +38,15 @@ class DefaultQuizDatastore(
         userStatsDao.insertOrUpdate(currentStats.copy(subscriptionTier = tier))
     }
 
+    override suspend fun fetchHideWelcomeOverlay(): Boolean = withContext(Dispatchers.Default) {
+        userStatsDao.getOrInitUserStats().hideWelcomeOverlay
+    }
+
+    override suspend fun storeHideWelcomeOverlay(hide: Boolean) = withContext(Dispatchers.Default) {
+        val currentStats = userStatsDao.getOrInitUserStats()
+        userStatsDao.insertOrUpdate(currentStats.copy(hideWelcomeOverlay = hide))
+    }
+
     override suspend fun storeDate() = withContext(Dispatchers.Default) {
         val currentStats = userStatsDao.getOrInitUserStats()
         val updatedStats = currentStats.copy(lastPlayedTimestamp = Clock.System.now().toEpochMilliseconds())

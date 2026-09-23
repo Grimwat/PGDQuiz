@@ -260,32 +260,41 @@ class QuizViewModelTest {
         assertEquals("Datastore should be updated with the new streak", expectedStreak, quizDatastore.fetchAnswerStreak())
     }
     @Test
-    fun `shouldShowInterstitial returns true exactly on every 10th question`() {
+    fun `shouldShowInterstitial returns true exactly on every 4th question`() {
         val totalQuestions = 50
 
         assertFalse("Should not show on question 1", viewModel.shouldShowInterstitial(0, totalQuestions))
+        assertFalse("Should not show on question 3", viewModel.shouldShowInterstitial(2, totalQuestions))
+        assertTrue("Should show on question 4", viewModel.shouldShowInterstitial(3, totalQuestions))
         assertFalse("Should not show on question 5", viewModel.shouldShowInterstitial(4, totalQuestions))
-        assertTrue("Should show on question 7", viewModel.shouldShowInterstitial(6, totalQuestions))
-        assertTrue("Should show on question 14", viewModel.shouldShowInterstitial(13, totalQuestions))
+        assertTrue("Should show on question 8", viewModel.shouldShowInterstitial(7, totalQuestions))
     }
 
     @Test
     fun `shouldShowInterstitial returns false on the very last question to avoid double ads`() {
-        val totalQuestions = 10
-
         assertFalse(
-            "Should return false on the last question even if it is a multiple of 10",
-            viewModel.shouldShowInterstitial(9, 10)
+            "Should return false on the last question even if it is a multiple of 4",
+            viewModel.shouldShowInterstitial(7, 8)
         )
     }
 
     @Test
-    fun `shouldShowInterstitial handles short quizzes correctly`() {
+    fun `shouldShowInterstitial triggers before a free user can run out of lives`() {
         val totalQuestions = 5
+
+        val triggered = (0 until totalQuestions).filter {
+            viewModel.shouldShowInterstitial(it, totalQuestions)
+        }
+        assertEquals("Only question 4 should trigger in a 5-question run", listOf(3), triggered)
+    }
+
+    @Test
+    fun `shouldShowInterstitial handles quizzes shorter than 4 questions`() {
+        val totalQuestions = 3
 
         for (i in 0 until totalQuestions) {
             assertFalse(
-                "No interstitial should trigger in a quiz shorter than 10 questions",
+                "No interstitial should trigger in a quiz shorter than 4 questions",
                 viewModel.shouldShowInterstitial(i, totalQuestions)
             )
         }
@@ -314,7 +323,7 @@ class QuizViewModelTest {
     }
 
     @Test
-    fun `canShowAd returns false when question index is not a multiple of 7`() = runTest {
+    fun `canShowAd returns false when question index is not a multiple of 4`() = runTest {
         viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
         mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
         assertFalse(viewModel.canShowAd())

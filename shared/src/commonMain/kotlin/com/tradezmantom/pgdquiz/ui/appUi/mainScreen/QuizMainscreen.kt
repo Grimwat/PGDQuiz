@@ -3,21 +3,29 @@
 package com.tradezmantom.pgdquiz.ui.appUi.mainScreen
 
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tradezmantom.pgdquiz.ui.appUi.LocalQuizPlatformActions
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.ExamLayout
@@ -27,6 +35,7 @@ import com.tradezmantom.pgdquiz.ui.data.QuizType
 import com.tradezmantom.pgdquiz.ui.data.getCurrentQuizTypeLives
 import com.tradezmantom.pgdquiz.ui.data.hasNoAds
 import com.tradezmantom.pgdquiz.ui.data.hasUnlimitedLives
+import com.tradezmantom.pgdquiz.ui.data.isPremium
 import com.tradezmantom.pgdquiz.ui.logic.QuizViewModel
 import com.tradezmantom.pgdquiz.ui.theme.PgdQuizTheme
 import org.jetbrains.compose.resources.painterResource
@@ -148,6 +157,38 @@ fun QuizMainScreen(
                     examCont = selectedQuizType!!.name,
                     onBackToModeSelect = {
                         selectedMode = null
+                    }
+                )
+            }
+        }
+
+        if (state.showWelcomeOverlay && !state.isLoading) {
+            var dontShowAgain by rememberSaveable { mutableStateOf(false) }
+            val closeWelcome = { viewModel.dismissWelcomeOverlay(dontShowAgain) }
+            BackHandler { closeWelcome() }
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f))
+                    // Swallow taps so the screen underneath can't be used while the overlay is up.
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                        onClick = {}
+                    )
+                    .windowInsetsPadding(WindowInsets.systemBars)
+                    .padding(16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                WelcomeOverlay(
+                    modifier = Modifier.widthIn(max = 420.dp),
+                    dontShowAgain = dontShowAgain,
+                    onDontShowAgainChange = { dontShowAgain = it },
+                    onClose = closeWelcome,
+                    showUpgrade = !state.isPremium(),
+                    showAds = !state.hasNoAds(),
+                    onUpgrade = {
+                        platformActions.launchApprenticeSubscription()
                     }
                 )
             }

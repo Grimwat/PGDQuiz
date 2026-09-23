@@ -11,6 +11,7 @@ class FakeDataStore : QuizDatastore {
     private var answerStreak = 0
     private var lastQuizType: QuizType? = null
     private var subscriptionTier = SubscriptionTier.FREE
+    private var hideWelcomeOverlay = false
     var isDateStored: Boolean = false
 
     fun setIsSameDay(isSame: Boolean) {
@@ -57,5 +58,11 @@ class FakeDataStore : QuizDatastore {
 
     override suspend fun storeSubscriptionTier(tier: SubscriptionTier) {
         subscriptionTier = tier
+    }
+
+    override suspend fun fetchHideWelcomeOverlay(): Boolean = hideWelcomeOverlay
+
+    override suspend fun storeHideWelcomeOverlay(hide: Boolean) {
+        hideWelcomeOverlay = hide
     }
 }

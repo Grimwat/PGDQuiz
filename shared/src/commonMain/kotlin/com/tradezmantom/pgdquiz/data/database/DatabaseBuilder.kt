@@ -9,7 +9,7 @@ expect fun createDatabaseBuilder(platformContext: PlatformContext): RoomDatabase
 
 fun createAppDatabase(platformContext: PlatformContext): AppDatabase {
     return createDatabaseBuilder(platformContext)
-        .addMigrations(MIGRATION_1_2)
+        .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
         .setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.Default)
         .build()

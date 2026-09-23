@@ -95,10 +95,7 @@ class UnSkipAddManager(private val context: Context) {
         val adRequest = AdRequest.Builder().build()
         InterstitialAd.load(
             context,
-            // TODO: replace with the real AdMob interstitial ad unit ID for the
-            // "quiz type changed" placement once created in AdMob. This is Google's
-            // shared test interstitial ID so the placement works out of the box.
-            "ca-app-pub-3940256099942544/1033173712",
+            "ca-app-pub-7804898639422438/3454363490",
             adRequest,
             object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: InterstitialAd) {

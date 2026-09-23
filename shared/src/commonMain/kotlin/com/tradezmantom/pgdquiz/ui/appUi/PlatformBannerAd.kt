@@ -10,6 +10,7 @@ enum class BannerAdPlacement {
     QUIZ_SCREEN,
     LIVES_LOST,
     QUIZ_COMPLETED,
+    WELCOME,
 }
 
 /** Renders a platform banner ad, or nothing where no ad SDK is wired up yet (iOS, for now). */
