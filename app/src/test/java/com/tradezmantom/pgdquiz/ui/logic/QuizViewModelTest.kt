@@ -155,6 +155,56 @@ class QuizViewModelTest {
     }
 
     @Test
+    fun `starting again for the same trade begins on the first question of the new set`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        viewModel.nextQuestion()
+        viewModel.nextQuestion()
+
+        viewModel.startQuiz(QuizDifficulty.HARD, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.quizUiState.value
+        assertEquals(0, state.currentQuestionIndex)
+        assertEquals(QuizDifficulty.HARD, state.quizDifficulty)
+        assertEquals(state.questions.first(), state.currentQuestion)
+    }
+
+    @Test
+    fun `triggerShowCorrectAnswer ignores a tap with no answer selected`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        val livesBefore = viewModel.quizUiState.value.getCurrentQuizTypeLives()
+
+        viewModel.triggerShowCorrectAnswer()
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.quizUiState.value
+        assertEquals(0, state.currentQuestionIndex)
+        assertEquals(livesBefore, state.getCurrentQuizTypeLives())
+        assertTrue(state.answeredQuestions.isEmpty())
+        assertFalse(viewModel.canShowAd())
+    }
+
+    @Test
+    fun `a second Next tap during the reveal is ignored`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        viewModel.selectAnswer("definitely wrong")
+        val livesBefore = viewModel.quizUiState.value.getCurrentQuizTypeLives()
+
+        viewModel.triggerShowCorrectAnswer()
+        mainDispatcherRule.testDispatcher.scheduler.advanceTimeBy(2000L)
+        viewModel.triggerShowCorrectAnswer()
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+
+        val state = viewModel.quizUiState.value
+        assertEquals("Only one question should be consumed", 1, state.currentQuestionIndex)
+        assertEquals("Only one life should be lost", livesBefore - 1, state.getCurrentQuizTypeLives())
+        assertEquals(1, state.answeredQuestions.size)
+    }
+
+    @Test
     fun `QuizDifficulty sets easy questions`() = runTest {
     assertEquals(viewModel.quizUiState.value.questions.size, 0)
     viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)

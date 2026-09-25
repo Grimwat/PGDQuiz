@@ -36,7 +36,7 @@ import com.tradezmantom.pgdquiz.ui.appUi.LocalQuizPlatformActions
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.AnswerButton
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.NextButton
 import com.tradezmantom.pgdquiz.ui.data.QuizType
-import com.tradezmantom.pgdquiz.ui.data.getCurrentQuestions
+import com.tradezmantom.pgdquiz.ui.data.hasNoAds
 import com.tradezmantom.pgdquiz.ui.logic.QuizViewModel
 
 @Composable
@@ -106,9 +106,8 @@ fun LandscapeGrid(
             item {
                 NextButton(
                     onClick = {
-                        val totalQuestions = state.getCurrentQuestions().size
-                        val currentIndex = state.currentQuestionIndex
-                        if (viewModel.shouldShowInterstitial(currentIndex, totalQuestions)) {
+                        // Same check as portrait. Paid tiers are ad-free (landscape used to skip this check).
+                        if (!state.hasNoAds() && viewModel.canShowAd()) {
                             platformActions.showInterstitialAd {
                                 viewModel.triggerShowCorrectAnswer()
                             }

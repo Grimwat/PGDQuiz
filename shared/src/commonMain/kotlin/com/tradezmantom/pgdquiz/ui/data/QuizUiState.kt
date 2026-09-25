@@ -29,7 +29,9 @@ fun QuizUiState.hasNoAds() = subscriptionTier == SubscriptionTier.APPRENTICE
         || subscriptionTier == SubscriptionTier.TRADESMAN
 fun QuizUiState.hasUnlimitedLives() = subscriptionTier != SubscriptionTier.FREE
 
-fun QuizUiState.getCurrentQuizTypeLives(): Int {
+fun QuizUiState.getCurrentQuizTypeLives(): Int = livesFor(quizType)
+
+fun QuizUiState.livesFor(quizType: QuizType): Int {
     return when (quizType) {
         QuizType.DRAIN_LAYING -> drainLayingQuizState.lives
         QuizType.PLUMBING -> plumbingQuizState.lives

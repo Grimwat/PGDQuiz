@@ -28,7 +28,7 @@ android {
         applicationId = "com.tradezmantom.pgdquiz"
         minSdk = 24
         targetSdk = 37
-        versionCode = 12
+        versionCode = 13
         versionName = "3.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

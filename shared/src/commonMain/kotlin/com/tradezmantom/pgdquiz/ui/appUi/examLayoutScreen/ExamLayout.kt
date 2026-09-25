@@ -31,6 +31,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.backhandler.BackHandler
@@ -75,7 +76,9 @@ private fun QuestionProgressIndicator(
         text = "Question ${currentIndex + 1} of $totalQuestions",
         fontSize = 13.sp,
         fontWeight = FontWeight.SemiBold,
-        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+        // Fixed white: every trade theme has a black background, but the light schemes leave
+        // onBackground at its near-black default, which made this invisible in light mode.
+        color = Color.White.copy(alpha = 0.7f),
         modifier = modifier
     )
 }
@@ -104,12 +107,17 @@ fun ExamLayout(
             state.getCurrentQuizTypeLives() <= 0 &&
             !state.hasUnlimitedLives()
 
-    LaunchedEffect(quizType, quizDifficulty) {
-        viewModel.startQuiz(quizDifficulty, quizType)
+    // The quiz is started when the difficulty is tapped. This is only a fallback for a fresh
+    // ViewModel (e.g. after process death restores this screen). Restarting unconditionally here
+    // wiped progress on every rotation, since rotation recreates the Activity.
+    LaunchedEffect(Unit) {
+        if (!viewModel.quizUiState.value.isQuizStarted) {
+            viewModel.startQuiz(quizDifficulty, quizType)
+        }
     }
 
     // Answer review is a paid feature; free users see the button locked as a teaser.
-    var showAnswerReview by remember { mutableStateOf(false) }
+    var showAnswerReview by rememberSaveable { mutableStateOf(false) }
     // The review is only reachable from the lives-lost / congratulations overlays; once neither is
     // up (ad-earned life, restart) reset it so it doesn't reopen by itself next time.
     val endOverlayShowing = isOutOfLives || state.showCongratulationsScreen
@@ -204,7 +212,8 @@ fun ExamLayout(
                             placement = BannerAdPlacement.forQuizType(quizType),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(60.dp)
+                                // Let the adaptive banner take its own height; forcing 60dp cropped the ad.
+                                .wrapContentHeight()
                         )
                     }
                 }

@@ -35,6 +35,7 @@ import com.tradezmantom.pgdquiz.ui.data.QuizType
 import com.tradezmantom.pgdquiz.ui.data.getCurrentQuizTypeLives
 import com.tradezmantom.pgdquiz.ui.data.hasNoAds
 import com.tradezmantom.pgdquiz.ui.data.hasUnlimitedLives
+import com.tradezmantom.pgdquiz.ui.data.livesFor
 import com.tradezmantom.pgdquiz.ui.data.isPremium
 import com.tradezmantom.pgdquiz.ui.logic.QuizViewModel
 import com.tradezmantom.pgdquiz.ui.theme.PgdQuizTheme
@@ -119,7 +120,8 @@ fun QuizMainScreen(
                         selectedMode = null
                         selectedQuizType = null
                     },
-                    lives = state.getCurrentQuizTypeLives(),
+                    // state.quizType only catches up once a quiz starts, so read the chosen trade directly.
+                    lives = state.livesFor(selectedQuizType!!),
                     streak = state.answerStreak,
                     showAds = !state.hasNoAds(),
                     hasUnlimitedLives = state.hasUnlimitedLives(),

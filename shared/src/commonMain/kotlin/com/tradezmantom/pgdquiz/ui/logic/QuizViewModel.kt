@@ -49,6 +49,9 @@ class QuizViewModel(
 
         viewModelScope.launch {
             _quizUiState.update { it.copy(
+                // Set synchronously (viewModelScope runs on Main.immediate) so ExamLayout's
+                // fallback start can tell a quiz is already on its way.
+                isQuizStarted = true,
                 isLoading = true,
                 showCongratulationsScreen = false,
                 quizComplete = false,
@@ -59,50 +62,37 @@ class QuizViewModel(
             ) }
             refreshStats()
 
-            val currentState = _quizUiState.value
-            val shouldLoadNewQuestions =
-                currentState.questions.isEmpty() || quizType != currentState.quizType
-
-            if (shouldLoadNewQuestions) {
-                delay(50)
-
-                val allQuestions = questionLoader.loadQuestions(quizType)
-                val selectedQuestions = allQuestions.shuffled().take(
-                    when (difficulty) {
-                        QuizDifficulty.EASY -> 25
-                        QuizDifficulty.MEDIUM -> 50
-                        QuizDifficulty.HARD -> 100
-                    }
-                )
-
-                if (selectedQuestions.isNotEmpty()) {
-                    val currentQuestion = selectedQuestions.first()
-                    _quizUiState.update {
-                        it.copy(
-                            isQuizStarted = true,
-                            quizDifficulty = difficulty,
-                            quizType = quizType,
-                            questions = selectedQuestions,
-                            currentQuestion = currentQuestion,
-                            currentQuestionIndex = 0,
-                            quizComplete = false,
-                            isLoading = false,
-                            optionsAndAnswer = currentQuestion.getOptionsAndAnswers().shuffled()
-                        )
-                    }
-                } else {
-                    _quizUiState.update {
-                        it.copy(isLoading = false)
-                    }
+            // Always draw a fresh set: reusing the previous run's questions gave a new
+            // difficulty the old question count and left a stale currentQuestion at index 0.
+            val allQuestions = questionLoader.loadQuestions(quizType)
+            val selectedQuestions = allQuestions.shuffled().take(
+                when (difficulty) {
+                    QuizDifficulty.EASY -> 25
+                    QuizDifficulty.MEDIUM -> 50
+                    QuizDifficulty.HARD -> 100
                 }
-            } else {
+            )
+
+            if (selectedQuestions.isNotEmpty()) {
+                val currentQuestion = selectedQuestions.first()
                 _quizUiState.update {
                     it.copy(
                         isQuizStarted = true,
                         quizDifficulty = difficulty,
                         quizType = quizType,
-                        isLoading = false
+                        questions = selectedQuestions,
+                        currentQuestion = currentQuestion,
+                        currentQuestionIndex = 0,
+                        selectedAnswer = "",
+                        showCorrectAnswer = false,
+                        quizComplete = false,
+                        isLoading = false,
+                        optionsAndAnswer = currentQuestion.getOptionsAndAnswers().shuffled()
                     )
+                }
+            } else {
+                _quizUiState.update {
+                    it.copy(isLoading = false)
                 }
             }
 
@@ -143,6 +133,11 @@ class QuizViewModel(
     }
 
     fun triggerShowCorrectAnswer() {
+        // NextButton's debounce (1.5s) is shorter than the reveal (3.5s): a second tap during the
+        // reveal used to score the same question again (another life lost) and skip the next one.
+        if (_quizUiState.value.showCorrectAnswer) return
+        // Nothing picked yet: an accidental tap on Next used to count as a wrong answer.
+        if (_quizUiState.value.selectedAnswer.isBlank()) return
 
         viewModelScope.launch {
             updateStreak()
@@ -321,8 +316,11 @@ class QuizViewModel(
             else -> {}
         }
     }
+    /** Whether tapping Next right now should show the every-4th-question interstitial. */
     fun canShowAd(): Boolean {
         val state = _quizUiState.value
+        // Only for a real submission: not a blank tap, and not a repeat tap during the reveal.
+        if (state.selectedAnswer.isBlank() || state.showCorrectAnswer) return false
         return shouldShowInterstitial(state.currentQuestionIndex, state.questions.size)
     }
     fun handleRewardEarned() {
