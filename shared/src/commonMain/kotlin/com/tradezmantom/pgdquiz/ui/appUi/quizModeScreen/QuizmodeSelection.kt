@@ -46,6 +46,9 @@ fun QuizModeSelection(
     showAds: Boolean = true,
     // Real run length per difficulty (a small question bank caps Hard below 100).
     questionCount: (QuizDifficulty) -> Int = { it.questionCount },
+    // "Exam Ready" (the full-length HARD run) is for paid tiers; free users see it locked
+    // and tapping it opens the Apprentice purchase via onUpgrade.
+    examReadyUnlocked: Boolean = true,
 ) {
     val isLandscape = isLandscapeOrientation()
 
@@ -94,9 +97,10 @@ fun QuizModeSelection(
                     modifier = Modifier.weight(1f).fillMaxHeight(0.7f)
                 )
                 ModeButtonLandscape(
-                    label = "Hard",
-                    questionCountText = "(${questionCount(QuizDifficulty.HARD)} Questions)",
-                    onClick = { onSelectDifficulty(QuizDifficulty.HARD) },
+                    label = "Exam Ready",
+                    questionCountText = null,
+                    locked = !examReadyUnlocked,
+                    onClick = { if (examReadyUnlocked) onSelectDifficulty(QuizDifficulty.HARD) else onUpgrade() },
                     quizType = quizType,
                     difficulty = QuizDifficulty.HARD,
                     modifier = Modifier.weight(1f).fillMaxHeight(0.7f)
@@ -163,11 +167,12 @@ fun QuizModeSelection(
                     onClick = { onSelectDifficulty(QuizDifficulty.MEDIUM) }
                 )
                 ModeButtonPortrait(
-                    label = "Hard",
-                    questionCountText = "(${questionCount(QuizDifficulty.HARD)} Questions)",
+                    label = "Exam Ready",
+                    questionCountText = null,
+                    locked = !examReadyUnlocked,
                     quizType = quizType,
                     difficulty = QuizDifficulty.HARD,
-                    onClick = { onSelectDifficulty(QuizDifficulty.HARD) }
+                    onClick = { if (examReadyUnlocked) onSelectDifficulty(QuizDifficulty.HARD) else onUpgrade() }
                 )
             }
             Box(

@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tradezmantom.pgdquiz.ui.appUi.quizModeScreen.ModeButtonSubtitle
 import com.tradezmantom.pgdquiz.ui.data.QuizDifficulty
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 import com.tradezmantom.pgdquiz.ui.theme.BackgroundLogo
@@ -37,10 +38,12 @@ private fun difficultyColors(difficulty: QuizDifficulty): Pair<Color, Color> {
 @Composable
 fun ModeButtonPortrait(
     label: String,
-    questionCountText: String,
+    questionCountText: String?,
     onClick: () -> Unit,
     quizType: QuizType,
     difficulty: QuizDifficulty,
+    // Paid-only mode shown to a free user: lock + APPRENTICE tag instead of the count.
+    locked: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     val (fillColor, glowColor) = difficultyColors(difficulty)
@@ -93,11 +96,7 @@ fun ModeButtonPortrait(
                     color = Color.White,
                     letterSpacing = 2.sp
                 )
-                Text(
-                    text = questionCountText,
-                    color = Color.White.copy(alpha = 0.85f),
-                    fontSize = 13.sp
-                )
+                ModeButtonSubtitle(questionCountText = questionCountText, locked = locked)
             }
         }
     }

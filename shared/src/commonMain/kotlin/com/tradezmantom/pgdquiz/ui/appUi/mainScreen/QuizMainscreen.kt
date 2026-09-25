@@ -114,8 +114,13 @@ fun QuizMainScreen(
                 QuizModeSelection(
                     quizType = selectedQuizType!!,
                     onSelectDifficulty = { mode ->
-                        selectedMode = mode
-                        viewModel.startQuiz(mode, selectedQuizType!!)
+                        if (mode == QuizDifficulty.HARD && !state.isPremium()) {
+                            // Exam Ready is paid-only; the button already routes free users here.
+                            platformActions.launchApprenticeSubscription()
+                        } else {
+                            selectedMode = mode
+                            viewModel.startQuiz(mode, selectedQuizType!!)
+                        }
                     },
                     onBackToQuizType = {
                         selectedMode = null
@@ -127,6 +132,7 @@ fun QuizMainScreen(
                     showAds = !state.hasNoAds(),
                     hasUnlimitedLives = state.hasUnlimitedLives(),
                     questionCount = { difficulty -> state.questionCountFor(selectedQuizType!!, difficulty) },
+                    examReadyUnlocked = state.isPremium(),
                     onUpgrade = {
                         platformActions.launchApprenticeSubscription()
                     })

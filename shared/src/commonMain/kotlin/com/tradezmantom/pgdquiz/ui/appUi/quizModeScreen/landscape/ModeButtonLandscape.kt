@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tradezmantom.pgdquiz.ui.appUi.quizModeScreen.ModeButtonSubtitle
 import com.tradezmantom.pgdquiz.ui.data.QuizDifficulty
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 import com.tradezmantom.pgdquiz.ui.theme.BackgroundLogo
@@ -37,9 +38,11 @@ private fun difficultyColors(difficulty: QuizDifficulty): Pair<Color, Color> {
 @Composable
 fun ModeButtonLandscape(
     label: String,
-    questionCountText: String,
+    questionCountText: String?,
     quizType: QuizType,
     difficulty: QuizDifficulty,
+    // Paid-only mode shown to a free user: lock + APPRENTICE tag instead of the count.
+    locked: Boolean = false,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -87,10 +90,7 @@ fun ModeButtonLandscape(
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
-                Text(
-                    text = questionCountText,
-                    color = Color.White.copy(alpha = 0.85f)
-                )
+                ModeButtonSubtitle(questionCountText = questionCountText, locked = locked)
             }
         }
     }
