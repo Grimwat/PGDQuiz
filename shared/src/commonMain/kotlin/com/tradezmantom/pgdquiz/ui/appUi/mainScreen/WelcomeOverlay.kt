@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -151,14 +152,16 @@ fun WelcomeOverlay(
 
             InfoRow(
                 icon = {
-                    Image(
-                        painter = painterResource(Res.drawable.flame1),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(48.dp)
-                            .clip(RoundedCornerShape(4.dp)),
-                        contentScale = ContentScale.Fit
-                    )
+                    // flame1.png has lots of transparent padding (flame fills ~57% of its height),
+                    // so draw it oversized inside a 48dp slot to get a ~46dp visible flame.
+                    Box(modifier = Modifier.size(48.dp), contentAlignment = Alignment.Center) {
+                        Image(
+                            painter = painterResource(Res.drawable.flame1),
+                            contentDescription = null,
+                            modifier = Modifier.requiredSize(80.dp),
+                            contentScale = ContentScale.Fit
+                        )
+                    }
                 },
                 title = "Streak",
                 body = "The flame counts correct answers in a row. A wrong answer resets it."

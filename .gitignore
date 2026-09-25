@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Kotlin compiler/KMP metadata cache
+.kotlin/
