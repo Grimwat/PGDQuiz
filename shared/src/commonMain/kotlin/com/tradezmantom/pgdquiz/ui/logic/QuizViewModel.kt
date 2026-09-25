@@ -65,13 +65,7 @@ class QuizViewModel(
             // Always draw a fresh set: reusing the previous run's questions gave a new
             // difficulty the old question count and left a stale currentQuestion at index 0.
             val allQuestions = questionLoader.loadQuestions(quizType)
-            val selectedQuestions = allQuestions.shuffled().take(
-                when (difficulty) {
-                    QuizDifficulty.EASY -> 25
-                    QuizDifficulty.MEDIUM -> 50
-                    QuizDifficulty.HARD -> 100
-                }
-            )
+            val selectedQuestions = allQuestions.shuffled().take(difficulty.questionCount)
 
             if (selectedQuestions.isNotEmpty()) {
                 val currentQuestion = selectedQuestions.first()
@@ -296,6 +290,14 @@ class QuizViewModel(
         _quizUiState.update {
             it.copy(isLoading = false, showWelcomeOverlay = !hideWelcomeOverlay)
         }
+
+        // So the difficulty screen can show real run lengths (e.g. Hard is 71 for Gasfitting).
+        // Done after loading finishes so it never delays startup; labels fall back to the
+        // nominal counts until it lands.
+        val bankSizes = listOf(QuizType.DRAIN_LAYING, QuizType.PLUMBING, QuizType.GASFITTING)
+            .associateWith { questionLoader.loadQuestions(it).size }
+            .filterValues { it > 0 }
+        _quizUiState.update { it.copy(questionBankSizes = bankSizes) }
     }
 
 

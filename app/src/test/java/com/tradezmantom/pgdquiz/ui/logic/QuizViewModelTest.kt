@@ -7,6 +7,7 @@ import com.tradezmantom.pgdquiz.ui.data.QuizDifficulty
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 import com.tradezmantom.pgdquiz.ui.data.SubscriptionTier
 import com.tradezmantom.pgdquiz.ui.data.getCurrentQuizTypeLives
+import com.tradezmantom.pgdquiz.ui.data.questionCountFor
 import com.tradezmantom.pgdquiz.util.STARTING_LIVES
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
@@ -152,6 +153,17 @@ class QuizViewModelTest {
         viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
         mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
         assertTrue(viewModel.quizUiState.value.answeredQuestions.isEmpty())
+    }
+
+    @Test
+    fun `difficulty labels are capped by the size of the question bank`() {
+        // FakeQuestionLoader has 3 questions per trade.
+        val state = viewModel.quizUiState.value
+        assertEquals(3, state.questionCountFor(QuizType.PLUMBING, QuizDifficulty.EASY))
+        assertEquals(3, state.questionCountFor(QuizType.PLUMBING, QuizDifficulty.HARD))
+        // Unknown bank size falls back to the nominal count rather than showing 0.
+        assertEquals(100, state.copy(questionBankSizes = emptyMap())
+            .questionCountFor(QuizType.PLUMBING, QuizDifficulty.HARD))
     }
 
     @Test

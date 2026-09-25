@@ -36,6 +36,7 @@ import com.tradezmantom.pgdquiz.ui.data.getCurrentQuizTypeLives
 import com.tradezmantom.pgdquiz.ui.data.hasNoAds
 import com.tradezmantom.pgdquiz.ui.data.hasUnlimitedLives
 import com.tradezmantom.pgdquiz.ui.data.livesFor
+import com.tradezmantom.pgdquiz.ui.data.questionCountFor
 import com.tradezmantom.pgdquiz.ui.data.isPremium
 import com.tradezmantom.pgdquiz.ui.logic.QuizViewModel
 import com.tradezmantom.pgdquiz.ui.theme.PgdQuizTheme
@@ -125,6 +126,7 @@ fun QuizMainScreen(
                     streak = state.answerStreak,
                     showAds = !state.hasNoAds(),
                     hasUnlimitedLives = state.hasUnlimitedLives(),
+                    questionCount = { difficulty -> state.questionCountFor(selectedQuizType!!, difficulty) },
                     onUpgrade = {
                         platformActions.launchApprenticeSubscription()
                     })

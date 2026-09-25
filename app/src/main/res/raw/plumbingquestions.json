@@ -396,17 +396,6 @@
             ]
         },
         {
-            "id": 37,
-            "question": "Who is responsible for organising the periodic testing of a backflow prevention device?",
-            "answer": "The building owner",
-            "options": [
-                "The local territorial authority",
-                "The installing plumber",
-                "The architect",
-                "An independently qualified person"
-            ]
-        },
-        {
             "id": 38,
             "question": "What is the minimum time a hot water cylinder relief drain installed under a concrete slab must last to meet the durability requirements of the New Zealand Building Code?",
             "answer": "50 years",
@@ -459,17 +448,6 @@
                 "To stop oscillation within the discharge stack",
                 "To stop the pipe running full bore",
                 "To increase the number of discharge units the stack can convey"
-            ]
-        },
-        {
-            "id": 43,
-            "question": "Which of the following is NOT an acceptable reason to disturb the scene of an accident that has resulted in serious harm?",
-            "answer": "To recover plant and equipment from the site",
-            "options": [
-                "To save a life",
-                "To prevent suffering of an injured person",
-                "To maintain public access to services (e.g. gas and electricity)",
-                "To prevent serious damage to property"
             ]
         },
         {
@@ -582,17 +560,6 @@
             "options": [
                 "Floor waste",
                 "Floor waste gully"
-            ]
-        },
-        {
-            "id": 55,
-            "question": "Which of the following statements is correct for a bypass fitted to a backflow prevention installation?",
-            "answer": "The bypass must provide the same level of protection as the main",
-            "options": [
-                "The bypass must be larger in diameter than the main",
-                "The bypass must be smaller in diameter than the main",
-                "The bypass must be the same size as the main",
-                "The bypass must be constructed of the same material as the main"
             ]
         },
         {
@@ -1025,17 +992,6 @@
             ]
         },
         {
-            "id": 95,
-            "question": "In a solar water heating system, which part is known as the collector?",
-            "answer": "The solar panel",
-            "options": [
-                "The solar panel manifold system",
-                "The drain tundish",
-                "The circulating pump",
-                "The water storage cylinder"
-            ]
-        },
-        {
             "id": 96,
             "question": "Which of the following is a solar preheater?",
             "answer": "An electric element that raises the water temperature slightly to start a thermo-syphon current.",
@@ -1044,17 +1000,6 @@
                 "A pump that circulates warm water when panel temperatures drop to near freezing.",
                 "A water heating system that relies solely on solar energy to reach the desired temperature.",
                 "The selective surface coating that directs rays to the solar tubes"
-            ]
-        },
-        {
-            "id": 97,
-            "question": "Which of the following is an advantage of using an indirect heating system?",
-            "answer": "One heat source can be used for both potable and non-potable hot water supplies.",
-            "options": [
-                "Higher temperatures can be achieved.",
-                "The temperature can be maintained at a more stable level.",
-                "The pressure rating of the circulating pump can be increased.",
-                "A tempering valve is not required on the installation."
             ]
         },
         {
@@ -1399,50 +1344,6 @@
                 "50 mm",
                 "100 mm",
                 "65 mm"
-            ]
-        },
-        {
-            "id": 131,
-            "question": "Which statement best describes an oxidising flame?",
-            "answer": "A noisy flame with a pointed, blue inner cone.",
-            "options": [
-                "A flame with a feathered intermediate cone.",
-                "A flame that has equal proportions of oxygen and acetylene.",
-                "A luminous flame used when welding iron or steel.",
-                "An ideal flame to use when lead burning."
-            ]
-        },
-        {
-            "id": 132,
-            "question": "Which of the following decreases as water is heated?",
-            "answer": "The density of the water.",
-            "options": [
-                "The boiling point of the water.",
-                "The pressure of the water.",
-                "The velocity of the water.",
-                "The volume of the water."
-            ]
-        },
-        {
-            "id": 133,
-            "question": "What is the maximum theoretical height that a pump is able to lift water when installed at sea level?",
-            "answer": "10.3 m.",
-            "options": [
-                "3.6 m.",
-                "7.85 m.",
-                "9.81 m.",
-                "101.3 m."
-            ]
-        },
-        {
-            "id": 134,
-            "question": "How does a quick recovery hot water cylinder differ from a standard hot water cylinder?",
-            "answer": "It has a second element located higher in the cylinder.",
-            "options": [
-                "It is fitted with higher grade insulation.",
-                "It operates at higher pressures.",
-                "The element has a higher kilowatt rating.",
-                "The thermostat is set to a higher temperature."
             ]
         },
         {

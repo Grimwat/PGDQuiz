@@ -332,7 +332,7 @@
         },
         {
             "id": "31",
-            "question": " A gas hob has been commissioned and is working correctly. When a wok is used on the gas hob, the bottom of the wok turns black with soot. Which of the following is the most likely cause of this?",
+            "question": "A gas hob has been commissioned and is working correctly. When a wok is used on the gas hob, the bottom of the wok turns black with soot. Which of the following is the most likely cause of this?",
             "answer": "The bottom of the wok is impinging on the burner flame.",
             "options": [
                 "The calorific value of the gas has altered.",
@@ -361,17 +361,6 @@
                 "3rd family.",
                 "4th family.",
                 "5th family."
-            ]
-        },
-        {
-            "id": "34",
-            "question": "Which of the following appliance types is most susceptible to adverse effects of air movement caused by the operation of mechanical ventilation systems?",
-            "answer": "Natural draught appliances.",
-            "options": [
-                "Balanced flued appliances.",
-                "Power flued appliances.",
-                "Fan forced appliances.",
-                "Room sealed appliances."
             ]
         },
         {
@@ -573,17 +562,6 @@
             ]
         },
         {
-            "id": "53",
-            "question": "What can occur within an appliance that has an efficiency exceeding 85%?",
-            "answer": "Condensation.",
-            "options": [
-                "Excessive CO2 creation.",
-                "Excessive flame noise and lift.",
-                "Flame cooling.",
-                "Vitiation due to low temperatures."
-            ]
-        },
-        {
             "id": "54",
             "question": "According to AS/NZS 5601 Part 2, what is the minimum clearance required between installed gas piping and any electrical service?",
             "answer": "25 mm.",
@@ -657,17 +635,6 @@
                 "Fire damper.",
                 "Carbon monoxide detector.",
                 "Under pressure shut off devic"
-            ]
-        },
-        {
-            "id": "61",
-            "question": "Which of the following best describes the term vitiation?",
-            "answer": "The contamination of the air supply by products of combustion.",
-            "options": [
-                "The fluctuation of gas supply due to a highly sensitive regulator spring.",
-                "The flow of combustion products as they enter a flue",
-                "Irregular flame due to an object protruding into the outer cone of the flame.",
-                "The flame of a burner lighting back to the injector"
             ]
         },
         {
@@ -767,39 +734,6 @@
                 "The hob is a natural gas appliance.",
                 "The aeration has been set incorrectly.",
                 "The wrong knobs are fitted to the appliance."
-            ]
-        },
-        {
-            "id": "71",
-            "question": "Which of the following can be confirmed by gas rating an appliance?",
-            "answer": "The burner injector size is correct.",
-            "options": [
-                "B The appliance efficiency.",
-                "Correct air to gas ratio.",
-                "The operation of the appliance safety devices.",
-                "Correct operation of the appliance flue."
-            ]
-        },
-        {
-            "id": "72",
-            "question": "Which of the following safety devices will shut off gas supply in the event of mechanical ventilation failing to operate?",
-            "answer": "Fan interlock.",
-            "options": [
-                "Flame rectification.",
-                "Fire damper.",
-                "Carbon monoxide detector.",
-                "Oxygen depletion device."
-            ]
-        },
-        {
-            "id": "73",
-            "question": "What TWO main elements occur in both natural gas and LPG?",
-            "answer": "Carbon and hydrogen.",
-            "options": [
-                "Hydrogen and nitrogen.",
-                "Propane and butane.",
-                "Nitrogen and oxygen.",
-                "Hydrogen and oxygen."
             ]
         },
         {

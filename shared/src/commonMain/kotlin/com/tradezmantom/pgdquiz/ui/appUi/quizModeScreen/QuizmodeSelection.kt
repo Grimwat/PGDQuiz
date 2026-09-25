@@ -44,6 +44,8 @@ fun QuizModeSelection(
     hasUnlimitedLives: Boolean = false,
     onSelectDifficulty: (mode: QuizDifficulty) -> Unit,
     showAds: Boolean = true,
+    // Real run length per difficulty (a small question bank caps Hard below 100).
+    questionCount: (QuizDifficulty) -> Int = { it.questionCount },
 ) {
     val isLandscape = isLandscapeOrientation()
 
@@ -77,7 +79,7 @@ fun QuizModeSelection(
             ) {
                 ModeButtonLandscape(
                     label = "Easy",
-                    questionCountText = "(25 Questions)",
+                    questionCountText = "(${questionCount(QuizDifficulty.EASY)} Questions)",
                     onClick = { onSelectDifficulty(QuizDifficulty.EASY) },
                     quizType = quizType,
                     difficulty = QuizDifficulty.EASY,
@@ -85,7 +87,7 @@ fun QuizModeSelection(
                 )
                 ModeButtonLandscape(
                     label = "Medium",
-                    questionCountText = "(50 Questions)",
+                    questionCountText = "(${questionCount(QuizDifficulty.MEDIUM)} Questions)",
                     onClick = { onSelectDifficulty(QuizDifficulty.MEDIUM) },
                     quizType = quizType,
                     difficulty = QuizDifficulty.MEDIUM,
@@ -93,7 +95,7 @@ fun QuizModeSelection(
                 )
                 ModeButtonLandscape(
                     label = "Hard",
-                    questionCountText = "(100 Questions)",
+                    questionCountText = "(${questionCount(QuizDifficulty.HARD)} Questions)",
                     onClick = { onSelectDifficulty(QuizDifficulty.HARD) },
                     quizType = quizType,
                     difficulty = QuizDifficulty.HARD,
@@ -148,21 +150,21 @@ fun QuizModeSelection(
 
                 ModeButtonPortrait(
                     label = "Easy",
-                    questionCountText = "(25 Questions)",
+                    questionCountText = "(${questionCount(QuizDifficulty.EASY)} Questions)",
                     quizType = quizType,
                     difficulty = QuizDifficulty.EASY,
                     onClick = { onSelectDifficulty(QuizDifficulty.EASY) }
                 )
                 ModeButtonPortrait(
                     label = "Medium",
-                    questionCountText = "(50 Questions)",
+                    questionCountText = "(${questionCount(QuizDifficulty.MEDIUM)} Questions)",
                     quizType = quizType,
                     difficulty = QuizDifficulty.MEDIUM,
                     onClick = { onSelectDifficulty(QuizDifficulty.MEDIUM) }
                 )
                 ModeButtonPortrait(
                     label = "Hard",
-                    questionCountText = "(100 Questions)",
+                    questionCountText = "(${questionCount(QuizDifficulty.HARD)} Questions)",
                     quizType = quizType,
                     difficulty = QuizDifficulty.HARD,
                     onClick = { onSelectDifficulty(QuizDifficulty.HARD) }

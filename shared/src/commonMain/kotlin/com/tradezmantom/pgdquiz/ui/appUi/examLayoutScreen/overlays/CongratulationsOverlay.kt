@@ -123,7 +123,13 @@ fun CongratulationsScreen(
             )
 
             Text(
-                text = "Great Work!",
+                // "Great Work!" at 8% read as sarcastic; match the message to the score.
+                text = when {
+                    percent >= 80 -> "Great Work!"
+                    percent >= 50 -> "Good effort, keep going!"
+                    else -> "Keep practising, you'll get there!"
+                },
+                textAlign = TextAlign.Center,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
@@ -244,7 +250,7 @@ fun CongratulationsScreen(
                             .border(1.5.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(12.dp)),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text("Back to Home", color = Color.White, fontWeight = FontWeight.Bold)
+                        Text("Change Difficulty", color = Color.White, fontWeight = FontWeight.Bold)
                     }
                 }
             }

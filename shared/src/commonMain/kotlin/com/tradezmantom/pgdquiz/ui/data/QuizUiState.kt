@@ -22,8 +22,15 @@ data class QuizUiState(
     val optionsAndAnswer: List<String> = emptyList(),
     val subscriptionTier: SubscriptionTier = SubscriptionTier.FREE,
     val showWelcomeOverlay: Boolean = false,
-    val answeredQuestions: List<AnsweredQuestion> = emptyList()
+    val answeredQuestions: List<AnsweredQuestion> = emptyList(),
+    val questionBankSizes: Map<QuizType, Int> = emptyMap()
 )
+
+/** How many questions a run of [difficulty] for [quizType] really has (capped by the bank). */
+fun QuizUiState.questionCountFor(quizType: QuizType, difficulty: QuizDifficulty): Int {
+    val bankSize = questionBankSizes[quizType] ?: return difficulty.questionCount
+    return minOf(difficulty.questionCount, bankSize)
+}
 fun QuizUiState.isPremium() = subscriptionTier != SubscriptionTier.FREE
 fun QuizUiState.hasNoAds() = subscriptionTier == SubscriptionTier.APPRENTICE
         || subscriptionTier == SubscriptionTier.TRADESMAN
