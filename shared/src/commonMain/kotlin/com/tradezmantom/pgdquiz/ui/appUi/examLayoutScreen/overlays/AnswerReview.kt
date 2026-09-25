@@ -50,11 +50,11 @@ fun ReviewAnswersButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val correct = answered.count { it.isCorrect }
+    // Styled to match the overlays' Restart / Leave Quiz buttons.
     Button(
         onClick = onClick,
         enabled = answered.isNotEmpty(),
-        shape = RoundedCornerShape(10.dp),
+        shape = RoundedCornerShape(12.dp),
         contentPadding = PaddingValues(0.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
@@ -62,13 +62,16 @@ fun ReviewAnswersButton(
         ),
         modifier = modifier
             .fillMaxWidth()
-            .height(40.dp)
+            .height(48.dp)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White.copy(alpha = 0.08f), RoundedCornerShape(10.dp))
-                .border(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f), RoundedCornerShape(10.dp))
+                .background(
+                    MaterialTheme.colorScheme.outline.copy(alpha = 0.6f),
+                    shape = RoundedCornerShape(12.dp)
+                )
+                .border(1.5.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
                 .padding(horizontal = 12.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -77,9 +80,8 @@ fun ReviewAnswersButton(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
-                    text = "${if (unlocked) "📋" else "🔒"} Review answers · $correct/${answered.size} correct",
+                    text = "${if (unlocked) "📋" else "🔒"} Review answers",
                     color = Color.White,
-                    fontSize = 13.sp,
                     fontWeight = FontWeight.Bold
                 )
                 if (!unlocked) {

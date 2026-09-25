@@ -58,9 +58,7 @@ fun LivesLost(
     onUpgrade: () -> Unit = {},
     onUpgradeApprentice: () -> Unit = {},
     onUpgradeTradesman: () -> Unit = {},
-    reviewAnswers: (@Composable () -> Unit)? = null,
-    apprenticePriceText: String = "NZD$20/week",
-    tradesmanPriceText: String = "NZD$300 Lifetime"
+    reviewAnswers: (@Composable () -> Unit)? = null
 ) {
     val (title, examEmoji) = when (quizType) {
         QuizType.DRAIN_LAYING -> "HappyPoo" to Res.drawable.happypoo2
@@ -286,7 +284,7 @@ fun LivesLost(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "\u26A1 Apprentice — $apprenticePriceText",
+                            text = "\u26A1 Upgrade: Apprentice",
                             color = Color.White.copy(alpha = 0.9f),
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold
@@ -324,7 +322,7 @@ fun LivesLost(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "\uD83D\uDD28 Tradesman — $tradesmanPriceText",
+                            text = "\uD83D\uDD28 Upgrade: Tradesman",
                             color = Color.White.copy(alpha = 0.9f),
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold
