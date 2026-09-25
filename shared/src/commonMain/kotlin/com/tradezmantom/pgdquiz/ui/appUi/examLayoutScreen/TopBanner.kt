@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.tradezmantom.pgdquiz.ui.appUi.isLandscapeOrientation
@@ -197,11 +198,13 @@ fun Banner(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "⚡ Upgrade to remove ads & unlimited lives",
+                            text = "⚡ Upgrade: unlimited lives, no ads & extra features",
                             color = Color.White.copy(alpha = 0.9f),
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold,
-                            letterSpacing = 0.3.sp
+                            letterSpacing = 0.3.sp,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 }

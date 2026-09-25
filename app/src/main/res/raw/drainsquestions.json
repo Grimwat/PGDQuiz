@@ -513,6 +513,18 @@
       "options": ["The company", "The health and safety representative", "The owner of the property where work takes place", "The Ministry of Business, Innovation and Employment"]
     },
     {
+      "id": 86,
+      "question": "For what length of time should a ceramic surface water drain be soaked before a leakage test complying with New Zealand Building Code clause E1/VM1 Surface Water is carried out?",
+      "answer": "24 hours",
+      "options": ["15 minutes", "30 minutes", "4 hours", "12 hours"]
+    },
+    {
+      "id": 87,
+      "question": "How many ml per m of pipe length is it acceptable for a 100 mm surface water drain pipe to lose per hour during a water test carried out to comply with New Zealand Building Code clause E1/VM1 Surface Water?",
+      "answer": "2.0",
+      "options": [ "20.0", "220", "1200", "2000"]
+    },
+    {
       "id": 88,
       "question": "The sides of a trench have been cut back to a safe slope. What is the minimum distance from the top edge of the trench that any vehicles can be permitted to drive?",
       "answer": "1000 mm",

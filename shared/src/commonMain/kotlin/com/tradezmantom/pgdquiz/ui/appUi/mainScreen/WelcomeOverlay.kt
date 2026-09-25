@@ -186,7 +186,7 @@ fun WelcomeOverlay(
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
-                    text = "Don't want to wait?\nUpgrade for unlimited lives & no ads",
+                    text = "Don't want to wait?\nUpgrade for unlimited lives, no ads & extra features",
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,

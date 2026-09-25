@@ -247,7 +247,7 @@ fun LivesLost(
                 modifier = Modifier.fillMaxWidth()
             )
             Text(
-                text = "Or upgrade for unlimited attempts",
+                text = "Or upgrade for unlimited lives, no ads & extra features",
                 fontSize = 10.sp,
                 fontWeight = FontWeight.Medium,
                 color = Color.White.copy(alpha = 0.6f),

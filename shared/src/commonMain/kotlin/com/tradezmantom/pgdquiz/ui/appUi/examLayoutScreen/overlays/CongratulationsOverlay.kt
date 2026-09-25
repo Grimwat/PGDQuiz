@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -189,10 +190,12 @@ fun CongratulationsScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "\u26A1 Upgrade to remove ads & unlimited lives",
+                            text = "\u26A1 Upgrade: unlimited lives, no ads & extra features",
                             color = Color.White.copy(alpha = 0.9f),
                             fontSize = 11.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 }
