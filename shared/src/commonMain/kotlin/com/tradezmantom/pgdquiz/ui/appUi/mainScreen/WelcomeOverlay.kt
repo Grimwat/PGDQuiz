@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -121,17 +122,25 @@ fun WelcomeOverlay(
 
             InfoRow(
                 icon = {
-                    Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
                         listOf(Res.drawable.drainlogo, Res.drawable.plumblogo, Res.drawable.gasslogo)
                             .forEach { logo ->
-                                Image(
-                                    painter = painterResource(logo),
-                                    contentDescription = null,
+                                // The logos are dark, so sit them on a light disc to stand out
+                                // against the overlay's dark gradient.
+                                Box(
                                     modifier = Modifier
-                                        .size(22.dp)
-                                        .clip(RoundedCornerShape(4.dp)),
-                                    contentScale = ContentScale.Fit
-                                )
+                                        .size(30.dp)
+                                        .clip(CircleShape)
+                                        .background(Color.White.copy(alpha = 0.9f)),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Image(
+                                        painter = painterResource(logo),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(24.dp),
+                                        contentScale = ContentScale.Fit
+                                    )
+                                }
                             }
                     }
                 },
@@ -146,7 +155,7 @@ fun WelcomeOverlay(
                         painter = painterResource(Res.drawable.flame1),
                         contentDescription = null,
                         modifier = Modifier
-                            .size(28.dp)
+                            .size(48.dp)
                             .clip(RoundedCornerShape(4.dp)),
                         contentScale = ContentScale.Fit
                     )
@@ -174,10 +183,10 @@ fun WelcomeOverlay(
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
-                    text = "Don't want to wait? Upgrade for unlimited lives and no ads",
-                    fontSize = 11.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.White.copy(alpha = 0.7f),
+                    text = "Don't want to wait?\nUpgrade for unlimited lives & no ads",
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -281,7 +290,7 @@ private fun InfoRow(
             .padding(horizontal = 12.dp, vertical = 10.dp)
     ) {
         Box(
-            modifier = Modifier.width(76.dp),
+            modifier = Modifier.width(96.dp),
             contentAlignment = Alignment.Center
         ) {
             icon()

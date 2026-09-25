@@ -1,13 +1,12 @@
 package com.tradezmantom.pgdquiz.ui.appUi.addManager.adds
 
 import android.util.Log
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.window.layout.WindowMetrics
-import androidx.window.layout.WindowMetricsCalculator
-import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
@@ -16,53 +15,47 @@ import com.google.android.gms.ads.LoadAdError
 
 @Composable
 fun BannerAd(adUnitId: String, modifier: Modifier = Modifier) {
-    AndroidView(
-        modifier = modifier
-            .fillMaxWidth(),
-        factory = {
-            val windowMetrics: WindowMetrics = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(it)
-            val bounds = windowMetrics.bounds
+    // Size the ad to the width it's actually given, not the full screen, so banners inside
+    // padded overlay cards aren't clipped at the edges.
+    BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
+        val adWidth = maxWidth.value.toInt()
+        key(adWidth) {
+            AndroidView(
+                modifier = Modifier.fillMaxWidth(),
+                factory = {
+                    AdView(it).apply {
+                        setAdSize(AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(it, adWidth))
+                        this.adUnitId = adUnitId
 
-            var adWidthPixels = it.resources.displayMetrics.widthPixels.toFloat()
+                        adListener = object : AdListener() {
+                            override fun onAdLoaded() {
+                                Log.d("ADS", "Banner ad loaded successfully")
+                            }
 
-            if (adWidthPixels == 0F) {
-                adWidthPixels = bounds.width().toFloat()
-            }
+                            override fun onAdFailedToLoad(adError: LoadAdError) {
+                                Log.e(
+                                    "ADS",
+                                    "Banner ad failed to load: code=${adError.code} " +
+                                            "domain=${adError.domain} message=${adError.message}"
+                                )
+                            }
 
-            val density = it.resources.displayMetrics.density
-            val adWidth = (adWidthPixels / density).toInt()
+                            override fun onAdOpened() {
+                                Log.d("ADS", "Banner ad opened")
+                            }
 
-            AdView(it).apply {
-                setAdSize(AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(it, adWidth))
-                this.adUnitId = adUnitId
+                            override fun onAdClicked() {
+                                Log.d("ADS", "Banner ad clicked")
+                            }
+                        }
 
-                adListener = object : AdListener() {
-                    override fun onAdLoaded() {
-                        Log.d("ADS", "Banner ad loaded successfully")
+                        loadAd(AdRequest.Builder().build())
                     }
-
-                    override fun onAdFailedToLoad(adError: LoadAdError) {
-                        Log.e(
-                            "ADS",
-                            "Banner ad failed to load: code=${adError.code} " +
-                                    "domain=${adError.domain} message=${adError.message}"
-                        )
-                    }
-
-                    override fun onAdOpened() {
-                        Log.d("ADS", "Banner ad opened")
-                    }
-
-                    override fun onAdClicked() {
-                        Log.d("ADS", "Banner ad clicked")
-                    }
+                },
+                onRelease = { adView ->
+                    adView.destroy()
                 }
-
-                loadAd(AdRequest.Builder().build())
-            }
-        },
-        onRelease = { adView ->
-            adView.destroy()
+            )
         }
-    )
+    }
 }
