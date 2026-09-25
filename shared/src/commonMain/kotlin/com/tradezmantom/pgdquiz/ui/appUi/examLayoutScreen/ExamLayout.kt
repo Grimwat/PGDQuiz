@@ -46,6 +46,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tradezmantom.pgdquiz.ui.appUi.BannerAdPlacement
 import com.tradezmantom.pgdquiz.ui.appUi.LocalQuizPlatformActions
 import com.tradezmantom.pgdquiz.ui.appUi.PlatformBannerAd
+import com.tradezmantom.pgdquiz.ui.appUi.forQuizType
 import com.tradezmantom.pgdquiz.ui.appUi.addManager.adds.RewardAdSuccess
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.landscape.LandscapeGrid
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.overlays.AnswerReviewScreen
@@ -200,7 +201,7 @@ fun ExamLayout(
 
                     if (showAds) {
                         PlatformBannerAd(
-                            placement = BannerAdPlacement.QUIZ_SCREEN,
+                            placement = BannerAdPlacement.forQuizType(quizType),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(60.dp)
@@ -279,7 +280,7 @@ fun ExamLayout(
 
                     if (showAds) {
                         PlatformBannerAd(
-                            placement = BannerAdPlacement.QUIZ_SCREEN,
+                            placement = BannerAdPlacement.forQuizType(quizType),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentHeight()

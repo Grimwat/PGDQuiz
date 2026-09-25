@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.tradezmantom.pgdquiz.ui.appUi.BannerAdPlacement
 import com.tradezmantom.pgdquiz.ui.appUi.PlatformBannerAd
+import com.tradezmantom.pgdquiz.ui.appUi.forQuizType
 import com.tradezmantom.pgdquiz.ui.appUi.isLandscapeOrientation
 import com.tradezmantom.pgdquiz.ui.appUi.quizModeScreen.landscape.ModeButtonLandscape
 import com.tradezmantom.pgdquiz.ui.appUi.quizModeScreen.portrait.ModeButtonPortrait
@@ -106,7 +107,7 @@ fun QuizModeSelection(
             ) {
                 if (showAds) {
                     PlatformBannerAd(
-                        placement = BannerAdPlacement.QUIZ_SCREEN,
+                        placement = BannerAdPlacement.forQuizType(quizType),
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(60.dp)
@@ -174,7 +175,7 @@ fun QuizModeSelection(
             ) {
                 if (showAds) {
                     PlatformBannerAd(
-                        placement = BannerAdPlacement.QUIZ_SCREEN,
+                        placement = BannerAdPlacement.forQuizType(quizType),
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(60.dp)

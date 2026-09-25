@@ -29,13 +29,13 @@ fun BannerAd(adUnitId: String, modifier: Modifier = Modifier) {
 
                         adListener = object : AdListener() {
                             override fun onAdLoaded() {
-                                Log.d("ADS", "Banner ad loaded successfully")
+                                Log.d("ADS", "Banner ad loaded successfully ($adUnitId)")
                             }
 
                             override fun onAdFailedToLoad(adError: LoadAdError) {
                                 Log.e(
                                     "ADS",
-                                    "Banner ad failed to load: code=${adError.code} " +
+                                    "Banner ad failed to load ($adUnitId): code=${adError.code} " +
                                             "domain=${adError.domain} message=${adError.message}"
                                 )
                             }

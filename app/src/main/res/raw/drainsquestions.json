@@ -419,8 +419,8 @@
       {
         "id": 70,
         "question": "A drain has been laid at a gradient of 1:80 (1.25%) and has a fall of 120 mm. How long is the drain?",
-        "answer": "960 mm",
-        "options": ["150 mm", "1.50 m", "6.66 m", "9.60 m"]
+        "answer": "9.60 m",
+        "options": ["150 mm", "1.50 m", "6.66 m", "960 mm"]
       },
       {
         "id": 71,
