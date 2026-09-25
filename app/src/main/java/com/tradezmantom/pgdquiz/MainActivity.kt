@@ -27,6 +27,7 @@ import com.tradezmantom.pgdquiz.ui.appUi.QuizPlatformActions
 import com.tradezmantom.pgdquiz.ui.appUi.addManager.adds.UnSkipAddManager
 import com.tradezmantom.pgdquiz.ui.appUi.mainScreen.QuizMainScreen
 import com.tradezmantom.pgdquiz.ui.data.QuizType
+import com.tradezmantom.pgdquiz.ui.data.SubscriptionTier
 import com.tradezmantom.pgdquiz.ui.logic.QuizViewModel
 import com.tradezmantom.pgdquiz.ui.logic.QuizViewModelFactory
 import com.tradezmantom.pgdquiz.ui.theme.PgdQuizTheme
@@ -40,6 +41,7 @@ class MainActivity : ComponentActivity(), QuizPlatformActions {
     private var adManager: UnSkipAddManager? = null
     private var billingManager: BillingManager? = null
     private var quizViewModel: QuizViewModel? = null
+    private var pendingTier: SubscriptionTier? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -47,7 +49,12 @@ class MainActivity : ComponentActivity(), QuizPlatformActions {
         val app = application as QuizApplication
 
         billingManager = BillingManager(PlatformContext(this)) { tier ->
-            quizViewModel?.updateSubscriptionTier(tier)
+            runOnUiThread {
+                // Billing can answer before setContent has created the ViewModel; hold the tier
+                // until it exists instead of dropping it.
+                val viewModel = quizViewModel
+                if (viewModel != null) viewModel.updateSubscriptionTier(tier) else pendingTier = tier
+            }
         }
         app.billingManager = billingManager!!
         billingManager?.initialize()
@@ -80,7 +87,13 @@ class MainActivity : ComponentActivity(), QuizPlatformActions {
                         questionLoader = DefaultQuestionLoader(PlatformContext(this@MainActivity))
                     )
                 )
-                quizViewModel = viewModel
+                if (quizViewModel !== viewModel) {
+                    quizViewModel = viewModel
+                    pendingTier?.let {
+                        viewModel.updateSubscriptionTier(it)
+                        pendingTier = null
+                    }
+                }
 
                 CompositionLocalProvider(LocalQuizPlatformActions provides this@MainActivity) {
                     PgdQuizTheme(quizType = selectedQuizType ?: QuizType.DEFAULT) {

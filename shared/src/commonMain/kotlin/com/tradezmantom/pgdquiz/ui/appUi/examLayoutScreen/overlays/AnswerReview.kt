@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tradezmantom.pgdquiz.ui.data.AnsweredQuestion
@@ -82,7 +83,11 @@ fun ReviewAnswersButton(
                 Text(
                     text = "${if (unlocked) "📋" else "🔒"} Review answers",
                     color = Color.White,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    // With large system fonts, shrink the label rather than wrapping the tag.
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f, fill = false)
                 )
                 if (!unlocked) {
                     Text(
@@ -91,6 +96,8 @@ fun ReviewAnswersButton(
                         fontSize = 9.sp,
                         fontWeight = FontWeight.ExtraBold,
                         letterSpacing = 0.5.sp,
+                        maxLines = 1,
+                        softWrap = false,
                         modifier = Modifier
                             .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(4.dp))
                             .padding(horizontal = 6.dp, vertical = 2.dp)

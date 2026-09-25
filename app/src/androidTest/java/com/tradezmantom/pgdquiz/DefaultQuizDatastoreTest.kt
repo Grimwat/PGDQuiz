@@ -10,6 +10,9 @@ import com.tradezmantom.pgdquiz.ui.data.QuizType
 import com.tradezmantom.pgdquiz.ui.data.SubscriptionTier
 import com.tradezmantom.pgdquiz.util.STARTING_LIVES
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -49,6 +52,22 @@ class DefaultQuizDatastoreTest {
         assertEquals(STARTING_LIVES, datastore.fetchCurrentLives(QuizType.PLUMBING))
         assertEquals(STARTING_LIVES, datastore.fetchCurrentLives(QuizType.DRAIN_LAYING))
         assertEquals(STARTING_LIVES, datastore.fetchCurrentLives(QuizType.GASFITTING))
+    }
+
+    @Test
+    fun concurrentWritesDoNotOverwriteEachOther() = runBlocking {
+        // A wrong answer stores the streak and the lives at the same time. Before writes were
+        // serialised, one read-modify-write could clobber the other and bring a lost life back.
+        repeat(50) { round ->
+            val lives = round % 5
+            coroutineScope {
+                launch(Dispatchers.Default) { datastore.storeAnswerStreak(round) }
+                launch(Dispatchers.Default) { datastore.storeCurrentLives(lives, QuizType.PLUMBING) }
+                launch(Dispatchers.Default) { datastore.storeDate() }
+            }
+            assertEquals("round $round lives", lives, datastore.fetchCurrentLives(QuizType.PLUMBING))
+            assertEquals("round $round streak", round, datastore.fetchAnswerStreak())
+        }
     }
 
     @Test

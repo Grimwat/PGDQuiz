@@ -43,6 +43,9 @@ actual class BillingManager actual constructor(
                 .enableOneTimeProducts()
                 .build()
         )
+        // Without this a dropped Play connection was never restored, so every Upgrade tap
+        // afterwards failed silently ("Service connection is disconnected").
+        .enableAutoServiceReconnection()
         .build()
 
     actual fun initialize() {
@@ -147,45 +150,62 @@ actual class BillingManager actual constructor(
         }
     }
 
+    /**
+     * Works out the user's tier from everything they currently own, including going back to
+     * FREE. Previously this only ever upgraded, so a lapsed or cancelled Apprentice sub (which
+     * Play simply stops returning) kept its stored tier forever.
+     */
     private fun checkExistingPurchases() {
         billingClient.queryPurchasesAsync(
             QueryPurchasesParams.newBuilder()
                 .setProductType(BillingClient.ProductType.INAPP)
                 .build()
-        ) { _, purchases ->
-            if (purchases != null) {
-                for (purchase in purchases) handlePurchase(purchase)
-            }
-        }
+        ) { inappResult, inappPurchases ->
+            billingClient.queryPurchasesAsync(
+                QueryPurchasesParams.newBuilder()
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build()
+            ) { subsResult, subsPurchases ->
+                val owned = (inappPurchases + subsPurchases)
+                    .filter { it.purchaseState == Purchase.PurchaseState.PURCHASED }
+                owned.forEach { acknowledgeIfNeeded(it) }
 
-        billingClient.queryPurchasesAsync(
-            QueryPurchasesParams.newBuilder()
-                .setProductType(BillingClient.ProductType.SUBS)
-                .build()
-        ) { _, purchases ->
-            if (purchases != null) {
-                for (purchase in purchases) handlePurchase(purchase)
+                val bestTier = owned.mapNotNull { tierFor(it) }.maxByOrNull { it.ordinal }
+                val bothSucceeded = inappResult.responseCode == BillingClient.BillingResponseCode.OK &&
+                        subsResult.responseCode == BillingClient.BillingResponseCode.OK
+                Log.d("BILLING", "existing purchases: tier=$bestTier complete=$bothSucceeded")
+                when {
+                    bestTier != null -> onTierUpdated(bestTier)
+                    // Only downgrade on a complete answer, so a failed/offline query can't strip
+                    // a paying user.
+                    bothSucceeded -> onTierUpdated(SubscriptionTier.FREE)
+                }
             }
         }
     }
 
     private fun handlePurchase(purchase: Purchase) {
         if (purchase.purchaseState != Purchase.PurchaseState.PURCHASED) return
-
-        val tier = when {
-            purchase.products.contains(TRADESMAN_PRODUCT_ID) -> SubscriptionTier.TRADESMAN
-            purchase.products.contains(APPRENTICE_PRODUCT_ID) -> SubscriptionTier.APPRENTICE
-            else -> return
-        }
-
-        if (!purchase.isAcknowledged) {
-            val ackParams = AcknowledgePurchaseParams.newBuilder()
-                .setPurchaseToken(purchase.purchaseToken)
-                .build()
-            billingClient.acknowledgePurchase(ackParams) { }
-        }
-
+        val tier = tierFor(purchase) ?: return
+        acknowledgeIfNeeded(purchase)
         onTierUpdated(tier)
+    }
+
+    private fun tierFor(purchase: Purchase): SubscriptionTier? = when {
+        purchase.products.contains(TRADESMAN_PRODUCT_ID) -> SubscriptionTier.TRADESMAN
+        purchase.products.contains(APPRENTICE_PRODUCT_ID) -> SubscriptionTier.APPRENTICE
+        else -> null
+    }
+
+    // Play refunds purchases that aren't acknowledged within 3 days.
+    private fun acknowledgeIfNeeded(purchase: Purchase) {
+        if (purchase.isAcknowledged) return
+        val ackParams = AcknowledgePurchaseParams.newBuilder()
+            .setPurchaseToken(purchase.purchaseToken)
+            .build()
+        billingClient.acknowledgePurchase(ackParams) { result ->
+            Log.d("BILLING", "acknowledge ${purchase.products} code=${result.responseCode}")
+        }
     }
 
     actual fun destroy() {
