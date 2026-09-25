@@ -64,18 +64,22 @@ class MainActivity : ComponentActivity(), QuizPlatformActions {
 
         adManager = UnSkipAddManager(this)
 
-        try {
-            MobileAds.initialize(this) { _ ->
-                window.decorView.postDelayed({
-                    if (!isFinishing) {
-                        Log.d("ADS", "Initial loading of ads started...")
-                        adManager?.loadAllAds()
-                    }
-                }, 1500)
+        // Google's AdMob guidance: initialise the SDK on a background thread to reduce ANRs
+        // (its startup work was seen stalling the main thread on a slow disk).
+        Thread {
+            try {
+                MobileAds.initialize(this) { _ ->
+                    window.decorView.postDelayed({
+                        if (!isFinishing) {
+                            Log.d("ADS", "Initial loading of ads started...")
+                            adManager?.loadAllAds()
+                        }
+                    }, 1500)
+                }
+            } catch (e: Exception) {
+                Log.e("ADS_ERROR", "AdMob failed: ${e.message}")
             }
-        } catch (e: Exception) {
-            Log.e("ADS_ERROR", "AdMob failed: ${e.message}")
-        }
+        }.start()
 
         setContent {
             val app = application as? QuizApplication
