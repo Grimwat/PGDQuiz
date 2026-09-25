@@ -51,6 +51,7 @@ fun CongratulationsScreen(
     isPremium: Boolean = false,
     showAds: Boolean = true,
     onUpgrade: (() -> Unit)? = null,
+    reviewAnswers: (@Composable () -> Unit)? = null,
     onRestart: () -> Unit,
     onBackToModeSelect: () -> Unit
 ) {
@@ -143,6 +144,8 @@ fun CongratulationsScreen(
                     modifier = Modifier.weight(1f)
                 )
             }
+
+            reviewAnswers?.invoke()
 
             if (!isPremium && onUpgrade != null) {
                 Button(

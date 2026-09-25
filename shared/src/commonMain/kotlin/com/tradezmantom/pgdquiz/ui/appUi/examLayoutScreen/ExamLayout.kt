@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
+
 package com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen
 
 
@@ -27,7 +29,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -42,8 +48,10 @@ import com.tradezmantom.pgdquiz.ui.appUi.LocalQuizPlatformActions
 import com.tradezmantom.pgdquiz.ui.appUi.PlatformBannerAd
 import com.tradezmantom.pgdquiz.ui.appUi.addManager.adds.RewardAdSuccess
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.landscape.LandscapeGrid
+import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.overlays.AnswerReviewScreen
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.overlays.CongratulationsScreen
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.overlays.LivesLost
+import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.overlays.ReviewAnswersButton
 import com.tradezmantom.pgdquiz.ui.appUi.examLayoutScreen.portrait.ButtonsPortrait
 import com.tradezmantom.pgdquiz.ui.appUi.isLandscapeOrientation
 import com.tradezmantom.pgdquiz.ui.data.QuizDifficulty
@@ -97,6 +105,25 @@ fun ExamLayout(
 
     LaunchedEffect(quizType, quizDifficulty) {
         viewModel.startQuiz(quizDifficulty, quizType)
+    }
+
+    // Answer review is a paid feature; free users see the button locked as a teaser.
+    var showAnswerReview by remember { mutableStateOf(false) }
+    // The review is only reachable from the lives-lost / congratulations overlays; once neither is
+    // up (ad-earned life, restart) reset it so it doesn't reopen by itself next time.
+    val endOverlayShowing = isOutOfLives || state.showCongratulationsScreen
+    LaunchedEffect(endOverlayShowing) {
+        if (!endOverlayShowing) showAnswerReview = false
+    }
+    val reviewAnswersButton: @Composable () -> Unit = {
+        ReviewAnswersButton(
+            answered = state.answeredQuestions,
+            unlocked = state.isPremium(),
+            onClick = {
+                if (state.isPremium()) showAnswerReview = true
+                else platformActions.launchApprenticeSubscription()
+            }
+        )
     }
 
     Box(
@@ -300,7 +327,8 @@ fun ExamLayout(
                         },
                         onUpgradeTradesman = {
                             platformActions.launchTradesmanPurchase()
-                        }
+                        },
+                        reviewAnswers = reviewAnswersButton
                     )
                 }
             }
@@ -329,6 +357,7 @@ fun ExamLayout(
                         onUpgrade = {
                             platformActions.launchApprenticeSubscription()
                         },
+                        reviewAnswers = reviewAnswersButton,
                         onRestart = {
                             if (showAds) {
                                 platformActions.showInterstitialAd {
@@ -350,6 +379,14 @@ fun ExamLayout(
                     )
                 }
             }
+        }
+
+        if (showAnswerReview && endOverlayShowing) {
+            BackHandler { showAnswerReview = false }
+            AnswerReviewScreen(
+                answered = state.answeredQuestions,
+                onClose = { showAnswerReview = false }
+            )
         }
 
         if (state.isShowingRewardSuccess) {

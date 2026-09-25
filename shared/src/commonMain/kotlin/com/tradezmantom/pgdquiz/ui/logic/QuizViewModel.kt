@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tradezmantom.pgdquiz.domain.interfaces.QuestionLoader
 import com.tradezmantom.pgdquiz.domain.interfaces.QuizDatastore
+import com.tradezmantom.pgdquiz.ui.data.AnsweredQuestion
 import com.tradezmantom.pgdquiz.ui.data.QuizDifficulty
 import com.tradezmantom.pgdquiz.ui.data.QuizType
 import com.tradezmantom.pgdquiz.ui.data.QuizUiState
@@ -53,7 +54,8 @@ class QuizViewModel(
                 quizComplete = false,
                 currentQuestionIndex = 0,
                 correctAnswersCount = 0,
-                bestStreak = 0
+                bestStreak = 0,
+                answeredQuestions = emptyList()
             ) }
             refreshStats()
 
@@ -232,10 +234,14 @@ class QuizViewModel(
     }
     fun updateStreak() {
         val selected = _quizUiState.value.selectedAnswer
-        val correct = _quizUiState.value.currentQuestion?.answer == selected
+        val question = _quizUiState.value.currentQuestion
+        val correct = question?.answer == selected
         val updatedStreak = if (correct) _quizUiState.value.answerStreak + 1 else 0
         _quizUiState.update {
             it.copy(
+                answeredQuestions = if (question != null) {
+                    it.answeredQuestions + AnsweredQuestion(question.question, selected, question.answer)
+                } else it.answeredQuestions,
                 answerStreak = updatedStreak,
                 bestStreak = maxOf(it.bestStreak, updatedStreak),
                 correctAnswersCount = if (correct) it.correctAnswersCount + 1 else it.correctAnswersCount

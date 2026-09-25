@@ -58,6 +58,7 @@ fun LivesLost(
     onUpgrade: () -> Unit = {},
     onUpgradeApprentice: () -> Unit = {},
     onUpgradeTradesman: () -> Unit = {},
+    reviewAnswers: (@Composable () -> Unit)? = null,
     apprenticePriceText: String = "NZD$20/week",
     tradesmanPriceText: String = "NZD$300 Lifetime"
 ) {
@@ -235,6 +236,8 @@ fun LivesLost(
                     }
                 }
             }
+
+            reviewAnswers?.invoke()
 
             HorizontalDivider(
                 color = Color.White.copy(alpha = 0.15f),

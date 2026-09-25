@@ -116,6 +116,45 @@ class QuizViewModelTest {
         assertEquals("answerStreak should be 1 after one correct answer", 1, viewModel.quizUiState.value.answerStreak)
     }
     @Test
+    fun `updateStreak records each answer in order for review`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+
+        val first = viewModel.quizUiState.value.currentQuestion!!
+        viewModel.selectAnswer(first.answer)
+        viewModel.updateStreak()
+        viewModel.nextQuestion()
+
+        val second = viewModel.quizUiState.value.currentQuestion!!
+        viewModel.selectAnswer("definitely wrong")
+        viewModel.updateStreak()
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+
+        val answered = viewModel.quizUiState.value.answeredQuestions
+        assertEquals(2, answered.size)
+        assertEquals(first.question, answered[0].question)
+        assertTrue(answered[0].isCorrect)
+        assertEquals(second.question, answered[1].question)
+        assertEquals("definitely wrong", answered[1].selectedAnswer)
+        assertEquals(second.answer, answered[1].correctAnswer)
+        assertFalse(answered[1].isCorrect)
+    }
+
+    @Test
+    fun `startQuiz clears previously answered questions`() = runTest {
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        viewModel.selectAnswer("anything")
+        viewModel.updateStreak()
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertEquals(1, viewModel.quizUiState.value.answeredQuestions.size)
+
+        viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
+        mainDispatcherRule.testDispatcher.scheduler.advanceUntilIdle()
+        assertTrue(viewModel.quizUiState.value.answeredQuestions.isEmpty())
+    }
+
+    @Test
     fun `QuizDifficulty sets easy questions`() = runTest {
     assertEquals(viewModel.quizUiState.value.questions.size, 0)
     viewModel.startQuiz(QuizDifficulty.EASY, QuizType.PLUMBING)
