@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The question banks are loaded by name via Resources.getIdentifier(), which the release
+     resource shrinker can't trace. Without this, shrinking could strip them and every quiz
+     would silently load with no questions. -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@raw/drainsquestions,@raw/gasquestions,@raw/plumbingquestions" />
